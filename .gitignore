@@ -1,0 +1,5 @@
+/vendor
+/app/cache/*
+/app/logs/*
+/output_*/
+/source/components/

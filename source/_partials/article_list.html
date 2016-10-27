@@ -1,0 +1,5 @@
+<ul class="list--unstyled p-0">
+    {% for article in articles %}
+    <li class="list-group-item{% if page.url == article.url %} active{% endif %}"><a href="{{ article.url }}">{{ article.title }}</a></li>
+    {% endfor %}
+</ul>

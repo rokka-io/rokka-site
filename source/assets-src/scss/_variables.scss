@@ -1,0 +1,50 @@
+
+//Furtive Overwrites
+
+$viewport-s: 480px;
+$viewport-m: 768px;
+$viewport-l: 1024px;
+$viewport-xl: 1280px;
+$viewport-xxl: 1440px;
+
+$font-size: 12px;
+$font-weight-thin: 100 !default;
+$font-weight: 300 !default;
+$font-weight-bold: 500 !default;
+$font-color: #333 !default;
+
+$font-family:  "Rubik", "Catamaran", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$monospace-font-family: "Monaco", "Lucida Console", Courier, monospace !default;
+
+// Sass will automatically convert the rgba values to hex
+// if they alpha value is 1. So, it will default to .99 to
+// avoid this.
+$alpha-value: .99;
+
+$gray-light-5: #e0dcd0;
+$gray-light-8: #faf8f3;
+$gray-mid-6: #898579;
+$gray-dark-9: #46453f;
+
+$red: #ec1c25;
+$red-light: lighten(#ec1c25, 10%);
+$orange: #ff9227;
+$blue: #2fa5e9;
+$green: #89d429;
+$off-white: $gray-light-8 !default;
+$light-gray: $gray-light-5 !default;
+$mid-gray: $gray-mid-6 !default;
+$dark-gray: $gray-dark-9 !default;
+$white: #fff !default;
+
+$link-color: $red;
+
+$border-radius: 4px !default;
+
+$measure-width: 100rem;
+
+
+// Custon
+$spacing: 1rem;
+
+$margin: $spacing;

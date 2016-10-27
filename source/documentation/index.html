@@ -1,0 +1,32 @@
+---
+title: Documentation
+layout: default
+description: Feel free to read the Guide to get a general overview of Rokka or have a look at the API reference.
+use: [guides, references]
+---
+
+
+{% block content_wrapper %}
+<section class="measure section p-t-0 bg--off-white overflow--hidden">
+    <div class="grd-row">
+        <div class="flex grd-row-col grd-row-col-3-6--md m-b-2 m-b-0-md m-r-1-md">
+            <div href="#" class="featurebox transition">
+                <h2 class="featurebox__title h2 m-0 transition">Guide</h2>
+                <div class="featurebox__text transition">
+                    <p>{% include 'article_list' with { 'articles': data.guides } %}</p>
+                </div>
+                <div class="featurebox__btn px2 py1 transition">Learn more</div>
+            </div>
+        </div>
+        <div class="flex grd-row-col grd-row-col-3-6--md m-l-1-md">
+            <div href="#" class="featurebox transition">
+                <h2 class="featurebox__title h2 m-0 transition">API Reference</h2>
+                <div class="featurebox__text transition">
+                    <p>{% include 'article_list' with { 'articles': data.references } %}</p>
+                </div>
+                <div class="featurebox__btn px2 py1 transition">Learn more</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,648 @@
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: $font-weight;
+}
+
+b, strong {
+    font-weight: $font-weight-bold;
+}
+
+th {
+    font-weight: $font-weight-bold;
+}
+
+// 
+// GENERAL HELPERS
+// 
+
+.flex {
+    display: flex;
+}
+
+.flex--reverse {
+    flex-direction: row-reverse;
+}
+
+.flex--center {
+    align-items: center;
+    justify-content: center;
+}
+
+.transition {
+    transition: 0.2s all ease-in-out;
+}
+
+.overflow--hidden {
+    overflow: hidden;
+}
+
+.photo {
+    border: 0.3rem solid white;
+    border-radius: 3px;
+    box-shadow: 0px 0px 25px #dadada;
+}
+
+@media screen and (min-width: $viewport-m) {
+    .txt--center--md {
+        text-align: center;
+    }
+}
+
+@media screen and (min-width: $viewport-l) {
+    .narrow-p--lg {
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+// 
+// ANIMATIONS
+// 
+
+.animation--inview {
+    animation-play-state: paused !important;
+}
+
+.in-viewport .animation--inview {
+    animation-play-state: running !important;
+}
+
+// 
+// TYPOGRAPHY
+// 
+
+.link--white {
+    color: white;
+    text-decoration: none;
+    &:hover {
+        color: white;
+        opacity: 0.7;
+    }
+}
+
+// 
+// ICONS
+// 
+
+.icon--github {
+    &:before {
+        content: "";
+        display: inline-block;
+        background: url("../images/github.svg");
+        background-size: 100%;
+        height: 1.5rem;
+        width: 1.5rem;
+        margin-bottom: -0.25rem;
+        margin-right: 0.5rem;
+    }
+}
+
+// 
+// SECTIONS
+// 
+
+.bg--pattern {
+    background-image: url("../images/rokka-pattern.png");
+    background-size: 100px;
+}
+
+.section {
+    padding: 2rem 1em;
+    @media screen and (min-width: $viewport-s) {
+        padding: 3em;
+    }
+    @media screen and (min-width: $viewport-m) {
+        padding: 3rem;
+    }
+    @media screen and (min-width: $viewport-l) {
+        padding: 4rem;
+    }
+}
+
+// 
+// SECTION: Header & Navigation
+// 
+
+
+.nav__logo {
+    width: 140px;
+    height: 32px;
+    background: url("../images/rokka-logo.png");
+    background-size: 100%;
+}
+
+.nav__item {
+    text-transform: uppercase;
+    font-weight: $font-weight-bold;
+    font-size: 1rem;
+}
+
+.section--header {
+
+}
+
+.section--header__content {
+    padding-top: 8rem;
+    padding-bottom: 10rem;
+}
+
+
+// 
+// SECTION: Why choose rokka?
+// 
+
+.featurebox {
+    background: white;
+    display: block;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    //padding: 2rem 2rem 4rem;
+    padding: 2rem;
+    /*
+    
+    // This is commented out because the feature boxes currently don't link
+    // anywhere, so there also doesn't need to be a hover state
+
+    @media screen and (min-width: $viewport-l) {
+        &:hover {
+            background: $red;
+            * {
+                color: white;
+            }
+            .featurebox__btn {
+                transform: translateY(0);
+                background-color: lighten($red, 10%);
+            }
+            .featurebox__icon svg {
+                fill: white;
+                //transform: translateY(-3.5rem);
+            }
+            .featurebox__title {
+                
+            }
+            .featurebox__text {
+                
+            }
+        }
+    }
+    */
+}
+
+.featurebox__icon {
+    height: 7rem;
+    padding: 1rem 0;
+    float: right;
+    @media screen and (min-width: $viewport-l) {
+        float: none;
+    }
+    svg {
+        height: 100%;
+        width: auto;
+        fill: $red;
+    }
+}
+
+.featurebox__btn {
+    background: $red;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: none;
+    @media screen and (min-width: $viewport-l) {
+        transform: translateY(3.5rem);
+    }
+}
+
+.feature-image {
+    width: 100%;
+}
+
+// 
+// SECTION: A dash of SEO for everyone
+// 
+
+.section--seo {
+    background-image: url("../images/section-image-seo2.png");
+    background-repeat: no-repeat;
+    background-size: auto 50%;
+    background-position: center 14%;
+    @media screen and (min-width: $viewport-s) {
+        
+    }
+    @media screen and (min-width: $viewport-m) {
+        
+    }
+    @media screen and (min-width: $viewport-l) {
+        background-size: auto 70%;
+        background-position: 175%;
+    }
+}
+
+@keyframes magnifying-glas {
+    0% {
+        transform: scale(0) translatex(-10rem);
+        background-position: -20rem;
+    }
+    15% {
+        transform: scale(1) translatex(-10rem);
+    }
+    20% {
+        background-position: -20rem;
+        transform: translatex(-10rem);
+    }
+    100% {
+        background-position: -44rem;
+        transform: translatex(0rem);
+    }
+}
+
+.magnifying-glas {
+    width: 15rem;
+    height: 15rem;
+    margin: 0 auto;
+    border-radius: 100%;
+    box-shadow: 0px 0px 25px #dadada;
+    background-color: white;
+    background-image: url("../images/section-image-seo2.png");
+    background-size: auto 170%;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    transform-origin: left;
+    animation: magnifying-glas 3s 1 cubic-bezier(.92,.04,.33,.95) both;
+    &:after {
+        content: "";
+        display: block;
+        height: 100%;
+        width: 100%;
+        transform: rotateZ(45deg);
+        background-image: linear-gradient(to left, rgba(#eee,0) 0%, rgba(#fff,0) 35%, rgba(#fff,0) 65%, rgba(#eee,0) 100%);
+    }
+}
+
+
+// 
+// SECTION: Auto Cropping
+// 
+
+.section--cropping {
+    background-image: url("../images/section-image-cropping.png");
+    background-size: auto 56%;
+    background-position: left top;
+    background-repeat: no-repeat;
+    @media screen and (min-width: $viewport-m) {
+        background-size: auto 80%;
+        background-position: left center;
+    }
+}
+
+@keyframes cropping {
+    0% {
+        width: 22rem;
+        height: 15rem;
+        background-size: 22rem;
+        background-position: 100% 100%;
+    }
+    20% {
+        width: 22rem;
+        height: 7rem;
+        background-size: 22rem;
+        background-position: 100% 100%;
+    }
+    40% {
+        width: 7rem;
+        height: 23rem;
+        background-size: 22rem;
+        background-position: 85% 100%;
+    }
+    60% {
+        width: 7rem;
+        height: 7rem;
+        background-size: 22rem;
+        background-position: 85% 100%;
+    }
+    80% {
+        width: 22rem;
+        height: 15rem;
+        background-size: 22rem;
+        background-position: 100% 100%;
+    }
+    100% {
+        width: 23rem;
+        height: 21rem;
+        background-size: 60rem;
+        background-position: 89% 100%;
+    }
+}
+
+.feature-image--cropping {
+    width: 100%;
+    height: 24rem;
+}
+
+.cropping-image {
+    margin: 0 auto;
+    background-image: url("../images/cropped-image.jpg");
+    background-color: white;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    animation: 6s cropping 1 cubic-bezier(.92,.04,.33,.95) both;
+}
+
+
+
+
+// 
+// SECTION: Upload once, show often
+// 
+
+@keyframes cat-image-main {
+    0% {
+        opacity: 0;
+        transform: translateY(10em);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cat-image-1 {
+    0% {
+        opacity: 0;
+        transform: translateX(0em);
+    }
+    100% {
+        transform: translateX(-400%);
+    }
+}
+
+@keyframes cat-image-2 {
+    0% {
+        opacity: 0;
+        transform: translateX(0em);
+    }
+    100% {
+        transform: translateX(-255%);
+    }
+}
+
+@keyframes cat-image-3 {
+    0% {
+        opacity: 0;
+        transform: translateX(0em);
+    }
+    100% {
+        transform: translateX(174%);
+    }
+}
+
+@keyframes cat-image-4 {
+    0% {
+        opacity: 0;
+        transform: translateX(0em);
+    }
+    100% {
+        transform: translateX(430%);
+    }
+}
+
+.feature-image--upload {
+    font-size: 0.8rem;
+    height: 16em;
+    position: relative;
+    @media screen and (min-width: $viewport-s) {
+        font-size: 0.9rem;
+    }
+    @media screen and (min-width: $viewport-m) {
+        font-size: 1.0rem;
+    }
+    @media screen and (min-width: $viewport-l) {
+        font-size: 1.2rem;
+    }
+}
+
+.cat-image {
+    background-image: url("../images/cat.jpg");
+    background-size: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+.cat-image--1 {
+    width: 6em;
+    height: 6em;
+    margin-left: -4.5em;
+    margin-top: -3em;
+    background-size: auto 100%;
+    background-position: 50%;
+    animation: cat-image-1 1.5s cubic-bezier(.92,.04,.33,.95);
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
+}
+
+.cat-image--2 {
+    z-index: 8;
+    width: 6em;
+    height: 9em;
+    margin-left: -3em;
+    margin-top: -4.5em;
+    background-size: auto 100%;
+    background-position: 42%;
+    animation: cat-image-2 1.4s cubic-bezier(.92,.04,.33,.95);
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
+}
+
+.cat-image--3 {
+    z-index: 8;
+    width: 9em;
+    height: 6em;
+    margin-left: -4.5em;
+    margin-top: -3em;
+    background-size: 170%;
+    background-position: 45%;
+    transform: translateX(180%);
+    animation: cat-image-3 1.4s cubic-bezier(.92,.04,.33,.95);
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
+}
+
+.cat-image--4 {
+    width: 6em;
+    height: 6em;
+    margin-left: -3em;
+    margin-top: -3em;
+    border-radius: 100%;
+    filter: grayscale(100%);
+    background-size: auto 100%;
+    background-position: 60%;
+    animation: cat-image-4 1.5s cubic-bezier(.92,.04,.33,.95);
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
+}
+
+.cat-image--main {
+    z-index: 10;
+    width: 16em;
+    height: 11em;
+    margin-left: -8em;
+    margin-top: -5.5em;
+    animation: cat-image-main 1s cubic-bezier(.44,.44,.34,1.68);
+}
+
+
+
+
+// 
+// SECTION: Extensive Documentation
+// 
+
+@keyframes documentation-scrolling {
+    0% {
+        background-position: 100% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+.section--documentation {
+    padding-bottom: 0;
+}
+
+.documentation-window {
+    border-radius: 0.5rem;
+    height: 26rem;
+    width: 100%;
+    padding: 1.8rem 0.4rem 0.4rem;
+    background-color: $gray-mid-6;
+    box-shadow: 0px 0px 25px #dadada;
+    position: relative;
+    margin-bottom: 2rem;
+    @media screen and (min-width: $viewport-m) {
+        width: 92%;
+        margin-left: 4%;
+        margin-top: -8rem;
+    }
+}
+
+.documentation-window__bar {
+    position: absolute;
+    top: 0.5rem;
+    i {
+        height: 0.8rem;
+        width: 0.8rem;
+        float: left;
+        background: $gray-light-5;
+        border-radius: 100%;
+        margin-right: 0.3rem;
+    }
+}
+
+.documentation-window__frame {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.4rem;
+    background-color: white;
+    background-image: url("../images/documentation.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    animation: documentation-scrolling 4s cubic-bezier(.69,-0.05,.64,1.27);
+    animation-fill-mode: both;
+    animation-delay: 1.4s;
+}
+
+
+
+
+// 
+// SECTION: Lightning fast delivery
+// 
+
+.section--delivery {
+    padding-top: 0;
+}
+
+.feature-image--delivery {
+    background-image: url("../images/worldmap.png");
+    background-color: white;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 100% auto;
+    height: 25rem;
+    width: 200%;
+    margin-left: -25%;
+    &:after {
+        content: "";
+        display: block;
+        height: 100%;
+        width: 100%;
+        background-image: linear-gradient(to bottom, rgba(#fff,0) 40%, rgba(#fff,1) 100%);
+    }
+    @media screen and (min-width: $viewport-s) {
+        width: 160%;
+        margin-left: -30%;
+    }
+    @media screen and (min-width: $viewport-m) {
+        background-position: center;
+        background-size: auto 100%;
+        height: 25rem;
+    }
+    @media screen and (min-width: $viewport-l) {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+.delivery-content {
+    margin-top: -6rem;
+}
+
+
+
+
+// 
+// SECTION: CTA (Pricing, Beta)
+// 
+
+.section--cta {
+    background-image: url("../images/beta.svg");
+    background-repeat: no-repeat;
+    background-size: 140%;
+    background-position: center -4rem;
+    @media screen and (max-width: $viewport-m - 1) {
+        padding-top: 20rem;
+    }
+    @media screen and (min-width: $viewport-s) {
+        background-size: 100%;
+        background-position: center -10rem;
+    }
+    @media screen and (min-width: $viewport-m) {
+        background-size: auto 100%;
+        background-position: right 50%;
+    }
+    @media screen and (min-width: $viewport-l) {
+        background-size: auto 140%;
+        background-position: 110% 60%;
+    }
+}
+
+
+// 
+// SECTION: Footer
+// 
+
+.footer__powered-by {
+    height: 1rem;
+}
+
+
+
+

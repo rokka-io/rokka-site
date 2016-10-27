@@ -1,0 +1,27 @@
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+.measure {
+    margin: 0 auto;
+    @media screen and (min-width: $viewport-xl) {
+        width: 90vw;
+        max-width: 1400px;
+    }
+}
+
+a {
+    color: $link-color;
+    text-decoration: none;
+    &:hover,
+    &:focus,
+    &:active {
+        color: darken($link-color, 10%);
+    }
+}
+
+li {
+    margin-bottom: 0.5rem;
+}

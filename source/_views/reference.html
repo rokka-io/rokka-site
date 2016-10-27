@@ -1,0 +1,7 @@
+{% extends "guide.html" %}
+
+{% block article_title %}API Reference{% endblock %}
+
+{% block articles %}
+    {% include 'article_list' with { 'articles': data.references } %}
+{% endblock %}

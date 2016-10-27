@@ -1,0 +1,10 @@
+sculpin_content_types:
+    # Need to explicitly disable it
+    posts:
+        enabled: false
+
+    guides:
+        permalink: documentation/guides/:slug_title.html
+
+    references:
+        permalink: documentation/references/:slug_title.html
