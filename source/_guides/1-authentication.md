@@ -3,22 +3,20 @@ title: Authentication
 use: [guides]
 ---
 
-## If you are using a library, you can skip this
+## If you are using a Library
 
-The library implementations are already taking care of this for you. All you need to supply is your key, secret and organization and you'll be set.
-
-If you want to do it by hand, using curl or implement a new library, this part is for you.
+All you need to do is specify the API key and secret that you will get with your account information.
 
 ## How to tell Rokka who you are
 
-In the previous guide, you have seen how to register and gotten an API key and an API secret. Time to put them to good use.
+All calls to the Rokka API are authenticated, except the operations list (see [rendering images](4-rendering-images)).
 
-All calls to the Rokka API are authenticated, except registration and the operations list. Here it's explained how to do it manually, but you can make your life easy with pre built libraries that will take care of this for you.
+To authenticate, use the `Api-Key` header with the key you where assigned during registration.
 
-Each call to Rokka expects 2 headers, `Api-Version` (You should always use this! But we cover that in the next step) and `Api-Key`.
+```bash
+curl -H 'Content-Type: application/json' -H 'Api-Version: 1' -H 'Api-Key: myKey' -X POST 'https://api.rokka.io/{action}' -d '...'
+```
 
-Simply send the key in the header and you are set.
+The secret is currently not used. It was used for an old authentication scheme. It will likely be used again for future implementations. So just hold on to it, but you can ignore it for the time being.
 
-The secret is currently not used (was used for an old authentication scheme), but will be used again for future implementations. So just hold on to it, but you can ignore it for the time being.
-
-If you implement an access library, pass the secret in with the key, so you have it present for future use and easy upgrade.
+If you implement your own Rokka client library, we recommend you require the secret in the configuration, together with the key, so you have it present for future use and easy upgrade.
