@@ -1,0 +1,7 @@
+{% extends "guide.html" %}
+
+{% block article_title %}Rokka Client Libraries{% endblock %}
+
+{% block articles %}
+    {% include 'article_list' with { 'articles': data.libraries } %}
+{% endblock %}
