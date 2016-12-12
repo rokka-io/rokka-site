@@ -26,7 +26,7 @@ With a user, you can create new organizations on the `/organizations` endpoint.
 ```bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/awesomecompany' -d '{
     "billing_email": "my.email@mail.com",
-    "display_name": "My Awesome Company",
+    "display_name": "My Awesome Company"
 }'
 ```
 ```php
