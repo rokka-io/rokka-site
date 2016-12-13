@@ -26,7 +26,19 @@ curl -H 'Content-Type: application/json' -X PATCH 'https://api.rokka.io/sourceim
     }'
 ```
 
-If you do a PUT instead of a PATCH request, then all existing fields will be deleted first.
+
+```php
+$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+
+$hash = '0dcabb778d58d07ccd48b5ff291de05ba4374fb9';
+
+$client->addStaticMetadata([ "somefield" => "somevalue",
+                             "somethingElse" => "anothervalue",
+                             "deleteThis" => null
+                             ], $hash);
+
+```
+If you do a PUT (or setStaticMetadata in PHP) instead of a PATCH request, then all existing fields will be deleted first.
 
 If you want to update/add just one value, you can also do this by making a PUT request to `https://api.rokka.io/sourceimages/{organization}/{hash}/meta/static/{name}`
 and include the JSON encoded value in the body
@@ -35,33 +47,46 @@ and include the JSON encoded value in the body
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/static/somefield' -d '"somevalue"'
 ```
 
-TODO: FIX php example
 ```php
-use Rokka\Client\Core\DynamicMetadata\SubjectArea;
-
 $client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
 
 $hash = '0dcabb778d58d07ccd48b5ff291de05ba4374fb9';
 
-$dynamicMetadata = new SubjectArea(0, 0, 30, 230);
-
-$newHash = $client->setDynamicMetadata($dynamicMetadata, $hash);
-
-echo 'Updated subject area. New image hash: ' . $newHash . PHP_EOL;
+$client->setStaticMetadataField("somefield", "somevalue", $hash);
 
 ```
 
 
 ## Delete static metadata from a source image
 
-To delete static metadata from a source image, you need to provide the organization, the identifying hash of the image and the name of the dynamic metadata. Do this by making a DELETE request to `https://api.rokka.io/sourceimages/{organization}/{hash}/meta/dynamic/{name}`
+Besides just setting a value of a field to null as shown above, you can also delete static metadata with special calls.
+
+For a single field:
 
 ```bash
 curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/static/somefield'
 ```
 
-You can also delete all values at once with omiting the name
+```php
+$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+
+$hash = '0dcabb778d58d07ccd48b5ff291de05ba4374fb9';
+
+$client->$client->deleteStaticMetadataField("somefield", $hash);
+
+```
+
+Deleting just all metadata of an image:
 
 ```bash
 curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/static'
+```
+
+```php
+$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+
+$hash = '0dcabb778d58d07ccd48b5ff291de05ba4374fb9';
+
+$client->$client->deleteStaticMetadata($hash);
+
 ```
