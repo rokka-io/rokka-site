@@ -3,6 +3,19 @@ Rokka
 
 This is the repository for the __Rokka Site__ which includes documentation and general information about the service.
 
+Local Development
+-----------------
+
+Do have the rendered output immediatly on your development environment, do:
+
+```
+composer install
+vendor/sculpin/sculpin/bin/sculpin generate --watch --server
+```
+
+and then open [http://localhost:8000](http://localhost:8000) in your browser
+
+
 Documentation
 -----------------
 
