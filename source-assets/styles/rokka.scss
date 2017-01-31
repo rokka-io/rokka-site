@@ -1,0 +1,442 @@
+@import "../liip-styleguide/dist/assets/toolkit/styles/toolkit";
+
+$color-green: #6ea644;
+
+body {
+    background: #ddd;
+}
+
+.logo svg g {
+    fill: currentColor;
+}
+
+
+
+
+// rokka feature
+.rokka-feature {
+
+}
+
+.rokka-feature__icon {
+    background: $color-green;
+    color: white;
+    width: 60px;
+    height: 60px;
+    padding: 0.7rem;
+    border-radius: 100%;
+    .icon {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+
+.pill {
+    background: $color-green;
+    color: white;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem 0.25rem;
+    border-radius: 1rem;
+    line-height: 1;
+}
+
+
+
+.rokka-box {
+    border: 1px solid #DDDDD8;
+    box-shadow: 0 2px 8px 0 rgba(192,193,188,0.20);
+    border-radius: 4px;
+    background-color: white;
+    pre, code {
+        background: none;
+        color: #414141;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        word-break: break-all;
+        white-space: pre-wrap;
+
+        .token.boolean, .token.constant, .token.deleted, .token.function, .token.number, .token.property, .token.symbol, .token.tag {
+            color: #B23852;
+        }
+
+        .language-css .token.string, .style .token.string, .token.attr-name, .token.builtin, .token.char, .token.entity, .token.important, .token.inserted, .token.operator, .token.regex, .token.selector, .token.string, .token.url, .token.variable {
+            color: #EC9506;
+        }
+
+    }
+}
+
+
+
+#rokka-section--why {
+    height: 80vh;
+}
+
+
+.rokka-animation--why {
+    position: absolute;
+    bottom: -170px;
+    right: 0;
+}
+
+.rokka-animation--freitag {
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+}
+
+/*
+    Rokka Hero Animation
+ */
+
+@keyframes scale-outside {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: translate(30%,20%);
+    }
+}
+
+// @keyframes rotate-bubble {
+//     0% {
+//         transform: rotate(0deg);
+//     }
+//     100% {
+//         transform: rotate(360deg);
+//     }
+// }
+
+// @keyframes rotate-outside {
+//     0% {
+//         transform: translateY(100%);
+//     }
+//     100% {
+//         transform: translateY(0%);
+//     }
+// }
+
+@keyframes translate-bubble-1 {
+    0% {
+        transform: translate(0%,0%);
+        
+    }
+    100% {
+        transform: translate(0%,-10%);
+    }
+}
+
+@keyframes translate-bubble-2 {
+    0% {
+        transform: translate(0%,0%);
+        
+    }
+    100% {
+        transform: translate(0%,5%);
+    }
+}
+
+@keyframes translate-bubble-3 {
+    0% {
+        transform: translate(0%,0%);
+        
+    }
+    100% {
+        transform: translate(0%,20%);
+    }
+}
+
+@keyframes translate-bubble-4 {
+    0% {
+        transform: translate(0%,0%);
+        
+    }
+    100% {
+        transform: translate(0%,-20%);
+    }
+}
+
+.rokka-hero-section {
+    height: 100vh;
+}
+
+.rokka-hero-container {
+    z-index: 2;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.rokka-hero {
+    font-size: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    // perspective: 10px;
+    .rokka-hero__animation {
+        transition: 0.9s;
+    }
+    .rokka-hero__animation--center {
+        transform: scale(0) rotate(-90deg);
+        transition-timing-function: cubic-bezier(0.54, -0.17, 0.26, 1.07);
+        transition-duration: 1s;
+        opacity: 0;
+        z-index: 150;
+    }
+    .rokka-hero__animation--outside {
+        transform: rotate(-120deg) scale(1);
+        transition-timing-function: cubic-bezier(0.18, 0.35, 0.32, 0.99);
+        transition-duration: 0.6s;
+        opacity: 1;
+        z-index: 130;
+        transform-style: preserve-3d;
+    }
+    .rokka-hero-bubble {
+        transition: 0.6s;
+        transition-timing-function: cubic-bezier(0.18, 0.35, 0.32, 0.99);
+    }
+    .rokka-hero-bubble__label {
+        transition: 0.4s;
+        transform: translateY(-150%);
+        transition-timing-function: cubic-bezier(0.54, -0.17, 0.26, 1.57);
+
+    }
+    &.rokka-hero--appear {
+        .rokka-hero__animation--center {
+            transform: none;
+            opacity: 1;
+        }
+        .rokka-hero__animation--outside {
+            transform: none;
+            transition-delay: 0s;
+            opacity: 1;
+        }
+        .rokka-hero-bubble {
+            
+        }
+        .rokka-hero-bubble--1 {
+            transform: translate(-120%,-240%) scale(1.2);
+            transition-delay: 0s;
+            opacity: 0.7;
+        }
+        .rokka-hero-bubble--2 {
+            transform: translate3d(200%,-200%,-17px) scale(0.6);
+            transition-delay: 0.07s;
+            opacity: 0.5;
+        }
+        .rokka-hero-bubble--3 {
+            transform: translate3d(240%,90%,1px) scale(1);
+            transition-delay: 0.17s;
+            opacity: 0.8;
+        }
+        .rokka-hero-bubble--4 {
+            transform: translate3d(-240%,210%, 5px) scale(1.6);
+            transition-delay: 0.21s;
+            opacity: 0.9;
+        }
+        .rokka-hero-bubble__label {
+            opacity: 1;
+            transform: none;
+            transition-delay: 0.8s;
+        }
+    }
+    &.rokka-hero--animate {
+        .rokka-hero__animation--outside {
+            // animation: scale-outside 7s infinite ease-in-out;
+            // animation-direction: alternate;
+            .rokka-hero-bubble {
+                .rokka-hero-bubble-wrap {
+                    animation: translate-bubble-1 5s infinite ease-in-out;
+                    animation-direction: alternate;
+                }
+            }
+            .rokka-hero-bubble--2 {
+                .rokka-hero-bubble-wrap {
+                    animation-name: translate-bubble-2;
+                    animation-delay: 1.2s;
+                }
+            }
+            .rokka-hero-bubble--3 {
+                .rokka-hero-bubble-wrap {
+                    animation-name: translate-bubble-3;
+                    animation-delay: 0.8s;
+                    animation-duration: 4.7s;
+                }
+            }
+            .rokka-hero-bubble--4 {
+                .rokka-hero-bubble-wrap {
+                    animation-name: translate-bubble-4;
+                    animation-delay: 0.4s;
+                }
+            }
+        }
+    }
+}
+.rokka-hero__animation-wrapper {
+    position: relative;
+    width: 5em;
+    height: 5em;
+}
+
+.rokka-hero__animation {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.rokka-hero-bubble {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1em;
+    opacity: 0;
+}
+
+.rokka-hero-bubble-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.rokka-hero-bubble--huge {
+    opacity: 1;
+    transform: scale(2);
+    .rokka-hero-bubble-wrap {
+        // font-size: 2.6em;
+
+    }
+    .rokka-hero-bubble__icon {
+        padding: 0.9em;
+        border-width: 1px;
+        background: rgba(255,255,255,0.2);
+        // color: $color-green;
+    }
+}
+
+.rokka-hero-bubble--1 {
+    transform: scale(1);
+}
+.rokka-hero-bubble--2 {
+    filter: blur(6px);
+    transform: translate3d(0,0,4px);
+
+}
+.rokka-hero-bubble--3 {
+    transform: translate3d(0,0,4px);
+
+}
+.rokka-hero-bubble--4 {
+    transform: translate3d(0,0,4px);
+}
+
+.rokka-hero-bubble__icon {
+    height: 100%;
+    width: 100%;
+    border: 2px solid white;
+    border-radius: 100%;
+    padding: 1.1em;
+    svg {
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.rokka-hero-bubble__label {
+    position: absolute;
+    bottom: -2em;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    opacity: 0;
+    div {
+        white-space: nowrap;
+    }
+}
+
+/*
+    Rokka Feature Animation
+ */
+.rokka-feature-animation {
+    margin-left: -1rem;
+    margin-right: 1rem;
+}
+
+
+
+// number
+.number {
+    display: inline-block;
+}
+
+.number__before {
+    .icon {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+.number__value {
+    line-height: 1;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-item-auto {
+    flex: 0 0 auto;
+}
+
+.flex-item-1 {
+    flex: 1 1 0;
+}
+
+.flex-align-center {
+    align-items: center;
+}
+
+.flex-space-between {
+    justify-content: space-between;
+}
+
+// Maybe Styleguide
+.font-normal {
+    font-weight: normal;
+}
+
+.text-primary {
+    color: $color-green;
+}
+
+.section--white {
+    background-color: white;
+}
+
+.btn--negative {
+    color: white;
+    border-color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    &:hover, &:focus {
+        color: #6ea644;
+        background: white;
+    }
+}

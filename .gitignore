@@ -4,3 +4,4 @@
 /output_*/
 /source/components/
 .DS_Store
+/node_modules

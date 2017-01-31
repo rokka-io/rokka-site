@@ -1,0 +1,14 @@
+{
+  "name": "rokka-site",
+  "version": "2.0.0",
+  "description": "The website for rokka.io",
+  "author": "Liip",
+  "homepage": "https://rokka.io",
+  "devDependencies": {
+    "browser-sync": "^2.18.6",
+    "gulp": "^3.9.1",
+    "gulp-include": "^2.3.1",
+    "gulp-inject-svg": "^0.1.9",
+    "gulp-sass": "^3.1.0"
+  }
+}

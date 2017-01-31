@@ -7,41 +7,27 @@
         <meta name="keywords" content="{{ page.keywords }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href='https://fonts.googleapis.com/css?family=Rubik:300,500' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="/assets/css/rokka.css">
+        <link rel="stylesheet" href="/assets/styles/rokka.css">
     </head>
-    <body class="bg--light-gray">
+    <body>
+        <img src="output_dev/assets/images/icons.svg">
         {% include("tag_manager.html") %}
-
-        <section class="measure section section--header bg--red bg--pattern fnt--white">
-            <nav class="overflow--hidden">
-                <a  href="/" class="nav__logo flt--left"></a>
-                <ul class="list--unstyled m-0 p0 flt--right">
-                    <!-- <li class="nav__item flt--left">
-                        <a class="nav__link fnt--white" href="#">Pricing</a>
-                    </li> -->
-                    <li class="nav__item flt--left">
-                        <a class="nav__link link--white" href="/documentation">Documentation</a>
-                    </li>
-                    <!--<li class="nav__item flt--left">
-                        <a class="nav__link link--white" href="#">Contact us</a>
-                    </li>-->
-                </ul>
-            </nav>
+        <section class="">
             {% block hero_content %}{% endblock %}
         </section>
 
         {% block breadcrumb %}
-        <section class="measure section bg--off-white">
-            <h1 class="m-0">{{page.title}}</h1>
+        <section>
+            <h1>{{page.title}}</h1>
             {% if page.description %}
-                <p class="m-b-0">{{page.description}}</p>
+                <p>{{page.description}}</p>
             {% endif %}
         </section>
         {% endblock %}
 
 
         {% block content_wrapper %}
-        <section class="measure section bg--white overflow--hidden">
+        <section>
             {% block content %}{% endblock %}
         </section>
         {% endblock %}
@@ -50,8 +36,8 @@
 
         {% include("footer.html") %}
 
-        <script src="/assets/js/all.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
+        <script src="/assets/scripts/rokka.js"></script>
+        <!-- <script>hljs.initHighlightingOnLoad();</script> -->
         {% block additional_javascript %}{% endblock %}
     </body>
 </html>
