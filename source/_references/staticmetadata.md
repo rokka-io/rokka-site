@@ -19,7 +19,7 @@ The most flexible way to add/replace/delete fields is with a PATCH request and h
 This also allows to update more than one field at once.
 
 ```bash
-curl -H 'Content-Type: application/json' -X PATCH 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/static/somefield' -d '{
+curl -H 'Content-Type: application/json' -X PATCH 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/static' -d '{
     "somefield": "somevalue",
     "somethingElse": "anothervalue",
     "deleteThis": null
