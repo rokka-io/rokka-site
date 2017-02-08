@@ -11,6 +11,15 @@ body {
 }
 
 
+.rokka-navbar-cta {
+    opacity: 0;
+    transition: opacity 0.3s;
+    .navbar--overlay & {
+        opacity: 1;
+    }
+}
+
+
 
 
 // rokka feature
@@ -47,41 +56,25 @@ body {
 
 
 .rokka-box {
-    border: 1px solid #DDDDD8;
-    box-shadow: 0 2px 8px 0 rgba(192,193,188,0.20);
+    border: 1px solid #ebebe6;
+    box-shadow: 10px 10px 20px 0 rgba(192, 193, 188, 0.08);
     border-radius: 4px;
     background-color: white;
-    pre, code {
-        background: none;
-        color: #414141;
-        box-shadow: none;
-        padding: 0;
-        margin: 0;
-        word-break: break-all;
-        white-space: pre-wrap;
-
-        .token.boolean, .token.constant, .token.deleted, .token.function, .token.number, .token.property, .token.symbol, .token.tag {
-            color: #B23852;
-        }
-
-        .language-css .token.string, .style .token.string, .token.attr-name, .token.builtin, .token.char, .token.entity, .token.important, .token.inserted, .token.operator, .token.regex, .token.selector, .token.string, .token.url, .token.variable {
-            color: #EC9506;
-        }
-
-    }
 }
 
 
-
-#rokka-section--why {
-    height: 80vh;
+.rokka-section--why {
+    padding-bottom: 15rem;
 }
 
 
 .rokka-animation--why {
-    position: absolute;
-    bottom: -170px;
-    right: 0;
+    text-align: right;
+    margin-top: -5.5rem;
+    margin-left: 5em;
+    img {
+        display: inline-block;
+    }
 }
 
 .rokka-animation--freitag {
@@ -162,21 +155,25 @@ body {
 }
 
 .rokka-hero-section {
-    height: 100vh;
+    height: 80vh;
+    min-height: 80vh;
+}
+
+.section-spacer {
+    height: 80vh;
 }
 
 .rokka-hero-container {
     z-index: 2;
     position: relative;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .rokka-hero {
-    font-size: 20px;
+    font-size: 16px;
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-left: 5rem;
     // perspective: 10px;
     .rokka-hero__animation {
         transition: 0.9s;
@@ -371,8 +368,26 @@ body {
     Rokka Feature Animation
  */
 .rokka-feature-animation {
-    margin-left: -1rem;
-    margin-right: 1rem;
+    margin-right: 2rem;
+    pre, code {
+        background: none;
+        color: #414141;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        word-break: break-all;
+        white-space: pre-wrap;
+        font-size: 12px;
+        
+        .token.boolean, .token.constant, .token.deleted, .token.function, .token.number, .token.property, .token.symbol, .token.tag {
+            color: #B23852;
+        }
+
+        .language-css .token.string, .style .token.string, .token.attr-name, .token.builtin, .token.char, .token.entity, .token.important, .token.inserted, .token.operator, .token.regex, .token.selector, .token.string, .token.url, .token.variable {
+            color: #EC9506;
+        }
+
+    }
 }
 
 
@@ -397,6 +412,10 @@ body {
     position: absolute;
 }
 
+.position-relative {
+    position: relative;
+}
+
 .flex {
     display: flex;
 }
@@ -411,6 +430,10 @@ body {
 
 .flex-align-center {
     align-items: center;
+}
+
+.flex-align-end {
+    align-items: flex-end;
 }
 
 .flex-space-between {
@@ -440,3 +463,259 @@ body {
         background: white;
     }
 }
+
+.text-tiny {
+    font-size: 0.6rem;
+}
+
+
+// Lightning fast delivery
+.rokka-feature--delivery {
+    .rokka-feature__image {
+        text-align: right;
+        margin-top: -5rem;
+        margin-bottom: -2rem;
+        margin-left: 7rem;
+        img {
+            display: inline-block;
+        }
+    }
+}
+
+
+
+// Easy API
+.rokka-feature--api {
+    margin-bottom: 3rem;
+}
+
+
+
+// Upload once, show often
+// 
+
+.rokka-section-uoso {
+  background-image: linear-gradient( 118deg, rgb(65,65,65) 0%, rgb(80,80,77) 100%);
+  color: white;
+  // padding-top: 0;
+  padding-bottom: 0;
+  overflow: visible;
+}
+
+.rokka-uoso {
+    position: relative;
+}
+
+.rokka-uoso-row--top {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.rokka-uoso-row--middle {
+    padding-top: 128px;
+    .rokka-uoso-text {
+        position: relative;
+        padding-right: 40px;
+    }
+}
+
+.rokka-uoso-row--bottom {
+    .rokka-uoso-text {
+        margin-top: 105px;
+    }
+}
+
+
+
+.rokka-uoso-device {
+    position: relative;
+}
+
+.rokka-uoso-device__screen {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    background-image: url(../images/liip-photo.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.rokka-uoso-device__hardware {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    background-size: 100%;
+}
+
+.rokka-uoso-device--imac {
+    $rokka-uoso-base-imac: 1302;
+
+    font-size: $rokka-uoso-base-imac + px;
+    width: 1em;
+    height: 603 / $rokka-uoso-base-imac + em;
+    margin-left: 30px;
+    margin-top: -15rem;
+    .rokka-uoso-device__hardware {
+        background-image: url(../images/rokka-device-imac.png);
+    }
+    .rokka-uoso-device__screen {
+        width: 1170 / $rokka-uoso-base-imac + em;
+        height: 660 / $rokka-uoso-base-imac + em;
+        left: 52 / $rokka-uoso-base-imac + em;
+        top: 27 / $rokka-uoso-base-imac + em;
+        transform: matrix3d(1.00342, 0, 0, 0, 0.193285, 0.421146, 0, 0.00033198, 0, 0, 1, 0, -2, 0, 0, 1);
+        transform-origin: 0px 0px 0px;
+    }
+}
+
+.rokka-uoso-device--iphone {
+    $rokka-uoso-base-iphone: 135;
+
+    font-size: $rokka-uoso-base-iphone + px;
+    width: 1em;
+    height: 250 / $rokka-uoso-base-iphone + em;
+    margin: 0 auto;
+    transform: translateX(8px);
+    .rokka-uoso-device__hardware {
+        background-image: url(../images/rokka-device-iphone.png);
+    }
+    .rokka-uoso-device__screen {
+        width: 104 / $rokka-uoso-base-iphone + em;
+        height: 188 / $rokka-uoso-base-iphone + em;
+        top: 21 / $rokka-uoso-base-iphone + em;
+        left: 10 / $rokka-uoso-base-iphone + em;
+    }
+}
+
+.rokka-uoso-device--ipad {
+    $rokka-uoso-base-ipad: 493;
+
+    font-size: $rokka-uoso-base-ipad + px;
+    width: 1em;
+    height: 356 / $rokka-uoso-base-ipad + em;
+    .rokka-uoso-device__hardware {
+        background-image: url(../images/rokka-device-ipad.png);
+    }
+    .rokka-uoso-device__screen {
+        width: 406 / $rokka-uoso-base-ipad + em;
+        height: 306 / $rokka-uoso-base-ipad + em;
+
+        left: 39 / $rokka-uoso-base-ipad + em;
+        top: 18 / $rokka-uoso-base-ipad + em;
+    }
+}
+
+
+.rokka-uoso-device--macbook {
+    $rokka-uoso-base-macbook: 820;
+
+    font-size: $rokka-uoso-base-macbook + px;
+    width: 1em;
+    height: 458 / $rokka-uoso-base-macbook + em;
+    transform: translateX(-50px);
+    margin-top: -70px;
+    .rokka-uoso-device__hardware {
+        background-image: url(../images/rokka-device-macbook.png);
+    }
+    .rokka-uoso-device__screen {
+        width: 660 / $rokka-uoso-base-macbook + em;
+        height: 414 / $rokka-uoso-base-macbook + em;
+        left: 35 / $rokka-uoso-base-macbook + em;
+        top: 15 / $rokka-uoso-base-macbook + em;
+        transform: matrix3d(1.02082, 0, 0, 0.0000176854, 0.175988, 0.3138, 0, 0.000544915, 0, 0, 1, 0, -3, 0, 0, 1);
+        transform-origin: 0px 0px 0px;
+    }
+}
+
+
+
+
+
+/*
+    Testimonial
+ */
+
+.rokka-quote {
+    margin-top: 2rem;
+}
+
+.rokka-quote__bubble {
+    background: #EBEBE6;
+    margin-right: 1rem;
+    position: relative;
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        right: -30px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 20px 0 0 30px;
+        border-color: transparent transparent transparent #EBEBE6;
+    }
+}
+
+.rokka-quote__avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    background-size: 100%;
+    background-image: url(../images/rokka-testimonial-freitag-benjamin.png);
+    margin-right: 0.5rem;
+}
+
+
+
+/*
+    Pricing
+ */
+.rokka-pricing-box {
+
+}
+
+.rokka-pricing-box__free {
+    border-top: 1px solid #ebebe6;
+}
+
+.rokka-pricing-box__desc {
+    padding-right: 5rem;
+}
+
+/*
+    Try out rokka for free
+ */
+
+.rokka-section-cta {
+
+}
+
+
+
+
+/*
+    Rokka Footer
+ */
+.rokka-footer {
+    border-top: 1px solid #DDDDD8;
+}
+
+.rokka-footer__logo {
+    svg {
+        width: auto;
+        g {
+            fill: currentColor;
+        }
+    }
+}
+
+

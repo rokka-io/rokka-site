@@ -12,7 +12,7 @@ layout: default
 
 {% block content_wrapper %}
 
-<div class="navbar navbar--sticky navbar--negative" style="height: 160px;">
+<div class="navbar navbar--sticky navbar--negative">
   <div class="navbar__body">
     <a href="/example-pages/home.html" class="navbar__brand" title="Liip"><div class="logo"><img src="output_dev/assets/images/rokka-logo.svg" style="height: 48px;">
 </div></a>
@@ -26,9 +26,10 @@ layout: default
     </button>
     <nav class="navbar__collapse">
       <ul class="navbar-menu">
-        <li><a href="/example-pages/work.html" class="navbar-menu__link">Work</a></li>
-        <li><a href="#" class="navbar-menu__link">Team</a></li>
-        <li><a href="#" class="navbar-menu__link">Blog</a></li>
+        <li class="rokka-navbar-cta"><button class="btn btn--default btn--small btn--primary">Start your free trial</button></li>
+        <li><a href="#" class="navbar-menu__link">Contact</a></li>
+        <li><a href="#" class="navbar-menu__link">Documentation</a></li>
+        <li><a href="#" class="navbar-menu__link">Login</a></li>
       </ul>
     </nav>
   </div>
@@ -36,70 +37,74 @@ layout: default
 
 
 <div class="section-spacer">
-  <section class="section section--primary section--fit section--fixed rokka-hero-section">
+  <section class="section section--primary section--fit section--middle section--fixed rokka-hero-section">
     <canvas id="section-multiplier" class="section__bg"></canvas>
+    <div class="section__body">
 
-    <div class="rokka-hero-container">
-      <div class="grid grid--middle">
-        <div class="grid__item md-w-1/2">
-          <div class="rokka-hero">
-            <div class="rokka-hero__animation-wrapper">
-              <div class="rokka-hero__animation rokka-hero__animation--center">
-                <div class="rokka-hero-bubble rokka-hero-bubble--huge">
-                  <div class="rokka-hero-bubble-wrap">
-                    <div class="rokka-hero-bubble__icon">
-                      <img src="output_dev/assets/images/rokka-box.svg">
+      <div class="rokka-hero-container">
+        <div class="grid grid--middle">
+
+          <div class="grid__item md-w-1/2">
+            <h1>digital image processing<br><span class="font-normal">done right.</span></h1>
+            <p class="text-lead">Store, render and deliver images. Easy and blazingly fast.</p>
+            <button class="btn btn--md btn--negative" id="trial-button">Start your free trial</button>
+          </div>
+
+          <div class="grid__item md-w-1/2">
+            <div class="rokka-hero">
+              <div class="rokka-hero__animation-wrapper">
+                <div class="rokka-hero__animation rokka-hero__animation--center">
+                  <div class="rokka-hero-bubble rokka-hero-bubble--huge">
+                    <div class="rokka-hero-bubble-wrap">
+                      <div class="rokka-hero-bubble__icon">
+                        <img src="output_dev/assets/images/rokka-box.svg">
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="rokka-hero__animation rokka-hero__animation--outside">
-                <div class="rokka-hero-bubble rokka-hero-bubble--1">
-                  <div class="rokka-hero-bubble-wrap">
-                    <div class="rokka-hero-bubble__icon">
-                      <svg class="icon icon--cloud"><use xlink:href="#cloud" /></svg>
-                    </div>
-                    <div class="rokka-hero-bubble__label"><div>Upload and render images</div></div>
-                  </div>
-                </div>
-
-                <div class="rokka-hero-bubble rokka-hero-bubble--2">
-                  <div class="rokka-hero-bubble-wrap">
-                    <div class="rokka-hero-bubble__icon">
-                      <svg class="icon icon--service-design"><use xlink:href="#service-design" /></svg>
+                <div class="rokka-hero__animation rokka-hero__animation--outside">
+                  <div class="rokka-hero-bubble rokka-hero-bubble--1">
+                    <div class="rokka-hero-bubble-wrap">
+                      <div class="rokka-hero-bubble__icon">
+                        <svg class="icon icon--cloud"><use xlink:href="#cloud" /></svg>
+                      </div>
+                      <div class="rokka-hero-bubble__label"><div>Upload and render images</div></div>
                     </div>
                   </div>
-                </div>
 
-                <div class="rokka-hero-bubble rokka-hero-bubble--3">
-                  <div class="rokka-hero-bubble-wrap">
-                    <div class="rokka-hero-bubble__icon">
-                      <svg class="icon icon--api"><use xlink:href="#api" /></svg>
+                  <div class="rokka-hero-bubble rokka-hero-bubble--2">
+                    <div class="rokka-hero-bubble-wrap">
+                      <div class="rokka-hero-bubble__icon">
+                        <svg class="icon icon--service-design"><use xlink:href="#service-design" /></svg>
+                      </div>
                     </div>
-                    <div class="rokka-hero-bubble__label"><div>image processing on the fly</div></div>
                   </div>
-                </div>
 
-                <div class="rokka-hero-bubble rokka-hero-bubble--4">
-                  <div class="rokka-hero-bubble-wrap">
-                    <div class="rokka-hero-bubble__icon">
-                      <svg class="icon icon--elearning"><use xlink:href="#elearning" /></svg>
+                  <div class="rokka-hero-bubble rokka-hero-bubble--3">
+                    <div class="rokka-hero-bubble-wrap">
+                      <div class="rokka-hero-bubble__icon">
+                        <svg class="icon icon--api"><use xlink:href="#api" /></svg>
+                      </div>
+                      <div class="rokka-hero-bubble__label"><div>image processing on the fly</div></div>
                     </div>
-                    <div class="rokka-hero-bubble__label"><div>Lightning fast delivery</div></div>
+                  </div>
+
+                  <div class="rokka-hero-bubble rokka-hero-bubble--4">
+                    <div class="rokka-hero-bubble-wrap">
+                      <div class="rokka-hero-bubble__icon">
+                        <svg class="icon icon--elearning"><use xlink:href="#elearning" /></svg>
+                      </div>
+                      <div class="rokka-hero-bubble__label"><div>Lightning fast delivery</div></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="grid__item md-w-1/2">
-          <h1>digital image processing<br><span class="font-normal">done right.</span></h1>
-          <p class="text-lead">Store, render and deliver images. Easy and blazingly fast.</p>
-          <button class="btn btn--md btn--negative" id="trial-button">Start your free trial</button>
-        </div>
-      </div>
 
-      
+        
+      </div>
     </div>
 
   </section>
@@ -112,12 +117,9 @@ layout: default
 </section>
 
 
-<section class="section section--white" id="rokka-section--why">
-  <div class="rokka-animation rokka-animation--why">
-    <img src="assets/images/background--why-roka.png"/>
-  </div>
+<section class="section rokka-section--why">
   <div class="section__body">
-    <h2 class="h1 mrgb++">Why rokka?</h2>
+    <h2 class="mrgb++">Why rokka?</h2>
 
     <div class="grid">
       <div class="grid__item md-w-1/2">
@@ -128,7 +130,7 @@ layout: default
             </div>
           </div>
           <div class="flex-item-1">
-            <h4 class="mrg0 mrgb--">Four your clients</h4>
+            <h3 class="mrg0 mrgb--">Four your clients</h3>
             <p class="mrg0">rokka supports you with professional search engine optimization of your digital images.</p>
           </div>
         </div>
@@ -140,7 +142,7 @@ layout: default
             </div>
           </div>
           <div class="flex-item-1">
-            <h4 class="mrg0 mrgb--">Four your website</h4>
+            <h3 class="mrg0 mrgb--">Four your website</h3>
             <p class="mrg0">With rokka you manage your digital images safely and improve the speed of your website.</p>
           </div>
         </div>
@@ -152,8 +154,71 @@ layout: default
             </div>
           </div>
           <div class="flex-item-1">
-            <h4 class="mrg0 mrgb--">Four your budget</h4>
+            <h3 class="mrg0 mrgb--">Four your budget</h3>
             <p class="mrg0">Instead of thousands of expensive features, rokka covers exactly your needs. And that is what you pay. </p>
+          </div>
+        </div>
+      </div>
+      <div class="grid__item md-w-1/2">
+        <div class="rokka-animation rokka-animation--why">
+          <img src="assets/images/rokka-neon-star.png"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section rokka-section-uoso">
+  <div class="section__body">
+    <div class="rokka-uoso">
+
+      <div class="rokka-uoso-row--top">
+        <div class="rokka-uoso-device rokka-uoso-device--imac">
+          <div class="rokka-uoso-device__hardware"></div>
+          <div class="rokka-uoso-device__screen"></div>
+        </div>
+      </div>
+
+      <div class="rokka-uoso-row--middle">
+        <div class="grid">
+          <div class="grid__item md-w-2/5">
+            <div class="rokka-uoso-text">
+              <h2 class="mrg0 mrgb--">Upload once,<br>show often</h2>
+              <p class="mrg0">With rokka you upload your image just once – in the highest possible resolution. Working with your individually defined image formats and outputs, rokka takes care of the whole conversion.</p>
+            </div>
+          </div>
+          <div class="grid__item md-w-1/5">
+            <div class="rokka-uoso-device rokka-uoso-device--iphone">
+              <div class="rokka-uoso-device__hardware"></div>
+              <div class="rokka-uoso-device__screen"></div>
+            </div>
+          </div>
+          <div class="grid__item md-w-2/5">
+
+            <div class="rokka-uoso-device rokka-uoso-device--ipad">
+              <div class="rokka-uoso-device__hardware"></div>
+              <div class="rokka-uoso-device__screen"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="rokka-uoso-row--bottom">
+        <div class="grid">
+          <div class="grid__item md-w-3/5">
+          <div class="rokka-uoso-device rokka-uoso-device--macbook">
+              <div class="rokka-uoso-device__hardware"></div>
+              <div class="rokka-uoso-device__screen"></div>
+            </div>
+          </div>
+
+          <div class="grid__item md-w-2/5">
+            <div class="rokka-uoso-text">
+              <h3 class="mrg0 mrgb--">Focal point and auto cropping</h3>
+              <p class="mrg0">Define the focal point of your image. Thanks to its complex auto cropping operations, rokka will identify the best possible sector and use it for all your pre-defined image formats.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -162,7 +227,8 @@ layout: default
 </section>
 
 
-<section class="section">
+
+<section class="section section--alt">
   <div class="section__body flex flex-space-between">
 
     <div class="number">
@@ -199,13 +265,30 @@ layout: default
 
 
 
-<section class="section section--white">
-  <div class="section__body pdgv++">
-    <div class="grid">
-      <div class="grid__item md-w-1/2">
-        <div class="rokka-feature-animation">
-          <div class="rokka-box pdg">
-<pre class="mrgb"><code>$ curl -X POST -F filedata=@image.jpg 'https://api.rokka.io/sourceimages/testorganization'</code></pre>
+<section class="section">
+  <div class="section__body">
+    <h2 class="position-relative">Made for the web.</h2>
+    <div class="rokka-feature--delivery">
+      <div class="grid grid--middle">
+        <div class="grid__item md-w-2/5">
+          <h3 class="mrg0 mrgb--">Lightning fast delivery</h3>
+          <p class="mrg0">No matter where in the world your viewers are, rokka delivers your images fast, safely and dependablely. This also saves your server resources.</p>
+          <p><img src="assets/images/amazon-web-services.png"/></p>
+        </div>
+        <div class="grid__item md-w-3/5">
+          <div class="rokka-feature__image">
+            <img src="assets/images/rokka-rocket.png"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rokka-feature--api">
+      <div class="grid grid--middle mrgt++">
+        <div class="grid__item md-w-3/5">
+          <div class="rokka-feature-animation">
+            <div class="rokka-box pdg">
+<pre class="mrgb"><code>$ curl -X POST -F filedata=@image.jpg 'https://api.rokka.io/sourceimages/organization'</code></pre>
 <pre><code class="language-json">{
   "total": 1,
   "sourceimages": [
@@ -226,23 +309,13 @@ layout: default
   ]
 }</code></pre>
 
+            </div>
+
           </div>
-
-        </div>
-      </div>
-      <div class="grid__item md-w-1/2">
-        <div class="rokka-feature mrgb+">
-          <h4 class="mrg0 mrgb--">Upload once, show often </h4>
-          <p class="mrg0">With rokka you upload your image just once – in the highest possible resolution. Working with your individually defined image formats and outputs, rokka takes care of the whole conversion.</p>
         </div>
 
-        <div class="rokka-feature mrgb+">
-          <h4 class="mrg0 mrgb--">Lightning fast delivery</h4>
-          <p class="mrg0">No matter where in the world your viewers are, rokka delivers your images fast, safely and dependablely. This also saves your server resources.</p>
-        </div>
-
-        <div class="rokka-feature">
-          <h4 class="mrg0 mrgb--">Simple API &amp; libraries</h4>
+        <div class="grid__item md-w-2/5">
+          <h3 class="mrg0 mrgb--">Simple API &amp; libraries</h3>
           <p class="mrg0">With the rokka image API you deliver your images easily on all your web sites. What’s more we offer libraries for common languages, making rokka even easier to use.</p>
 
           <ul class="list-inline list-inline--tight mrgt-">
@@ -251,64 +324,133 @@ layout: default
             <li><div class="label"><span class="label__body">Symfony</span></div></li>
             <li><div class="label"><span class="label__body">CLI</span></div></li>
           </ul>
-
         </div>
       </div>
     </div>
   </div>
 </section>
+
+
+
+
+
+
 
 <section class="section section--alt">
-  <div class="rokka-animation rokka-animation--freitag">
-    <img src="assets/images/background--why-freitag.png"/>
-  </div>
   <div class="section__body">
-    <h2 class="h1">Why FREITAG chose rokka</h2>
-    <div class="grid">
-      <div class="grid__item md-w-1/2">
-        <p class="text-lead">«Bei FREITAG fotografieren wir rund 60'000 Unikate pro Jahr. Auf unserem alten Fotoserver legten wir zu jedem Unikat mehrere Bildausschnitte und -formate ab, was zu einer enormen Datenmenge führte. Dank rokka benötigen wir jedes Bild nur noch einmal und profitieren dank Digital Image Processing von der gerätespezifischen Bereitstellung der Bilder.»</p>
-        <p>
-          <div class="h4 mrg0">Benjamin Caviezel</div>
-          Specialist New Media at FREITAG
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+    <h2 class="">Pricing: Easy and transparent.</h2>
+    <div class="rokka-box rokka-pricing-box mrgt+">
+      <div class="pdg+">
+        <div class="grid grid--middle">
+          <div class="grid__item md-w-3/5">
+            <h3 class="mrg0 mrgb--">Paid plan</h3>
+            <p class="mrg0 rokka-pricing-box__desc">
+              Only pay what you effectively use. Quarterly, you get the invoice with a detailed listing of what you have used. So you have an exact overview about your costs.
+            </p>
+          </div>
+          <div class="grid__item md-w-2/5">
+            <div class="flex">
+              <div class="number flex-item-1">
+                <div class="flex">
+                  <div class="number__before text-muted mrgr--">CHF</div>
+                  <div class="number__text">
+                    <div class="number__value h1 mrgb0 text-primary">0.40</div>
+                    <div class="number__description text-muted">per GB of storage</div>
+                  </div>
+                </div>
+              </div>
 
-
-
-<section class="section">
-  <div class="section__body">
-    <h2 class="h1">Pricing</h2>
-    <div class="rokka-box pdg pdgv+ pdgr+">
-      <div class="grid grid--middle">
-        <div class="grid__item md-w-1/2">
-          <p class="h2 font-normal mrg0">
-            Easy and transparent pricing.<br>
-            Only pay what you actually use.
-          </p>
-        </div>
-        <div class="grid__item md-w-1/2">
-          <div class="flex flex-space-between">
-            <div class="number">
-              <div class="flex">
-                <div class="number__before text-muted mrgr--">CHF</div>
-                <div class="number__text">
-                  <div class="number__value h1 mrgb0 text-primary">0.40</div>
-                  <div class="number__description text-lead text-muted">per GB of images</div>
+              <div class="number flex-item-1">
+                <div class="flex">
+                  <div class="number__before text-muted mrgr--">CHF</div>
+                  <div class="number__text">
+                    <div class="number__value h1 mrgb0 text-primary">0.50</div>
+                    <div class="number__description text-muted">per GB of traffic</div>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <div class="number">
-              <div class="flex">
-                <div class="number__before text-muted mrgr--">CHF</div>
-                <div class="number__text">
-                  <div class="number__value h1 mrgb0 text-primary">0.50</div>
-                  <div class="number__description text-lead text-muted">per GB of traffic</div>
+          </div>
+        </div>
+      </div>
+      <div class="pdg+ rokka-pricing-box__free">
+        <div class="grid grid--middle">
+          <div class="grid__item md-w-3/5">
+            <p class="mrg0 text-bold text-small">Free plan</p>
+            <p class="mrg0 text-small rokka-pricing-box__desc">
+              You don't want to buy a pig in a poke? Get in touch and try out rokka and all its features for free.
+            </p>
+          </div>
+          <div class="grid__item md-w-2/5">
+            <div class="flex">
+              <div class="number flex-item-1">
+                <div class="flex">
+                  <div class="number__before text-muted mrgr-- invisible">CHF</div>
+                  <div class="number__text">
+                    <div class="number__value h3 mrg0 text-muted">FREE</div>
+                    <div class="number__description text-muted text-small">2GB of space</div>
+                  </div>
                 </div>
               </div>
+
+              <div class="number flex-item-1">
+                <div class="flex">
+                  <div class="number__before text-muted mrgr-- invisible">CHF</div>
+                  <div class="number__text">
+                    <div class="number__value h3 mrg0 text-muted">FREE</div>
+                    <div class="number__description text-muted text-small">5GB of traffic</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-tiny text-right text-muted">All prices in CHF and excl. VAT.</p>
+
+  </div>
+</section>
+
+
+
+<section class="section section--primary rokka-section-cta">
+  <div class="section__body">
+
+    <div class="flex flex-align-center">
+      <div class="flex-item-1">
+        <h2 class="mrg0">Try out rokka for free</h2>
+        <p class="mrg0 text-lead">Follow clients like Migros, FREITAG and SRF – start now with rokka.</p>
+      </div>
+      <div class="flex-item-auto">
+        <button class="btn btn--md btn--negative">Start your free trial</button>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<section class="section section--white rokka-section-cta">
+  <div class="section__body">
+
+    <div class="rokka-quote">
+      <div class="flex flex-align-end">
+        <div class="flex-item-1">
+          <div class="rokka-quote__bubble pdg+">
+            <h3 class="mrg0 mrgb--">Why FREITAG chose rokka</h3>
+            <p class="mrg0">«Bei FREITAG fotografieren wir rund 60'000 Unikate pro Jahr. Auf unserem alten Fotoserver legten wir zu jedem Unikat mehrere Bildausschnitte und -formate ab, was zu einer enormen Datenmenge führte. Dank rokka benötigen wir jedes Bild nur noch einmal und profitieren dank Digital Image Processing von der gerätespezifischen Bereitstellung der Bilder.»</p>
+          </div>
+        </div>
+        <div class="flex-item-auto mrgl+">
+          <div class="flex flex-align-center">
+            <div class="flex-item-auto">
+              <div class="rokka-quote__avatar"></div>
+            </div>
+            <div class="flex-item-1">
+              <div class="h4 mrg0 mrgt--">Benjamin Caviezel</div>
+              <span>Specialist New Media at FREITAG</span>
             </div>
           </div>
         </div>
@@ -318,18 +460,24 @@ layout: default
 </section>
 
 
-
-<section class="section section--primary">
-  <div class="section__body">
-    <h2 class="h1">Try out rokka for free</h2>
-    <p class="text-lead">Follow clients like Migros, FREITAG and SRF – start now with rokka.</p>
-    <button class="btn btn--md btn--negative">Start your free trial</button>
-  </div>
-</section>
-
 <section class="section section--white">
   <div class="section__body">
-    Footer
+    <div class="rokka-footer pdgt">
+      <div class="flex">
+        <div class="flex-item-1">
+          <div class="rokka-footer__logo"><img src="output_dev/assets/images/rokka-logo.svg" style="height: 24px;"></div>
+        </div>
+        <div class="flex-item-auto mrgl">
+          <span class="text-small">Limmatstrasse 183, CH-8005 Zürich, Switzerland</span>
+        </div>
+        <div class="flex-item-auto mrgl">
+          <span class="text-small">+41 43 500 39 80</span>
+        </div>
+        <div class="flex-item-auto mrgl">
+          <a href="mailto:sales@rokka.io" class="text-small">sales@rokka.io</a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
