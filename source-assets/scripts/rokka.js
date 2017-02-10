@@ -7,10 +7,10 @@ window.addEventListener('DOMContentLoaded', function() {
   new Toolkit.Navbar(navbar, { mode: 'window' });
 });
 
-window.addEventListener('DOMContentLoaded', function() {
-  var el = document.querySelector('#section-multiplier');
-  new Toolkit.Multiplier(el, '/assets/images/clouds-hero.png');
-});
+// window.addEventListener('DOMContentLoaded', function() {
+//   var el = document.querySelector('#section-multiplier');
+//   new Toolkit.Multiplier(el, '/assets/images/clouds-hero.png');
+// });
 
 window.addEventListener('DOMContentLoaded', function() {
   // var trialbutton = document.querySelector('#trial-button');
