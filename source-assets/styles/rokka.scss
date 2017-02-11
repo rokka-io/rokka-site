@@ -1,9 +1,26 @@
+@import '../liip-styleguide/node_modules/kanbasu/src/assets/scss/tools/functions';
+@import '../liip-styleguide/node_modules/kanbasu/src/assets/scss/tools/mixins';
+@import '../liip-styleguide/src/assets/toolkit/styles/tools/mixins';
+
+// Import Kanbasu and Toolkit Settings
+
+@import '../liip-styleguide/node_modules/kanbasu/src/assets/scss/settings/settings';
+@import '../liip-styleguide/src/assets/toolkit/styles/settings/settings';
+@import '../liip-styleguide/src/assets/toolkit/styles/settings/kanbasu';
+
+
+// Import Compiled Toolkit CSS
 @import "../liip-styleguide/dist/assets/toolkit/styles/toolkit";
 
 $color-green: #6ea644;
 
 body {
     background: #ddd;
+    overflow-x: hidden;
+}
+
+html {
+    overflow-x: hidden;
 }
 
 .logo svg g {
@@ -64,14 +81,25 @@ body {
 
 
 .rokka-section--why {
-    padding-bottom: 15rem;
+    padding-bottom: 25vw;
+    @include media('sm') {
+        padding-bottom: 33vw;
+    }
+    @include media('lg') {
+        padding-bottom: 16rem;
+    }
 }
 
 
 .rokka-animation--why {
+    // margin-top: 3.1rem;
+    // margin-left: 4rem;
+    margin-bottom: -5rem;
     text-align: right;
-    margin-top: -5.5rem;
-    margin-left: 5em;
+    @include media('lg') {
+        margin-left: 36%;
+        margin-bottom: -6rem;
+    }
     img {
         display: inline-block;
     }
@@ -157,12 +185,44 @@ body {
 .rokka-hero-section {
     height: 100vh;
     min-height: auto;
-    max-height: 1000px;
+    max-height: 740px;
+    .section__body {
+        height: 100%;
+        @include media('md') {
+            height: auto;
+        }
+    }
+}
+
+.rokka-hero-text {
+    text-align: center;
+    position: absolute;
+    bottom: 2rem;
+    width: 100%;
+    // transform: translateY(-10rem);
+    @include media('md') {
+        text-align: left;
+        position: static;
+    }
 }
 
 .section-spacer {
     height: 100vh;
-    max-height: 1000px;
+    max-height: 740px;
+    // &:after {
+    //     content: "";
+    //     position: absolute;
+    //     width: 100%;
+    //     height: 1000%;
+    //     top: -150px;
+    //     transform: skewY(-12deg);
+    //     background-color: #edf2f7;
+    //     z-index: -1;
+    // }
+}
+
+.push-left {
+    padding-left: 3rem;
 }
 
 .rokka-hero-container {
@@ -171,10 +231,22 @@ body {
 }
 
 .rokka-hero {
-    font-size: 13px;
+    font-size: 10px;
     width: 100%;
-    display: flex;
-    justify-content: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-8rem);
+    @include media('sm') {
+        font-size: 11px;
+    }
+    @include media('md') {
+        position: static;
+        transform: none;
+        font-size: 12px;
+    }
+    @include media('lg') {
+        font-size: 14px;
+    }
     .rokka-hero__animation {
         transition: 0.9s;
     }
@@ -197,7 +269,7 @@ body {
         transition: 0.6s;
         transition-timing-function: cubic-bezier(0.18, 0.35, 0.32, 0.99);
     }
-    .rokka-hero-bubble__label {
+    .rokka-hero-bubble__label div {
         transition: 0.4s;
         transform: translateY(-150%);
         transition-timing-function: cubic-bezier(0.54, -0.17, 0.26, 1.57);
@@ -217,26 +289,26 @@ body {
             
         }
         .rokka-hero-bubble--1 {
-            transform: translate(-120%,-240%) scale(1.2);
+            transform: translate(-150%, -270%);
             transition-delay: 0s;
             opacity: 0.7;
         }
         .rokka-hero-bubble--2 {
-            transform: translate3d(200%,-200%,-17px) scale(0.6);
+            transform: translate3d(200%,-200%,-17px);
             transition-delay: 0.07s;
             opacity: 0.5;
         }
         .rokka-hero-bubble--3 {
-            transform: translate3d(240%,90%,1px) scale(1);
+            transform: translate3d(240%,90%,1px);
             transition-delay: 0.17s;
             opacity: 0.8;
         }
         .rokka-hero-bubble--4 {
-            transform: translate3d(-240%,210%, 5px) scale(1.6);
+            transform: translate3d(-240%,210%, 5px);
             transition-delay: 0.21s;
             opacity: 0.9;
         }
-        .rokka-hero-bubble__label {
+        .rokka-hero-bubble__label div {
             opacity: 1;
             transform: none;
             transition-delay: 0.8s;
@@ -351,16 +423,20 @@ body {
 
 .rokka-hero-bubble__label {
     position: absolute;
-    bottom: -2em;
-    left: 0;
-    width: 100%;
-    display: flex;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8em;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
-    opacity: 0;
+    font-size: 1.4em;
+    display: flex;
+    @include media('md') {
+        display: flex;
+    }
     div {
-        white-space: nowrap;
+        text-align: center;
+        opacity: 0;
     }
 }
 
@@ -368,7 +444,8 @@ body {
     Rokka Feature Animation
  */
 .rokka-feature-animation {
-    margin-right: 2rem;
+    margin-right: -1rem;
+    margin-left: -5rem;
     perspective: 780px;
     .rokka-box {
         transform: rotate3d(15,32,0,12deg) scale(0.9);
@@ -381,7 +458,7 @@ body {
         margin: 0;
         word-break: break-all;
         white-space: pre-wrap;
-        font-size: 12px;
+        font-size: 14px;
         
         .token.boolean, .token.constant, .token.deleted, .token.function, .token.number, .token.property, .token.symbol, .token.tag {
             color: #B23852;
@@ -436,6 +513,10 @@ body {
     align-items: center;
 }
 
+.flex-justify-center {
+    justify-content: center;
+}
+
 .flex-align-end {
     align-items: flex-end;
 }
@@ -477,9 +558,7 @@ body {
 .rokka-feature--delivery {
     .rokka-feature__image {
         text-align: right;
-        margin-top: -7rem;
         margin-bottom: -2rem;
-        margin-left: 7rem;
         img {
             display: inline-block;
         }
@@ -511,14 +590,14 @@ body {
 }
 
 .rokka-uoso-row--top {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    // position: absolute;
+    // top: 0;
+    // left: 50%;
+    // transform: translateX(-50%);
 }
 
 .rokka-uoso-row--middle {
-    padding-top: 12rem;
+    // padding-top: 12rem;
     .rokka-uoso-text {
         position: relative;
     }
@@ -559,23 +638,39 @@ body {
 }
 
 .rokka-uoso-device--imac {
-    $rokka-uoso-base-imac: 1302;
+    $rokka-uoso-base-imac: 1170; // 1302
 
-    font-size: $rokka-uoso-base-imac + px;
     width: 1em;
-    height: 603 / $rokka-uoso-base-imac + em;
-    margin-left: 30px;
-    margin-top: -15rem;
+    height: 660 / $rokka-uoso-base-imac + em; // 603
+
+    position: relative;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    margin-bottom: -250 / $rokka-uoso-base-imac + em;
+    margin-top: -200 / $rokka-uoso-base-imac + em;
+
+    perspective: 2860 / $rokka-uoso-base-imac + em;
+
+    font-size: 90vw;
+
+    @media (min-width: 87.5em) {
+        font-size: 1260px;
+    }
+
     .rokka-uoso-device__hardware {
         background-image: url(../images/rokka-device-imac.png);
+        width: 1302 / $rokka-uoso-base-imac + em;;
+        height:  603 / $rokka-uoso-base-imac + em;;
+        left: -52 / $rokka-uoso-base-imac + em;
+        top: -27 / $rokka-uoso-base-imac + em;
     }
     .rokka-uoso-device__screen {
-        width: 1170 / $rokka-uoso-base-imac + em;
-        height: 660 / $rokka-uoso-base-imac + em;
-        left: 52 / $rokka-uoso-base-imac + em;
-        top: 27 / $rokka-uoso-base-imac + em;
-        transform: matrix3d(1.00342, 0, 0, 0, 0.193285, 0.421146, 0, 0.00033198, 0, 0, 1, 0, -2, 0, 0, 1);
-        transform-origin: 0px 0px 0px;
+        width: 100%;
+        height: 100%;
+        transform-origin: top center;
+        transform: rotateX(-71.6deg);
     }
 }
 
@@ -586,7 +681,6 @@ body {
     width: 1em;
     height: 250 / $rokka-uoso-base-iphone + em;
     margin: 0 auto;
-    transform: translateX(8px);
     .rokka-uoso-device__hardware {
         background-image: url(../images/rokka-device-iphone.png);
     }
@@ -618,23 +712,28 @@ body {
 
 
 .rokka-uoso-device--macbook {
-    $rokka-uoso-base-macbook: 820;
+    $rokka-uoso-base-macbook: 660;
 
     font-size: $rokka-uoso-base-macbook + px;
     width: 1em;
-    height: 458 / $rokka-uoso-base-macbook + em;
-    transform: translateX(-100px);
-    margin-top: -70px;
+    height: 414 / $rokka-uoso-base-macbook + em;
+    // transform: translateX(-100px);
+    // margin-top: -70px;
+    perspective: 1840 / $rokka-uoso-base-macbook + em;
     .rokka-uoso-device__hardware {
         background-image: url(../images/rokka-device-macbook.png);
+        width: 820 / $rokka-uoso-base-macbook + em;
+        height: 458 / $rokka-uoso-base-macbook + em;
+        top: -15 / $rokka-uoso-base-macbook + em;
+        left: -35 / $rokka-uoso-base-macbook + em;
     }
     .rokka-uoso-device__screen {
-        width: 660 / $rokka-uoso-base-macbook + em;
-        height: 414 / $rokka-uoso-base-macbook + em;
-        left: 35 / $rokka-uoso-base-macbook + em;
-        top: 15 / $rokka-uoso-base-macbook + em;
-        transform: matrix3d(1.02082, 0, 0, 0.0000176854, 0.175988, 0.3138, 0, 0.000544915, 0, 0, 1, 0, -3, 0, 0, 1);
-        transform-origin: 0px 0px 0px;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        transform-origin: top center;
+        transform: rotateX(-78.7deg);
     }
 }
 

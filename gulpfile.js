@@ -14,7 +14,8 @@ gulp.task('serve', function() {
             baseDir: "./output_dev"
         },
         open: false,
-        reloadDelay: 1000
+        reloadDelay: 1000,
+        notify: false
     });
 });
 
@@ -48,7 +49,9 @@ gulp.task('scripts', function () {
 
 gulp.task('styles', function () {
   return gulp.src('source-assets/styles/rokka.scss')
-    .pipe(sass())
+    .pipe(sass({
+      includePaths: './'
+    }))
     .pipe(gulp.dest('output_dev/assets/styles/'))
     .pipe(browserSync.stream());
 });
