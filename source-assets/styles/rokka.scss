@@ -14,6 +14,8 @@
 
 $color-green: #6ea644;
 
+$breakpoint-uoso: 87.5em;
+
 body {
     background: #ddd;
     overflow-x: hidden;
@@ -81,7 +83,7 @@ html {
 
 
 .rokka-section--why {
-    padding-bottom: 25vw;
+    padding-bottom: 44vw;
     @include media('sm') {
         padding-bottom: 33vw;
     }
@@ -578,11 +580,15 @@ html {
 // 
 
 .rokka-section-uoso {
-  background-image: linear-gradient( 118deg, rgb(65,65,65) 0%, rgb(80,80,77) 100%);
-  color: white;
-  // padding-top: 0;
-  padding-bottom: 0;
-  overflow: visible;
+    background-image: linear-gradient( 118deg, rgb(65,65,65) 0%, rgb(80,80,77) 100%);
+    color: white;
+    // padding-top: 0;
+    overflow: visible;
+
+    // padding-bottom: 0;
+    @include media('md') {
+        padding-bottom: 0;
+    }
 }
 
 .rokka-uoso {
@@ -598,6 +604,10 @@ html {
 
 .rokka-uoso-row--middle {
     // padding-top: 12rem;
+    padding-bottom: 60vw;
+    @include media('sm') {
+        padding-bottom: 0;
+    }
     .rokka-uoso-text {
         position: relative;
     }
@@ -645,17 +655,25 @@ html {
 
     position: relative;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0.05em;
+    
 
-    margin-bottom: -250 / $rokka-uoso-base-imac + em;
+    margin-bottom: -300 / $rokka-uoso-base-imac + em;
     margin-top: -200 / $rokka-uoso-base-imac + em;
 
     perspective: 2860 / $rokka-uoso-base-imac + em;
 
-    font-size: 90vw;
+    font-size: 180vw;
 
-    @media (min-width: 87.5em) {
+
+    @include media('sm') {
+        font-size: 90vw;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+
+    @media (min-width: $breakpoint-uoso) {
         font-size: 1260px;
     }
 
@@ -677,10 +695,25 @@ html {
 .rokka-uoso-device--iphone {
     $rokka-uoso-base-iphone: 135;
 
-    font-size: $rokka-uoso-base-iphone + px;
     width: 1em;
     height: 250 / $rokka-uoso-base-iphone + em;
-    margin: 0 auto;
+
+
+    // position: absolute;
+    bottom: 0;
+    left: 0;
+    display: none;
+    @include media('md') {
+        position: relative;
+        display: block;
+        font-size: 9.65vw;
+    }
+    @include media('md') {
+        margin: 0 auto;
+    }
+    @media (min-width: $breakpoint-uoso) {
+        font-size: $rokka-uoso-base-iphone + px;
+    }
     .rokka-uoso-device__hardware {
         background-image: url(../images/rokka-device-iphone.png);
     }
@@ -695,9 +728,26 @@ html {
 .rokka-uoso-device--ipad {
     $rokka-uoso-base-ipad: 493;
 
-    font-size: $rokka-uoso-base-ipad + px;
     width: 1em;
     height: 356 / $rokka-uoso-base-ipad + em;
+
+    position: absolute;
+    bottom: -2.7rem;
+    left: 60%;
+
+    font-size: 52vw;
+
+    @include media('sm') {
+        position: relative;
+        font-size: 35.24vw;
+        bottom: initial;
+        left: initial;
+    }
+
+    @media (min-width: $breakpoint-uoso) {
+        font-size: $rokka-uoso-base-ipad + px;
+    }
+
     .rokka-uoso-device__hardware {
         background-image: url(../images/rokka-device-ipad.png);
     }
@@ -714,12 +764,46 @@ html {
 .rokka-uoso-device--macbook {
     $rokka-uoso-base-macbook: 660;
 
-    font-size: $rokka-uoso-base-macbook + px;
+    
     width: 1em;
     height: 414 / $rokka-uoso-base-macbook + em;
     // transform: translateX(-100px);
     // margin-top: -70px;
     perspective: 1840 / $rokka-uoso-base-macbook + em;
+
+    position: absolute;
+    bottom: -3.8rem;
+    left: -48%;
+    font-size: 100vw;
+
+    @include media('sm') {
+        position: relative;
+        font-size: 47.21vw;
+        left: initial;
+        right: 3rem;
+        bottom: -2rem;
+    }
+    @include media('md') {
+        right: 1rem;
+    }
+
+    @media (min-width: 940px) {
+        margin-bottom: -5rem;
+        bottom: 1rem;
+    }
+
+    @include media('lg') {
+        margin-bottom: -1.7rem;
+        bottom: 0.4rem;
+        right: 2rem;
+    }
+
+    @media (min-width: $breakpoint-uoso) {
+        font-size: $rokka-uoso-base-macbook + px;
+        bottom: 3.5rem;
+        margin-bottom: -7rem;
+    }
+
     .rokka-uoso-device__hardware {
         background-image: url(../images/rokka-device-macbook.png);
         width: 820 / $rokka-uoso-base-macbook + em;
@@ -738,7 +822,17 @@ html {
 }
 
 
-
+.rokka-uoso-text--cropping {
+    @include media('md') {
+        margin-bottom: 2rem;
+    }
+    @include media('lg') {
+        margin-top: 9vw;
+    }
+    @media (min-width: $breakpoint-uoso) {
+        margin-top: 6rem;
+    }
+}
 
 
 /*
