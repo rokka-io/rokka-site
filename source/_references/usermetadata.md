@@ -50,6 +50,7 @@ $hash = '0dcabb778d58d07ccd48b5ff291de05ba4374fb9';
 
 $client->addUserMetadata([ "somefield" => "somevalue",
                              "somethingElse" => "anothervalue",
+                             "date:someFate" => new \DateTime("2017-01-29T12:34:56Z"),
                              "deleteThis" => null
                              ], $hash);
 
