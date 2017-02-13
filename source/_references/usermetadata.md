@@ -37,7 +37,7 @@ curl -H 'Content-Type: application/json' -X PATCH 'https://api.rokka.io/sourceim
     "somefield": "somevalue",
     "int:someNumber": 0,
     "date:someDate": "2017-01-29T12:34:56Z",
-    "array:someArray": ["Foo","Bar","Baz"]
+    "array:someArray": ["Foo","Bar","Baz"],
     "deleteThis": null
     }'
 ```
@@ -48,13 +48,13 @@ $client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'a
 
 $hash = '0dcabb778d58d07ccd48b5ff291de05ba4374fb9';
 
-$client->addStaticMetadata([ "somefield" => "somevalue",
+$client->addUserMetadata([ "somefield" => "somevalue",
                              "somethingElse" => "anothervalue",
                              "deleteThis" => null
                              ], $hash);
 
 ```
-If you do a PUT (or setStaticMetadata in PHP) instead of a PATCH request, then all existing fields will be deleted first.
+If you do a PUT (or setUserMetadata in PHP) instead of a PATCH request, then all existing fields will be deleted first.
 
 If you want to update/add just one value, you can also do this by making a PUT request to `https://api.rokka.io/sourceimages/{organization}/{hash}/meta/user/{name}`
 and include the JSON encoded value in the body
@@ -68,7 +68,7 @@ $client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'a
 
 $hash = '0dcabb778d58d07ccd48b5ff291de05ba4374fb9';
 
-$client->setStaticMetadataField("somefield", "somevalue", $hash);
+$client->setUserMetadataField("somefield", "somevalue", $hash);
 
 ```
 
@@ -88,7 +88,7 @@ $client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'a
 
 $hash = '0dcabb778d58d07ccd48b5ff291de05ba4374fb9';
 
-$client->$client->deleteStaticMetadataField("somefield", $hash);
+$client->$client->deleteUserMetadataField("somefield", $hash);
 
 ```
 
@@ -103,7 +103,7 @@ $client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'a
 
 $hash = '0dcabb778d58d07ccd48b5ff291de05ba4374fb9';
 
-$client->$client->deleteStaticMetadata($hash);
+$client->$client->deleteUserMetadata($hash);
 
 ```
 
