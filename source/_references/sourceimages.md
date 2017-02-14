@@ -14,7 +14,7 @@ Source images are your original images you upload to Rokka. You should always se
 | organization | Name of the organization that the image belongs to |
 | hash | Hash to access the image with, based on metadata |
 | binary_hash | Hash of image binary data |
-| static_metadata | Contains the following data set. Changing this will not alter the main hash identifying the image |
+| user_metadata | Contains the following data set. Changing this will not alter the main hash identifying the image |
 | name | Original filename |
 | format | Original format |
 | size | Size of images in bytes |
@@ -106,44 +106,9 @@ Note: If the image you try to delete does not exist, the API responds with a 404
 
 ## List source images
 
-To list images for an organization, you can use this call.
+See [searching for images](searching-images.html) for more details about how to get a list of your images.
 
-In the following example the organization is set to __mycompany__.
-
-```bash
-curl -X GET 'https://api.rokka.io/sourceimages/mycompany'
-```
-```php
-$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
-
-$sourceImages = $client->listSourceImages();
-
-var_dump($sourceImages);
-```
-
-The response will contain an array of objects that look like a single image, but may have less information presented. At least the hash will always be present.
-
-### Paging the list
-
-You can limit the outputs of the list by using limit and offset parameters to page through them.
-
-| Attribute | Description | Default |
-| -------------- | ------------- | ------------- |
-| limit | Optional limit | 100 |
-| offset | Optional offset | 0 |
-
-```bash
-curl -X GET 'https://api.rokka.io/sourceimages/mycompany?offset=100limit=20'
-```
-```php
-$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
-
-$sourceImages = $client->listSourceImages(20, 100);
-
-var_dump($sourceImages);
-```
-
-### Finding by binary hash
+## Finding by binary hash
 
 You can limit the outputs of the list by using limit and offset parameters to page through them.
 
