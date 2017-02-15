@@ -29,7 +29,7 @@ The elements of an array will always be stored as string, you can't specify a ty
 
 To add user metadata to a source image, you need to provide the organization, the identifying hash of the image, the name of the user metadata and the values to add.
 
-Regular index field names must begin with a letter and be at least 3 and no more than 56 characters long. The allowed characters are: a-z (lower-case letters), 0-9, and _ (underscore).
+Regular index field names must begin with a letter and be at least 3 and no more than 54 characters long. The allowed characters are: a-z (lower-case letters), 0-9, and _ (underscore).
 
 The most flexible way to add/replace/delete fields is with a PATCH request and having the field data JSON-encoded in the body.
 This also allows to update more than one field at once.

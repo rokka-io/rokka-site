@@ -5,14 +5,14 @@ use: [references]
 
 ## Intro
 
-It's possible to search for images and their metadata. The search options are pretty basic right now, but may be improved in the future.
+It's possible to list images and their metadata in your organization and also filter by their metadata. The filter options are pretty basic right now, but may be improved in the future.
 
 
 ## Listing source images
 
 To list images for an organization, you can use this call. By default that returns the latest uploaded images.
 
-Be aware, that it can take a few seconds, until newly uploaded images show up in the search results (or their newly changed metadata)
+Be aware, that it can take a few seconds, until newly uploaded images show up in the list results (or their newly changed metadata)
 
 
 ```bash
@@ -86,22 +86,22 @@ curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimag
 }
 ```
 
-## Searching for particular images
+## Filtering for particular images
 
-You can search for almost any field returned by a sourceimage (and its user metadata). Just append the fieldname and value to your list request. The following returns all images with height = 1000.
+You can filter the list by the fields returned by a sourceimage (and its user defined metadata). Just append the fieldname and value to your list request. The following returns all images with height = 1200.
 
 
 ```bash
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/testorganization?height=1200'
 ```
 
-You can also search for user metadata, don't forgot to include the type prefix ([described here](user-metadata.html)). Example:
+You can also filter for user defined metadata, if you prefix the fieldname with `user:`. Don't forgot to include the type prefix ([described here](user-metadata.html)). Example:
 
 ```bash
-curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/testorganization?int:foo=3'
+curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/testorganization?user:int:foo=3'
 ```
 
-## Prefix searches
+## Prefix filtering
 
 Returning all images which start with a certain value in a field is as easy as appending a star:
 
@@ -111,28 +111,28 @@ curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimag
 
 Returns all images starting with _foo_
 
-## Range searches
+## Range filtering
 
-If you want to search for certain ranges or "greater than, less than", you can use the [Lucene range syntax](https://lucene.apache.org/core/2_9_4/queryparsersyntax.html#Range%20Searches).
+If you want to filter for certain ranges or "greater than, less than", you can use the [Lucene range syntax](https://lucene.apache.org/core/2_9_4/queryparsersyntax.html#Range%20Searches).
 
 |                                                              | parameter            |
 |--------------------------------------------------------------|----------------------|
 | Images with a size bigger than 30000:                        | `size=[30000,}`      |
 | Images with a size equal or bigger than 30000:               | `size={30000,}`      |
 | Images with a size bigger than 30000 and smaller than 40000: | `size=[30000,40000]` |
-| Images with a _somedate_ in 2017                             | `date:somedate={'2017-01-01T00:00:00Z',}` |
+| Images with a _somedate_ in 2017                             | `user:date:somedate={'2017-01-01T00:00:00Z',}` |
 
-## AND searches
+## AND filtering
 
-You can search in different fields at once, eg. `size=[30000,}&name=foo*` returns all images greater than 30000 and name starting with _foo_.
+You can filter in different fields at once, eg. `size=[30000,}&name=foo*` returns all images greater than 30000 and name starting with _foo_.
 
-## OR / NOT searches
+## OR / NOT filtering
 
-OR and NOT searches are currently not possible. If you have a need for that, get in contact with us and we'll see what we can do.
+OR and NOT filters are currently not possible. If you have a need for that, get in contact with us and we'll see what we can do.
 
 ## Different sorting
 
-You can change the sort field with the `sort` parameter. You can sort by almost any field, even user metadata. If you want eg. by size, do the following:
+You can change the sort field with the `sort` parameter. You can sort by almost any field, even user defined metadata (prefixed by `user:`). If you want eg. by size, do the following:
 
 ```bash
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/testorganization?sort=size'
