@@ -4,3 +4,8 @@
 
 title: Rokka
 subtitle: Fast and awesome image delivery.
+
+imports:
+  - sculpin_site_en.yml
+
+# Translations

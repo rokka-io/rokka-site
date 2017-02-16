@@ -1,0 +1,39 @@
+---
+title: Signup
+layout: default
+description: Sign up now
+---
+
+
+{% block page_title %}
+    {{ site.text.signup.title }}
+{% endblock %}
+
+{% block page_description %}
+    {{ site.text.signup.text }}
+{% endblock %}
+
+
+{% block content_wrapper %}
+    <section class="section section--light">
+          <div class="section__body">
+            <div class="grid">
+                <div class="grid__item md-w-2/3">
+                {% if site.language == 'en' %}
+                    <div class="pipedriveWebForms" data-pd-webforms="https://pipedrivewebforms.com/form/5b7fe87c9d421d3eb7a599b96f641cb4311935"><script src="https://pipedrivewebforms.com/webforms.min.js"></script></div>
+                {% else %}
+                    <div class="pipedriveWebForms" data-pd-webforms="https://pipedrivewebforms.com/form/fb71503123334536ddbe5e96e8cdbad2311935"><script src="https://pipedrivewebforms.com/webforms.min.js"></script></div>
+                {% endif %}
+                </div>
+                <div class="grid__item md-w-1/3">
+                    {% for reason in site.text.why_rokka.reasons %}
+                        <div class="rokka-feature{% if loop.last == false %} mrgb+{% endif %}">
+                            <h3 class="mrg0 h4 mrgb--"><div class="rokka-feature__icon">✔</div>{{ reason.title|raw }}</h3>
+                            <p class="mrg0">{{ reason.text|raw }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

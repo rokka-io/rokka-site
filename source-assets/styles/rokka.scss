@@ -25,19 +25,63 @@ html {
     overflow-x: hidden;
 }
 
-.logo svg g {
-    fill: currentColor;
+.logo {
+    // height: 48px;
+    svg {
+        width: 10em;
+        @include media('md') {
+            width: 7em;
+        }
+        @include media('lg') {
+            width: 7em;
+        }
+        g {
+            fill: currentColor;
+        }
+    }
 }
 
 
 .rokka-navbar-cta {
-    opacity: 0;
-    transition: opacity 0.3s;
+    transition: 0.3s;
+    color: white;
+    border-color: white;
+    margin-right: $spacing-unit-small;
     .navbar--overlay & {
-        opacity: 1;
+        color: $brand-color;
+        border-color: $brand-color;
+    }
+    @include media('md') {
+        opacity: 0;
+        margin-right: $spacing-unit-default;
+        .navbar--overlay & {
+            opacity: 1;
+        }
+    }
+    @include media('lg') {
+        margin-right: $spacing-unit-large;
     }
 }
 
+
+.navbar-menu__link {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+
+.navbar-language-item {
+    .navbar-menu__link {
+        font-weight: normal;
+        font-size: 0.7rem;
+        &:last-child {
+            margin-left: $spacing-unit-tiny;
+        }
+        &.active {
+            font-weight: 500;
+        }
+    }
+}
 
 
 
@@ -52,25 +96,18 @@ html {
     width: 1.3rem;
     height: 1.3rem;
     border-radius: 100%;
-    font-size: 0.7rem;
-    line-height: 1.4rem;
+    font-size: 1rem;
+    line-height: 1;
     text-align: center;
     float: left;
     margin-right: 0.5rem;
+    svg {
+        width: 0.7em;
+        height: 1.3em;
+        stroke-width: 0.3rem;
+    }
 }
 
-
-
-.pill {
-    background: $color-green;
-    color: white;
-    font-weight: 500;
-    text-transform: uppercase;
-    font-size: 0.7rem;
-    padding: 0.3rem 0.6rem 0.25rem;
-    border-radius: 1rem;
-    line-height: 1;
-}
 
 
 
@@ -188,6 +225,7 @@ html {
     height: 100vh;
     min-height: auto;
     max-height: 740px;
+    // min-height: 550px;
     .section__body {
         height: 100%;
         @include media('md') {
@@ -199,18 +237,44 @@ html {
 .rokka-hero-text {
     text-align: center;
     position: absolute;
-    bottom: 2rem;
+    top: 50%;
     width: 100%;
-    // transform: translateY(-10rem);
+    transform: translateY(-50%) translateY(3rem);
+    @media (min-height: 500px) {
+        transform: translateY(-50%) translateY(8rem);
+    }
+    .h2 {
+        margin: 0 -1rem;
+    }
+
     @include media('md') {
+        .h2 {
+            margin: 0;
+        }
+        
         text-align: left;
         position: static;
+    }
+    .rokka-lang-de & {
+        @include media('lg') {
+            .nbsp {
+                display: block;
+            }
+        }
+    }
+    .rokka-lang-en & {
+        @include media('md') {
+            .nbsp {
+                display: block;
+            }
+        }
     }
 }
 
 .section-spacer {
     height: 100vh;
     max-height: 740px;
+    // min-height: 550px;
     // &:after {
     //     content: "";
     //     position: absolute;
@@ -233,11 +297,14 @@ html {
 }
 
 .rokka-hero {
-    font-size: 10px;
+    font-size: 9px;
     width: 100%;
     position: absolute;
     top: 50%;
-    transform: translateY(-8rem);
+    transform: translateY(-50%) translateY(-5rem);
+    @media (min-height: 500px) {
+
+    }
     @include media('sm') {
         font-size: 11px;
     }
@@ -266,6 +333,10 @@ html {
         opacity: 1;
         z-index: 130;
         transform-style: preserve-3d;
+        display: none;
+        @media (min-height: 500px) {
+            display: block;
+        }
     }
     .rokka-hero-bubble {
         transition: 0.6s;
@@ -291,24 +362,28 @@ html {
             
         }
         .rokka-hero-bubble--1 {
-            transform: translate(-150%, -270%);
+            transform: translate(0%, -290%);
             transition-delay: 0s;
             opacity: 0.7;
-        }
-        .rokka-hero-bubble--2 {
-            transform: translate3d(200%,-200%,-17px);
-            transition-delay: 0.07s;
-            opacity: 0.5;
+            @include media('md') {
+                transform: translate(-150%, -270%);
+            }
         }
         .rokka-hero-bubble--3 {
-            transform: translate3d(240%,90%,1px);
+            transform: translate(-240%, 130%);
             transition-delay: 0.17s;
             opacity: 0.8;
+            @include media('md') {
+                transform: translate(240%,90%);
+            }
         }
         .rokka-hero-bubble--4 {
-            transform: translate3d(-240%,210%, 5px);
+            transform: translate(240%, 130%);
             transition-delay: 0.21s;
             opacity: 0.9;
+            @include media('md') {
+                transform: translate(-240%,210%);
+            }
         }
         .rokka-hero-bubble__label div {
             opacity: 1;
@@ -445,13 +520,20 @@ html {
 /*
     Rokka Feature Animation
  */
-.rokka-feature-animation {
-    margin-right: -1rem;
-    margin-left: -5rem;
-    perspective: 780px;
-    .rokka-box {
-        transform: rotate3d(15,32,0,12deg) scale(0.9);
+.rokka-feature--api {
+    
+    .rokka-feature__image {
+        perspective: 780px;
+        @include media('md') {
+            margin-left: -8%;
+            margin-right: -6%;
+        }
+        @include media('lg') {
+            margin-left: -8%;
+            margin-right: -8%;
+        }
     }
+
     pre, code {
         background: none;
         color: #414141;
@@ -460,8 +542,10 @@ html {
         margin: 0;
         word-break: break-all;
         white-space: pre-wrap;
-        font-size: 14px;
-        
+        font-size: 10px;
+        @include media('lg') {
+            font-size: 14px;
+        }
         .token.boolean, .token.constant, .token.deleted, .token.function, .token.number, .token.property, .token.symbol, .token.tag {
             color: #B23852;
         }
@@ -470,6 +554,12 @@ html {
             color: #EC9506;
         }
 
+    }
+
+    @include media('md') {
+        .rokka-box {
+            transform: rotate3d(15,32,0,12deg) scale(0.9);
+        }
     }
 }
 
@@ -508,7 +598,7 @@ html {
 }
 
 .flex-item-1 {
-    flex: 1 1 0;
+    flex: 1 1 auto;
 }
 
 .flex-align-center {
@@ -540,16 +630,16 @@ html {
     background-color: white;
 }
 
-.btn--negative {
-    color: white;
-    border-color: white;
-    text-transform: uppercase;
-    font-weight: bold;
-    &:hover, &:focus {
-        color: #6ea644;
-        background: white;
-    }
-}
+// .btn--negative {
+//     color: white;
+//     border-color: white;
+//     text-transform: uppercase;
+//     font-weight: bold;
+//     &:hover, &:focus {
+//         color: #6ea644;
+//         background: white;
+//     }
+// }
 
 .text-tiny {
     font-size: 0.6rem;
@@ -557,13 +647,46 @@ html {
 
 
 // Lightning fast delivery
+// 
+
+.rokka-section--feature {
+    overflow: hidden;
+}
+
 .rokka-feature--delivery {
+    padding-top: 10rem;
+    @include media('sm') {
+        padding-top: 0;
+    }
     .rokka-feature__image {
-        text-align: right;
-        margin-bottom: -2rem;
+        position: absolute;
+        width: 14rem;
+        top: 0;
+        right: 50%;
+        z-index: -1;
+        transform: translate(50%, 0%) rotate(23deg);
         img {
-            display: inline-block;
+            width: 100%;
         }
+        @include media('sm') {
+            position: static;
+            width: auto;
+            top: auto;
+            right: auto;
+            transform: translateX(10%);
+        }
+
+        @include media('md') {
+            transform: translateX(12%);
+        }
+
+        @include media('lg') {
+            transform: translate(22%,5%);
+            img {
+                width: auto;
+            }
+        }
+
     }
 }
 
@@ -593,6 +716,10 @@ html {
 
 .rokka-uoso {
     position: relative;
+}
+
+.rokka-uoso-headline {
+    margin-right: -35px !important;
 }
 
 .rokka-uoso-row--top {
@@ -740,8 +867,8 @@ html {
     @include media('sm') {
         position: relative;
         font-size: 35.24vw;
-        bottom: initial;
-        left: initial;
+        bottom: auto;
+        left: auto;
     }
 
     @media (min-width: $breakpoint-uoso) {
@@ -779,7 +906,7 @@ html {
     @include media('sm') {
         position: relative;
         font-size: 47.21vw;
-        left: initial;
+        left: auto;
         right: 3rem;
         bottom: -2rem;
     }
@@ -835,65 +962,141 @@ html {
 }
 
 
-/*
-    Testimonial
- */
-
-.rokka-quote {
-    margin-top: 2rem;
-}
-
-.rokka-quote__bubble {
-    background: #EBEBE6;
-    margin-right: 1rem;
-    position: relative;
-    &:after {
-        content: "";
-        display: block;
-        position: absolute;
-        bottom: 0;
-        right: -30px;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 20px 0 0 30px;
-        border-color: transparent transparent transparent #EBEBE6;
-    }
-}
-
-.rokka-quote__avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 100%;
-    background-size: 100%;
-    background-image: url(../images/rokka-testimonial-freitag-benjamin.png);
-    margin-right: 0.5rem;
-}
-
-
 
 /*
     Pricing
  */
+
+.rokka-section--pricing {
+    .number .flex {
+        flex-direction: column;
+        margin-top: $spacing-unit-small;
+        @include media('md') {
+            margin-top: 0;
+            flex-direction: row;
+        }
+        .number__description, .number__before {
+            font-size: $font-size-small;
+            @include media('md') {
+                font-size: $font-size-default;
+            }
+        }
+    }
+}
+
 .rokka-pricing-box {
 
 }
 
-.rokka-pricing-box__free {
+.rokka-pricing {
+    padding: $spacing-unit-small;
+    @include media('md') {
+        padding: $spacing-unit-default;
+    }
+}
+
+.rokka-pricing__free {
     border-top: 1px solid #ebebe6;
 }
 
 .rokka-pricing-box__desc {
-    padding-right: 5rem;
+    @include media('lg') {
+        padding-right: 5rem;
+    }
 }
 
 /*
     Try out rokka for free
  */
 
-.rokka-section-cta {
-
+.rokka-section--cta {
+    .rokka-cta__text, .rokka-cta__button {
+        // text-align: center;
+    }
+    .rokka-cta__button {
+        margin-top: $spacing-unit-default;
+        @include media('lg') {
+            margin-top: 0;
+            text-align: right;
+        }
+    }
 }
+
+
+
+
+/*
+    Testimonial
+ */
+.rokka-section--testimonial {
+    @include media('lg') {
+        padding-bottom: 0;
+    }
+}
+
+
+.rokka-quote {
+    margin-top: 2rem;
+    flex-direction: column;
+    display: flex;
+    @include media('lg') {
+        flex-direction: row;
+        align-items: flex-end;
+    }
+}
+
+.rokka-quote__person {
+    flex: 1 1 auto;
+    @include media('lg') {
+        flex: 0 0 auto;
+    }
+}
+
+.rokka-quote__bubble {
+    background: #EBEBE6;
+    position: relative;
+    padding: $spacing-unit-small;
+    flex: 1 1 auto;
+    margin-bottom: 2rem;
+    @include media('lg') {
+        margin-right: 2rem;
+        margin-bottom: 0;
+        padding: $spacing-unit-default;
+    }
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: -20px;
+        left: 15px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 30px 25px 0 0;
+        border-color: #EBEBE6 transparent transparent transparent;
+        @include media('lg') {
+            bottom: 0;
+            left: auto;
+            right: -30px;
+            border-width: 20px 0 0 30px;
+            border-color: transparent transparent transparent #EBEBE6;
+        }
+    }
+}
+
+.rokka-quote__avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 100%;
+    background-size: 100%;
+    background-image: url(../images/rokka-testimonial-freitag-benjamin.png);
+    margin-right: 0.5rem;
+    @include media('lg') {
+        width: 70px;
+        height: 70px;
+    }
+}
+
 
 
 
@@ -903,15 +1106,74 @@ html {
  */
 .rokka-footer {
     border-top: 1px solid #DDDDD8;
+    flex-direction: column;
+    @include media('md') {
+        flex-direction: row;
+        align-items: center;
+    }
 }
 
 .rokka-footer__logo {
+    line-height: 0;
+    margin-bottom: $spacing-unit-small;
+    @include media('md') {
+        margin-bottom: 0;
+    }
     svg {
-        width: auto;
+        height: 1.5rem;
+        width: 6.4rem;
+        @include media('md') {
+            height: 2rem;
+            width: 8rem;
+        }
         g {
             fill: currentColor;
         }
     }
 }
 
+.rokka-footer__item  {
+    @include media('md') {
+        margin-left: $spacing-unit-small;
+    }
+}
 
+
+
+/*
+    Documentation
+ */
+
+.rokka-doc-content {
+    h2:first-child {
+        margin-top: 0;
+    }
+}
+
+
+
+
+/*
+    Contact Form
+ */
+
+.pipedriveWebForms {
+    margin: -16px;
+    width: auto !important;
+}
+
+.rokka-contact {
+    padding: $spacing-unit-small;
+    border: $field-border;
+    border-radius: $border-radius-default;
+    margin-top: 73px;
+    background: $warm-grey-50;
+}
+
+.rokka-contact__phone {
+    font-size: $font-size-large;
+}
+
+.rokka-contact__mail {
+    font-size: $font-size-large;
+}

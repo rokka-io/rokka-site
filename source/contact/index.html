@@ -1,0 +1,39 @@
+---
+title: asdf
+layout: default
+description: Contact us
+---
+
+
+{% block page_title %}
+    {{ site.text.contact.title }}
+{% endblock %}
+
+{% block page_description %}
+    {{ site.text.contact.text }}
+{% endblock %}
+
+
+{% block content_wrapper %}
+    <section class="section section--light">
+          <div class="section__body">
+            <div class="grid">
+                <div class="grid__item md-w-2/3">
+                {% if site.language == 'en' %}
+                    <div class="pipedriveWebForms" data-pd-webforms="https://pipedrivewebforms.com/form/47728732096d39a1585ceb388128a71c311935"><script src="https://pipedrivewebforms.com/webforms.min.js"></script></div>
+                {% else %}
+                    <div class="pipedriveWebForms" data-pd-webforms="https://pipedrivewebforms.com/form/a1e3f8ddeca09322c5707b7c519c5513311935"><script src="https://pipedrivewebforms.com/webforms.min.js"></script></div>
+                {% endif %}
+                </div>
+                <div class="grid__item md-w-1/3">
+                    <div class="rokka-contact">
+                        <div class="text-bold mrgb--">{{ site.text.contact.mail }}</div>
+                        <a href="mailto:sales@rokka.io" class="rokka-contact__mail">sales@rokka.io</a>
+                        <div class="text-bold mrgt mrgb--">{{ site.text.contact.phone }}</div>
+                        <div class="rokka-contact__phone">+41 43 500 39 80</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
