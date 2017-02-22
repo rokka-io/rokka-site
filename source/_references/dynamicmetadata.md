@@ -58,7 +58,7 @@ You can use this to specify the most important part of the image, the part that 
 
 ### Properties
 
-- `width` (required): Integer. The width of the subject area.
-- `height` (required): Integer. The height of the subject area.
-- `x`: Integer. The x-offset of the starting point, in pixels. The default value is 0.
-- `y`: Integer. The y-offset of the starting point, in pixels. The default value is 0.
+- `x` (required): Integer. The x-offset of the starting point, in pixels. The default value is 0.
+- `y` (required): Integer. The y-offset of the starting point, in pixels. The default value is 0.
+- `width`: Integer. The width of the subject area.
+- `height`: Integer. The height of the subject area.
