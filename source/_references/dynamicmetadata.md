@@ -16,14 +16,12 @@ Rokka will generate a new identifying hash for the image and delete the old iden
 In the following example, we are adding a subject area to an image.
 
 ```bash
-curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/SubjectArea' -d '[
-    {
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/SubjectArea' -d '{
         "width": 20, 
         "height": 20, 
         "x": 0, 
         "y": 0
-    }
-]'
+    }'
 ```
 
 
