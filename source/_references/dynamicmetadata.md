@@ -9,14 +9,14 @@ Dynamic metadata is metadata added to a source image that changes the image iden
 
 ## Add dynamic metadata to a source image
 
-To add dynamic metadata to a source image, you need to provide the organization, the identifying hash of the image, the name of the dynamic metadata and the values to add. Do this by making a POST request to `https://api.rokka.io/sourceimages/{organization}/{hash}/meta/dynamic/{name}`
+To add dynamic metadata to a source image, you need to provide the organization, the identifying hash of the image, the name of the dynamic metadata and the values to add. Do this by making a PUT request to `https://api.rokka.io/sourceimages/{organization}/{hash}/meta/dynamic/{name}`
 
 Rokka will generate a new identifying hash for the image and delete the old identifying hash. The new location of the image will be returned in the `Location` header of the response. 
 
 In the following example, we are adding a subject area to an image.
 
 ```bash
-curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/subjectarea' -d '[
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/SubjectArea' -d '[
     {
         "width": 20, 
         "height": 20, 
@@ -49,7 +49,7 @@ To delete dynamic metadata from a source image, you need to provide the organiza
 Rokka will generate a new identifying hash for the image and delete the old identifying hash. The new location of the image will be returned in the `Location` header of the response. 
 
 ```bash
-curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/subjectarea'
+curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/SubjectArea'
 ```
 
 ## [Subject area](#subject-area)
