@@ -132,14 +132,24 @@ OR and NOT filters are currently not possible. If you have a need for that, get 
 
 ## Different sorting
 
-You can change the sort field with the `sort` parameter. You can sort by almost any field, even user defined metadata (prefixed by `user:`). If you want eg. by size, do the following:
+You can change the sort field with the `sort` parameter.
+You can sort by almost any field, even user defined metadata (prefixed by `user:`).
+If you want eg. by size, do the following:
 
 ```bash
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/testorganization?sort=size'
 ```
 
-Default sort order is ascending, if you want to change that add `desc` to your sort field, eg. the biggest images first:
+Default sort order is descending; if you want to change it, add `desc` or `asc` to
+your sort field, eg. the biggest images first:
 
 ```bash
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/testorganization?sort=size desc'
+```
+
+Sorting by multiple fields is possible, just add multiple sorting criteria separated by comma.
+The following example will sort images first by `create` descending and later by `size` ascending: 
+
+```bash
+curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/testorganization?sort=created desc,size asc'
 ```
