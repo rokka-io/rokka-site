@@ -86,15 +86,21 @@ Trims edges that are the background color from an image.
 
 - `fuzzy`: Number, between 0 and 100. Sets the degree of tolerance for pixel colour when calculating how much to trim from the image. The default value is 0.
 
-## Crop
+## [Crop](#crop)
 
 Crops an image to a set size.
 
 ### Properties
 
-- `width` (required): Integer, between 1 and 10000. The new width for the image. 
+- `width` (required): Integer, between 1 and 10000. The new width for the image.
 - `height` (required): Integer, between 1 and 10000. The new height for the image.
-- `anchor`: String. Describes where the crop should originate in the form of `XOFFSET-YOFFSET`. `XOFFSET` is either a number of pixels or "left", "center", "right" while `YOFFSET` is either a number of pixels or "top", "center", "bottom". The default value is `auto`, which will crop to the [subject area](/documentation/references/dynamic-metadata.html#subject-area) of the source image and fall back to `center-center` if there is no valid subject area.
+- `anchor`: String. Describes where the crop should originate in the form of `XOFFSET-YOFFSET`, where:
+    - `XOFFSET` is either a number of pixels or "left", "center", "right"
+    - `YOFFSET` is either a number of pixels or "top", "center", "bottom".
+   
+   The default value is `auto`, which will crop the image centering the crop box around the defined 
+   [Subject Area](/documentation/references/dynamic-metadata.html#subject-area), if any.
+   If no Subject Area is defined, the crop operation will fallback to `center-center`.
 
 ## Noop
 
