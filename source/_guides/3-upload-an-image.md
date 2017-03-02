@@ -1,5 +1,6 @@
 ---
 title: Upload and Render an Image
+use: [guides]
 ---
 
 ## Upload Image into an Organization

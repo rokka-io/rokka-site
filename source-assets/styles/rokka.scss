@@ -121,6 +121,9 @@ html {
 
 .rokka-section--why {
     padding-bottom: 44vw;
+    .rokka-feature {
+        margin-bottom: $spacing-unit-large;
+    }
     @include media('sm') {
         padding-bottom: 33vw;
     }

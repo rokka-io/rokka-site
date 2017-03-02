@@ -96,7 +96,7 @@ gulp.task('watch', function() {
   gulp.watch('source-assets/scripts/**/*.js', ['scripts']);
   gulp.watch('source-assets/liip-styleguide/dist/assets/toolkit/scripts/**/*.js', ['scripts']);
   gulp.watch('source-assets/liip-styleguide/dist/assets/toolkit/styles/**/*.css', ['styles']);
-  // gulp.watch('source/**/*', ['cleanup']);
+  gulp.watch('source/**/*', ['injectSvg']);
   // gulp.watch('app/config/**/*', ['cleanup']);
 });
 
