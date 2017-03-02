@@ -36,4 +36,4 @@ rotate operation, the URL would look like this:
 
 Do not use the dynamic renderer for production output, but create stacks instead. The output is not cached.
 
-See [operations](/documentation/references/operations.html) for the definition of URL operations.
+See [operations](../references/operations.html) for the definition of URL operations.

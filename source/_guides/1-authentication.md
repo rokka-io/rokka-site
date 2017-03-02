@@ -9,7 +9,7 @@ All you need to do is specify the API key and secret that you will get with your
 
 ## How to tell Rokka who you are
 
-All calls to the Rokka API are authenticated, except the operations list (see [rendering images](4-rendering-images)).
+All calls to the Rokka API are authenticated, except the operations list (see [rendering images](upload-and-render-an-image.html)).
 
 To authenticate, use the `Api-Key` header with the key you where assigned during registration.
 

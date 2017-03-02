@@ -1,5 +1,6 @@
 ---
 title: Create an Organization
+use: [guides]
 ---
 
 ## Organizations own Images
@@ -34,4 +35,4 @@ This creates an organization called "testorganization" and returns a json struct
 
 Your organization is now ready to use.
 
-You should not share your personal admin account, and particularly not use it from a web application. Instead, create a separate user for automated tools called e.g. "website@testorganization.com", then give it write access to your organization. Giving permissions on an organization is explained [in the reference](../references/memberships).
+You should not share your personal admin account, and particularly not use it from a web application. Instead, create a separate user for automated tools called e.g. "website@testorganization.com", then give it write access to your organization. Giving permissions on an organization is explained [in the reference](../references/memberships.html).

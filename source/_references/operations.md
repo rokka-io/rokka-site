@@ -99,7 +99,7 @@ Crops an image to a set size.
     - `YOFFSET` is either a number of pixels or "top", "center", "bottom".
    
    The default value is `auto`, which will crop the image centering the crop box around the defined 
-   [Subject Area](/documentation/references/dynamic-metadata.html#subject-area), if any.
+   [Subject Area](../references/dynamic-metadata.html#subject-area), if any.
    If no Subject Area is defined, the crop operation will fallback to `center-center`.
 
 ## Noop

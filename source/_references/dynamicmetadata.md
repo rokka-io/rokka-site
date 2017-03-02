@@ -50,7 +50,7 @@ Rokka will generate a new identifying hash for the image and delete the old iden
 curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/SubjectArea'
 ```
 
-## [Subject area](#subject-area)
+## Subject area
 
 The subject area of an image is a box defined by its width, height and the coordinates of its
 starting point (top-left corner).

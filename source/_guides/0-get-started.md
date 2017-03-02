@@ -31,7 +31,7 @@ If you do not use the version header, Rokka will always default to the latest ve
 
 ## Registration
 
-Before you can use the Rokka service, you need to register. The Rokka API will offer an automated registration, but for now, you need to fill in the <a href="https://docs.google.com/a/liip.ch/forms/d/e/1FAIpQLSfhl-f8Eda-haZBMWkzkvPen8RoQ6YFYSDJ1ez1QN-QKBQm3Q/viewform">online form</a>.
+Before you can use the Rokka service, you need to register. The Rokka API will offer an automated registration, but for now, you need to fill in the <a href="/signup">online form</a>.
 
 <!---
 To do so, you need only supply an email address. This call will register you at the service:
