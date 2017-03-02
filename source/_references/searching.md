@@ -137,7 +137,7 @@ The following fields are available for each image for filtering:
  - `height` (integer): the image height, in pixels;
  - `created` (date): the image creation date;
 
-You can also filter by fields defined in the [User Metadata](/documentation/references/usermetadata.html),
+You can also filter by fields defined in the [User Metadata](/documentation/references/user-metadata.html),
 those fields are accessible by using the `user:` and the correct [field type](user-metadata.html) prefixes.
 
 The following example will return all images where the field `my_integer_field` has a value of `3`:
