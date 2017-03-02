@@ -2,7 +2,7 @@
 # via `site.*`. So for example, {{ site.title }} can be used
 # in a template to get the contents of the `title` key.
 
-title: Rokka
+title: rokka
 subtitle: Fast and awesome image delivery.
 
 imports:
@@ -38,10 +38,10 @@ text:
         text: Mit rokka verwalten Sie Ihre Bilder sicher und reduzieren die Ladezeit Ihrer Website.
       -
         title: Für Ihr Budget
-        text: Statt viele tausend teure Funktionen umfasst rokka genau das, was Sie brauchen. Und nur das bezahlen Sie.
+        text: Mit rokka bezahlen Sie genau das, was Sie brauchen und verfügen über sämtliche verfügbaren Features. Sprich keine versteckten Kosten.
 
   uoso:
-    title: Einmal aufladen,<br>vielfach verwenden
+    title: Einmal hochladen,<br>vielfach verwenden
     lead: Mit rokka benötigen Sie jedes Ihrer Bilder nur einmal – in der bestmöglichen Auflösung. Dank Ihrer individuell definierten Bildformate und Bildoutputs übernimmt rokka die gesamte Konvertierung.
     feature_1: 
       title: Fokus und auto-cropping
@@ -56,7 +56,7 @@ text:
 
   fast_delivery:
     title: Blitzschnelle Verteilung
-    text: Egal wo auf der Welt sich Ihre Kunden befinden. rokka liefert Ihre Bilder schnell, sicher und zuverlässig. Dies verringert die Ladezeit Ihres Kunden und Ihren Ressourcenbedarf.
+    text: Egal wo auf der Welt sich Ihre Kunden befinden, rokka liefert Ihre Bilder schnell, sicher und zuverlässig. Dies verringert die Ladezeit Ihres Kunden und Ihren Ressourcenbedarf.
   
   simple_api:
     title: Einfache API und Libraries
@@ -70,8 +70,8 @@ text:
       per_storage: pro GB Speicherplatz
       per_traffic: pro GB Datenvolumen
     free:
-      title: Kostenlose Testversion
-      text: Sie möchten die Katze nicht im Sack kaufen? Das verstehen wir und deshalb können sie alle Funktionen von rokka vollumfänglich und ohne Kosten testen.
+      title: Kostenlose Version
+      text: Sie möchten die Katze nicht im Sack kaufen? Das verstehen wir und deshalb können sie alle Funktionen von rokka bis zu 2GB Speicherplatz und 5GB Datenvolumen kostenlos nutzen.
       free: GRATIS
       free_space: 2GB Speicherplatz
       free_traffic: 5GB Datenvolumen
@@ -89,7 +89,7 @@ text:
     job_title: Specialist New Media bei FREITAG
   
   signup:
-    title: Starten Sie die kostenlose Testversion.
+    title: Starten Sie die 3-monatige Testversion.
     text: rokka ist für Sie kostenlos bis zu einem Speicherplatz von 2GB und 5GB Datenvolumen. Keine monatlichen Kosten und keine Kreditkarte nötig.
 
   contact:

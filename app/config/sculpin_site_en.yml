@@ -2,7 +2,7 @@
 # via `site.*`. So for example, {{ site.title }} can be used
 # in a template to get the contents of the `title` key.
 
-title: Rokka
+title: rokka
 subtitle: Fast and awesome image delivery.
 
 # Translations
@@ -35,7 +35,7 @@ text:
         text: With rokka you manage your digital images safely and improve the speed of your website.
       -
         title: Four your budget
-        text: Instead of thousands of expensive features, rokka covers exactly your needs. And that is what you pay.
+        text: "With rokka you pay exactly what you use and have all the available features. That means: no hidden costs."
 
   uoso:
     title: Upload once,<br>show often
@@ -53,30 +53,30 @@ text:
 
   fast_delivery:
     title: Lightning fast delivery
-    text: No matter where in the world your viewers are, rokka delivers your images fast, safely and dependablely. This also saves your server resources.
+    text: No matter where in the world your viewers are, rokka delivers your images fast, safely and dependably. This also saves your server resources.
   
   simple_api:
     title: Simple API &amp; libraries
-    text: With the rokka image API you deliver your images easily on all your web sites. What’s more we offer libraries for common languages, making rokka even easier to use.
+    text: With the rokka image API you deliver your images easily on all your web sites. What’s more, we offer libraries for common languages, making rokka even easier to use.
 
   pricing:
     title: 'Pricing: Easy and transparent'
     paid:
       title: One plan fits all
-      text: Only pay what you effectively use. Quarterly, you get the invoice with a detailed listing of what you have used. So you have an exact overview about your costs.
+      text: Only pay for what you effectively use. You get a quarterly invoice with a detailed listing of what you have used, so you have an exact overview of your costs.
       per_storage: per GB of storage
       per_traffic: per GB of traffic
     free:
       title: Free plan
-      text: You don't want to buy a pig in a poke? Get in touch and try out rokka and all its features for free.
+      text: You don't want to buy a pig in a poke? Up to 2GB of space and 5GB of traffic, rokka is free for everyone.
       free: FREE
       free_space: 2GB of space
       free_traffic: 5GB of traffic
     disclaimer: All prices in CHF and excl. VAT.
 
   cta:
-    title: Try out rokka for free
-    text: Follow clients like Migros or FREITAG – start now with rokka.
+    title: Try out rokka for 90 days.
+    text: Follow companies like Migros or FREITAG – start now with rokka.
     cta_button: Start your free trial
 
   testimonial:
@@ -86,8 +86,8 @@ text:
     job_title: Specialist New Media at FREITAG
 
   signup:
-    title: Start your free trial.
-    text: rokka is free to use for up to 2GB of space and 5GB of traffic. No monthly costs, no credit card required.
+    title: Try out rokka for 90 days.
+    text: rokka is free to use for 90 days. No monthly costs, no credit card required.
 
   contact:
     title: Thank you for your interest.
