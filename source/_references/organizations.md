@@ -5,7 +5,7 @@ use: [references]
 
 ## Intro
 
-Organizations are what Rokka uses to group images together. A user can be part of multiple organizations.
+Organizations are what rokka uses to group images together. A user can be part of multiple organizations.
 An organization is also part of the url to use the API and the rendering backend. It's a best practice to
 have one organization per backend that manages images. For example if you run two shops that might 
 have overlapping images, having two separate organizations would be advisable.
@@ -16,7 +16,7 @@ have overlapping images, having two separate organizations would be advisable.
 | -------------- | ------------- |
 | id | UUID, doesn't change |
 | name | Websafe name to use in urls e.g. "rokka" |
-| display_name | A more pretty name that can be displayed e.g. "Rokka.io" |
+| display_name | A more pretty name that can be displayed e.g. "rokka.io" |
 | billing_email | Email address for billing purposes |
 
 ## Create an organization

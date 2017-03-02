@@ -5,7 +5,7 @@ use: [guides]
 
 ## Organizations own Images
 
-Images uploaded to Rokka are always owned by an organization, not an individual user. When you create an organization, you automatically become its administrator and can add other users with a set of permissions. Users are identified by their email address.
+Images uploaded to rokka are always owned by an organization, not an individual user. When you create an organization, you automatically become its administrator and can add other users with a set of permissions. Users are identified by their email address.
 
 ## Create a new Organization
 
