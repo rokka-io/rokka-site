@@ -83,6 +83,7 @@ gulp.task('sculpin', function (cb) {
     gutil.log(gutil.env.env);
     gulp.src('output_en/**/*').pipe(gulp.dest('dist/en'));
     gulp.src('output_de/**/*').pipe(gulp.dest('dist/de'))
+    gulp.src('output_en/index.html').pipe(gulp.dest('dist/'));
     browserSync.reload();
     cb(err);
   });
