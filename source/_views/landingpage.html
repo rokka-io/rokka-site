@@ -76,7 +76,7 @@
 </section>
 
 
-<section class="section section--light rokka-section--why">
+<!-- <section class="section section--light rokka-section--why">
   <div class="section__body">
     <div class="grid grid--middle">
 
@@ -96,8 +96,26 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
+
+<section class="section section--light rokka-section--why">
+  <div class="section__body">
+    <div class="grid grid--middle">
+      <div class="grid__item">
+        <h2 class="mrgb+ mrgt0">{{ site.text.why_rokka.title|raw }}</h2>
+      </div>
+        {% for reason in site.text.why_rokka.reasons %}
+          <div class="grid__item md-w-1/3">
+            <div class="rokka-feature{% if loop.last == false %} mrgb+{% endif %}">
+              <h3 class="mrg0 h4 mrgb--"><div class="rokka-feature__icon"><svg class="icon icon--check test"><use xlink:href="#check" /></svg></div>{{ reason.title|raw }}</h3>
+              <p class="mrg0">{{ reason.text|raw }}</p>
+            </div>
+          </div>
+        {% endfor %}
+    </div>
+  </div>
+</section>
 
 <section class="section rokka-section-uoso">
 
