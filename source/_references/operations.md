@@ -86,7 +86,7 @@ Trims edges that are the background color from an image.
 
 - `fuzzy`: Number, between 0 and 100. Sets the degree of tolerance for pixel colour when calculating how much to trim from the image. The default value is 0.
 
-## [Crop](#crop)
+## Crop
 
 Crops an image to a set size.
 

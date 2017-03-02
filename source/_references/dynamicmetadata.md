@@ -56,7 +56,7 @@ The subject area of an image is a box defined by its width, height and the coord
 starting point (top-left corner).
 Setting the subject area of an image allows the Crop operation (when used with the `auto` anchor),
 to center the cropping box around the defined SubjectArea.
-For further details see the [Crop operation](/documentation/references/operations.html#crop) 
+For further details see the [Crop operation](../references/operations.html#crop) 
  
 You can use the SubjectArea to specify the most important part of the image, the part that should be
 retained at any size.
