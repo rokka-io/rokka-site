@@ -137,7 +137,7 @@ The following fields are available for each image for filtering:
  - `height` (integer): the image height, in pixels;
  - `created` (date): the image creation date;
 
-You can also filter by fields defined in the [User Metadata](/documentation/references/usermetadata.html),
+You can also filter by fields defined in the [User Metadata](/documentation/references/user-metadata.html),
 those fields are accessible by using the `user:` and the correct [field type](user-metadata.html) prefixes.
 
 The following example will return all images where the field `my_integer_field` has a value of `3`:
@@ -161,12 +161,12 @@ Returns all images having their name starting with "*plan*", such as "*plan*t", 
 If you want to filter for certain ranges or "greater than, less than", you can use the
 [Lucene range query syntax](http://lucene.apache.org/core/6_4_1/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Range_Searches).
 
-|                                                              | parameter            |
-|--------------------------------------------------------------|----------------------|
-| Images with a size bigger than 30000:                        | `size=[30000,}`      |
-| Images with a size equal or bigger than 30000:               | `size={30000,}`      |
-| Images with a size bigger than 30000 and smaller than 40000: | `size=[30000,40000]` |
-| Images with a _somedate_ in 2017                             | `user:date:somedate={'2017-01-01T00:00:00Z',}` |
+Some example usage:
+
+- `size=[30000,40000]`: Matches images with a size value between `30000` and `40000` (extremes included)
+- `size=[30000,}`: Returns images with a size value equal or bigger than `30000`:
+- `size={30000,}`: Matches images with a size value bigger than `30000`
+- `created=['2017-01-01T00:00:00Z',}`: Images created from `2017` to now
 
 ## AND filtering
 
