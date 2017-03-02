@@ -11,3 +11,6 @@ sculpin_content_types:
 
     references:
         permalink: documentation/references/:slug_title.html
+
+sculpin_markdown:
+    parser_class: Sculpin\Bundle\MarkdownBundle\PhpMarkdownExtraParser
