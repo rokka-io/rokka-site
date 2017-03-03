@@ -372,11 +372,11 @@ var _domDelegate2 = _interopRequireDefault(_domDelegate);
 
 var _utils = __webpack_require__(0);
 
-var _scroll = __webpack_require__(35);
+var _scroll = __webpack_require__(34);
 
 var _scroll2 = _interopRequireDefault(_scroll);
 
-var _scrollDoc = __webpack_require__(34);
+var _scrollDoc = __webpack_require__(33);
 
 var _scrollDoc2 = _interopRequireDefault(_scrollDoc);
 
@@ -4371,7 +4371,7 @@ return Promise;
 
 })));
 //# sourceMappingURL=es6-promise.map
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32), __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35), __webpack_require__(1)))
 
 /***/ }),
 /* 30 */
@@ -7041,6 +7041,148 @@ if (true) {
 
 /***/ }),
 /* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(30)
+
+/**
+ * `requestAnimationFrame()`
+ */
+
+var request = global.requestAnimationFrame
+  || global.webkitRequestAnimationFrame
+  || global.mozRequestAnimationFrame
+  || fallback
+
+var prev = +new Date
+function fallback (fn) {
+  var curr = +new Date
+  var ms = Math.max(0, 16 - (curr - prev))
+  var req = setTimeout(fn, ms)
+  return prev = curr, req
+}
+
+/**
+ * `cancelAnimationFrame()`
+ */
+
+var cancel = global.cancelAnimationFrame
+  || global.webkitCancelAnimationFrame
+  || global.mozCancelAnimationFrame
+  || clearTimeout
+
+if (Function.prototype.bind) {
+  request = request.bind(global)
+  cancel = cancel.bind(global)
+}
+
+exports = module.exports = request
+exports.cancel = cancel
+
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports) {
+
+var win = window || {};
+var doc = document || { documentElement: {} };
+// IE < 9 & Node
+var scrollElem = typeof win.pageYOffset === 'undefined' ?
+  doc.documentElement :
+  null;
+
+function detectScrollElem() {
+  var startScrollTop = window.pageYOffset;
+  document.documentElement.scrollTop = startScrollTop + 1;
+  if (window.pageYOffset > startScrollTop) {
+    document.documentElement.scrollTop = startScrollTop;
+    // IE > 9 & FF (standard)
+    return document.documentElement;
+  }
+  // Chrome (non-standard)
+  return document.body;
+}
+
+module.exports = function scrollDoc() {
+  return scrollElem || (scrollElem = detectScrollElem());
+}
+
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var raf = __webpack_require__(32)
+
+function scroll (prop, element, to, options, callback) {
+  var start = +new Date
+  var from = element[prop]
+  var cancelled = false
+
+  var ease = inOutSine
+  var duration = 350
+
+  if (typeof options === 'function') {
+    callback = options
+  }
+  else {
+    options = options || {}
+    ease = options.ease || ease
+    duration = options.duration || duration
+    callback = callback || function () {}
+  }
+
+  if (from === to) {
+    return callback(
+      new Error('Element already at target scroll position'),
+      element[prop]
+    )
+  }
+
+  function cancel () {
+    cancelled = true
+  }
+
+  function animate (timestamp) {
+    if (cancelled) {
+      return callback(
+        new Error('Scroll cancelled'),
+        element[prop]
+      )
+    }
+
+    var now = +new Date
+    var time = Math.min(1, ((now - start) / duration))
+    var eased = ease(time)
+
+    element[prop] = (eased * (to - from)) + from
+
+    time < 1 ?
+      raf(animate) :
+      callback(null, element[prop])
+  }
+
+  raf(animate)
+
+  return cancel
+}
+
+function inOutSine (n) {
+  return .5 * (1 - Math.cos(Math.PI * n));
+}
+
+module.exports = {
+  top: function (element, to, options, callback) {
+    return scroll('scrollTop', element, to, options, callback)
+  },
+  left: function (element, to, options, callback) {
+    return scroll('scrollLeft', element, to, options, callback)
+  }
+}
+
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -7226,148 +7368,6 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(30)
-
-/**
- * `requestAnimationFrame()`
- */
-
-var request = global.requestAnimationFrame
-  || global.webkitRequestAnimationFrame
-  || global.mozRequestAnimationFrame
-  || fallback
-
-var prev = +new Date
-function fallback (fn) {
-  var curr = +new Date
-  var ms = Math.max(0, 16 - (curr - prev))
-  var req = setTimeout(fn, ms)
-  return prev = curr, req
-}
-
-/**
- * `cancelAnimationFrame()`
- */
-
-var cancel = global.cancelAnimationFrame
-  || global.webkitCancelAnimationFrame
-  || global.mozCancelAnimationFrame
-  || clearTimeout
-
-if (Function.prototype.bind) {
-  request = request.bind(global)
-  cancel = cancel.bind(global)
-}
-
-exports = module.exports = request
-exports.cancel = cancel
-
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports) {
-
-var win = window || {};
-var doc = document || { documentElement: {} };
-// IE < 9 & Node
-var scrollElem = typeof win.pageYOffset === 'undefined' ?
-  doc.documentElement :
-  null;
-
-function detectScrollElem() {
-  var startScrollTop = window.pageYOffset;
-  document.documentElement.scrollTop = startScrollTop + 1;
-  if (window.pageYOffset > startScrollTop) {
-    document.documentElement.scrollTop = startScrollTop;
-    // IE > 9 & FF (standard)
-    return document.documentElement;
-  }
-  // Chrome (non-standard)
-  return document.body;
-}
-
-module.exports = function scrollDoc() {
-  return scrollElem || (scrollElem = detectScrollElem());
-}
-
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var raf = __webpack_require__(33)
-
-function scroll (prop, element, to, options, callback) {
-  var start = +new Date
-  var from = element[prop]
-  var cancelled = false
-
-  var ease = inOutSine
-  var duration = 350
-
-  if (typeof options === 'function') {
-    callback = options
-  }
-  else {
-    options = options || {}
-    ease = options.ease || ease
-    duration = options.duration || duration
-    callback = callback || function () {}
-  }
-
-  if (from === to) {
-    return callback(
-      new Error('Element already at target scroll position'),
-      element[prop]
-    )
-  }
-
-  function cancel () {
-    cancelled = true
-  }
-
-  function animate (timestamp) {
-    if (cancelled) {
-      return callback(
-        new Error('Scroll cancelled'),
-        element[prop]
-      )
-    }
-
-    var now = +new Date
-    var time = Math.min(1, ((now - start) / duration))
-    var eased = ease(time)
-
-    element[prop] = (eased * (to - from)) + from
-
-    time < 1 ?
-      raf(animate) :
-      callback(null, element[prop])
-  }
-
-  raf(animate)
-
-  return cancel
-}
-
-function inOutSine (n) {
-  return .5 * (1 - Math.cos(Math.PI * n));
-}
-
-module.exports = {
-  top: function (element, to, options, callback) {
-    return scroll('scrollTop', element, to, options, callback)
-  },
-  left: function (element, to, options, callback) {
-    return scroll('scrollLeft', element, to, options, callback)
-  }
-}
-
-
-/***/ }),
 /* 36 */
 /***/ (function(module, exports) {
 
@@ -7457,7 +7457,10 @@ module.exports = {
       headers.forEach(function(value, name) {
         this.append(name, value)
       }, this)
-
+    } else if (Array.isArray(headers)) {
+      headers.forEach(function(header) {
+        this.append(header[0], header[1])
+      }, this)
     } else if (headers) {
       Object.getOwnPropertyNames(headers).forEach(function(name) {
         this.append(name, headers[name])

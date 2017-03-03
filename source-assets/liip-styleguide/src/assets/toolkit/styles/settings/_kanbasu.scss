@@ -57,23 +57,35 @@ $spacing-unit-default:              20px;
 
 // Use EM media-queries for better browser consistency
 // See http://zellwk.com/blog/media-query-units
-// $screen-xs-max:                     640px  / 16px * 1em;
-// $screen-sm-min:                     641px  / 16px * 1em;
-// $screen-sm-max:                     768px  / 16px * 1em;
-// $screen-md-min:                     769px  / 16px * 1em;
-// $screen-md-max:                     1024px / 16px * 1em;
-// $screen-lg-min:                     1025px / 16px * 1em;
+$screen-xs-max:                     640px  / 16px * 1em;
+$screen-sm-min:                     641px  / 16px * 1em;
+$screen-sm-max:                     768px  / 16px * 1em;
+$screen-md-min:                     769px  / 16px * 1em;
+$screen-md-max:                     1024px / 16px * 1em;
+$screen-lg-min:                     1025px / 16px * 1em;
+$screen-lg-max:                     1439px / 16px * 1em;
+$screen-xl-min:                     1440px / 16px * 1em;
+$screen-xl-max:                     1679px / 16px * 1em;
+$screen-xxl-min:                    1680px / 16px * 1em;
+$screen-xxl-max:                    1919px / 16px * 1em;
+$screen-xxxl-min:                   1920px / 16px * 1em;
 
-// $breakpoints-default:               (
-//                                      'sm' '(min-width: #{$screen-sm-min})',
-//                                      'md' '(min-width: #{$screen-md-min})',
-//                                      'lg' '(min-width: #{$screen-lg-min})'
-//                                    );
-// $breakpoints-desc:                  (
-//                                      'xs' '(max-width: #{$screen-xs-max})',
-//                                      'sm' '(max-width: #{$screen-sm-max})',
-//                                      'md' '(max-width: #{$screen-md-max})'
-//                                    );
+$breakpoints-default:               (
+                                     'sm' '(min-width: #{$screen-sm-min})',
+                                     'md' '(min-width: #{$screen-md-min})',
+                                     'lg' '(min-width: #{$screen-lg-min})',
+                                     'xl' '(min-width: #{$screen-xl-min})',
+                                     'xxl' '(min-width: #{$screen-xxl-min})',
+                                     'xxxl' '(min-width: #{$screen-xxxl-min})'
+                                   );
+$breakpoints-desc:                  (
+                                     'xs' '(max-width: #{$screen-xs-max})',
+                                     'sm' '(max-width: #{$screen-sm-max})',
+                                     'md' '(max-width: #{$screen-md-max})',
+                                     'lg' '(max-width: #{$screen-lg-max})',
+                                     'xl' '(max-width: #{$screen-xl-max})',
+                                     'xxl' '(max-width: #{$screen-xxl-max})'
+                                   );
 
 
 /**
