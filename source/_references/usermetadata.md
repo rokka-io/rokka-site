@@ -73,7 +73,7 @@ metadata using a DELETE API call.
 For a single field:
 
 ```bash
-curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/myorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/static/somefield'
+curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/myorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/user/somefield'
 ```
 
 Deleting all user metadata of an image:
