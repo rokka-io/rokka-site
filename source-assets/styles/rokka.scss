@@ -17,7 +17,7 @@ $color-green: #6ea644;
 $breakpoint-uoso: 87.5em;
 
 body {
-    background: #ddd;
+    background: white;
     overflow-x: hidden;
 }
 
@@ -41,6 +41,16 @@ html {
     }
 }
 
+
+.rokka-breadcrumbs {
+    color: $muted-color;
+    a {
+        color: inherit;
+        &:hover {
+            opacity: $text-color;
+        }
+    }
+}
 
 .rokka-navbar-cta {
     transition: 0.3s;

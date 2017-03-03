@@ -42,7 +42,7 @@ text:
     lead: With rokka you upload your image just once – in the highest possible resolution. Working with your individually defined image formats and outputs, rokka takes care of the whole conversion.
     feature_1: 
       title: Focal point and auto cropping
-      text: Define the focal point of your image. Thanks to its complex auto cropping operations, rokka will identify the best possible sector and use it for all your pre-defined image formats.
+      text: Define the focal point of your image. Thanks to its clever auto cropping operations, rokka will identify the best possible sector and use it for all your pre-defined image formats.
 
   counter:
     images_stored: images stored

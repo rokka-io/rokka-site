@@ -1,5 +1,6 @@
 ---
 title: Javascript Library
+use: [libraries]
 ---
 
 ## rokka.js

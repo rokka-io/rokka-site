@@ -1,19 +1,29 @@
 {% extends "default.html" %}
 
+{% block real_breadcrumb %}
+<section class="section pdgt+ pdgb0">
+    <div class="section__body">
+        <div class="rokka-breadcrumbs">
+            <a href="/{{ site.language }}/documentation">« Back to Documentation</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
 
 {% block content_wrapper %}
 <section class="section">
     <div class="section__body">
         <div class="grid grid--huge">
-            <div class="grid__item md-w-3/4">
-                <div class="rokka-doc-content">
-                    {% block content %}{% endblock %}
-                </div>
-            </div>
             <div class="grid__item md-w-1/4">
                 {% block articles %}
                     {% include 'article_list' with { 'articles': data.guides } %}
                 {% endblock articles %}
+            </div>
+            <div class="grid__item md-w-3/4">
+                <div class="rokka-doc-content">
+                    {% block content %}{% endblock %}
+                </div>
             </div>
         </div>
     </div>
