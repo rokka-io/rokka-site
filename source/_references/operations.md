@@ -14,10 +14,10 @@ use: [references]
 
 It is possible to list all operations.
 
-```bash
+```language-bash
 curl -X GET 'https://api.rokka.io/operations'
 ```
-```php
+```language-php
 $client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
 
 $operations = $client->listOperations();

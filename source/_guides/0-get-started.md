@@ -36,14 +36,14 @@ Before you can use the rokka service, you need to register. The rokka API will o
 <!---
 To do so, you need only supply an email address. This call will register you at the service:
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X POST 'https://api.rokka.io/users' -d '[
     {
         "email": "my@email.com"
     }
 ]'
 ```
-```php
+```language-php
 $client = \Rokka\Client\Factory::getUserClient();
 
 $user = $client->createUser('my@email.com');

@@ -29,13 +29,13 @@ Role can be `read`, `write` and `admin`.
 
 It's best practice to create a user with only write access for general operations, and only use the admin user when necessary.
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/awesomecompany/memberships/user@email.com' -d '{
     "role": "write"
 }'
 ```
 
-```php
+```language-php
 use \Rokka\Client\Core\Membership;
 
 $client = \Rokka\Client\Factory::getUserClient();

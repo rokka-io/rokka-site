@@ -22,11 +22,11 @@ Signing up is done using the `/users` endpoint. A post will do the trick.
 
 This is the only route besides the operations listing, where you don't need authorization. Everything else will need it, so check for the authorization part of the guide to see the details.
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X POST 'https://api.rokka.io/users' -d '{ "email": "my.email@mail.com"}'
 ```
 
-```php
+```language-php
 $client = \Rokka\Client\Factory::getUserClient();
 
 $user = $client->createUser('my.email@mail.com');

@@ -23,13 +23,13 @@ have overlapping images, having two separate organizations would be advisable.
 
 With a user, you can create new organizations on the `/organizations` endpoint.
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/awesomecompany' -d '{
     "billing_email": "my.email@mail.com",
     "display_name": "My Awesome Company"
 }'
 ```
-```php
+```language-php
 $client = \Rokka\Client\Factory::getUserClient();
 
 $client->setCredentials('apiKey', 'apiSecret');
@@ -49,10 +49,10 @@ At the same time a membership relation is created, making you the admin of the n
 
 To retrieve the metadata, a simple GET request will do. Anyone with read rights can do so on this organization.
 
-```bash
+```language-bash
 curl -X GET 'https://api.rokka.io/organizations/awesomecompany'
 ```
-```php
+```language-php
 $client = \Rokka\Client\Factory::getUserClient();
 
 $client->setCredentials('apiKey', 'apiSecret');

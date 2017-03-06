@@ -13,7 +13,7 @@ All calls to the rokka API are authenticated, except the operations list (see [r
 
 To authenticate, use the `Api-Key` header with the key you where assigned during registration.
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -H 'Api-Version: 1' -H 'Api-Key: myKey' -X POST 'https://api.rokka.io/{action}' -d '...'
 ```
 

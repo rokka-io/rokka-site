@@ -7,10 +7,10 @@ use: [guides]
 
 You have your user, know how to authenticate and created an organization. Now let's upload an image!
 
-```bash
+```language-bash
 curl -X POST -F filedata=@image.jpg 'https://api.rokka.io/sourceimages/testorganization'
 ```
-```php
+```language-php
 /** @var \Rokka\Client\Image $imageClient */ 
 $imageClient->uploadSourceImage(file_get_contents('image.jpg'), 'image.jpg');
 ```
@@ -18,7 +18,7 @@ $imageClient->uploadSourceImage(file_get_contents('image.jpg'), 'image.jpg');
 The previous cURL command does a __POST__ request on api.rokka.io, with an image under __./image.jpg__ for an organization called __testorganization__.
 The @ sign instructs cURL to send the binary data of the specified file. If the upload was successful, it returns the metadata in the "source image" structure, for example: 
 
-```javascript
+```language-js
 {
     "total": 1,
     "sourceimages": [
@@ -48,7 +48,7 @@ Keep track of the hash you where returned. You will need this hash to display th
 Now that your image is uploaded, you can create a stack to render our image with custom operations.
 Let's say we want to resize our images to have them display as thumbnails in our app.
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/thumbnail' -d '[
     {
         "name": "resize",
@@ -59,7 +59,7 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/tes
     }
 ]'
 ```
-```php
+```language-php
 
 $resize = new \Rokka\Client\Core\StackOperation('resize', ['width' => 200, 'height' => 200]);
 $stackOperationCollection = new \Rokka\Client\Core\StackOperationCollection([$resize]);
