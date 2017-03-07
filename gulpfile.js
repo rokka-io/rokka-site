@@ -2,12 +2,15 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     gutil = require('gulp-util'),
     uglify = require('gulp-uglify'),
+    uncss = require('gulp-uncss'),
     autoprefixer = require('gulp-autoprefixer'),
     cleancss = require('gulp-clean-css'),
+    htmlmin = require('gulp-htmlmin'),
     include = require('gulp-include'),
     injectSvg = require('gulp-inject-svg'),
     exec = require('child_process').exec,
     del = require('del'),
+    pump = require('pump'),
     browserSync = require('browser-sync').create();
 
 
@@ -49,9 +52,8 @@ gulp.task('fonts', function () {
 
 
 gulp.task('scripts', function () {
-  return gulp.src('source-assets/scripts/rokka.js')
+  return gulp.src('source-assets/scripts/*.js')
     .pipe(include()).on('error', gutil.log)
-    .pipe(gutil.env.env === 'prod' ? uglify() : gutil.noop())
     .pipe(gulp.dest('dist/assets/scripts/'))
     .pipe(browserSync.stream());
 });
@@ -63,12 +65,74 @@ gulp.task('styles', function () {
       includePaths: './'
     }))
     .pipe(autoprefixer({
-        browsers: ['last 2 versions'],
+        browsers: ['last 2 versions', 'ie >= 10'],
         cascade: false
     }))
-    .pipe(gutil.env.env === 'prod' ? cleancss() : gutil.noop())
     .pipe(gulp.dest('dist/assets/styles/'))
     .pipe(browserSync.stream());
+});
+
+
+
+
+
+
+gulp.task('minify:scripts', ['sculpin', 'scripts'], function (cb) {
+
+  pump([
+      gulp.src('dist/assets/scripts/*.js'),
+      uglify({
+        mangle: {
+          toplevel: true
+        },
+        compress: {
+          dead_code: true,
+          collapse_vars: true,
+          reduce_vars: true,
+          drop_console: true
+        }
+      }),
+      gulp.dest('dist/assets/scripts/')
+    ],
+    cb
+  );
+});
+
+
+gulp.task('minify:styles', ['styles', 'sculpin', 'scripts'] , function () {
+  return gulp.src('dist/assets/styles/rokka.css')
+    .pipe(uncss({
+        html: ['dist/**/*.html'],
+        ignore: [/language\-[\S]+/, /token[\S]+/],
+        timeout: 1000
+    }))
+    .pipe(cleancss({
+      level: {
+        1: {
+          specialComments: 0
+        },
+        2: {
+          all: true
+        }
+      }
+    }))
+    .pipe(gulp.dest('dist/assets/styles/'))
+});
+
+
+gulp.task('minify:html', ['minify:styles', 'minify:scripts'] , function () {
+  return gulp.src('dist/**/*.html')
+    .pipe(htmlmin({
+      collapseWhitespace: true,
+      conservativeCollapse: true,
+      sortAttributes: true,
+      removeScriptTypeAttributes: true,
+      removeStyleLinkTypeAttributes: true,
+      removeRedundantAttributes: true,
+      removeEmptyAttributes: true,
+      removeComments: true
+    }))
+    .pipe(gulp.dest('dist/'))
 });
 
 
@@ -101,5 +165,5 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', ['styles', 'scripts', 'watch', 'serve', 'fonts', 'injectSvg']);
-gulp.task('build', ['setbuild', 'styles', 'scripts', 'fonts', 'injectSvg']);
+gulp.task('build', ['setbuild', 'minify:styles', 'minify:scripts', 'minify:html', 'fonts', 'injectSvg']);
 
