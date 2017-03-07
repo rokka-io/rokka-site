@@ -1,5 +1,9 @@
 //=include ../liip-styleguide/dist/assets/toolkit/scripts/toolkit.js
 
+window.addEventListener('DOMContentLoaded', function() {
+  var navbar = document.querySelector('.navbar');
+  new Toolkit.Navbar(navbar, { mode: 'default' });
+});
 
 // window.addEventListener('DOMContentLoaded', function() {
 //   var el = document.querySelector('#section-multiplier');
