@@ -1,127 +1,141 @@
 <html lang="{{ site.language }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>{% block title %}{{ page.title|title }} | {{ site.title }}{% endblock %}</title>
-        <meta name="description" content="{{ site.text.lead.text }}">
-        <meta name="keywords" content="{{ site.keywords }}">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="author" content="rokka.io, Liip AG, Switzerland"/>
-        <meta name="msvalidate.01" content="5301024A6A1B29738BF195B6B8D9CDB6">
-
-        <link rel="canonical" href="http://rokka.io/{{ site.language }}{{ page.url|trim('.') }}">
-        <link rel="stylesheet" href="/assets/styles/rokka.css">
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-        <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-        <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-        <link rel="manifest" href="/manifest.json">
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#6ea644">
-        <meta name="theme-color" content="#6ea644">
-
-        <meta property="og:type"   content="website" /> 
-        <meta property="og:site_name" content="rokka.io"/>
-        <meta property="og:title" content="{{ site.text.hero.heading_1 }} {{ site.text.hero.heading_2 }}"/>
-        <meta property="og:description" content="{{ site.text.lead.text }}"/>
-        <meta property="og:image" content="/assets/images/sharing-image.png">
-        <meta property="og:url" content="http://rokka.io">
-
-    </head>
-    <body class="rokka-lang-{{ site.language }}">
-        <img src="/dist/assets/images/icons.svg">
-        {% include("tag_manager.html") %}
-
-
-        <div class="navbar navbar--sticky navbar--negative">
-          <div class="navbar__body">
-            <a href="/{{ site.language }}/" class="navbar__brand" title="Liip">
-              <div class="logo">
-                <img src="/dist/assets/images/rokka-logo.svg">
-              </div>
+<head>
+<title>
+    {% block title %}{{ page.title|title }} | {{ site.title }}{% endblock %}
+</title>
+<meta charset="utf-8"/>
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<meta content="{{ site.text.lead.text }}" name="description"/>
+<meta content="{{ site.keywords }}" name="keywords"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="rokka.io, Liip AG, Switzerland" name="author"/>
+<meta content="5301024A6A1B29738BF195B6B8D9CDB6" name="msvalidate.01"/>
+<meta content="#6ea644" name="theme-color"/>
+<link href="{{ site.domain }}{{ site.language }}{{ page.url|trim('.') }}" rel="canonical"/>
+<link href="/assets/styles/rokka.css" rel="stylesheet"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/manifest.json" rel="manifest"/>
+<link color="#6ea644" href="/safari-pinned-tab.svg" rel="mask-icon"/>
+<meta content="website" property="og:type"/>
+<meta content="rokka.io" property="og:site_name"/>
+<meta content="{{ site.sharing_title }}" property="og:title"/>
+<meta content="{{ site.text.lead.text }}" property="og:description"/>
+<meta content="/assets/images/sharing-image.png" property="og:image"/>
+<meta content="{{ site.domain }}" property="og:url"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="@liip" name="twitter:site"/>
+<meta content="@liip" name="twitter:creator"/>
+<meta content="{{ site.sharing_title }}" name="twitter:title"/>
+<meta content="{{ site.text.lead.text }}" name="twitter:description"/>
+<meta content="/assets/images/sharing-image.png" name="twitter:image"/>
+</head>
+<body class="rokka-lang-{{ site.language }}">
+{% include("tag_manager.html") %}
+<img src="/dist/assets/images/icons.svg"/>
+<div class="navbar navbar--sticky navbar--negative">
+    <div class="navbar__body">
+        <a class="navbar__brand" href="/{{ site.language }}/" title="Liip">
+            <div class="logo">
+                <img src="/dist/assets/images/rokka-logo.svg"/>
+            </div>
+        </a>
+        <div class="flex-item-1 text-right">
+            <a class="btn btn--negative btn--small rokka-navbar-cta" href="/{{ site.language }}/signup">
+                {{ site.text.navigation.cta|raw }}
             </a>
-
-            <div class="flex-item-1 text-right">
-              <a href="/{{ site.language }}/signup" class="btn btn--negative btn--small rokka-navbar-cta">{{ site.text.navigation.cta|raw }}</a>
-            </div>
-
-            <button class="navbar__toggle btn btn--bare" title="Toggle navbar">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="navbar-hamburger icon">
-                <rect x="4" y="5" width="16" height="2" class="navbar-hamburger__first"></rect>
-                <rect x="4" y="11" width="16" height="2" class="navbar-hamburger__second"></rect>
-                <rect x="4" y="17" width="16" height="2" class="navbar-hamburger__third"></rect>
-              </svg>
-            </button>
-            <nav class="navbar__collapse">
-              <ul class="navbar-menu">
-                <li><a href="/{{ site.language }}/contact" class="navbar-menu__link">{{ site.text.navigation.contact|raw }}</a></li>
-                <li><a href="/{{ site.language }}/documentation" class="navbar-menu__link">{{ site.text.navigation.documentation|raw }}</a></li>
-                <!-- <li><a href="#" class="navbar-menu__link">{{ site.text.navigation.login|raw }}</a></li> -->
-
-                <li class="navbar-language-item">
-                  {% if site.language == "de" %}
-                    <a href="/de{{ page.url }}" class="navbar-menu__link active">DE</a>
-                    <a href="/en{{ page.url }}" class="navbar-menu__link">EN</a>
-                  {% else %}
-                    <a href="/de{{ page.url }}" class="navbar-menu__link">DE</a>
-                    <a href="/en{{ page.url }}" class="navbar-menu__link active">EN</a>
-                  {% endif %}
-                </li>
-              </ul>
-            </nav>
-          </div>
         </div>
-
-
-        {% block breadcrumb_wrapper %}
-          <section class="section section--primary section--middle section--behind-navbar">
-            <div class="section__body">
-                {% block breadcrumb %}
-                  <div class="grid">
-                    <div class="grid__item">
-                      <h1 class="mrgb0">
-                        {% block page_title %}
-                          {{page.title}}
-                        {% endblock %}
-                      </h1>
-                    </div>
-                    <div class="grid__item md-w-2/3">
-                      <p class="text-lead">
-                        {% block page_description %}
-                          {% if page.description %}
-                            {{page.description}}
-                          {% endif %}
-                        {% endblock %}
-                      </p>
-                    </div>
-                  </div>
+        <button class="navbar__toggle btn btn--bare" title="Toggle navbar">
+            <svg class="navbar-hamburger icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <rect class="navbar-hamburger__first" height="2" width="16" x="4" y="5">
+                </rect>
+                <rect class="navbar-hamburger__second" height="2" width="16" x="4" y="11">
+                </rect>
+                <rect class="navbar-hamburger__third" height="2" width="16" x="4" y="17">
+                </rect>
+            </svg>
+        </button>
+        <nav class="navbar__collapse">
+            <ul class="navbar-menu">
+                <li>
+                    <a class="navbar-menu__link" href="/{{ site.language }}/contact">
+                        {{ site.text.navigation.contact|raw }}
+                    </a>
+                </li>
+                <li>
+                    <a class="navbar-menu__link" href="/{{ site.language }}/documentation">
+                        {{ site.text.navigation.documentation|raw }}
+                    </a>
+                </li>
+                <!-- <li><a href="#" class="navbar-menu__link">{{ site.text.navigation.login|raw }}</a></li> -->
+                <li class="navbar-language-item">
+                    {% if site.language == "de" %}
+                    <a class="navbar-menu__link active" href="/de{{ page.url }}">
+                        DE
+                    </a>
+                    <a class="navbar-menu__link" href="/en{{ page.url }}">
+                        EN
+                    </a>
+                    {% else %}
+                    <a class="navbar-menu__link" href="/de{{ page.url }}">
+                        DE
+                    </a>
+                    <a class="navbar-menu__link active" href="/en{{ page.url }}">
+                        EN
+                    </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+{% block breadcrumb_wrapper %}
+<section class="section section--primary section--middle section--behind-navbar">
+    <div class="section__body">
+        {% block breadcrumb %}
+        <div class="grid">
+            <div class="grid__item">
+                <h1 class="mrgb0">
+                    {% block page_title %}
+                  {{page.title}}
                 {% endblock %}
+                </h1>
             </div>
-          </section>
+            <div class="grid__item md-w-2/3">
+                <p class="text-lead">
+                    {% block page_description %}
+                  {% if page.description %}
+                    {{page.description}}
+                  {% endif %}
+                {% endblock %}
+                </p>
+            </div>
+        </div>
         {% endblock %}
+    </div>
+</section>
+{% endblock %}
 
-        {% block real_breadcrumb %}{% endblock %}
-
-
-        {% block content_wrapper %}
-        <section class="section">
-          <div class="section__body">
-            {% block content %}{% endblock %}
-          </div>
-        </section>
-        {% endblock %}
+{% block real_breadcrumb %}{% endblock %}
 
 
+{% block content_wrapper %}
+<section class="section">
+    <div class="section__body">
+        {% block content %}{% endblock %}
+    </div>
+</section>
+{% endblock %}
 
-        {% include("footer.html") %}
 
-        <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script> -->
-        <script src="/assets/scripts/rokka.js"></script>
-        
-        <!-- <script>hljs.initHighlightingOnLoad();</script> -->
-        {% block additional_javascript %}
 
-        {% endblock %}
-    </body>
+{% include("footer.html") %}
+<script src="/assets/scripts/rokka.js">
+</script>
+<!-- <script>hljs.initHighlightingOnLoad();</script> -->
+{% block additional_javascript %}
+
+{% endblock %}
+</body>
 </html>
