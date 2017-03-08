@@ -632,6 +632,14 @@ html {
     background-color: white;
 }
 
+.btn {
+    font-weight: bold;
+}
+
+.navbar-menu__link, .label, .navbar-language-item .navbar-menu__link.active {
+    font-weight: bold;
+}
+
 // .btn--negative {
 //     color: white;
 //     border-color: white;
@@ -854,6 +862,9 @@ html {
         height: 188 / $rokka-uoso-base-iphone + em;
         top: 21 / $rokka-uoso-base-iphone + em;
         left: 10 / $rokka-uoso-base-iphone + em;
+
+        background-size: 530%;
+        background-position: 34% 51%;
     }
 }
 
@@ -889,6 +900,9 @@ html {
 
         left: 39 / $rokka-uoso-base-ipad + em;
         top: 18 / $rokka-uoso-base-ipad + em;
+
+        background-size: 220%;
+        background-position: 27% 50%;
     }
 }
 
@@ -950,6 +964,8 @@ html {
         top: 0;
         transform-origin: top center;
         transform: rotateX(-78.7deg);
+        background-size: 120%;
+        background-position: 12% 81%;
     }
 }
 
@@ -1094,7 +1110,7 @@ html {
     height: 44px;
     border-radius: 100%;
     background-size: 100%;
-    background-image: url(../images/rokka-testimonial-freitag-benjamin.png);
+    background-image: url(../images/rokka-testimonial-freitag-benjamin.jpg);
     margin-right: 0.5rem;
     @include media('lg') {
         width: 70px;
