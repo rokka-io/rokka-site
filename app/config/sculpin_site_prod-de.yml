@@ -1,0 +1,7 @@
+language: de
+environment: prod
+
+domain: http://rokka.io/
+
+imports:
+  - translations/text_de.yml

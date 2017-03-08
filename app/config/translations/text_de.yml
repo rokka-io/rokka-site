@@ -1,16 +1,7 @@
-# The contents of this file are parsed and made available as
-# via `site.*`. So for example, {{ site.title }} can be used
-# in a template to get the contents of the `title` key.
-
 title: rokka
 subtitle: Fast and awesome image delivery.
 keywords: image manipulation service, image storage, image delivery, secure image library service, image API, image hosting
-
-imports:
-  - sculpin_site_en.yml
-
-# Translations
-language: de
+sharing_title: rokka is web images done right.
 
 text:
   navigation:
