@@ -14,8 +14,10 @@
     "gulp-include": "^2.3.1",
     "gulp-inject-svg": "^0.1.9",
     "gulp-sass": "^3.1.0",
+    "gulp-svgmin": "^1.2.3",
     "gulp-uglify": "^2.0.1",
     "gulp-uncss": "^1.0.6",
-    "pump": "^1.0.2"
+    "pump": "^1.0.2",
+    "run-sequence": "^1.2.2"
   }
 }

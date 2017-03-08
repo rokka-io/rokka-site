@@ -1,66 +1,88 @@
-var gulp = require('gulp'),
-    sass = require('gulp-sass'),
-    gutil = require('gulp-util'),
-    uglify = require('gulp-uglify'),
-    uncss = require('gulp-uncss'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cleancss = require('gulp-clean-css'),
-    htmlmin = require('gulp-htmlmin'),
-    include = require('gulp-include'),
-    injectSvg = require('gulp-inject-svg'),
-    exec = require('child_process').exec,
-    del = require('del'),
-    pump = require('pump'),
-    browserSync = require('browser-sync').create();
+const gulp = require('gulp');
+const sass = require('gulp-sass');
+const gutil = require('gulp-util');
+const uglify = require('gulp-uglify');
+const uncss = require('gulp-uncss');
+const autoprefixer = require('gulp-autoprefixer');
+const cleancss = require('gulp-clean-css');
+const htmlmin = require('gulp-htmlmin');
+const svgmin = require('gulp-svgmin');
+const include = require('gulp-include');
+const injectSvg = require('gulp-inject-svg');
+const runSequence = require('run-sequence');
+const exec = require('child_process').exec;
+const del = require('del');
+const pump = require('pump');
+const browserSync = require('browser-sync').create();
+
+const config = require('./gulpconfig.js');
 
 
 
-gulp.task('serve', function() {
+var env = 'local';
+
+
+gulp.task('clean', () => {
+  return del([config.dest])
+});
+
+
+gulp.task('serve', () => {
     browserSync.init({
         server: {
-            baseDir: "./dist"
+            baseDir: config.dest
         },
         open: false,
         reloadDelay: 1000,
         notify: false
     });
+
+    gulp.watch('source-assets/styles/**/*.scss', ['compile:styles']);
+    gulp.watch('source-assets/scripts/**/*.js', ['compile:scripts']);
+    gulp.watch('source/**/*', ['compile:html']);
 });
 
-gulp.task('favicons', ['images'], function () {
+
+/*
+  Clean up
+ */
+
+/*
+  Assets
+ */
+
+gulp.task('copy:favicons', () => {
   return gulp.src('source-assets/favicons/**/*')
-    .pipe(gulp.dest('dist/'))
+    .pipe(gulp.dest(config.dest))
     .pipe(browserSync.stream());
 });
 
-gulp.task('injectSvg', ['favicons'], function() {
-  return gulp.src('dist/**/*.html')
-    .pipe(injectSvg())
-    .pipe(gulp.dest('dist/'));
- 
+
+gulp.task('copy:fonts', () => {
+  return gulp.src('source-assets/liip-styleguide/dist/assets/toolkit/fonts/**/*')
+    .pipe(gulp.dest('dist/assets/fonts/'));
 });
 
-gulp.task('images', ['sculpin'], function () {
-  return gulp.src(['source-assets/images/**/*', 'source-assets/liip-styleguide/dist/assets/toolkit/icons/icons.svg'])
+
+gulp.task('copy:images', () => {
+  return gulp.src([
+      'source-assets/images/**/*',
+      'source-assets/liip-styleguide/dist/assets/toolkit/icons/icons.svg'
+    ])
     .pipe(gulp.dest('dist/assets/images/'))
     .pipe(browserSync.stream());
 });
 
-gulp.task('fonts', function () {
-  return gulp.src('source-assets/liip-styleguide/dist/assets/toolkit/fonts/**/*')
-    .pipe(gulp.dest('dist/assets/fonts/'))
-});
+
+gulp.task('copy', ['copy:favicons', 'copy:fonts', 'copy:images']);
 
 
-gulp.task('scripts', function () {
-  return gulp.src('source-assets/scripts/*.js')
-    .pipe(include()).on('error', gutil.log)
-    .pipe(gulp.dest('dist/assets/scripts/'))
-    .pipe(browserSync.stream());
-});
+/*
+  Compile styles, scripts and sculpin
+ */
 
-
-gulp.task('styles', function () {
-  return gulp.src('source-assets/styles/rokka.scss')
+gulp.task('compile:styles', () => {
+  return gulp.src(config.styles.src)
     .pipe(sass({
       includePaths: './'
     }))
@@ -68,16 +90,73 @@ gulp.task('styles', function () {
         browsers: ['last 2 versions', 'ie >= 10'],
         cascade: false
     }))
-    .pipe(gulp.dest('dist/assets/styles/'))
+    .pipe(gulp.dest(config.styles.dest))
     .pipe(browserSync.stream());
+});
+
+
+gulp.task('compile:scripts', () => {
+  return gulp.src(config.scripts.src)
+    .pipe(include()).on('error', gutil.log)
+    .pipe(gulp.dest(config.scripts.dest))
+    .pipe(browserSync.stream());
+});
+
+
+gulp.task('compile:html', (cb) => {
+  let count = 0;
+
+  for (const lang of config.languages) {
+    let sculpinEnv = env + '-' + lang;
+    let sculpinCmd = 'vendor/sculpin/sculpin/bin/sculpin generate --env=' + sculpinEnv;
+
+    exec(sculpinCmd, (err, stdout, stderr) => {
+      gutil.log('Sculpin: ' + gutil.colors.cyan(sculpinEnv) + '\n\n' + stdout);
+      gutil.log(gutil.colors.red(stderr));
+
+      gulp.src('output_' + sculpinEnv + '/**/*')
+          .pipe(gulp.dest(config.dest + lang))
+          .on('end', () => {
+            del('output_' + sculpinEnv);
+          });
+
+      count++;
+      if (count == config.languages.length) {
+        gulp.src('output_'+env+'-en/index.html').pipe(gulp.dest(config.dest));
+        cb();
+      }
+    });
+  }
+
+})
+
+
+
+gulp.task('compile', ['compile:styles', 'compile:scripts', 'compile:html']);
+
+
+
+gulp.task('inject', () => {
+  gulp.src('dist/**/*.svg')
+    .pipe(svgmin({
+        plugins: [{
+          removeDoctype: false
+        }, {
+          cleanupIDs: false
+        }]
+    }))
+    .pipe(gulp.dest(config.dest))
+    .on('end', () => {
+      return gulp.src('dist/**/*.html')
+        .pipe(injectSvg())
+        .pipe(gulp.dest(config.dest));
+    })
 });
 
 
 
 
-
-
-gulp.task('minify:scripts', ['sculpin', 'scripts'], function (cb) {
+gulp.task('minify:scripts', (cb) => {
 
   pump([
       gulp.src('dist/assets/scripts/*.js'),
@@ -99,7 +178,7 @@ gulp.task('minify:scripts', ['sculpin', 'scripts'], function (cb) {
 });
 
 
-gulp.task('minify:styles', ['styles', 'sculpin', 'scripts'] , function () {
+gulp.task('minify:styles', () => {
   return gulp.src('dist/assets/styles/rokka.css')
     .pipe(uncss({
         html: ['dist/**/*.html'],
@@ -120,7 +199,7 @@ gulp.task('minify:styles', ['styles', 'sculpin', 'scripts'] , function () {
 });
 
 
-gulp.task('minify:html', ['minify:styles', 'minify:scripts'] , function () {
+gulp.task('minify:html', () => {
   return gulp.src('dist/**/*.html')
     .pipe(htmlmin({
       collapseWhitespace: true,
@@ -132,38 +211,35 @@ gulp.task('minify:html', ['minify:styles', 'minify:scripts'] , function () {
       removeEmptyAttributes: true,
       removeComments: true
     }))
-    .pipe(gulp.dest('dist/'))
+    .pipe(gulp.dest(config.dest))
 });
 
 
-// Generate HTML with Sculpin
-gulp.task('sculpin', function (cb) {
-  exec('vendor/sculpin/sculpin/bin/sculpin generate --env=en && vendor/sculpin/sculpin/bin/sculpin generate --env=de', function (err, stdout, stderr) {
-    gutil.log(gutil.colors.cyan('Building pages with Sculpin\n\n') + stdout);
-    gutil.log(gutil.colors.red(stderr));
-    gutil.log(gutil.env.env);
-    gulp.src('output_en/**/*').pipe(gulp.dest('dist/en'));
-    gulp.src('output_de/**/*').pipe(gulp.dest('dist/de'))
-    gulp.src('output_en/index.html').pipe(gulp.dest('dist/'));
-    browserSync.reload();
-    cb(err);
-  });
-})
+gulp.task('minify', ['minify:styles', 'minify:scripts', 'minify:html']);
 
-gulp.task('setbuild', function () {
-  gutil.env.env = 'prod';
+
+
+
+
+
+gulp.task('build:stage', () => {
+  env = 'stage';
+  gulp.start('build');
 });
 
-// watch files
-gulp.task('watch', function() {
-  gulp.watch('source-assets/styles/**/*.scss', ['styles']);
-  gulp.watch('source-assets/scripts/**/*.js', ['scripts']);
-  gulp.watch('source-assets/liip-styleguide/dist/assets/toolkit/scripts/**/*.js', ['scripts']);
-  gulp.watch('source-assets/liip-styleguide/dist/assets/toolkit/styles/**/*.css', ['styles']);
-  gulp.watch('source/**/*', ['injectSvg']);
-  // gulp.watch('app/config/**/*', ['cleanup']);
+gulp.task('build:prod', () => {
+  env = 'prod';
+  gulp.start('build');
 });
 
-gulp.task('default', ['styles', 'scripts', 'watch', 'serve', 'fonts', 'injectSvg']);
-gulp.task('build', ['setbuild', 'minify:styles', 'minify:scripts', 'minify:html', 'fonts', 'injectSvg']);
+
+gulp.task('build', ['clean'], () => {
+  runSequence('compile', 'copy', 'inject', 'minify');
+});
+
+gulp.task('default', ['clean'], () => {
+  runSequence('compile', 'copy', 'inject', 'serve');
+});
+
+
 
