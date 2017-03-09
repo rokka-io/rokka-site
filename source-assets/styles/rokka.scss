@@ -16,6 +16,18 @@ $color-green: #6ea644;
 
 $breakpoint-uoso: 87.5em;
 
+
+@mixin image-2x($image) {
+  @media (min--moz-device-pixel-ratio: 1.3),
+         (-o-min-device-pixel-ratio: 2.6/2),
+         (-webkit-min-device-pixel-ratio: 1.3),
+         (min-device-pixel-ratio: 1.3),
+         (min-resolution: 1.3dppx) {
+    background-image: url($image);
+  }
+}
+
+
 body {
     background: white;
     overflow-x: hidden;
@@ -819,6 +831,7 @@ html {
 
     .rokka-uoso-device__hardware {
         background-image: url(../images/rokka-device-imac.png);
+        @include image-2x("../images/rokka-device-imac@2x.png");
         width: 1302 / $rokka-uoso-base-imac + em;;
         height:  603 / $rokka-uoso-base-imac + em;;
         left: -52 / $rokka-uoso-base-imac + em;
@@ -856,6 +869,7 @@ html {
     }
     .rokka-uoso-device__hardware {
         background-image: url(../images/rokka-device-iphone.png);
+        @include image-2x("../images/rokka-device-iphone@2x.png");
     }
     .rokka-uoso-device__screen {
         width: 104 / $rokka-uoso-base-iphone + em;
@@ -893,6 +907,7 @@ html {
 
     .rokka-uoso-device__hardware {
         background-image: url(../images/rokka-device-ipad.png);
+        @include image-2x("../images/rokka-device-ipad@2x.png");
     }
     .rokka-uoso-device__screen {
         width: 406 / $rokka-uoso-base-ipad + em;
@@ -952,6 +967,7 @@ html {
 
     .rokka-uoso-device__hardware {
         background-image: url(../images/rokka-device-macbook.png);
+        @include image-2x("../images/rokka-device-macbook@2x.png");
         width: 820 / $rokka-uoso-base-macbook + em;
         height: 458 / $rokka-uoso-base-macbook + em;
         top: -15 / $rokka-uoso-base-macbook + em;
