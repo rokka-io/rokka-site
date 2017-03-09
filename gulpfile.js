@@ -178,25 +178,25 @@ gulp.task('minify:scripts', (cb) => {
 });
 
 
-gulp.task('minify:styles', () => {
-  return gulp.src('dist/assets/styles/rokka.css')
-    // .pipe(uncss({
-    //     html: ['dist/**/*.html'],
-    //     ignore: [/language\-[\S]+/, /token[\S]+/, 'svg', '.logo', '.navbar'],
-    //     timeout: 1000
-    // }))
-    .pipe(cleancss({
-      level: {
-        1: {
-          specialComments: 0
-        },
-        2: {
-          all: true
-        }
-      }
-    }))
-    .pipe(gulp.dest('dist/assets/styles/'))
-});
+// gulp.task('minify:styles', () => {
+//   return gulp.src('dist/assets/styles/rokka.css')
+//     .pipe(uncss({
+//         html: ['dist/**/*.html'],
+//         ignore: [/language\-[\S]+/, /token[\S]+/, 'svg', '.logo', '.navbar'],
+//         timeout: 1000
+//     }))
+//     .pipe(cleancss({
+//       level: {
+//         1: {
+//           specialComments: 0
+//         },
+//         2: {
+//           all: true
+//         }
+//       }
+//     }))
+//     .pipe(gulp.dest('dist/assets/styles/'))
+// });
 
 
 gulp.task('minify:html', () => {
@@ -215,7 +215,7 @@ gulp.task('minify:html', () => {
 });
 
 
-gulp.task('minify', ['minify:styles', 'minify:scripts', 'minify:html']);
+gulp.task('minify', [/*'minify:styles',*/ 'minify:scripts', 'minify:html']);
 
 
 
