@@ -180,11 +180,11 @@ gulp.task('minify:scripts', (cb) => {
 
 gulp.task('minify:styles', () => {
   return gulp.src('dist/assets/styles/rokka.css')
-    .pipe(uncss({
-        html: ['dist/**/*.html'],
-        ignore: [/language\-[\S]+/, /token[\S]+/, 'svg', '.logo', '.navbar'],
-        timeout: 1000
-    }))
+    // .pipe(uncss({
+    //     html: ['dist/**/*.html'],
+    //     ignore: [/language\-[\S]+/, /token[\S]+/, 'svg', '.logo', '.navbar'],
+    //     timeout: 1000
+    // }))
     .pipe(cleancss({
       level: {
         1: {
