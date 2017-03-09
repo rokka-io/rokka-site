@@ -69,7 +69,7 @@ html {
     color: white;
     border-color: white;
     margin-right: $spacing-unit-small;
-    .navbar--overlay & {
+    .navbar--overlay &, .navbar--expanded & {
         color: $brand-color;
         border-color: $brand-color;
     }
@@ -93,11 +93,15 @@ html {
 
 
 .navbar-language-item {
+    text-align: center;
     .navbar-menu__link {
         font-weight: normal;
         font-size: 0.7rem;
-        &:last-child {
-            margin-left: $spacing-unit-tiny;
+        display: inline-block;
+        @include media('md') {
+            &:last-child {
+                margin-left: $spacing-unit-tiny;
+            }
         }
         &.active {
             font-weight: 500;
@@ -486,6 +490,9 @@ html {
 
 .rokka-hero-bubble--1 {
     transform: scale(1);
+    .rokka-hero-bubble__icon svg {
+        transform: translateX(11%);
+    }
 }
 .rokka-hero-bubble--2 {
     filter: blur(6px);
@@ -509,6 +516,9 @@ html {
     svg {
         height: 100%;
         width: 100%;
+        path, g {
+            stroke: white;
+        }
     }
 }
 
@@ -585,9 +595,20 @@ html {
 }
 
 .number__before {
-    .icon {
-        width: 34px;
-        height: 34px;
+    svg {
+        width: 50px;
+        height: 46px;
+        @include media('md') {
+            width: 36px;
+            height: 36px;
+        }
+        @include media('lg') {
+            width: 64px;
+            height: 64px;
+        }
+        g, path {
+            stroke: $brand-color;
+        }
     }
 }
 
