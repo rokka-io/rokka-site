@@ -19,23 +19,23 @@ Membership is the connection between a user and an organization. It defines thei
 
 If you have admin rights (given when creating a new organization automatically), you can add a user to the organization with this call.
 
-__awesomecompany__ would be your organization name, __user@email.com__ the email the user has used to register their own account at Rokka.
+__awesomecompany__ would be your organization name, __user@email.com__ the email the user has used to register their own account at rokka.
 
 Role can be `read`, `write` and `admin`.
 
 - Read role can only read metadata, including the organization, but not memberships. This could be used for a display-only application.
-- Write can add images and stacks, as well as reading metadata. This would be the role you would want to give your application interacting with Rokka, mainly.
+- Write can add images and stacks, as well as reading metadata. This would be the role you would want to give your application interacting with rokka, mainly.
 - Admin can do everything, including adding, removing and promoting users in the organization.
 
 It's best practice to create a user with only write access for general operations, and only use the admin user when necessary.
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/awesomecompany/memberships/user@email.com' -d '{
     "role": "write"
 }'
 ```
 
-```php
+```language-php
 use \Rokka\Client\Core\Membership;
 
 $client = \Rokka\Client\Factory::getUserClient();

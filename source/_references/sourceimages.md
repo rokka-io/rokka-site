@@ -30,10 +30,10 @@ You can create a source image with a post to the `/sourceimages` route and your 
 
 In the following example, __image.png__ is a image file in your current working directory and the organization is set to __mycompany__.
 
-```bash
+```language-bash
 curl -X POST -F filedata=@image.png 'https://api.rokka.io/sourceimages/mycompany'
 ```
-```php
+```language-php
 $client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
 
 $sourceImage = $client->uploadSourceImage(file_get_contents('image.png'), 'image.png');
@@ -50,10 +50,10 @@ You can retrieve meta data about a source image by providing the identifying has
 
 In the following example the organization is set to __mycompany__ and the hash is set to __c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5__.
 
-```bash
+```language-bash
 curl -X GET 'https://api.rokka.io/sourceimages/mycompany/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5'
 ```
-```php
+```language-php
 $client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
 
 $sourceImage = $client->getSourceImage('c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5');
@@ -63,7 +63,7 @@ var_dump($sourceImage);
 
 An example response looks like following.
 
-```javascript
+```language-js
 {
     "organization": "mycompany",
     "hash": "c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5",
@@ -89,10 +89,10 @@ To delete a source image, you do a delete call on the source images url.
 
 In the following example the organization is set to __mycompany__ and the hash is set to __c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5__.
 
-```bash
+```language-bash
 curl -X DELETE 'https://api.rokka.io/sourceimages/mycompany/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5'
 ```
-```php
+```language-php
 $client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
 
 $isDeleted = $client->deleteSourceImage('c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5');
@@ -118,10 +118,10 @@ You can limit the outputs of the list by using limit and offset parameters to pa
 
 In the following example the organization is set to __mycompany__ and the binary hash is set to __03b3e8a0bdd76ef55c021066642c9d2fa9c02799__.
 
-```bash
+```language-bash
 curl -X GET 'https://api.rokka.io/sourceimages/mycompany?binaryHash=03b3e8a0bdd76ef55c021066642c9d2fa9c02799'
 ```
-```php
+```language-php
 $client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
 
 $sourceImage = $client->getSourceImage('03b3e8a0bdd76ef55c021066642c9d2fa9c02799', true);
@@ -135,7 +135,7 @@ The result is a list with one item in it if anything is found.
 
 Should you have a need to download the source image again, you can do so, using this call. This is the only way to get the exact image back. Even if you choose "noop" as a stack operation, rokka will process the image which may alter it.
 
-```bash
+```language-bash
 curl -X GET 'https://api.rokka.io/sourceimages/mycompany/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5/download'
 ```
 

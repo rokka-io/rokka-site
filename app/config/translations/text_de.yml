@@ -1,0 +1,91 @@
+title: rokka
+subtitle: Fast and awesome image delivery.
+keywords: image manipulation service, image storage, image delivery, secure image library service, image API, image hosting
+sharing_title: rokka is web images done right.
+
+text:
+  navigation:
+    contact: Kontakt
+    documentation: Dokumentation
+    login: Login
+    cta: Jetzt kostenlos testen
+  hero:
+    heading_1: digital image processing
+    heading_2: done right.
+    lead: Bilder verwalten, verändern und verteilen.<span class="nbsp"> </span>Einfach und unglaublich schnell.
+    cta: Jetzt kostenlos testen
+    feature_1: Bilder hochladen und anzeigen
+    feature_2: ad-hoc Bildverarbeitung
+    feature_3: Blitzschnelle Verteilung
+  lead:
+    text: Der rokka image converter unterstützt Sie in der Verwaltung Ihrer digitalen Bilder – einfach und sauber. Ob Bildformate, SEO Attribute oder blitzschnelle Verteilung, mit rokka haben Sie das richtige Werkzeug für Ihre digitalen Bilder.
+  why_rokka:
+    title: Wieso rokka?
+    reasons:
+      -
+        title: Für Ihre Kunden
+        text: rokka unterstützt Sie in der professionellen Suchmaschinenoptimierung Ihrer Bilder.
+      -
+        title: Für Ihre Website
+        text: Mit rokka verwalten Sie Ihre Bilder sicher und reduzieren die Ladezeit Ihrer Website.
+      -
+        title: Für Ihr Budget
+        text: Mit rokka bezahlen Sie genau das, was Sie brauchen und verfügen über sämtliche verfügbaren Features. Sprich keine versteckten Kosten.
+
+  uoso:
+    title: Einmal hochladen,<br>vielfach verwenden
+    lead: Mit rokka benötigen Sie jedes Ihrer Bilder nur einmal – in der bestmöglichen Auflösung. Dank Ihrer individuell definierten Bildformate und Bildoutputs übernimmt rokka die gesamte Konvertierung.
+    feature_1: 
+      title: Fokus und auto-cropping
+      text: Definieren Sie den Fokus Ihres Bildes. rokka wählt beim Zuschneiden auf die von Ihnen definierten Bildformate den bestmöglichen Ausschnitt.
+
+  counter:
+    images_stored: Bilder hochgeladen
+    requests: Bilder verteilt
+    traffic: GB Datenvolumen
+
+  made_for_web: Gemacht für das Web.
+
+  fast_delivery:
+    title: Blitzschnelle Verteilung
+    text: Egal wo auf der Welt sich Ihre Kunden befinden, rokka liefert Ihre Bilder schnell, sicher und zuverlässig. Dies verringert die Ladezeit Ihres Kunden und Ihren Ressourcenbedarf.
+  
+  simple_api:
+    title: Einfache API und Libraries
+    text: Mit der rokka image API verteilen Sie Ihre Bilder ganz einfach auf Ihre Web-Präsenzen. Noch einfacher wird die Bedienung von rokka durch unsere Libraries für die gängigen Sprachen.
+
+  pricing:
+    title: 'Preise: Einfach und transparent.'
+    paid:
+      title: Ein Angebot für alle.
+      text: Bei rokka bezahlen Sie nur das, was Sie effektiv brauchen. Die Kosten werden Ihnen quartalsweise in Rechnung gestellt und anhand der monatlichen Aufstellung haben Sie eine genaue Übersicht über Ihre Kosten.
+      per_storage: pro GB Speicherplatz
+      per_traffic: pro GB Datenvolumen
+    free:
+      title: Kostenlose Version
+      text: Sie möchten die Katze nicht im Sack kaufen? Das verstehen wir und deshalb können sie alle Funktionen von rokka bis zu 2GB Speicherplatz und 5GB Datenvolumen kostenlos nutzen.
+      free: GRATIS
+      free_space: 2GB Speicherplatz
+      free_traffic: 5GB Datenvolumen
+    disclaimer: Alle Preise in CHF und ohne Mehrwertsteuer.
+
+  cta:
+    title: Testen Sie rokka kostenlos und ohne Verpflichtungen.
+    text: Machen Sie es wie die Migros oder FREITAG und starten Sie jetzt mit rokka.
+    cta_button: Kostenlose Testversion starten
+
+  testimonial:
+    title: Warum sich FREITAG für rokka entschied.
+    quote: «Bei FREITAG fotografieren wir rund 60'000 Unikate pro Jahr. Auf unserem alten Fotoserver legten wir zu jedem Unikat mehrere Bildausschnitte und -formate ab, was zu einer enormen Datenmenge führte. Dank rokka benötigen wir jedes Bild nur noch einmal und profitieren dank Digital Image Processing von der gerätespezifischen Bereitstellung der Bilder.»
+    name: Benjamin Caviezel
+    job_title: Specialist New Media bei FREITAG
+  
+  signup:
+    title: Starten Sie die 3-monatige Testversion.
+    text: Keine monatlichen Kosten und keine Kreditkarte nötig. Testen Sie rokka 90 Tage lang kostenlos.
+
+  contact:
+    title: Herzlichen Dank für Ihr Interesse.
+    text: rokka unterstützt Sie beim Verwalten, verändern und verteilen Ihrer Bilder. Einfach und unglaublich schnell.
+    mail: E-Mail
+    phone: Telefon

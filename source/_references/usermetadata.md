@@ -44,7 +44,7 @@ The most flexible way to add/replace/delete fields is with a PATCH request and h
 JSON-encoded in the body.
 This also allows to update more than one field at once.
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X PATCH 'https://api.rokka.io/sourceimages/myorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/user' -d '{
     "some_field": "some value",
     "str:some_string_field": "some value again",
@@ -61,7 +61,7 @@ If you want to update/add just one value, you can also do this by making a PUT r
 `https://api.rokka.io/sourceimages/{organization}/{hash}/meta/user/{name}` and include the 
 JSON encoded value in the body:
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/myorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/user/somefield' -d '"somevalue"'
 ```
 
@@ -72,12 +72,12 @@ metadata using a DELETE API call.
 
 For a single field:
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/myorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/user/somefield'
 ```
 
 Deleting all user metadata of an image:
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/myorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/user'
 ```

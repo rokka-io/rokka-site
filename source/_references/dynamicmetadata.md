@@ -11,11 +11,11 @@ Dynamic metadata is metadata added to a source image that changes the image iden
 
 To add dynamic metadata to a source image, you need to provide the organization, the identifying hash of the image, the name of the dynamic metadata and the values to add. Do this by making a PUT request to `https://api.rokka.io/sourceimages/{organization}/{hash}/meta/dynamic/{name}`
 
-Rokka will generate a new identifying hash for the image and delete the old identifying hash. The new location of the image will be returned in the `Location` header of the response. 
+rokka will generate a new identifying hash for the image and delete the old identifying hash. The new location of the image will be returned in the `Location` header of the response. 
 
 In the following example, we are adding a subject area to an image.
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/SubjectArea' -d '{
         "width": 20, 
         "height": 20, 
@@ -25,7 +25,7 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimag
 ```
 
 
-```php
+```language-php
 use Rokka\Client\Core\DynamicMetadata\SubjectArea;
 
 $client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
@@ -44,19 +44,19 @@ echo 'Updated subject area. New image hash: ' . $newHash . PHP_EOL;
 
 To delete dynamic metadata from a source image, you need to provide the organization, the identifying hash of the image and the name of the dynamic metadata. Do this by making a DELETE request to `https://api.rokka.io/sourceimages/{organization}/{hash}/meta/dynamic/{name}`
 
-Rokka will generate a new identifying hash for the image and delete the old identifying hash. The new location of the image will be returned in the `Location` header of the response. 
+rokka will generate a new identifying hash for the image and delete the old identifying hash. The new location of the image will be returned in the `Location` header of the response. 
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/SubjectArea'
 ```
 
-## [Subject area](#subject-area)
+## Subject area
 
 The subject area of an image is a box defined by its width, height and the coordinates of its
 starting point (top-left corner).
 Setting the subject area of an image allows the Crop operation (when used with the `auto` anchor),
 to center the cropping box around the defined SubjectArea.
-For further details see the [Crop operation](/documentation/references/operations.html#crop) 
+For further details see the [Crop operation](../references/operations.html#crop) 
  
 You can use the SubjectArea to specify the most important part of the image, the part that should be
 retained at any size.

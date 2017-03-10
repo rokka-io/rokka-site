@@ -3,7 +3,7 @@ title: API rate limiting and throttling
 use: [guides]
 ---
 
-To avoid unexpected load spikes on our servers, we enforce some rate limiting on API calls. Currently this only concerns calls on the [/sourceimages/ route](/documentation/references/source-images.html), but may change in the future. It will not affect delivering images to your end users. 
+To avoid unexpected load spikes on our servers, we enforce some rate limiting on API calls. Currently this only concerns calls on the [/sourceimages/ route](../references/source-images.html), but may change in the future. It will not affect delivering images to your end users. 
 
 Before rejecting your requests when doing too many of them, the system throttles you with delaying them. You won't recognize much, except that they take longer than usual.
 

@@ -17,12 +17,12 @@ The images are by default sorted by their created date in a descending order (la
 Be aware: newly uploaded images or changed metadata may take a few seconds until
 they appear in the results.
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/myorganization'
 ```
 
 Example JSON response:
-```js
+```language-js
 {
   "total": 126,
   "links": {
@@ -66,12 +66,12 @@ Where `limit` must be an integer number between `0` and `2000`.
 Please notice that using `limit=0` will return an empty list of items, but can be used to validate the
 provided search parameters or for just get the total result count.
 
-```bash
+```language-bash
 curl -X GET 'https://api.rokka.io/sourceimages/myorganization?limit=20&offset=100'
 ```
 
 Example JSON response:
-```js
+```language-js
 {
   "total": 126,
   "links": {
@@ -102,7 +102,7 @@ return a link for the next page with the cursor value in it.
 A typical response for an organization with more than 10'000 hits looks like the following:
 
 Example JSON response:
-```js
+```language-js
 {
    "total" : 74088,
    "links" : {
@@ -124,7 +124,7 @@ Just append the field-name and value to your list request.
 
 The following returns all images with height = 1200.
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/myorganization?height=1200'
 ```
 
@@ -142,7 +142,7 @@ those fields are accessible by using the `user:` and the correct [field type](us
 
 The following example will return all images where the field `my_integer_field` has a value of `3`:
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/myorganization?user:int:my_integer_field=3'
 ```
 
@@ -150,7 +150,7 @@ curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimag
 
 Returning all images which start with a certain value in a field is as easy as appending a star:
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/myorganization?name=plan*'
 ```
 
@@ -185,21 +185,21 @@ You can change the sort field by using the `sort` parameter, it accepts a field 
 
 The following will return the items sorted by the image size, ascending:
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/myorganization?sort=size'
 ```
 
 Default sort order is descending; if you want to change it, add `desc` or `asc` to
 your sort field, eg. the biggest images first:
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/myorganization?sort=size desc'
 ```
 
 Sorting by multiple fields is possible, just add multiple sorting criteria separated by comma.
 The following example will sort images first by `create` descending and later by `size` ascending: 
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/myorganization?sort=created desc,size asc'
 ```
 
@@ -208,6 +208,6 @@ filtering: both the `user:` and the field type prefix must be specified.
 
 The following will sort by the user defined field `my_integer_field` in a descending order: 
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/myorganization?sort=user:int:my_integer_field desc'
 ```

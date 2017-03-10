@@ -1,0 +1,91 @@
+title: rokka
+subtitle: Fast and awesome image delivery.
+keywords: image manipulation service, image storage, image delivery, secure image library service, image API, image hosting
+sharing_title: rokka is web images done right.
+
+text:
+  navigation:
+    contact: Contact
+    documentation: Documentation
+    login: Login
+    cta: Start your free trial
+  hero:
+    heading_1: digital image processing
+    heading_2: done right.
+    lead: Store, render and deliver images.<span class="nbsp"> </span>Easy and blazingly fast.
+    cta: Start your free trial
+    feature_1: Upload and render images
+    feature_2: image processing on the fly
+    feature_3: Lightning fast delivery
+  lead:
+    text: The rokka image converter supports you in storing your digital images – easy and neat. Whether for handling image formats, SEO attributes or the lightning fast delivery, rokka is just the right tool for your digital images.
+  why_rokka:
+    title: Why rokka?
+    reasons:
+      -
+        title: For your clients
+        text: rokka supports you with professional search engine optimization of your digital images.
+      -
+        title: For your website
+        text: With rokka you manage your digital images safely and improve the speed of your website.
+      -
+        title: For your budget
+        text: "With rokka you pay exactly what you use and have all the available features. That means: no hidden costs."
+
+  uoso:
+    title: Upload once,<br>show often
+    lead: With rokka you upload your image just once – in the highest possible resolution. Working with your individually defined image formats and outputs, rokka takes care of the whole conversion.
+    feature_1: 
+      title: Focal point and auto cropping
+      text: Define the focal point of your image. Thanks to its clever auto cropping operations, rokka will identify the best possible sector and use it for all your pre-defined image formats.
+
+  counter:
+    images_stored: images stored
+    requests: image requests
+    traffic: GB traffic
+
+  made_for_web: Made for the web.
+
+  fast_delivery:
+    title: Lightning fast delivery
+    text: No matter where in the world your viewers are, rokka delivers your images fast, safely and dependably. This also saves your server resources.
+  
+  simple_api:
+    title: Simple API &amp; libraries
+    text: With the rokka image API you deliver your images easily on all your web sites. What’s more, we offer libraries for common languages, making rokka even easier to use.
+
+  pricing:
+    title: 'Pricing: Easy and transparent'
+    paid:
+      title: One plan fits all
+      text: Only pay for what you effectively use. You get a quarterly invoice with a detailed listing of what you have used, so you have an exact overview of your costs.
+      per_storage: per GB of storage
+      per_traffic: per GB of traffic
+    free:
+      title: Free plan
+      text: You don't want to buy a pig in a poke? Up to 2GB of space and 5GB of traffic, rokka is free for everyone.
+      free: FREE
+      free_space: 2GB of space
+      free_traffic: 5GB of traffic
+    disclaimer: All prices in CHF and excl. VAT.
+
+  cta:
+    title: Try out rokka for 90 days.
+    text: Follow companies like Migros or FREITAG – start now with rokka.
+    cta_button: Start your free trial
+
+  testimonial:
+    title: Why FREITAG chose rokka
+    quote: “At FREITAG we photograph around 60'000 unique products per year. With our old image server, we had to store several image formats and cuttings per product, which led to an enormous amount of data. With rokka, we store every image just once and benefit due to digital image processing from device-specific preparation of all images.”
+    name: Benjamin Caviezel
+    job_title: Specialist New Media at FREITAG
+
+  signup:
+    title: Try out rokka for 90 days.
+    text: rokka is free to use for 90 days. No monthly costs, no credit card required.
+
+  contact:
+    title: Thank you for your interest.
+    text: rokka supports you in storing, rendering and delivering your images. Easy and blazingly fast.
+    mail: E-mail
+    phone: Phone

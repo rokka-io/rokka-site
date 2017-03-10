@@ -1,15 +1,16 @@
 ---
 title: Upload and Render an Image
+use: [guides]
 ---
 
 ## Upload Image into an Organization
 
 You have your user, know how to authenticate and created an organization. Now let's upload an image!
 
-```bash
+```language-bash
 curl -X POST -F filedata=@image.jpg 'https://api.rokka.io/sourceimages/testorganization'
 ```
-```php
+```language-php
 /** @var \Rokka\Client\Image $imageClient */ 
 $imageClient->uploadSourceImage(file_get_contents('image.jpg'), 'image.jpg');
 ```
@@ -17,7 +18,7 @@ $imageClient->uploadSourceImage(file_get_contents('image.jpg'), 'image.jpg');
 The previous cURL command does a __POST__ request on api.rokka.io, with an image under __./image.jpg__ for an organization called __testorganization__.
 The @ sign instructs cURL to send the binary data of the specified file. If the upload was successful, it returns the metadata in the "source image" structure, for example: 
 
-```javascript
+```language-js
 {
     "total": 1,
     "sourceimages": [
@@ -47,7 +48,7 @@ Keep track of the hash you where returned. You will need this hash to display th
 Now that your image is uploaded, you can create a stack to render our image with custom operations.
 Let's say we want to resize our images to have them display as thumbnails in our app.
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/thumbnail' -d '[
     {
         "name": "resize",
@@ -58,7 +59,7 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/tes
     }
 ]'
 ```
-```php
+```language-php
 
 $resize = new \Rokka\Client\Core\StackOperation('resize', ['width' => 200, 'height' => 200]);
 $stackOperationCollection = new \Rokka\Client\Core\StackOperationCollection([$resize]);
@@ -82,4 +83,4 @@ Notice that the organization name is a __subdomain__ of rokka.io and that the st
 
 `https://testorganization.rokka.io/thumbnail/c03683b067927d77973b458e0baa40aa7b5e5418/image.jpg`
 
-There is also the dynamic rendering that allows to specify operations in the URL without creating a stack. Dynamic rendering should __NOT__ be used in production systems, since its output  is not cached. You can however use stack rendering with custom options (explained in the [rendering reference](/documentation/references/render.html)), if you need for instance different resizing options. 
+There is also the dynamic rendering that allows to specify operations in the URL without creating a stack. Dynamic rendering should __NOT__ be used in production systems, since its output  is not cached. You can however use stack rendering with custom options (explained in the [rendering reference](../references/render.html)), if you need for instance different resizing options. 

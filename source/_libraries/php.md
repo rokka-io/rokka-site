@@ -1,5 +1,6 @@
 ---
-title: PHP Library and Symfony Bundle 
+title: PHP Library and Symfony Bundle
+use: [libraries]
 ---
 
 ## PHP Library

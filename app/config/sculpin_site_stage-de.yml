@@ -1,0 +1,7 @@
+language: de
+environment: stage
+
+domain: http://stage.rokka.io/
+
+imports:
+  - translations/text_de.yml

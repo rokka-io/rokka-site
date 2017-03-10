@@ -1,5 +1,5 @@
-<ul class="list--unstyled p-0">
+<ul class="list-stacked list-stacked--divided">
     {% for article in articles %}
-    <li class="list-group-item{% if page.url == article.url %} active{% endif %}"><a href="{{ article.url }}">{{ article.title }}</a></li>
+    <li class="list-group-item{% if page.url == article.url %} text-bold{% endif %}"><a href="/{{ site.language }}{{ article.url }}">{{ article.title }}</a></li>
     {% endfor %}
 </ul>

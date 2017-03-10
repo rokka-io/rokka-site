@@ -17,7 +17,7 @@ use: [references]
 You can create a stack by providing an organization, the name and operations to apply on the stack.
 In the following example, the stack applies a resize of 200 x 200 and rotates it by 45 degrees. It's created in the testorganization and given the name teststack.
 
-```bash
+```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '[
     {
         "name": "resize",
@@ -35,7 +35,7 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/tes
 ]'
 ```
 
-```php
+```language-php
 use Rokka\Client\Core\StackOperation;
 use Rokka\Client\Core\StackOperationCollection;
 
@@ -59,11 +59,11 @@ Note: The name "dynamic" is reserved and can't be chosen, as it's used for dynam
 
 You can retrieve a stack by providing the organization and stack name. This example gets the stack teststack from the organization testorganization.
 
-```bash
+```language-bash
 curl -X GET 'https://api.rokka.io/stacks/testorganization/teststack'
 ```
 
-```php
+```language-php
 $client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
 
 $stack = $client->getStack('teststack');
@@ -74,7 +74,7 @@ print_r($stack);
 
 An example JSON response looks like this.
 
-```javascript
+```language-js
 {
     organization: "testorganization",
     name: "teststack",
@@ -111,11 +111,11 @@ An example JSON response looks like this.
 
 Deleting a stack works like this.
 
-```bash
+```language-bash
 curl -X DELETE 'https://api.rokka.io/stacks/testorganization/teststack'
 ```
 
-```php
+```language-php
 $client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
 
 $deleted = $client->deleteStack('teststack');
@@ -131,11 +131,11 @@ if (true === $deleted) {
 
 It is possible to list all stacks for an organization.
 
-```bash
+```language-bash
 curl -X GET 'https://api.rokka.io/stacks/testorganization'
 ```
 
-```php
+```language-php
 use Rokka\Client\Core\Stack;
 
 $client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');

@@ -14,10 +14,10 @@ use: [references]
 
 It is possible to list all operations.
 
-```bash
+```language-bash
 curl -X GET 'https://api.rokka.io/operations'
 ```
-```php
+```language-php
 $client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
 
 $operations = $client->listOperations();
@@ -86,7 +86,7 @@ Trims edges that are the background color from an image.
 
 - `fuzzy`: Number, between 0 and 100. Sets the degree of tolerance for pixel colour when calculating how much to trim from the image. The default value is 0.
 
-## [Crop](#crop)
+## Crop
 
 Crops an image to a set size.
 
@@ -99,7 +99,7 @@ Crops an image to a set size.
     - `YOFFSET` is either a number of pixels or "top", "center", "bottom".
    
    The default value is `auto`, which will crop the image centering the crop box around the defined 
-   [Subject Area](/documentation/references/dynamic-metadata.html#subject-area), if any.
+   [Subject Area](../references/dynamic-metadata.html#subject-area), if any.
    If no Subject Area is defined, the crop operation will fallback to `center-center`.
 
 ## Noop
