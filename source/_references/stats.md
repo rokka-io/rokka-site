@@ -13,11 +13,11 @@ curl -H Api-Key: $API_KEY -X GET 'https://api.rokka.io/stats/{organization}'
 
 ## Specify the date range
 
-To get stats for specific days you can specify the startTime and endTime query parameters like so: 
+To get stats for specific days you can specify the from and to query parameters like so: 
 
 ```language-bash
-curl -H Api-Key: $API_KEY -X GET 'https://api.rokka.io/stats/{organization}?startTime=2016-11-11&endTime=2017-01-01'
+curl -H Api-Key: $API_KEY -X GET 'https://api.rokka.io/stats/{organization}?from=2016-11-11&to=2017-01-01'
 ```
 
-You can use just one or both. The startTime parameter defaults to 30 days ago, while the endTime parameter defaults to now.
-Note: Starting time and ending time can not have the same value. 
+You can use just one or both. The from parameter defaults to 30 days ago, while the to parameter defaults to now.
+Note: Starting date and ending date can not have the same value. 
