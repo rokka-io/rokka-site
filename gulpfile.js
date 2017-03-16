@@ -17,15 +17,11 @@ const browserSync = require('browser-sync').create();
 
 const config = require('./gulpconfig.js');
 
-
-
-var env = 'local';
-
+let env = 'local';
 
 gulp.task('clean', () => {
   return del([config.dest])
 });
-
 
 gulp.task('serve', () => {
     browserSync.init({
@@ -41,11 +37,6 @@ gulp.task('serve', () => {
     gulp.watch('source-assets/scripts/**/*.js', ['compile:scripts']);
     gulp.watch('source/**/*', ['compile:html']);
 });
-
-
-/*
-  Clean up
- */
 
 /*
   Assets
@@ -130,11 +121,17 @@ gulp.task('compile:html', (cb) => {
 
 })
 
-
-
 gulp.task('compile', ['compile:styles', 'compile:scripts', 'compile:html']);
 
-
+gulp.task('dashboard', (cb) => {
+  exec('./install-dashboard.sh', (err, stdout, stderr) => {
+    if (err) {
+      throw err;
+    }
+    gutil.log(gutil.colors.red(stderr));
+    cb();
+  })
+})
 
 gulp.task('inject', () => {
   gulp.src('dist/**/*.svg')
@@ -152,9 +149,6 @@ gulp.task('inject', () => {
         .pipe(gulp.dest(config.dest));
     })
 });
-
-
-
 
 gulp.task('minify:scripts', (cb) => {
 
@@ -214,12 +208,7 @@ gulp.task('minify:html', () => {
     .pipe(gulp.dest(config.dest))
 });
 
-
 gulp.task('minify', [/*'minify:styles',*/ 'minify:scripts', 'minify:html']);
-
-
-
-
 
 
 gulp.task('build:stage', () => {
@@ -234,11 +223,11 @@ gulp.task('build:prod', () => {
 
 
 gulp.task('build', ['clean'], () => {
-  runSequence('compile', 'copy', 'inject', 'minify');
+  runSequence('compile', 'copy', 'dashboard', 'inject', 'minify');
 });
 
 gulp.task('default', ['clean'], () => {
-  runSequence('compile', 'copy', 'inject', 'serve');
+  runSequence('compile', 'copy', 'dashboard', 'inject', 'serve');
 });
 
 
