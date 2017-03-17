@@ -9,11 +9,11 @@ Local Development
 Do have the rendered output immediatly on your development environment, do:
 
 ```
-composer install
-vendor/sculpin/sculpin/bin/sculpin generate --watch --server
+composer install && npm install
+./node_modules/.bin/gulp
 ```
 
-and then open [http://localhost:8000](http://localhost:8000) in your browser
+and then open [http://localhost:3000](http://localhost:3000) in your browser
 
 
 Documentation
