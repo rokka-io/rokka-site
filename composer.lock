@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d414fa19215723a993fe259e7f267dd",
+    "content-hash": "f927f2b6bbc8beb657a292c70c6277c1",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1083,43 +1083,6 @@
                 "textile"
             ],
             "time": "2014-01-02T09:39:06+00:00"
-        },
-        {
-            "name": "petemc/sculpin-gulp-bundle",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/petemcfarlane/sculpin-gulp-bundle.git",
-                "reference": "715eb5e9e5dfc23c0db6fc09f13f281e42d2acf6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/petemcfarlane/sculpin-gulp-bundle/zipball/715eb5e9e5dfc23c0db6fc09f13f281e42d2acf6",
-                "reference": "715eb5e9e5dfc23c0db6fc09f13f281e42d2acf6",
-                "shasum": ""
-            },
-            "require-dev": {
-                "phpspec/phpspec": "^2.5",
-                "sculpin/sculpin": "^2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PeteMc\\Sculpin\\SculpinGulpBundle\\": "src/PeteMc/Sculpin/SculpinGulpBundle/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Pete McFarlane",
-                    "email": "peterjohnmcfarlane@gmail.com"
-                }
-            ],
-            "description": "Run gulp tasks with sculpin generate",
-            "time": "2016-04-13 13:46:40"
         },
         {
             "name": "psr/log",
@@ -2656,8 +2619,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "sculpin/sculpin": 20,
-        "dflydev/embedded-composer": 20,
-        "petemc/sculpin-gulp-bundle": 20
+        "dflydev/embedded-composer": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
