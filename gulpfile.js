@@ -128,7 +128,10 @@ gulp.task('dashboard', (cb) => {
     if (err) {
       throw err;
     }
+
+    gutil.log('Dashboard: \n\n' + stdout);
     gutil.log(gutil.colors.red(stderr));
+
     cb();
   })
 })

@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # clone repo and make sure we're up to date
-git clone -q https://github.com/rokka-io/rokka-dashboard.git rokka-dashboard
+if [ ! -d rokka-dashboard ]; then
+  git clone -q https://github.com/rokka-io/rokka-dashboard.git rokka-dashboard
+fi
+
 cd rokka-dashboard
 git checkout -q master
 git pull origin master
