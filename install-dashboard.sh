@@ -21,3 +21,5 @@ mkdir -p ../dist/dashboard
 cp build/*.{svg,json,ico} ../dist/assets/dashboard
 cp -R build/static ../dist/assets/dashboard
 cp build/index.html ../dist/dashboard/
+
+cat ../dist/dashboard/index.html
