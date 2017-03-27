@@ -9,11 +9,14 @@ env:
 install:
   - composer install
 
+before_script:
+  - "[[ \"$TRAVIS_PULL_REQUEST\" == 'false' && \"$TRAVIS_BRANCH\" == 'master' ]] && BUILD_CMD='build:prod' || BUILD_CMD='build:stage'"
+
 script:
   - curl -o ~/.nvm/nvm.sh https://raw.githubusercontent.com/creationix/nvm/v0.31.0/nvm.sh # update nvm
   - bash -c "source ~/.nvm/nvm.sh; nvm install $NODE_JS_VERSION;"
   - bash -c "source ~/.nvm/nvm.sh; nvm use $NODE_JS_VERSION;  node --version; npm install"
-  - bash -c "source ~/.nvm/nvm.sh; nvm use $NODE_JS_VERSION; ./node_modules/.bin/gulp build:stage"
+  - bash -c "source ~/.nvm/nvm.sh; nvm use $NODE_JS_VERSION; ./node_modules/.bin/gulp $BUILD_CMD"
 
 deploy:
   # How to deploy to S3: https://docs.travis-ci.com/user/deployment/s3/
