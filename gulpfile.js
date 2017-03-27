@@ -211,7 +211,7 @@ gulp.task('minify:html', () => {
     .pipe(gulp.dest(config.dest))
 });
 
-gulp.task('minify', [/*'minify:styles',*/ 'minify:scripts', 'minify:html']);
+gulp.task('minify', [/*'minify:styles',*/ 'minify:scripts' /*'minify:html'*/]);
 
 
 gulp.task('build:stage', () => {
