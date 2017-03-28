@@ -3,30 +3,41 @@ language: php
 php:
   - '7.0'
 
-env:
-  - NODE_JS_VERSION=7
-
 install:
   - composer install
 
 before_script:
-  - "[[ \"$TRAVIS_PULL_REQUEST\" == 'false' && \"$TRAVIS_BRANCH\" == 'master' ]] && BUILD_CMD='build:prod' || BUILD_CMD='build:stage'"
+  - source ./.travis/before_script.sh
 
 script:
   - curl -o ~/.nvm/nvm.sh https://raw.githubusercontent.com/creationix/nvm/v0.31.0/nvm.sh # update nvm
   - bash -c "source ~/.nvm/nvm.sh; nvm install $NODE_JS_VERSION;"
   - bash -c "source ~/.nvm/nvm.sh; nvm use $NODE_JS_VERSION;  node --version; npm install"
+  - bash -c "source ~/.nvm/nvm.sh; nvm use $NODE_JS_VERSION;  node --version; npm rebuild"
   - bash -c "source ~/.nvm/nvm.sh; nvm use $NODE_JS_VERSION; ./node_modules/.bin/gulp $BUILD_CMD"
+
+secure:
+  global:
+    # To store these securely, here is how to encrypt: https://docs.travis-ci.com/user/encryption-keys/
+    - secure: FnJfgEw0hyfUhsPPgMeluZQpHlVZSrVgTgQXPWbX4WGFbGrrF0NdtzTtdIczCn8TEgIlDfvuq4LtGL3Gd6t1rmShr+yY6CR2Gb3qiDAbJ+RzkOF5ae2qgJLu7CW+lruZ03/whI0sHKBSJgAJRMrgSpgWxXGVHul8MpgjvCyXIsadKxw5Ayl934UrBoerdrTgdzr2f7FSFR3Zl8RPcziMPfdb+IfwZ3pOzG/LHd/sGheTC13LQj+zI+/fF4yyfRPZRweHEpAuiF6zOZv8itXo4WRUB4TyLQtxDjY3n09VYVK27EKFungq0+jjnurXOc22O5jiLQxCXGKpQokdqHDI9YbUlZCODmUJ+MkVdPd+b1wM0hNRoZ6qYqz4rPqfamCIGpkXyVgTDAwH65v5JjdgBKzt+pZwF4qIzV8CFZwQI0bE5pf0LFjapHryQhSNX657lnEvyNUizH8HIdDGJpIJRl/U3RE4L6EmLTUz4tHxyR7WMXFWKb2qXoGBLkhWeXmxGga54kHG53LfvI0e8Rsw6a0C9Tj2JTEA2OD1TwaXz71JZ5d4J5+s5RagaaCLbxvuQkd82/F9WNk56o3q8DimfDKoAO5b+O+3N+THjvKI3NftgZSPfBP2gQ39dACYIhUmMRqn7UNbEwSEV23jn2U4l07bpgOLs2OC7MHIf/PQd+g=
+    - secure: Bw4UpC5flP/7hkEn6yK/cPG/qdyy/BWSt/BZzyZxaLSm4GZ1DH0m2fhxcwdVvShsfWSoFGZ2HL2NKL6vxnmDUD+Ui3QYNw6S8FOmqT2fVQosIfiM3GAHac8ibfnebp2ASKB2oPR640jLi9lxnNL4VIS66HGcy97ZUPzhPOkXxGQEzx4bNO7e362617FHcw7SxZq0ZEVkFMcBEI/TdbxpFBPGJ1HI+crIjlPk++jfn5kjmkSfXk68NHIB5TowJKM8kuEwrwCgrU322N7N6sK/Ggr6jYRIFJWNFOhrjgZF5oc0P6aXfnRBZ8ciiqGjyxCcpyTbGqcFEdkE9oipuI0ifEXGbQ7cWDOPm19SAzwrRRbX/dlb9/Ds4+FGvyzn4ZbXHvi0im2xOB2tcfiBycjnzbOh4VZnoBD5gKUwOEGbrf8svzzZQzlEAB8/zMSSjG9jegBQ4svcPYSgz45zgfWyL75MurLL3OJ8N8RZ7Isr1Oy9TGdcSCk3/9K4mZ5WZleGlmOKRA1H/VjktB6Mx3a3QGwCI8WCtOAaLIQASqYaKpQL/M4Wq9lugRiOcy91NwqZebqHvl22SC/hDJ+gYhMZX8szDAuR2SfzSqBDGdaiwdoY30/wlMYqQGyHOu0xxEdGtK4byl8Pqq2oyvGNK3WeXs0w8yum3MMyUlwKPxAHzUY=
+
+env:
+  global:
+    - NODE_JS_VERSION: 7
+    # To store these securely, here is how to encrypt: https://docs.travis-ci.com/user/encryption-keys/
+    - secure: FnJfgEw0hyfUhsPPgMeluZQpHlVZSrVgTgQXPWbX4WGFbGrrF0NdtzTtdIczCn8TEgIlDfvuq4LtGL3Gd6t1rmShr+yY6CR2Gb3qiDAbJ+RzkOF5ae2qgJLu7CW+lruZ03/whI0sHKBSJgAJRMrgSpgWxXGVHul8MpgjvCyXIsadKxw5Ayl934UrBoerdrTgdzr2f7FSFR3Zl8RPcziMPfdb+IfwZ3pOzG/LHd/sGheTC13LQj+zI+/fF4yyfRPZRweHEpAuiF6zOZv8itXo4WRUB4TyLQtxDjY3n09VYVK27EKFungq0+jjnurXOc22O5jiLQxCXGKpQokdqHDI9YbUlZCODmUJ+MkVdPd+b1wM0hNRoZ6qYqz4rPqfamCIGpkXyVgTDAwH65v5JjdgBKzt+pZwF4qIzV8CFZwQI0bE5pf0LFjapHryQhSNX657lnEvyNUizH8HIdDGJpIJRl/U3RE4L6EmLTUz4tHxyR7WMXFWKb2qXoGBLkhWeXmxGga54kHG53LfvI0e8Rsw6a0C9Tj2JTEA2OD1TwaXz71JZ5d4J5+s5RagaaCLbxvuQkd82/F9WNk56o3q8DimfDKoAO5b+O+3N+THjvKI3NftgZSPfBP2gQ39dACYIhUmMRqn7UNbEwSEV23jn2U4l07bpgOLs2OC7MHIf/PQd+g=
+    - secure: Bw4UpC5flP/7hkEn6yK/cPG/qdyy/BWSt/BZzyZxaLSm4GZ1DH0m2fhxcwdVvShsfWSoFGZ2HL2NKL6vxnmDUD+Ui3QYNw6S8FOmqT2fVQosIfiM3GAHac8ibfnebp2ASKB2oPR640jLi9lxnNL4VIS66HGcy97ZUPzhPOkXxGQEzx4bNO7e362617FHcw7SxZq0ZEVkFMcBEI/TdbxpFBPGJ1HI+crIjlPk++jfn5kjmkSfXk68NHIB5TowJKM8kuEwrwCgrU322N7N6sK/Ggr6jYRIFJWNFOhrjgZF5oc0P6aXfnRBZ8ciiqGjyxCcpyTbGqcFEdkE9oipuI0ifEXGbQ7cWDOPm19SAzwrRRbX/dlb9/Ds4+FGvyzn4ZbXHvi0im2xOB2tcfiBycjnzbOh4VZnoBD5gKUwOEGbrf8svzzZQzlEAB8/zMSSjG9jegBQ4svcPYSgz45zgfWyL75MurLL3OJ8N8RZ7Isr1Oy9TGdcSCk3/9K4mZ5WZleGlmOKRA1H/VjktB6Mx3a3QGwCI8WCtOAaLIQASqYaKpQL/M4Wq9lugRiOcy91NwqZebqHvl22SC/hDJ+gYhMZX8szDAuR2SfzSqBDGdaiwdoY30/wlMYqQGyHOu0xxEdGtK4byl8Pqq2oyvGNK3WeXs0w8yum3MMyUlwKPxAHzUY=
 
 deploy:
   # How to deploy to S3: https://docs.travis-ci.com/user/deployment/s3/
   # master
   - provider: s3
-    # To store these securely, here is how to encrypt: https://docs.travis-ci.com/user/encryption-keys/
-    access_key_id:
-      secure: "FnJfgEw0hyfUhsPPgMeluZQpHlVZSrVgTgQXPWbX4WGFbGrrF0NdtzTtdIczCn8TEgIlDfvuq4LtGL3Gd6t1rmShr+yY6CR2Gb3qiDAbJ+RzkOF5ae2qgJLu7CW+lruZ03/whI0sHKBSJgAJRMrgSpgWxXGVHul8MpgjvCyXIsadKxw5Ayl934UrBoerdrTgdzr2f7FSFR3Zl8RPcziMPfdb+IfwZ3pOzG/LHd/sGheTC13LQj+zI+/fF4yyfRPZRweHEpAuiF6zOZv8itXo4WRUB4TyLQtxDjY3n09VYVK27EKFungq0+jjnurXOc22O5jiLQxCXGKpQokdqHDI9YbUlZCODmUJ+MkVdPd+b1wM0hNRoZ6qYqz4rPqfamCIGpkXyVgTDAwH65v5JjdgBKzt+pZwF4qIzV8CFZwQI0bE5pf0LFjapHryQhSNX657lnEvyNUizH8HIdDGJpIJRl/U3RE4L6EmLTUz4tHxyR7WMXFWKb2qXoGBLkhWeXmxGga54kHG53LfvI0e8Rsw6a0C9Tj2JTEA2OD1TwaXz71JZ5d4J5+s5RagaaCLbxvuQkd82/F9WNk56o3q8DimfDKoAO5b+O+3N+THjvKI3NftgZSPfBP2gQ39dACYIhUmMRqn7UNbEwSEV23jn2U4l07bpgOLs2OC7MHIf/PQd+g="
+    # they are the same as secure.global.secure but you can't use env variables sadly
     secret_access_key:
-      secure: "Bw4UpC5flP/7hkEn6yK/cPG/qdyy/BWSt/BZzyZxaLSm4GZ1DH0m2fhxcwdVvShsfWSoFGZ2HL2NKL6vxnmDUD+Ui3QYNw6S8FOmqT2fVQosIfiM3GAHac8ibfnebp2ASKB2oPR640jLi9lxnNL4VIS66HGcy97ZUPzhPOkXxGQEzx4bNO7e362617FHcw7SxZq0ZEVkFMcBEI/TdbxpFBPGJ1HI+crIjlPk++jfn5kjmkSfXk68NHIB5TowJKM8kuEwrwCgrU322N7N6sK/Ggr6jYRIFJWNFOhrjgZF5oc0P6aXfnRBZ8ciiqGjyxCcpyTbGqcFEdkE9oipuI0ifEXGbQ7cWDOPm19SAzwrRRbX/dlb9/Ds4+FGvyzn4ZbXHvi0im2xOB2tcfiBycjnzbOh4VZnoBD5gKUwOEGbrf8svzzZQzlEAB8/zMSSjG9jegBQ4svcPYSgz45zgfWyL75MurLL3OJ8N8RZ7Isr1Oy9TGdcSCk3/9K4mZ5WZleGlmOKRA1H/VjktB6Mx3a3QGwCI8WCtOAaLIQASqYaKpQL/M4Wq9lugRiOcy91NwqZebqHvl22SC/hDJ+gYhMZX8szDAuR2SfzSqBDGdaiwdoY30/wlMYqQGyHOu0xxEdGtK4byl8Pqq2oyvGNK3WeXs0w8yum3MMyUlwKPxAHzUY="
+      secure: SFfVSJMHUusK4V0fFEwxf6DgN8QqG2dXVQPV+fyEIdwcZu3HCABBcbzxTGPoCS+Xn8WUx3l7QlebtU+xTFtME1Agq+S0aD9kfRTpAu+gAXKpVoYaVut1CNY2akX71gHvmCitKQ8WOV/QJtMndvN4kWpJFK1Jht0BWpNm6OPj04SgTACJ+kmtUGYr5KcGStY4EEijPqpOVv3E+nN/2PNuRoTid8ymjVsIFI909J8JaYa4F4GNHK5hwWJoL/LA1QQAl4ICaoPg61wPii2UsS5IiQD0QaIkWtrHV8qEIwFtOagAotuUj67et6iSeMpToXkP8XwfGEvu9GoZ5h+hJ1fSacdeE82PFvME7Xz2bxai1xu9XPHKsl5SookzJuqkPuU8SSgZ8K6VkeXijv6kKC5QK/9oAngNvJxLT0hGkQKT+VK6KY7qIB2rVH/cdSGIxfyimw2slxCLP74y2ADHePtBFTRA59C4c7vzYluMUyytG2Oz97wKMVEY4VwwIvkaHKnzkEa6tzcLlCaQpWTxsN51delbsYjkroEP3zzGdgAL63ecOwPSQK9sAO1Wx0IOaQYcfOGvVmPuhcncHXMWY+JnNRxbCFHPIv3opZadBQaRrDD6UhVNdzATayYQR+kwgD5p63MBdYaNVJQQUjNZR9+4aLiVzDdnk9dOVpl7CWpR4Mc=
+    access_key_id:
+      secure: T4LX4G6sueVmtlamdjeJSAPxgdYjRzH38ak4mvy6HxLwhNHpQfzm8vBQUfozRbWF33XhrTDx+f1IBaZWw9Domy/acPZfAC8PCRpmm609cxIENxfhPjD4xO/mxufz3d0loErljrAJtNzsEl+6wcSrFiL0eSkP+rPblaIPBLnv+fHju7E4fUis6cgct4VqG4jKjPM5Bjtism7TemKwTkBoVAW5EIsOa1izMtIM6AKsqW9yhGdmlcIJJQT/Y3h6veIX4DhyjW2M2DUZO4iDJAL0T+L+iDuOBt6oySaS53EuwocQhaSftT+DcyiAMfx3Ma/wO3Im/1MUuNJzwVmP5xj8+ftxTeHihbVRThNc2RRsGUMISvsHVsidfVaaJLXz/Jp+7b5oMrwh2nuvnmvibtOUZvJJxvWaDV2ZuhC0gD2U3S81XRC64NahlONjQJienfVihNE2i1BJ8l0PlfZtMZBYOt7w2Qg2GIcNYnXqMIukNovMmx6PSonNIdj7/I2GfGks1v9t3wt4QC9CmBA+eG0gJXeHFewH4NXWuVi3JKh2lU6ERTR7A9TBbQS5aSpLX3vla2vKxDtNFtUcftjuUMe0D5CPmiVGsLSeMjoCvAwp3c1Y4uUF5b/xXi1M7VL8mas/SA2ABcWxWZqpd5knIudjZuez0HW/krFQC1tPax1cEgs=
     bucket: "rokka-io"
     region: "eu-central-1"
     skip_cleanup: true
@@ -35,17 +46,21 @@ deploy:
       branch: master
   # staging
   - provider: s3
-    # To store these securely, here is how to encrypt: https://docs.travis-ci.com/user/encryption-keys/
-    access_key_id:
-      secure: "FnJfgEw0hyfUhsPPgMeluZQpHlVZSrVgTgQXPWbX4WGFbGrrF0NdtzTtdIczCn8TEgIlDfvuq4LtGL3Gd6t1rmShr+yY6CR2Gb3qiDAbJ+RzkOF5ae2qgJLu7CW+lruZ03/whI0sHKBSJgAJRMrgSpgWxXGVHul8MpgjvCyXIsadKxw5Ayl934UrBoerdrTgdzr2f7FSFR3Zl8RPcziMPfdb+IfwZ3pOzG/LHd/sGheTC13LQj+zI+/fF4yyfRPZRweHEpAuiF6zOZv8itXo4WRUB4TyLQtxDjY3n09VYVK27EKFungq0+jjnurXOc22O5jiLQxCXGKpQokdqHDI9YbUlZCODmUJ+MkVdPd+b1wM0hNRoZ6qYqz4rPqfamCIGpkXyVgTDAwH65v5JjdgBKzt+pZwF4qIzV8CFZwQI0bE5pf0LFjapHryQhSNX657lnEvyNUizH8HIdDGJpIJRl/U3RE4L6EmLTUz4tHxyR7WMXFWKb2qXoGBLkhWeXmxGga54kHG53LfvI0e8Rsw6a0C9Tj2JTEA2OD1TwaXz71JZ5d4J5+s5RagaaCLbxvuQkd82/F9WNk56o3q8DimfDKoAO5b+O+3N+THjvKI3NftgZSPfBP2gQ39dACYIhUmMRqn7UNbEwSEV23jn2U4l07bpgOLs2OC7MHIf/PQd+g="
+    # they are the same as secure.global.secure but you can't use env variables sadly
     secret_access_key:
-      secure: "Bw4UpC5flP/7hkEn6yK/cPG/qdyy/BWSt/BZzyZxaLSm4GZ1DH0m2fhxcwdVvShsfWSoFGZ2HL2NKL6vxnmDUD+Ui3QYNw6S8FOmqT2fVQosIfiM3GAHac8ibfnebp2ASKB2oPR640jLi9lxnNL4VIS66HGcy97ZUPzhPOkXxGQEzx4bNO7e362617FHcw7SxZq0ZEVkFMcBEI/TdbxpFBPGJ1HI+crIjlPk++jfn5kjmkSfXk68NHIB5TowJKM8kuEwrwCgrU322N7N6sK/Ggr6jYRIFJWNFOhrjgZF5oc0P6aXfnRBZ8ciiqGjyxCcpyTbGqcFEdkE9oipuI0ifEXGbQ7cWDOPm19SAzwrRRbX/dlb9/Ds4+FGvyzn4ZbXHvi0im2xOB2tcfiBycjnzbOh4VZnoBD5gKUwOEGbrf8svzzZQzlEAB8/zMSSjG9jegBQ4svcPYSgz45zgfWyL75MurLL3OJ8N8RZ7Isr1Oy9TGdcSCk3/9K4mZ5WZleGlmOKRA1H/VjktB6Mx3a3QGwCI8WCtOAaLIQASqYaKpQL/M4Wq9lugRiOcy91NwqZebqHvl22SC/hDJ+gYhMZX8szDAuR2SfzSqBDGdaiwdoY30/wlMYqQGyHOu0xxEdGtK4byl8Pqq2oyvGNK3WeXs0w8yum3MMyUlwKPxAHzUY="
+      secure: SFfVSJMHUusK4V0fFEwxf6DgN8QqG2dXVQPV+fyEIdwcZu3HCABBcbzxTGPoCS+Xn8WUx3l7QlebtU+xTFtME1Agq+S0aD9kfRTpAu+gAXKpVoYaVut1CNY2akX71gHvmCitKQ8WOV/QJtMndvN4kWpJFK1Jht0BWpNm6OPj04SgTACJ+kmtUGYr5KcGStY4EEijPqpOVv3E+nN/2PNuRoTid8ymjVsIFI909J8JaYa4F4GNHK5hwWJoL/LA1QQAl4ICaoPg61wPii2UsS5IiQD0QaIkWtrHV8qEIwFtOagAotuUj67et6iSeMpToXkP8XwfGEvu9GoZ5h+hJ1fSacdeE82PFvME7Xz2bxai1xu9XPHKsl5SookzJuqkPuU8SSgZ8K6VkeXijv6kKC5QK/9oAngNvJxLT0hGkQKT+VK6KY7qIB2rVH/cdSGIxfyimw2slxCLP74y2ADHePtBFTRA59C4c7vzYluMUyytG2Oz97wKMVEY4VwwIvkaHKnzkEa6tzcLlCaQpWTxsN51delbsYjkroEP3zzGdgAL63ecOwPSQK9sAO1Wx0IOaQYcfOGvVmPuhcncHXMWY+JnNRxbCFHPIv3opZadBQaRrDD6UhVNdzATayYQR+kwgD5p63MBdYaNVJQQUjNZR9+4aLiVzDdnk9dOVpl7CWpR4Mc=
+    access_key_id:
+      secure: T4LX4G6sueVmtlamdjeJSAPxgdYjRzH38ak4mvy6HxLwhNHpQfzm8vBQUfozRbWF33XhrTDx+f1IBaZWw9Domy/acPZfAC8PCRpmm609cxIENxfhPjD4xO/mxufz3d0loErljrAJtNzsEl+6wcSrFiL0eSkP+rPblaIPBLnv+fHju7E4fUis6cgct4VqG4jKjPM5Bjtism7TemKwTkBoVAW5EIsOa1izMtIM6AKsqW9yhGdmlcIJJQT/Y3h6veIX4DhyjW2M2DUZO4iDJAL0T+L+iDuOBt6oySaS53EuwocQhaSftT+DcyiAMfx3Ma/wO3Im/1MUuNJzwVmP5xj8+ftxTeHihbVRThNc2RRsGUMISvsHVsidfVaaJLXz/Jp+7b5oMrwh2nuvnmvibtOUZvJJxvWaDV2ZuhC0gD2U3S81XRC64NahlONjQJienfVihNE2i1BJ8l0PlfZtMZBYOt7w2Qg2GIcNYnXqMIukNovMmx6PSonNIdj7/I2GfGks1v9t3wt4QC9CmBA+eG0gJXeHFewH4NXWuVi3JKh2lU6ERTR7A9TBbQS5aSpLX3vla2vKxDtNFtUcftjuUMe0D5CPmiVGsLSeMjoCvAwp3c1Y4uUF5b/xXi1M7VL8mas/SA2ABcWxWZqpd5knIudjZuez0HW/krFQC1tPax1cEgs=
     bucket: "stage-rokka-io"
     region: "eu-central-1"
     skip_cleanup: true
     local_dir: dist
     on:
-      branch: stage
+      branch: cache-clear-after-upload
+
+after_deploy:
+  - npm install aws-sdk
+  - node .travis/invalidate-cloudfront.js
 
 cache:
   directories:
