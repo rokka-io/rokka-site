@@ -1094,28 +1094,28 @@ html {
     border-top: 1px solid #ebebe6;
     padding: 0;
     table {
-        font-size: $font-size-small;
+        // font-size: $font-size-small;
     }
     tr {
         border-bottom: $field-border;
     }
     th, td {
         padding-left: 0;
+        width: 50%;
     }
 }
 
 .rokka-pricing__details-link {
     display: block;
     padding: $spacing-unit-small;
+    color: $text-color;
     @include media('md') {
         padding: $spacing-unit-default;
+        // padding-right: 65%;
     }
     &:hover, &:active, &:focus {
         background: #F7F7F5;
         text-decoration: none;
-    }
-    div:first-child {
-        color: $text-color;
     }
 }
 
@@ -1126,6 +1126,9 @@ html {
     .rokka-pricing__details-link {
         background: white;
         pointer-events: none;
+        span:last-child {
+            display: none;
+        }
     }
 }
 
