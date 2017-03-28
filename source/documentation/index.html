@@ -18,7 +18,12 @@ use: [guides, references, libraries]
     </div>
     <div class="grid__item md-w-1/3">
         <h2 class="h3">API Client Libraries</h2>
-        {% include 'article_list' with { 'articles': data.libraries } %}
+        <ul class="list-stacked list-stacked--divided">
+            {% for library in site.rokka_libraries %}
+                <li class="list-group-item"><a href="{{ library.link }}">{{ library.title }}</a></li>
+            {% endfor %}
+        </ul>
+
     </div>
 </div>
 {% endblock %}

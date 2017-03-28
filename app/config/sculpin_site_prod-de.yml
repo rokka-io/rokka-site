@@ -5,3 +5,4 @@ domain: http://rokka.io/
 
 imports:
   - translations/text_de.yml
+  - pagedata.yml
