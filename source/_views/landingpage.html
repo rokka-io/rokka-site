@@ -267,6 +267,7 @@
             <li><a class="label" target="_blank" href="https://github.com/rokka-io/rokka.js"><span class="label__body">JavaScript</span></a></li>
             <li><a class="label" target="_blank" href="https://github.com/rokka-io/rokka-client-php"><span class="label__body">PHP</span></a></li>
             <li><a class="label" target="_blank" href="https://github.com/rokka-io/rokka-client-bundle"><span class="label__body">Symfony</span></a></li>
+            <li><a class="label" target="_blank" href="https://www.drupal.org/project/rokka"><span class="label__body">Drupal</span></a></li>
             <li><a class="label" target="_blank" href="https://github.com/rokka-io/rokka-client-php-cli"><span class="label__body">CLI</span></a></li>
           </ul>
         </div>
@@ -287,28 +288,32 @@
     <div class="rokka-box rokka-pricing-box mrgt+">
       <div class="rokka-pricing rokka-pricing__paid">
         <div class="grid grid--middle">
-          <div class="grid__item md-w-1/2 lg-w-3/5">
+          <div class="grid__item md-w-1/2">
             <h3 class="mrg0 mrgb--">{{ site.text.pricing.paid.title|raw }}</h3>
             <p class="mrg0 rokka-pricing-box__desc">{{ site.text.pricing.paid.text|raw }}</p>
           </div>
-          <div class="grid__item md-w-1/2 lg-w-2/5">
+          <div class="grid__item md-w-1/2">
             <div class="flex">
               <div class="number flex-item-1">
                 <div class="flex">
-                  <div class="number__before text-muted mrgr--">CHF</div>
                   <div class="number__text">
-                    <div class="number__value h2 mrg0 text-primary">0.40</div>
-                    <div class="number__description text-muted">{{ site.text.pricing.paid.per_storage|raw }}</div>
+                    <div class="number__value number__value--chf h2 mrg0 text-primary">0.40</div>
+                    <div class="number__description">
+                      <div class="text-bold">{{ site.text.pricing.paid.storage_text1|raw }}</div>
+                      <div class="text-small">{{ site.text.pricing.paid.storage_text2|raw }}</div>
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div class="number flex-item-1">
                 <div class="flex">
-                  <div class="number__before text-muted mrgr--">CHF</div>
                   <div class="number__text">
-                    <div class="number__value h2 mrg0 text-primary">0.50</div>
-                    <div class="number__description text-muted">{{ site.text.pricing.paid.per_traffic|raw }}</div>
+                    <div class="number__value number__value--chf h2 mrg0 text-primary">0.50</div>
+                    <div class="number__description">
+                      <div class="text-bold">{{ site.text.pricing.paid.traffic_text1|raw }}</div>
+                      <div class="text-small">{{ site.text.pricing.paid.traffic_text2|raw }}</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -316,30 +321,118 @@
           </div>
         </div>
       </div>
+
+
+      <div class="rokka-pricing rokka-pricing__details">
+        <a href="#" class="rokka-pricing__details-link">
+       
+            <div class="text-bold">{{ site.text.pricing.details.title|raw }}</div>
+            <div>{{ site.text.pricing.details.text|raw }}</div>
+       
+        </a>
+        <div class="rokka-pricing__details-table">
+          <div class="grid grid--middle">
+            <div class="grid__item md-w-1/2">
+              <h4>{{ site.text.pricing.details.storage|raw }}</h4>
+              <table>
+                <thead>
+                  <tr>
+                    <th>{{ site.text.pricing.details.amount|raw }}</th>
+                    <th>{{ site.text.pricing.details.chf_per_gb|raw }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>0 - 400</td>
+                    <td>CHF 0.40</td>
+                  </tr>
+
+                  <tr>
+                    <td>401 - 800</td>
+                    <td>CHF 0.30</td>
+                  </tr>
+
+                  <tr>
+                    <td>801 - 1200</td>
+                    <td>CHF 0.20</td>
+                  </tr>
+
+                  <tr>
+                    <td>1201 - 1600</td>
+                    <td>CHF 0.10</td>
+                  </tr>
+
+                  <tr>
+                    <td>1600 - ∞</td>
+                    <td>CHF 0.05</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="grid__item md-w-1/2">
+              <h4>{{ site.text.pricing.details.traffic|raw }}</h4>
+              <table>
+                <thead>
+                  <tr>
+                    <th>{{ site.text.pricing.details.amount|raw }}</th>
+                    <th>{{ site.text.pricing.details.chf_per_gb|raw }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>0 - 2000</td>
+                    <td>CHF 0.50</td>
+                  </tr>
+
+                  <tr>
+                    <td>2001 - 4000</td>
+                    <td>CHF 0.42</td>
+                  </tr>
+
+                  <tr>
+                    <td>4001 - 6000</td>
+                    <td>CHF 0.43</td>
+                  </tr>
+
+                  <tr>
+                    <td>6001 - 8000</td>
+                    <td>CHF 0.26</td>
+                  </tr>
+
+                  <tr>
+                    <td>8001 - ∞</td>
+                    <td><a href="/{{ site.language }}/contact">{{ site.text.pricing.details.contact|raw }}</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       <div class="rokka-pricing rokka-pricing__free">
         <div class="grid grid--middle">
-          <div class="grid__item md-w-1/2 lg-w-3/5">
+          <div class="grid__item md-w-1/2">
             <p class="mrg0 text-bold">{{ site.text.pricing.free.title|raw }}</p>
             <p class="mrg0 rokka-pricing-box__desc">{{ site.text.pricing.free.text|raw }}</p>
           </div>
-          <div class="grid__item md-w-1/2 lg-w-2/5">
+          <div class="grid__item md-w-1/2">
             <div class="flex">
               <div class="number flex-item-1">
                 <div class="flex">
-                  <div class="number__before text-muted mrgr-- invisible hidden-xs-down">CHF</div>
                   <div class="number__text">
                     <div class="number__value h3 mrg0 text-muted">{{ site.text.pricing.free.free|raw }}</div>
-                    <div class="number__description text-muted text-small">{{ site.text.pricing.free.free_space|raw }}</div>
+                    <div class="number__description text-small">{{ site.text.pricing.free.free_space|raw }}</div>
                   </div>
                 </div>
               </div>
 
               <div class="number flex-item-1">
                 <div class="flex">
-                  <div class="number__before text-muted mrgr-- invisible hidden-xs-down">CHF</div>
                   <div class="number__text">
                     <div class="number__value h3 mrg0 text-muted">{{ site.text.pricing.free.free|raw }}</div>
-                    <div class="number__description text-muted text-small">{{ site.text.pricing.free.free_traffic|raw }}</div>
+                    <div class="number__description text-small">{{ site.text.pricing.free.free_traffic|raw }}</div>
                   </div>
                 </div>
               </div>
@@ -376,12 +469,11 @@
 
 <section class="section section--white rokka-section--testimonial">
   <div class="section__body">
-
-    <div class="rokka-quote">
-
+    <div class="rokka-quotes">
+      <div class="rokka-quote rokka-quote--left">
         <div class="rokka-quote__bubble">
-          <h3 class="mrg0 mrgb--">{{ site.text.testimonial.title|raw }}</h3>
-          <p class="mrg0">{{ site.text.testimonial.quote|raw }}</p>
+          <h3 class="mrg0 mrgb--">{{ site.text.testimonial2.title|raw }}</h3>
+          <p class="mrg0">{{ site.text.testimonial2.quote|raw }}</p>
         </div>
         <div class="rokka-quote__person">
           <div class="flex flex-align-center">
@@ -389,13 +481,32 @@
               <div class="rokka-quote__avatar"></div>
             </div>
             <div class="flex-item-1">
-              <div class="h4 mrg0">{{ site.text.testimonial.name|raw }}</div>
-              <span>{{ site.text.testimonial.job_title|raw }}</span>
+              <div class="h4 mrg0">{{ site.text.testimonial2.name|raw }}</div>
+              <span>{{ site.text.testimonial2.job_title|raw }}</span>
             </div>
           </div>
         </div>
+      </div>
 
+      <div class="rokka-quote rokka-quote--right">
+        <div class="rokka-quote__bubble">
+          <h3 class="mrg0 mrgb--">{{ site.text.testimonial1.title|raw }}</h3>
+          <p class="mrg0">{{ site.text.testimonial1.quote|raw }}</p>
+        </div>
+        <div class="rokka-quote__person">
+          <div class="flex flex-align-center">
+            <div class="flex-item-auto">
+              <div class="rokka-quote__avatar"></div>
+            </div>
+            <div class="flex-item-1">
+              <div class="h4 mrg0">{{ site.text.testimonial1.name|raw }}</div>
+              <span>{{ site.text.testimonial1.job_title|raw }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
 </section>
 {% endblock %}
@@ -407,7 +518,12 @@
         new Toolkit.Navbar(navbar, { mode: 'section' });
       });
       window.addEventListener('DOMContentLoaded', function() {
-        // var trialbutton = document.querySelector('#trial-button');
+        
+        document.querySelector('.rokka-pricing__details-link').addEventListener('click', function(e) {
+          e.preventDefault();
+          document.querySelector('.rokka-pricing__details').classList.add('rokka-pricing__details--open');
+        });
+
         var hero = document.querySelector('.rokka-hero');
 
         window.setTimeout(function() {

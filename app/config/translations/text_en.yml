@@ -59,14 +59,24 @@ text:
     paid:
       title: One plan fits all
       text: Only pay for what you effectively use. You get a quarterly invoice with a detailed listing of what you have used, so you have an exact overview of your costs.
-      per_storage: per GB of storage
-      per_traffic: per GB of traffic
+      storage_text1: per 1 GB of storage
+      storage_text2: up to 400 GB
+      traffic_text1: per 1 GB of traffic
+      traffic_text2: up to 2000 GB
+    details:
+      title: Pay less when using more than 400 GB storage or 2000 GB traffic.
+      text: See details
+      storage: Storage
+      traffic: Traffic
+      amount: Amount (GB)
+      chf_per_gb: CHF per GB
+      contact: Contact us for an individual offer
     free:
       title: Free plan
       text: You don't want to buy a pig in a poke? Up to 2GB of space and 5GB of traffic, rokka is free for everyone.
       free: FREE
-      free_space: 2GB of space
-      free_traffic: 5GB of traffic
+      free_space: up to 2 GB of space
+      free_traffic: up to 5 GB of traffic
     disclaimer: All prices in CHF and excl. VAT.
 
   cta:
@@ -74,11 +84,17 @@ text:
     text: Follow companies like Migros or FREITAG – start now with rokka.
     cta_button: Start your free trial
 
-  testimonial:
-    title: Why FREITAG chose rokka
+  testimonial1:
+    title: FREITAG
     quote: “At FREITAG we photograph around 60'000 unique products per year. With our old image server, we had to store several image formats and cuttings per product, which led to an enormous amount of data. With rokka, we store every image just once and benefit due to digital image processing from device-specific preparation of all images.”
     name: Benjamin Caviezel
-    job_title: Specialist New Media at FREITAG
+    job_title: Specialist New Media, FREITAG
+
+  testimonial2:
+    title: Migros-Genossenschafts-Bund
+    quote: «Mit rokka verfügen wir über einen zentralen Image Processing Service für unsere Bilder, welches die Speicherung und Auslieferung der Bilder schnell, sicher und effizient gewährleistet. Somit können wir egal auf welcher unserer Plattformen dasselbe Bild in den verschiedensten Formaten darstellen. Ohne nennenswerten Aufwand im Bildermanagement.»
+    name: Alain Petignat
+    job_title: Leiter Online Entwicklung und Betrieb, Migros-Genossenschafts-Bund
 
   signup:
     title: Try out rokka for 90 days.
