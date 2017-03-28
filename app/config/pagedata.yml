@@ -1,0 +1,13 @@
+rokka_libraries:
+  -
+    title: Javascript
+    alt: The Javascript library provides an api client for user and organization management and for uploading images and managing stacks.
+    link: https://github.com/rokka-io/rokka.js
+  -
+    title: PHP
+    alt: The PHP library provides api clients for user/organization management and for uploading images and managing stacks.
+    link: https://github.com/rokka-io/rokka-client-php
+  - 
+    title: Symfony
+    alt: The library is integrated into Symfony with the RokkaClientBundle. It provides you with configuration and provides the management and the image client as services.
+    link: https://github.com/rokka-io/rokka-client-bundle

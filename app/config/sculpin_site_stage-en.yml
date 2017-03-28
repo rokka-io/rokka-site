@@ -5,3 +5,4 @@ domain: http://stage.rokka.io/
 
 imports:
   - translations/text_en.yml
+  - pagedata.yml
