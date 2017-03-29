@@ -109,7 +109,13 @@ html {
     }
 }
 
+.d-block {
+    display: block;
+}
 
+.overflow-hidden {
+    overflow: hidden;
+}
 
 // rokka feature
 .rokka-feature {
@@ -616,6 +622,27 @@ html {
     line-height: 1;
 }
 
+.number__value--chf {
+    position: relative;
+    &:before {
+        content: "CHF";
+        font-size: $font-size-small;
+        color: $muted-color;
+        font-weight: normal;
+        display: block;
+        margin-bottom: 0.3em;
+        @include media('md') {
+
+        }
+        @include media('lg') {
+            
+            position: absolute;
+            right: 103%;
+            top: 0.4em;
+        }
+    }
+}
+
 .position-absolute {
     position: absolute;
 }
@@ -633,7 +660,7 @@ html {
 }
 
 .flex-item-1 {
-    flex: 1 1 auto;
+    flex: 1 1;
 }
 
 .flex-align-center {
@@ -818,6 +845,7 @@ html {
     left: 0;
     z-index: 50;
     background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 .rokka-uoso-device--imac {
@@ -955,7 +983,7 @@ html {
 
     position: absolute;
     bottom: -3.8rem;
-    left: -48%;
+    left: -60%;
     font-size: 100vw;
 
     @include media('sm') {
@@ -963,7 +991,7 @@ html {
         font-size: 47.21vw;
         left: auto;
         right: 3rem;
-        bottom: -2rem;
+        bottom: -3rem;
     }
     @include media('md') {
         right: 1rem;
@@ -1034,9 +1062,9 @@ html {
             flex-direction: row;
         }
         .number__description, .number__before {
-            font-size: $font-size-small;
+            // font-size: $font-size-small;
             @include media('md') {
-                font-size: $font-size-default;
+                // font-size: $font-size-default;
             }
         }
     }
@@ -1061,6 +1089,55 @@ html {
     @include media('lg') {
         padding-right: 5rem;
     }
+}
+
+.rokka-pricing__details {
+    border-top: 1px solid #ebebe6;
+    padding: 0;
+    table {
+        // font-size: $font-size-small;
+    }
+    tr {
+        border-bottom: $field-border;
+    }
+    th, td {
+        padding-left: 0;
+        width: 50%;
+    }
+}
+
+.rokka-pricing__details-link {
+    display: block;
+    padding: $spacing-unit-small;
+    color: $text-color;
+    @include media('md') {
+        padding: $spacing-unit-default;
+        // padding-right: 65%;
+    }
+    &:hover, &:active, &:focus {
+        background: #F7F7F5;
+        text-decoration: none;
+    }
+}
+
+.rokka-pricing__details--open {
+    .rokka-pricing__details-table {
+        max-height: 1200px;
+    }
+    .rokka-pricing__details-link {
+        background: white;
+        pointer-events: none;
+        span:last-child {
+            display: none;
+        }
+    }
+}
+
+.rokka-pricing__details-table {
+    max-height: 0px;
+    transition: 1.5s;
+    overflow: hidden;
+    padding: 0 $spacing-unit-default;
 }
 
 /*
@@ -1093,20 +1170,26 @@ html {
 }
 
 
-.rokka-quote {
-    margin-top: 2rem;
-    flex-direction: column;
+.rokka-quotes {
     display: flex;
+    flex-direction: column;
     @include media('lg') {
         flex-direction: row;
-        align-items: flex-end;
+        padding: 0 5%;
+    }
+}
+
+.rokka-quote {
+    margin-top: 2rem;
+    @include media('lg') {
+        margin-top: 0;
+        flex: 1 1;
     }
 }
 
 .rokka-quote__person {
-    flex: 1 1 auto;
     @include media('lg') {
-        flex: 0 0 auto;
+        margin-left: -3.425rem;
     }
 }
 
@@ -1114,11 +1197,8 @@ html {
     background: #EBEBE6;
     position: relative;
     padding: $spacing-unit-small;
-    flex: 1 1 auto;
     margin-bottom: 2rem;
     @include media('lg') {
-        margin-right: 2rem;
-        margin-bottom: 0;
         padding: $spacing-unit-default;
     }
     &:after {
@@ -1133,12 +1213,42 @@ html {
         border-width: 30px 25px 0 0;
         border-color: #EBEBE6 transparent transparent transparent;
         @include media('lg') {
-            bottom: 0;
-            left: auto;
-            right: -30px;
-            border-width: 20px 0 0 30px;
-            border-color: transparent transparent transparent #EBEBE6;
+            left: 0;
         }
+    }
+}
+
+.rokka-quote--left {
+    @include media('md') {
+        margin-right: 20%;
+    }
+    @include media('lg') {
+        margin-right: $spacing-unit-default;
+    }
+    .rokka-quote__bubble {
+        @include media('lg') {
+            
+        }
+    }
+    .rokka-quote__avatar {
+        background-image: url(../images/rokka-testimonial-migros-alain.svg);
+    }
+}
+
+.rokka-quote--right {
+    @include media('md') {
+        margin-left: 20%;
+    }
+    @include media('lg') {
+        margin-left: $spacing-unit-default;
+    }
+    .rokka-quote__bubble {
+        @include media('lg') {
+            margin-top: 10rem;
+        }
+    }
+    .rokka-quote__avatar {
+        background-image: url(../images/rokka-testimonial-freitag-benjamin.jpg);
     }
 }
 
@@ -1147,7 +1257,6 @@ html {
     height: 44px;
     border-radius: 100%;
     background-size: 100%;
-    background-image: url(../images/rokka-testimonial-freitag-benjamin.jpg);
     margin-right: 0.5rem;
     @include media('lg') {
         width: 70px;
