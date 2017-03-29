@@ -845,6 +845,7 @@ html {
     left: 0;
     z-index: 50;
     background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 .rokka-uoso-device--imac {
@@ -982,7 +983,7 @@ html {
 
     position: absolute;
     bottom: -3.8rem;
-    left: -48%;
+    left: -60%;
     font-size: 100vw;
 
     @include media('sm') {
@@ -990,7 +991,7 @@ html {
         font-size: 47.21vw;
         left: auto;
         right: 3rem;
-        bottom: -2rem;
+        bottom: -3rem;
     }
     @include media('md') {
         right: 1rem;
