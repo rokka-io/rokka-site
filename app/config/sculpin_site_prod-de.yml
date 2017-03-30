@@ -1,7 +1,7 @@
 language: de
 environment: prod
 
-domain: http://rokka.io/
+domain: https://rokka.io/
 
 imports:
   - translations/text_de.yml

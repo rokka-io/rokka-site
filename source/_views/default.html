@@ -1,3 +1,10 @@
+{% if page.multilang == true %}
+  {% set canonical = site.domain ~ site.language ~ page.url|trim('.') %}
+{% else %}
+  {% set canonical = site.domain|trim('/') ~ page.url|trim('.') %}
+{% endif %}
+
+
 <html lang="{{ site.language }}">
 <head>
 <title>
@@ -11,7 +18,7 @@
 <meta content="rokka.io, Liip AG, Switzerland" name="author"/>
 <meta content="5301024A6A1B29738BF195B6B8D9CDB6" name="msvalidate.01"/>
 <meta content="#6ea644" name="theme-color"/>
-<link href="{{ site.domain }}{{ site.language }}{{ page.url|trim('.') }}" rel="canonical"/>
+<link href="{{ canonical }}" rel="canonical"/>
 <link href="/assets/styles/rokka.css" rel="stylesheet"/>
 <link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
@@ -19,11 +26,11 @@
 <link href="/manifest.json" rel="manifest"/>
 <link color="#6ea644" href="/safari-pinned-tab.svg" rel="mask-icon"/>
 <meta content="website" property="og:type"/>
-<meta content="rokka.io" property="og:site_name"/>
+<meta content="rokka" property="og:site_name"/>
 <meta content="{{ site.sharing_title }}" property="og:title"/>
 <meta content="{{ site.text.lead.text }}" property="og:description"/>
-<meta content="/assets/images/sharing-image.png" property="og:image"/>
-<meta content="{{ site.domain }}" property="og:url"/>
+<meta content="{{ site.domain }}assets/images/sharing-image.png" property="og:image"/>
+<meta content="{{ canonical }}" property="og:url"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="@liip" name="twitter:site"/>
 <meta content="@liip" name="twitter:creator"/>
@@ -63,26 +70,18 @@
                     </a>
                 </li>
                 <li>
-                    <a class="navbar-menu__link" href="/{{ site.language }}/documentation">
+                    <a class="navbar-menu__link" href="/documentation">
                         {{ site.text.navigation.documentation|raw }}
                     </a>
                 </li>
                 <!-- <li><a href="#" class="navbar-menu__link">{{ site.text.navigation.login|raw }}</a></li> -->
                 <li class="navbar-language-item">
-                    {% if site.language == "de" %}
-                    <a class="navbar-menu__link active" href="/de{{ page.url }}">
-                        DE
-                    </a>
-                    <a class="navbar-menu__link" href="/en{{ page.url }}">
-                        EN
-                    </a>
+                    {% if page.multilang == true %}
+                    	<a class="navbar-menu__link{% if site.language == "de" %} active{% endif %}" href="/de{{ page.url }}">DE</a>
+                    	<a class="navbar-menu__link{% if site.language == "en" %} active{% endif %}" href="/en{{ page.url }}">EN</a>
                     {% else %}
-                    <a class="navbar-menu__link" href="/de{{ page.url }}">
-                        DE
-                    </a>
-                    <a class="navbar-menu__link active" href="/en{{ page.url }}">
-                        EN
-                    </a>
+                    	<span class="navbar-menu__link disabled rokka-lang-not-available">DE</span>
+                    	<a class="navbar-menu__link active" href="{{ page.url }}">EN</a>
                     {% endif %}
                 </li>
             </ul>

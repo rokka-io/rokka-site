@@ -1,7 +1,7 @@
 language: en
 environment: stage
 
-domain: http://stage.rokka.io/
+domain: https://stage.rokka.io/
 
 imports:
   - translations/text_en.yml
