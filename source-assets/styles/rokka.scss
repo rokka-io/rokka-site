@@ -92,49 +92,49 @@ html {
 }
 
 .navbar-menu__link.disabled {
-	transition: none;
-	position: relative;
-	&:hover {
-		border: 0;
-	}
-	display: none;
+  transition: none;
+  position: relative;
+  &:hover {
+    border: 0;
+  }
+  display: none;
     @include media('md') {
-    	display: inline-block;
+      display: inline-block;
     }
 }
 
 .rokka-lang-not-available:hover {
-	&:after {
-		content: "";
-		display: block;
-		position: absolute;
-		right: 50%;
-		top: 100%;
-		width: 0;
-		height: 0;
-		border-style: solid;
-		border-width: 0 0 10px 10px;
-		border-color: transparent transparent rgba(255,255,255,0.1) transparent;
-		.navbar--overlay & {
-			border-bottom-color: $warm-grey-100;
-		}
-	}
-	&:before {
-		content: "Die Dokumentation ist momentan nur auf Englisch verfügbar.";
-		display: block;
-		position: absolute;
-		top: 100%;
-		right: 50%;
-		width: 12rem;
-		padding: 0.3rem;
-		text-align: left;
-		background: red;
-		margin-top: 10px;
-		background: rgba(255,255,255,0.1);
-		.navbar--overlay & {
-			background: $warm-grey-100;
-		}
-	}
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 50%;
+    top: 100%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 10px 10px;
+    border-color: transparent transparent rgba(255,255,255,0.1) transparent;
+    .navbar--overlay & {
+      border-bottom-color: $warm-grey-100;
+    }
+  }
+  &:before {
+    content: "Die Dokumentation ist momentan nur auf Englisch verfügbar.";
+    display: block;
+    position: absolute;
+    top: 100%;
+    right: 50%;
+    width: 12rem;
+    padding: 0.3rem;
+    text-align: left;
+    background: red;
+    margin-top: 10px;
+    background: rgba(255,255,255,0.1);
+    .navbar--overlay & {
+      background: $warm-grey-100;
+    }
+  }
 }
 
 .navbar-language-item {

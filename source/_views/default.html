@@ -1,7 +1,7 @@
 {% if page.multilang == true %}
-	{% set canonical = site.domain ~ site.language ~ page.url|trim('.') %}
+  {% set canonical = site.domain ~ site.language ~ page.url|trim('.') %}
 {% else %}
-	{% set canonical = site.domain|trim('/') ~ page.url|trim('.') %}
+  {% set canonical = site.domain|trim('/') ~ page.url|trim('.') %}
 {% endif %}
 
 
