@@ -94,7 +94,8 @@ gulp.task('compile:scripts', () => {
 });
 
 
-gulp.task('compile:html', (cb) => {
+
+gulp.task('compile:sculpin', (cb) => {
   let count = 0;
 
   for (const lang of config.languages) {
@@ -105,20 +106,48 @@ gulp.task('compile:html', (cb) => {
       gutil.log('Sculpin: ' + gutil.colors.cyan(sculpinEnv) + '\n\n' + stdout);
       gutil.log(gutil.colors.red(stderr));
 
-      gulp.src('output_' + sculpinEnv + '/**/*')
-          .pipe(gulp.dest(config.dest + lang))
-          .on('end', () => {
-            del('output_' + sculpinEnv);
-          });
-
       count++;
       if (count == config.languages.length) {
-        gulp.src('output_'+env+'-en/index.html').pipe(gulp.dest(config.dest));
         cb();
       }
     });
   }
 
+})
+
+
+
+gulp.task('compile:html', ['compile:sculpin'], () => {
+
+  return Promise.all([
+    new Promise(function(resolve, reject) {
+      gulp.src('output_'+ env +'-en/index.html')
+        .pipe(gulp.dest(config.dest))
+        .on('end', resolve)
+    }),
+    new Promise(function(resolve, reject) {
+      gulp.src('output_'+ env +'-en/documentation/**/*')
+        .pipe(gulp.dest(config.dest + 'documentation'))
+        .on('end', resolve)
+    }),
+    new Promise(function(resolve, reject) {
+      gulp.src('output_' + env + '-de/**/*')
+        .pipe(gulp.dest(config.dest + 'de'))
+        .on('end', resolve)
+    }),
+    new Promise(function(resolve, reject) {
+      gulp.src('output_' + env + '-en/**/*')
+        .pipe(gulp.dest(config.dest + 'en'))
+        .on('end', resolve)
+    })
+  ]).then(function () {
+    del([
+      config.dest + 'de/documentation/',
+      config.dest + 'en/documentation/',
+      'output_' + env + '-en',
+      'output_' + env + '-de'
+    ], {force:true})
+  });
 })
 
 gulp.task('compile', ['compile:styles', 'compile:scripts', 'compile:html']);
