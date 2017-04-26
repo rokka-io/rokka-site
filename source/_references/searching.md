@@ -1,5 +1,5 @@
 ---
-title: Searching images
+title: Searching Images
 use: [references]
 ---
 
@@ -159,9 +159,10 @@ Returns all images having their name starting with "*plan*", such as "*plan*t", 
 ## Range filtering
 
 If you want to filter for certain ranges or "greater than, less than", you can use the
-[Lucene range query syntax](http://lucene.apache.org/core/6_4_1/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Range_Searches).
-
-Some example usage:
+[Lucene range query syntax](http://lucene.apache.org/core/6_4_1/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Range_Searches). 
+Range queries use the mathematical notation of sets. Square brackets are `[]` inclusive, curly 
+brackets `{}` are exclusive. You can omit one of the values when you only want to specify a minimum 
+or maximum. You can also mix inclusive and exclusive limits. Some examples:
 
 - `size=[30000,40000]`: Matches images with a size value between `30000` and `40000` (extremes included)
 - `size=[30000,}`: Returns images with a size value equal or bigger than `30000`:
