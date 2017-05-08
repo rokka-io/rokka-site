@@ -16,7 +16,7 @@ use: [references]
 
 You can create a stack by providing an organization, the name and operations to apply on the stack.
 In the following example, the stack applies a resize of 200 x 200 and rotates it by 45 degrees. It's created in the testorganization and given the name teststack.
-The _options_ parameter can be used to supply stack related options (like basestack, jpg.quality or 'png.compression_level) and is optional,
+The _options_ parameter can be used to supply stack related options (like basestack, jpg.quality or 'png.compression_level) and is optional.
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
