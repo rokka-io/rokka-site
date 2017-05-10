@@ -16,7 +16,7 @@ rokka will generate a new identifying hash for the image and delete the old iden
 In the following example, we are adding a subject area to an image.
 
 ```language-bash
-curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/SubjectArea' -d '{
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/subject_area' -d '{
         "width": 20, 
         "height": 20, 
         "x": 0, 
@@ -47,7 +47,7 @@ To delete dynamic metadata from a source image, you need to provide the organiza
 rokka will generate a new identifying hash for the image and delete the old identifying hash. The new location of the image will be returned in the `Location` header of the response. 
 
 ```language-bash
-curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/SubjectArea'
+curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/subject_area'
 ```
 
 ## Subject area
