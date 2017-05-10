@@ -9,8 +9,6 @@ Dynamic metadata is metadata added to a source image that changes the image iden
 
 ## Add dynamic metadata to a source image
 
-FIXME: Add remark that if the "new" image already exists, that is not overwritten with static metadata from the old one
-
 To add dynamic metadata to a source image, you need to provide the organization, the identifying hash of the image, the name of the dynamic metadata and the values to add. Do this by making a PUT request to `https://api.rokka.io/sourceimages/{organization}/{hash}/meta/dynamic/{name}`
 
 rokka will generate a new image with a new identifying hash, the same binary hash and meta data and return the new location in the `Location` header of the response.  This newly created image and the previous one are not especially connected (besides having the same binary hash), so if you change meta data on one image later, it won't propagate to the other.
@@ -47,8 +45,6 @@ echo 'Updated subject area. New image hash: ' . $newHash . PHP_EOL;
 ```
 
 ## Delete dynamic metadata from a source image
-
-FIXME: Add remark that if the "new" image already exists, that is not overwritten with static metadata from the old one
 
 To delete dynamic metadata from a source image, you need to provide the organization, the identifying hash of the image and the name of the dynamic metadata. Do this by making a DELETE request to `https://api.rokka.io/sourceimages/{organization}/{hash}/meta/dynamic/{name}`
 
