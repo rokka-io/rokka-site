@@ -11,12 +11,16 @@ Dynamic metadata is metadata added to a source image that changes the image iden
 
 To add dynamic metadata to a source image, you need to provide the organization, the identifying hash of the image, the name of the dynamic metadata and the values to add. Do this by making a PUT request to `https://api.rokka.io/sourceimages/{organization}/{hash}/meta/dynamic/{name}`
 
-rokka will generate a new identifying hash for the image and delete the old identifying hash. The new location of the image will be returned in the `Location` header of the response. 
+rokka will generate a new image with a new identifying hash, the same binary hash and meta data and return the new location in the `Location` header of the response.  This newly created image and the previous one are not especially connected (besides having the same binary hash), so if you change meta data on one image later, it won't propagate to the other.
+
+If an image with the new hash already exists, it won't be created, but the existing one will be used and returned. Eventually existing meta data won't be copied/overwritten in this case.
+
+If you don't need the previous image to be kept on rokka, you can directly delete it with the `?deletePrevious=true` parameter.
 
 In the following example, we are adding a subject area to an image.
 
 ```language-bash
-curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/SubjectArea' -d '{
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/subject_area' -d '{
         "width": 20, 
         "height": 20, 
         "x": 0, 
@@ -34,7 +38,7 @@ $hash = '0dcabb778d58d07ccd48b5ff291de05ba4374fb9';
 
 $dynamicMetadata = new SubjectArea(0, 0, 30, 230);
 
-$newHash = $client->setDynamicMetadata($dynamicMetadata, $hash);
+$newHash = $client->setDynamicMetadata($dynamicMetadata, $hash, ['deletePrevious' => false);
 
 echo 'Updated subject area. New image hash: ' . $newHash . PHP_EOL;
 
@@ -44,10 +48,12 @@ echo 'Updated subject area. New image hash: ' . $newHash . PHP_EOL;
 
 To delete dynamic metadata from a source image, you need to provide the organization, the identifying hash of the image and the name of the dynamic metadata. Do this by making a DELETE request to `https://api.rokka.io/sourceimages/{organization}/{hash}/meta/dynamic/{name}`
 
-rokka will generate a new identifying hash for the image and delete the old identifying hash. The new location of the image will be returned in the `Location` header of the response. 
+As in adding dynamic meta data, rokka will generate a new image with a new identifying hash, the same binary hash and meta data and return the new location in the `Location` header of the response.  If an image with the new hash already exists, it won't be created, but the existing one will be used and returned. Eventually existing meta data won't be copied/overwritten in this case.
+
+If you don't need the previous image to be kept on rokka, you can directly delete it with the `?deletePrevious=true` parameter.
 
 ```language-bash
-curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/SubjectArea'
+curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/subject_area?deletePrevious=true'
 ```
 
 ## Subject area

@@ -104,11 +104,26 @@ Deleting a source image will not remove it from the cache. Access to it will fad
 
 Note: If the image you try to delete does not exist, the API responds with a 404 status code. This 404 can be ignored, though it might indicate a logic error in the client application.
 
+## Deleting source images with binary hash
+
+The same binary hash can have different entries in rokka, if they have different [dynamic metadata](dynamicmetadata.html). With this command you can delete all of them at once
+
+```language-bash
+curl -X DELETE 'https://api.rokka.io/sourceimages/mycompany?binaryHash=03b3e8a0bdd76ef55c021066642c9d2fa9c02799'
+```
+```language-php
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
+
+$isDeleted = $client->deleteSourceImagesWithBinaryHash('03b3e8a0bdd76ef55c021066642c9d2fa9c02799');
+
+var_dump($isDeleted);
+```
+
 ## List source images
 
 See [searching for images](searching-images.html) for more details about how to get a list of your images.
 
-## Finding by binary hash
+## Finding with binary hash
 
 You can limit the outputs of the list by using limit and offset parameters to page through them.
 
@@ -124,7 +139,7 @@ curl -X GET 'https://api.rokka.io/sourceimages/mycompany?binaryHash=03b3e8a0bdd7
 ```language-php
 $client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
 
-$sourceImage = $client->getSourceImage('03b3e8a0bdd76ef55c021066642c9d2fa9c02799', true);
+$sourceImage = $client->getSourceImageWithBinaryHash('03b3e8a0bdd76ef55c021066642c9d2fa9c02799');
 
 var_dump($sourceImage);
 ```
