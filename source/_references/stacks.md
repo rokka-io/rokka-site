@@ -6,37 +6,49 @@ use: [references]
 ## The stack object
 
 | Attribute | Description |
-| -------------- | ------------- |
+| --------- | ----------- |
 | organization | Name of the organization that the stack belongs to |
 | name | Name of the stack |
 | created | When this stack was created |
 | stackOperations | List of operations for this stack |
+| options | Optional options that influence the entire stack |
 
 ## Create a stack
 
 You can create a stack by providing an organization, the name and operations to apply on the stack.
 In the following example, the stack applies a resize of 200 x 200 and rotates it by 45 degrees. It's created in the testorganization and given the name teststack.
-The _options_ parameter can be used to supply stack related options (like basestack, jpg.quality or 'png.compression_level) and is optional.
+
+The _options_ parameter is optional. You can use the following options in there.
+
+| Attribute | Default | Minimum | Maximum | Description |
+| --------- | ------- | ------- | ------- | ----------- |
+| basestack | - | - | - | Name of existing stack that will be executed before this stack. Makes it easy to create new stacks with same base options. |
+| jpg.quality | 76 | 1 | 100 | Jpg quality setting, lower number means smaller file size and worse lossy quality. |
+| webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. |
+| png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images. |
+
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
-  "operations":
-  [
-    {
-        "name": "resize",
-        "options": {
-            "width": 200,
-            "height": 200
+    "operations":
+    [
+        {
+            "name": "resize",
+            "options": {
+                "width": 200,
+                "height": 200
+            }
+        },
+        {
+            "name": "rotate",
+            "options": {
+                "angle": 45
+            }
         }
-    },
-    {
-        "name": "rotate",
-        "options": {
-            "angle": 45
-        }
+    ],
+    "options": {
+        "jpg.quality": 60
     }
-  ],
-  "options": {}
 }
 '
 ```
