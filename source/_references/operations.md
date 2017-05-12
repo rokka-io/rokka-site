@@ -25,11 +25,75 @@ $operations = $client->listOperations();
 var_dump($operations);
 ```
 
-## Resize
+## Individual operations documentation
+
+### Autorotate
+
+Rotates the binary data to the correct physical orientation based on EXIF data.
+
+If width and height are given, it takes those values to determine the aspect ratio and turns the image so it has the
+same one as the box given, if needed. The rotation_direction is only taken into account when width and height are set
+and then overrides the one set in the image's EXIF data.
+
+#### Properties
+
+All properties are optional.
+
+- `width`: Integer, between 1 and 10000. Width of the box to fit in.
+- `height`: Integer, between 1 and 10000. Height of the box to fit in.
+- `rotation_direction`: Direction of rotation to use, overriding the one set in the EXIF data of the image.
+
+### Blur
+
+Blurs the entire image.
+
+#### Properties
+
+- `sigma`: Integer, minimum value 0. The default value is 4. Controls most of the blurring of the image.
+- `radius`: Number, minimum value 0. The default value is 0. Can be left at 0 for most operations. If you have a deep
+            understanding of how blurring operations work, you can use this to your advantage, otherwise you are good
+            with leaving this at 0.
+
+### Crop
+
+Crops an image to a set size.
+
+#### Properties
+
+- `width` (required): Integer, between 1 and 10000. The new width for the image.
+- `height` (required): Integer, between 1 and 10000. The new height for the image.
+- `anchor`: String. Describes where the crop should originate in the form of `XOFFSET-YOFFSET`, where:
+    - `XOFFSET` is either a number of pixels or "left", "center", "right"
+    - `YOFFSET` is either a number of pixels or "top", "center", "bottom".
+   
+   The default value is `auto`, which will crop the image centering the crop box around the defined 
+   [Subject Area](../references/dynamic-metadata.html#subject-area), if any.
+   If no Subject Area is defined, the crop operation will fallback to `center-center`.
+
+### Dropshadow
+
+Adds a dropshadow to an image.
+
+#### Properties
+
+- `horizontal`: Integer, between -100 and 100. The horizontal extent of the shadow in pixels. The default value is 0.
+- `vertical`: Integer, between -100 and 100. The vertical extent of the shadow in pixels. The default value is 0.
+- `opacity`: Integer, between 0 and 100. 100 is fully opaque and 0 is fully transparent. The default value is 0.
+- `sigma`: Integer, minimum value 0. The default value is 0.5. Controls most of the blurring of the shadow.
+- `blur_radius`: Number, minimum value 0. The default value is 0. Can be left at 0 for most operations. If you have a
+                 deep understanding of how blurring operations work, you can use this to your advantage, otherwise you
+                 are good with leaving this at 0.
+- `color`: String. The hex code for the shadow colour. The default value is `000000`.
+
+### Noop
+
+Performs no operations and has no properties. The noop operation is provided so you can create a stack to return an unaltered source image.
+
+### Resize
 
 Resizes an image.
 
-### Properties
+#### Properties
 
 - `width` (required): Integer, between 1 and 10000. The new width for the image. 
 - `height` (required): Integer, between 1 and 10000. The new height for the image.
@@ -55,53 +119,20 @@ Resizes an image.
     - `sinc`
     - `triangle`
 
-## Rotate
+### Rotate
 
 Rotates an image clockwise.
 
-### Properties
+#### Properties
 
 - `angle` (required): Number, between 0 and 360. The angle of rotation for the image.
 - `background_colour`: String. The hex code for the background colour. The default value is `000000`.
 - `background_opacity`: Number, between 0 and 100. 100 is fully opaque and 0 is fully transparent. The default value is 0.
 
-## Dropshadow
-
-Adds a dropshadow to an image.
-
-### Properties
-
-- `horizontal`: Integer, between -100 and 100. The horizontal extent of the shadow in pixels. The default value is 0.
-- `vertical`: Integer, between -100 and 100. The vertical extent of the shadow in pixels. The default value is 0.
-- `opacity`: Integer, between 0 and 100. 100 is fully opaque and 0 is fully transparent. The default value is 0.
-- `sigma`: Integer, minimum value 0. This parameter has a considerable effect on the rendering time! The default value is 10.
-- `blur_radius`: Number, minimum value 0. The default value is 0.
-- `color`: String. The hex code for the shadow colour. The default value is `000000`.
-
-## Trim
+### Trim
 
 Trims edges that are the background color from an image.
 
-### Properties
+#### Properties
 
 - `fuzzy`: Number, between 0 and 100. Sets the degree of tolerance for pixel colour when calculating how much to trim from the image. The default value is 0.
-
-## Crop
-
-Crops an image to a set size.
-
-### Properties
-
-- `width` (required): Integer, between 1 and 10000. The new width for the image.
-- `height` (required): Integer, between 1 and 10000. The new height for the image.
-- `anchor`: String. Describes where the crop should originate in the form of `XOFFSET-YOFFSET`, where:
-    - `XOFFSET` is either a number of pixels or "left", "center", "right"
-    - `YOFFSET` is either a number of pixels or "top", "center", "bottom".
-   
-   The default value is `auto`, which will crop the image centering the crop box around the defined 
-   [Subject Area](../references/dynamic-metadata.html#subject-area), if any.
-   If no Subject Area is defined, the crop operation will fallback to `center-center`.
-
-## Noop
-
-Performs no operations and has no properties. The noop operation is provided so you can create a stack to return an unaltered source image.
