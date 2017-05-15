@@ -13,7 +13,7 @@ To add dynamic metadata to a source image, you need to provide the organization,
 
 rokka will generate a new image with a new identifying hash, the same binary hash and meta data and return the new location in the `Location` header of the response.  This newly created image and the previous one are not especially connected (besides having the same binary hash), so if you change meta data on one image later, it won't propagate to the other.
 
-If an image with the new hash already exists, it won't be created, but the existing one will be used and returned. Eventually existing meta data won't be copied/overwritten in this case.
+If an image with the new hash already exists, it won't be created, but the existing one will be used and returned. Existing meta data won't be copied/overwritten in this case.
 
 If you don't need the previous image to be kept on rokka, you can directly delete it with the `?deletePrevious=true` parameter.
 
