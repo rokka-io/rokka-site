@@ -84,3 +84,5 @@ Notice that the organization name is a __subdomain__ of rokka.io and that the st
 `https://testorganization.rokka.io/thumbnail/c03683b067927d77973b458e0baa40aa7b5e5418/image.jpg`
 
 There is also the dynamic rendering that allows to specify operations in the URL without creating a stack. Dynamic rendering should __NOT__ be used in production systems, since its output  is not cached. You can however use stack rendering with custom options (explained in the [rendering reference](../references/render.html)), if you need for instance different resizing options. 
+
+Rokka supports most common image formats for generating images, mainly jpg, png, gif and webp.
