@@ -71,7 +71,7 @@ print_r($stack);
 
 ```
 
-Note: The name "dynamic" is reserved and can't be chosen, as it's used for dynamic rendering.
+Note: The name "dynamic" (used for dynamic rendering) and names starting with "_" are reserved and can't be chosen as stack names.
 
 ## Retrieve a stack
 
