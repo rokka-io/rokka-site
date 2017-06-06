@@ -22,7 +22,7 @@ The _options_ parameter is optional. You can use the following options in there.
 
 | Attribute | Default | Minimum | Maximum | Description |
 | --------- | ------- | ------- | ------- | ----------- |
-| basestack | - | - | - | Name of existing stack that will be executed before this stack. Makes it easy to create new stacks with same base options. |
+| basestack | - | - | - | Name of existing stack that will be executed before this stack. See below for details|
 | jpg.quality | 76 | 1 | 100 | Jpg quality setting, lower number means smaller file size and worse lossy quality. |
 | webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. |
 | png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images. |
@@ -128,6 +128,22 @@ echo 'Created stack ' . $stack->getName() . PHP_EOL;
 print_r($stack);
 
 ```
+
+### Basestacks
+
+Basestacks make it easy to create new stacks with the same base options. Basestacks can keep your stack configuration much simpler, but also have the advantage of making your first-hit responses faster, since the output of basestacks are stored internally. This is especially useful if you use computational expensive stack operations like "dropshadow".
+
+We recommend to not use basestacks as output stacks, for internal caching reasons. In case you want to deliver an image from a basestack, the best-practice way is to add another stack with just a "noop" stack operation and use this stack for delivering your images. The "noop" operation doesn't do anything to the image itself, it just converts the incoming image to your desired output format.
+
+One way to build such a stack config would then be the following configurations:
+
+  * "base" with expensive stack operations like a rotation and a dropshadow
+    * "original" stack with just a "noop" stack operation and "base" as basestack
+    * "large" stack with a "resize" operation and a size of 1000x1000 and "base" as basestack
+    * "medium" stack with a "resize" operation and a size of 500x500 and "base" as basestack
+    * etc..
+
+Later, if you want to add another size, you just base them on the same basestack and you don't have to repeat the same rotation/dropshadow options. Furthermore the rokka servers don't have to recalculate the expensive operations, just the quite simple resize operations for the new stack. Leading to much faster response times for your end users on the first hits.
 
 ## Retrieve a stack
 
