@@ -87,7 +87,7 @@ Adds a dropshadow to an image.
 
 ### Noop
 
-Performs no operations and has no properties. The noop operation is provided so you can create a stack to return an unaltered source image.
+Performs no operations and has no properties. The noop operation is provided so you can create a stack to return the original image. The image still goes through our processing engine to convert it to the desired output format and apply compression techniques to make it as small as possible. In short: With the noop operation the delivered image shows the same pixels as the source image, but does not necessarely consist of the same bytes.
 
 ### Resize
 
