@@ -24,7 +24,7 @@ The _options_ parameter is optional. You can use the following options in there.
 | --------- | ------- | ------- | ------- | ----------- |
 | basestack | - | - | - | Name of existing stack that will be executed before this stack. Makes it easy to create new stacks with same base options. |
 | jpg.quality | 76 | 1 | 100 | Jpg quality setting, lower number means smaller file size and worse lossy quality. |
-| webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. |
+| webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. |
 | png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images. |
 
 
