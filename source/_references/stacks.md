@@ -62,9 +62,9 @@ $client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'a
 $resize = new StackOperation('resize', ['width' => 200, 'height' => 200]);
 $rotate = new StackOperation('rotate', ['angle' => 45]);
 
-$stackOperationCollection = new StackOperationCollection([$resize, $rotate]);
+$stackOperationCollection = [$resize, $rotate];
 
-$stack = $client->createStack('teststack', $stackOperationCollection);
+$stack = $client->createStack('teststack', $stackOperationCollection, '', ['jpg.quality' => 60]);
 
 echo 'Created stack ' . $stack->getName() . PHP_EOL;
 print_r($stack);
