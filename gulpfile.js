@@ -48,6 +48,11 @@ gulp.task('copy:favicons', () => {
     .pipe(browserSync.stream());
 });
 
+gulp.task('copy:pdf', () => {
+  return gulp.src('source-assets/pdf/**/*')
+    .pipe(gulp.dest('dist/assets/pdf/'))
+});
+
 
 gulp.task('copy:fonts', () => {
   return gulp.src('source-assets/liip-styleguide/dist/assets/toolkit/fonts/**/*')
@@ -65,7 +70,7 @@ gulp.task('copy:images', () => {
 });
 
 
-gulp.task('copy', ['copy:favicons', 'copy:fonts', 'copy:images']);
+gulp.task('copy', ['copy:favicons', 'copy:fonts', 'copy:images', 'copy:pdf']);
 
 
 /*
