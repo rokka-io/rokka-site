@@ -71,6 +71,8 @@ var_dump($stack); // print out stack data
 
 This does a __PUT__ request that creates a __thumbnail__ stack for our __testorganization__. The body of the message defines the operations to use. As that argument is an array, you can define multiple operations that are applied in the specified order. A successful response returns the resulting stack definition.
 
+You can also create stacks which deliver just the original image, even unprocessed at all. See [stacks](/documentation/references/stacks.html) for more details.
+
 See [operations](/documentation/references/operations.html) for the definition of all available operations and their arguments.
 
 ## Rendering an Image

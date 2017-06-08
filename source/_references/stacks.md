@@ -26,7 +26,7 @@ The _options_ parameter is optional. You can use the following options in there.
 | jpg.quality | 76 | 1 | 100 | Jpg quality setting, lower number means smaller file size and worse lossy quality. |
 | webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. |
 | png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images. |
-
+| source_file | false | - | - | - | For outputting just the original unprocessed source file, set this to true and configure an empty operations collection. Can not be used together with other stack options. |
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
@@ -73,7 +73,7 @@ print_r($stack);
 
 Note: The name "dynamic" (used for dynamic rendering) and names starting with "_" are reserved and can't be chosen as stack names.
 
-### Overwriting stacks
+### Updating stacks
 
 Please read this carefully, if you want to overwrite existing stacks with new options/operations and the same name, since it may not work like you'd expect.
 
@@ -129,6 +129,29 @@ print_r($stack);
 
 ```
 
+### Configuring a stack with no operations
+
+If you want to deliver an image without any image altering stack operations, you can configure a stack without any operations, just an empty collection with `"operations": []`. This stack configuration still loads the image into our processing engine and converts them to the requested image format (even if input and output image are the same). It will also apply optimizations to make the image as small as possible for delivering to endusers.
+
+This configuration is useful if you want to deliver an image in its original size, don't want to have to take care about the input format and most imporantly, want to profit from our image optimizations. No matter in what format an image is uploaded, it will always be converted to your requested output format and made as small as possible.
+
+### Configuring a stack to just deliver the original source file
+
+Sometimes you want rokka to just deliver the exact original file you uploaded without any conversion and optimizations. For example delivering a PDF or SVG file in their original formats. Or a manually highly optimized PNG.
+
+To get such a stack, create a stack with an empty operations collection and the stack option `source_file: true`. Such a configuration can't have any stack operations or any other stack options, otherwise the creation of the stack will fail.
+
+```language-json
+{
+    "operations": [],
+    "options": {
+        "source_file": true
+    }
+}
+```
+
+Be aware that if you configure such a stack, everyone can download the original source file of all your uploaded images (as long as they know the hash of an image). If there's enough demand, we will implement a feature to only enable that for explicitely tagged pictures. Just tell us, if you'd like to use such a feature.
+
 ### Basestacks
 
 Basestacks make it easy to create new stacks with the same base options. Basestacks can keep your stack configuration much simpler, but also have the advantage of making your first-hit responses faster, since the output of basestacks are stored internally. This is especially useful if you use computational expensive stack operations like "dropshadow".
@@ -138,7 +161,7 @@ We recommend to not use basestacks as output stacks, for internal caching reason
 One way to build such a stack config would then be the following configurations:
 
   * "base" with expensive stack operations like a rotation and a dropshadow
-    * "original" stack with just a "noop" stack operation and "base" as basestack
+    * "original" stack with no stack operations and "base" as basestack
     * "large" stack with a "resize" operation and a size of 1000x1000 and "base" as basestack
     * "medium" stack with a "resize" operation and a size of 500x500 and "base" as basestack
     * etc..
