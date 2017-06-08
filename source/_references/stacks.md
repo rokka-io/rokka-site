@@ -156,7 +156,7 @@ Be aware that if you configure such a stack, everyone can download the original 
 
 Basestacks make it easy to create new stacks with the same base options. Basestacks can keep your stack configuration much simpler, but also have the advantage of making your first-hit responses faster, since the output of basestacks are stored internally. This is especially useful if you use computational expensive stack operations like "dropshadow".
 
-We recommend to not use basestacks as output stacks, for internal caching reasons. In case you want to deliver an image from a basestack, the best-practice way is to add another stack with just a "noop" stack operation and use this stack for delivering your images. The "noop" operation doesn't do anything to the image itself, it just converts the incoming image to your desired output format.
+We recommend to not use basestacks as output stacks, for internal caching reasons. In case you want to deliver an image from a basestack, the best-practice way is to add another stack with no stack operations and use this stack for delivering your images.
 
 One way to build such a stack config would then be the following configurations:
 
