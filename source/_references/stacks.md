@@ -75,7 +75,7 @@ Note: The name "dynamic" (used for dynamic rendering) and names starting with "_
 
 ### Updating stacks
 
-Please read this carefully, if you want to overwrite existing stacks with new options/operations and the same name, since it may not work like you'd expect.
+Please read this carefully, if you want to update an existing stacks with new options/operations, since it may not work like you'd expect.
 
 rokka delivers images with a very long expire time (one year), so that endusers (eg. browsers) and the content delivery network (CDN) can keep them stored.
 rokka assumes, that an image with the same URL never changes, that's why we use hashes for the images to ensure that. rokka also assumes that a once defined stack does not change significantly and suddenly delivers a totally different style of pictures. You have to create a new stack with a different name, if you want to do this. Otherwise end users may not get those newly generated images. While we can delete the CDN caches, there's no way to delete a browser cache without a new URL.
