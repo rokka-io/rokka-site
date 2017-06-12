@@ -85,10 +85,6 @@ Adds a dropshadow to an image.
                  are good with leaving this at 0.
 - `color`: String. The hex code for the shadow colour. The default value is `000000`.
 
-### Noop
-
-Performs no operations and has no properties. The noop operation is provided so you can create a stack to return an unaltered source image.
-
 ### Resize
 
 Resizes an image.
