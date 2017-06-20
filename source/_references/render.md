@@ -21,7 +21,7 @@ curl -X GET 'https://{organization}.rokka.io/{stack-name}/{hash}/{slug}.{format}
 
 ## Dynamically render an image
 
-For debugging, you can use the dynamic renderer to specify operations directly in the URL:
+You can use the dynamic renderer to specify operations directly in the URL without the need for stacks:
 
 ```language-bash
 curl -X GET 'https://{organization}.rokka.io/dynamic/{operations}/{hash}.{format}'
@@ -34,6 +34,6 @@ rotate operation, the URL would look like this:
 'https://{organization}.rokka.io/dynamic/resize-width-200-height-150--rotate-angle-90/{hash}.{format}'
 ```
 
-Do not use the dynamic renderer for production output, but create stacks instead. The output is not cached.
+We recommend using stacks instead of the dynamic renderer for a better reusability of your rendered images.
 
 See [operations](../references/operations.html) for the definition of URL operations.

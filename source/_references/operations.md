@@ -62,13 +62,13 @@ Crops an image to a set size.
 
 - `width` (required): Integer, between 1 and 10000. The new width for the image.
 - `height` (required): Integer, between 1 and 10000. The new height for the image.
-- `anchor`: String. Describes where the crop should originate in the form of `XOFFSET-YOFFSET`, where:
+- `anchor`: String. Describes where the crop should originate in the form of `XOFFSET_YOFFSET`, where:
     - `XOFFSET` is either a number of pixels or "left", "center", "right"
     - `YOFFSET` is either a number of pixels or "top", "center", "bottom".
    
    The default value is `auto`, which will crop the image centering the crop box around the defined 
    [Subject Area](../references/dynamic-metadata.html#subject-area), if any.
-   If no Subject Area is defined, the crop operation will fallback to `center-center`.
+   If no Subject Area is defined, the crop operation will fallback to `center_center`.
 
 ### Dropshadow
 
