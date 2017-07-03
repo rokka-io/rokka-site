@@ -91,8 +91,10 @@ Resizes an image.
 
 #### Properties
 
-- `width` (required): Integer, between 1 and 10000. The new width for the image. 
-- `height` (required): Integer, between 1 and 10000. The new height for the image.
+At least `widht` or `height` is required.
+
+- `width`: Integer, between 1 and 10000. The new width for the image.
+- `height`: Integer, between 1 and 10000. The new height for the image.
 - `mode`: String. The mode of resizing to use. The default value is `box`. Possible values are:
     - `absolute`: Resizes the image to the dimensions given.
     - `box`: Resizes the image to keep its aspect ratio and fit into a box of the dimensions given, i.e. the dimensions given are the maximum dimensions of the resized image.
