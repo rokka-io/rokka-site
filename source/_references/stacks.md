@@ -27,6 +27,7 @@ The _options_ parameter is optional. You can use the following options in there.
 | webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. |
 | png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images. |
 | source_file | false | - | - | - | For outputting just the original unprocessed source file, set this to true and configure an empty operations collection. Can not be used together with other stack options. |
+| autoformat | false | - | - | - | If set, rokka will return WebP instead of png/jpeg, if the client supports it. See below for more infos.|
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
@@ -167,6 +168,13 @@ One way to build such a stack config would then be the following configurations:
     * etc..
 
 Later, if you want to add another size, you just base them on the same basestack and you don't have to repeat the same rotation/dropshadow options. Furthermore the rokka servers don't have to recalculate the expensive operations, just the quite simple resize operations for the new stack. Leading to much faster response times for your end users on the first hits.
+
+### Autoformat
+
+If you set the `autoformat: true` stack option, rokka will deliver an image in the usually smaller WebP format instead of PNG or JPG, if the client supports it.
+If you didn't set `webp.quality` explicitely, it will return a lossless image, if a PNG was requested and a lossy image, if a JPG was requested. If you set `webp.quality` to any value on that stack, it will always honor that, no matter what was requested.
+
+In the future, we may support more autoformat features, depending on demand.
 
 ## Retrieve a stack
 
