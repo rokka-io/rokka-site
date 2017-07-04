@@ -28,6 +28,7 @@ The _options_ parameter is optional. You can use the following options in there.
 | png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images. |
 | source_file | false | - | - | - | For outputting just the original unprocessed source file, set this to true and configure an empty operations collection. Can not be used together with other stack options. |
 | autoformat | false | - | - | - | If set, rokka will return WebP instead of png/jpeg, if the client supports it. See below for more infos.|
+| dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See below for more infos. |
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
@@ -172,9 +173,53 @@ Later, if you want to add another size, you just base them on the same basestack
 ### Autoformat
 
 If you set the `autoformat: true` stack option, rokka will deliver an image in the usually smaller WebP format instead of PNG or JPG, if the client supports it.
-If you didn't set `webp.quality` explicitely, it will return a lossless image, if a PNG was requested and a lossy image, if a JPG was requested. If you set `webp.quality` to any value on that stack, it will always honor that, no matter what was requested.
+If you didn't set `webp.quality` explicitly and requested a PNG, it will return a lossless image and a lossy compressed image, if a JPG was requested. If you set `webp.quality` to any value on that stack, it will always honor that, no matter what was requested.
 
 In the future, we may support more autoformat features, depending on demand.
+
+### Device Pixel Ratio (DPR)
+
+High resolution screens (Retina in some marketing terms) are very common today and modern browsers support this with the '<img srcset>' and '<picture>' element. The `dpr` stack option helps you implementing that easily without the need for different stacks. If `dpr` is set for example to 2.0, then rokka will return an image with twice the resolution than asked for.
+
+An example, let's assume you have a stack named `small which resizes your pictures to 200x200:
+
+```language-json
+{
+  "operations": [
+    {
+      "name": "resize",
+      "options": {
+        "width": 200,
+        "height": 200
+      }
+    }
+  ]
+}
+```
+
+A call to https://{yourorg}.rokka.io/small/{hash}.jpg will return a 200px image. But if you call it with https://{yourorg}.rokka.io/small/options-dpr-2/{hash}.jpg, you get a 400px image, looking much sharper on a retina screen. If you want to let the browser decide, which picture it should request, you can for example use the `srcset` attribute in an image tag.
+
+```language-html
+<img src="https://{yourorg}.rokka.io/small/{hash}.jpg"
+     srcset= "https://{yourorg}.rokka.io/small/options-dpr-2/{hash}.jpg 2x,
+              https://{yourorg}.rokka.io/small/options-dpr-3/{hash}.jpg 3x">
+```
+
+There's also a resize stack operation option called `upscale_dpr`, which applies in some cases. Assuming your picture in the above example is only 300px wide. Using a dpr setting of 2 will upscale that to 400px by default (otherwise the browser would display it smaller, as a 150 css pixel image). Settting `upscale_dpr` to `false` will not do that and return the image in its original dimensions (which in this example would be 300px).
+
+The more general `upscale` resize stack operation option also applies. If `upscale` is set to `false`, but `upscale_dpr` is set to `true` the above example would return a 200px picture in the dpr=1 case, but still a 400px in the dpr=2 case.
+
+In table form, with a 300px image:
+
+| stack operation options | dpr: 1, width: 200 | dpr: 2, width: 200 | dpr: 1, width: 400 | dpr: 2, width: 400 |
+|----------------------------------|---------------|----------------|--------------------|--------------------|
+| upscale: true, upscale_dpr: true | Return: 200px | Return: 400px | Return: 400px       | return 800px       |
+| upscale: false, upscale_dpr: true | Return: 200px | Return: 400px | Return: 300px      | return 600px       |
+| upscale: false, upscale_dpr: false | Return: 200px | Return: 300px | Return: 300px     | return 300px       |
+
+
+Important: A stack with dpr options applied, currently needs a resize operation. Otherwise the dpr setting won't work and the call will return a `400` error. We can't produce higher dpr resolution with the other operations. Furthermore, if you use a basestack, the same applies. The main stack needs a resize operation, one just in the basestack won't do it.
+
 
 ## Retrieve a stack
 
