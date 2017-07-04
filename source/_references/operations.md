@@ -91,13 +91,16 @@ Resizes an image.
 
 #### Properties
 
-- `width` (required): Integer, between 1 and 10000. The new width for the image. 
-- `height` (required): Integer, between 1 and 10000. The new height for the image.
+At least `width` or `height` is required.
+
+- `width`: Integer, between 1 and 10000. The new width for the image.
+- `height`: Integer, between 1 and 10000. The new height for the image.
 - `mode`: String. The mode of resizing to use. The default value is `box`. Possible values are:
     - `absolute`: Resizes the image to the dimensions given.
     - `box`: Resizes the image to keep its aspect ratio and fit into a box of the dimensions given, i.e. the dimensions given are the maximum dimensions of the resized image.
     - `fill`: Resizes the image to keep its aspect ratio and completely fill a box of the dimensions given, i.e. the dimensions given are the minimum dimensions of the resized image.
 - `upscale`: Boolean. Whether to allow the resulting image to be bigger than the original one. The default value is `true`.
+- `upscale_dpr`: Boolean. Whether to allow the resulting image to be dpr times bigger than the original one, when the dpr stack option is set. Eg. If your image has 100x100 dimensions and you ask for a 60x60 image, this setting would upscale a `dpr: 2` setting  to 120x120 even when `upscale` is set to `false`. But it would upscale a request for a 120x120 image only to 200x200 (since a `dpr: 1` request would leave it at 100x100). This is to prevent, that a browser would display an image  with `dpr: 1` on a standard screen bigger than one with `dpr: 2` on a retina screen.  We recommend to leave this untouched. The default value is `true`.
 - `filter`: String. The filter to use when resizing the image. The default value is `blackman`. Possible values are:
     - `blackman`
     - `bessel`
