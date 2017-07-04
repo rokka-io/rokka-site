@@ -29,6 +29,7 @@ The _options_ parameter is optional. You can use the following options in there.
 | source_file | false | - | - | - | For outputting just the original unprocessed source file, set this to true and configure an empty operations collection. Can not be used together with other stack options. |
 | autoformat | false | - | - | - | If set, rokka will return WebP instead of png/jpeg, if the client supports it. See below for more infos.|
 | dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See below for more infos. |
+| optimizations.disable_all |true| - | - | Disables all additional enhanced image size optimizations. See below for more infos. |
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
@@ -220,6 +221,17 @@ In table form, with a 300px image:
 
 Important: A stack with dpr options applied, currently needs a resize operation. Otherwise the dpr setting won't work and the call will return a `400` error. We can't produce higher dpr resolution with the other operations. Furthermore, if you use a basestack, the same applies. The main stack needs a resize operation, one just in the basestack won't do it.
 
+### Additional image size optimizations
+
+rokka does some advanced image size optimizations on your images by default. As does optimizations are not always fast, it does those in the background to not slow down your first render request to an image. Therefore the first request on a newly rendered image will not have those optimizations applied, but requests made 10-30 seconds later will have those applied.
+
+For PNG and lossless WebP we use [pngquant](https://pngquant.org/) to make the image size significantly smaller as long as the quality doesn't degrade. We additionally compress PNG with [zopflipng](https://github.com/google/zopfli) to make them even smaller.
+
+For JPEG we recompress the lossless rendered image with [MozJPEG](https://github.com/mozilla/mozjpeg) and [jpeg-archive](https://github.com/danielgtaylor/jpeg-archive) and match the quality of the initially rendered image. This makes the image size approx. 75% - 90% the size of the initially rendered one, sometimes even less.
+
+We never do any of those optimizations to your source images, they stay as they were uploaded.
+
+If you want to disable those optimizations, set `optimizations.disable_all` to `true` as a stack options. More refined options are in the backlog, tell us, if you definitely need one.
 
 ## Retrieve a stack
 
