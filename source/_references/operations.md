@@ -91,7 +91,7 @@ Resizes an image.
 
 #### Properties
 
-At least `widht` or `height` is required.
+At least `width` or `height` is required.
 
 - `width`: Integer, between 1 and 10000. The new width for the image.
 - `height`: Integer, between 1 and 10000. The new height for the image.
