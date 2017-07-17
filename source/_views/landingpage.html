@@ -282,7 +282,7 @@
 
 
 
-<section class="section section--alt rokka-section--pricing">
+<section id="rokka-pricing" class="section section--alt rokka-section--pricing">
   <div class="section__body">
     <h2 class="">{{ site.text.pricing.title|raw }}</h2>
     <div class="rokka-box rokka-pricing-box mrgt+">
@@ -325,10 +325,10 @@
 
       <div class="rokka-pricing rokka-pricing__details">
         <a href="#" class="rokka-pricing__details-link">
-       
+
             <span class="text-bold">{{ site.text.pricing.details.title|raw }}</span>
             <span class="text-primary text-bold">{{ site.text.pricing.details.text|raw }}</span>
-       
+
         </a>
         <div class="rokka-pricing__details-table">
           <div class="grid">
@@ -518,7 +518,7 @@
         new Toolkit.Navbar(navbar, { mode: 'section' });
       });
       window.addEventListener('DOMContentLoaded', function() {
-        
+
         document.querySelector('.rokka-pricing__details-link').addEventListener('click', function(e) {
           e.preventDefault();
           document.querySelector('.rokka-pricing__details').classList.add('rokka-pricing__details--open');
