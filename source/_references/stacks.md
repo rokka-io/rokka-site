@@ -29,7 +29,7 @@ The _options_ parameter is optional. You can use the following options in there.
 | source_file | false | - | - | - | For outputting just the original unprocessed source file, set this to true and configure an empty operations collection. Can not be used together with other stack options. |
 | autoformat | false | - | - | - | If set, rokka will return WebP instead of png/jpeg, if the client supports it. See below for more infos.|
 | dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See below for more infos. |
-| optimizations.disable_all |true| - | - | Disables all additional enhanced image size optimizations. See below for more infos. |
+| optim.disable_all |true| - | - | Disables all additional enhanced image size optimizations. See below for more infos. |
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
@@ -231,7 +231,7 @@ For JPEG we recompress the lossless rendered image with [MozJPEG](https://github
 
 We never do any of those optimizations to your source images, they stay as they were uploaded.
 
-If you want to disable those optimizations, set `optimizations.disable_all` to `true` as a stack options. More refined options are in the backlog, tell us, if you definitely need one.
+If you want to disable those optimizations, set `optim.disable_all` to `true` as a stack options. More refined options are in the backlog, tell us, if you definitely need one.
 
 ## Retrieve a stack
 
