@@ -27,13 +27,13 @@ curl -X PUT \
 
 Now just get the image with
 
-https://$ROKKA_ORG.rokka.io/dynamic/options-autoformat-true/2017/06/Relax_sabbatical.jpg.jpg
+https://$ROKKA_ORG.rokka.io/dynamic/options-autoformat-true/-2017/06/Relax_sabbatical.jpg-.jpg
 
 (Little caveat here: We recommend actually uploading picture to Rokka with the API (see below), this gives you much more control over everything, this approach is shown first, since it gets you started with rokka a little bit faster. Be also aware that if your original image changes, rokka won't notice, it will store the original in its database and never check for it again. You also have to delete them via the API, if you don't want them anymore in rokka)
 
 This breaks down in
 
-https://{ROKKA_URL}/{STACKNAME}/{OPTIONS}/{IMAGE_PATH_AFTER_BASE_PATH}.{FORMAT}
+https://{ROKKA_URL}/{STACKNAME}/{OPTIONS}/-{IMAGE_PATH_AFTER_BASE_PATH}-.{FORMAT}
 
 Dynamic is a special stackname, you can define your stacks dynamically (more about stacks below).
 {OPTIONS} can have different options, here we only use `autoformat`, so that rokka delivers webp for browsers supporting that. {OPTIONS} is optional, but currently not for dynamic stacks (will maybe change in the future).
@@ -42,15 +42,15 @@ Then comes the obvious path to your image and then {FORMAT}, obvious choices her
 
 If you want to resize a picture to a certain size, you can do it via options:
 
-https://$ROKKA_ORG.rokka.io/dynamic/options-autoformat-true--resize-width-300/2017/06/Relax_sabbatical.jpg.jpg
+https://$ROKKA_ORG.rokka.io/dynamic/options-autoformat-true--resize-width-300/-2017/06/Relax_sabbatical.jpg-.jpg
 
 And if you now want to deliver retina pictures for browsers supporting it, add the dpr to your stack options and all is fine:
 
 ```
 <img
-    src="https://$ROKKA_ORG.rokka.io/dynamic/options-autoformat-true--resize-width-300/2017/06/Relax_sabbatical.jpg.jpg"
-    srcset="https://$ROKKA_ORG.rokka.io/dynamic/options-autoformat-true-dpr-2--resize-width-300/2017/06/Relax_sabbatical.jpg.jpg 2x,
-            https://$ROKKA_ORG.rokka.io/dynamic/options-autoformat-true-dpr-3--resize-width-300/2017/06/Relax_sabbatical.jpg.jpg 3x"
+    src="https://$ROKKA_ORG.rokka.io/dynamic/options-autoformat-true--resize-width-300/-2017/06/Relax_sabbatical-.jpg.jpg"
+    srcset="https://$ROKKA_ORG.rokka.io/dynamic/options-autoformat-true-dpr-2--resize-width-300/-2017/06/Relax_sabbatical.jpg-.jpg 2x,
+            https://$ROKKA_ORG.rokka.io/dynamic/options-autoformat-true-dpr-3--resize-width-300/-2017/06/Relax_sabbatical.jpg-.jpg 3x"
 />
 ```
 
@@ -84,14 +84,14 @@ curl -X PUT \
 
 And your URL suddenly gets much shorter to:
 
-https://$ROKKA_ORG.rokka.io/medium/2017/06/Relax_sabbatical.jpg.jpg
+https://$ROKKA_ORG.rokka.io/medium/-2017/06/Relax_sabbatical.jpg-.jpg
 
 or for the `<img>` example above
 ```
 <img
-    src="https://$ROKKA_ORG.rokka.io/medium/2017/06/Relax_sabbatical.jpg.jpg"
-    srcset="https://$ROKKA_ORG.rokka.io/medium/options-dpr-2/2017/06/Relax_sabbatical.jpg.jpg 2x,
-            https://$ROKKA_ORG.rokka.io/medium/options-dpr-3/2017/06/Relax_sabbatical.jpg.jpg 3x"
+    src="https://$ROKKA_ORG.rokka.io/medium/-2017/06/Relax_sabbatical.jpg-.jpg"
+    srcset="https://$ROKKA_ORG.rokka.io/medium/options-dpr-2/-2017/06/Relax_sabbatical.jpg-.jpg 2x,
+            https://$ROKKA_ORG.rokka.io/medium/options-dpr-3/-2017/06/Relax_sabbatical.jpg-.jpg 3x"
 />
 ```
 
