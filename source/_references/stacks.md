@@ -30,6 +30,7 @@ The _options_ parameter is optional. You can use the following options in there.
 | autoformat | false | - | - | - | If set, rokka will return WebP instead of png/jpeg, if the client supports it. See below for more infos.|
 | dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See below for more infos. |
 | optim.disable_all |true| - | - | Disables all additional enhanced image size optimizations. See below for more infos. |
+| optim.immediate.jpeg |false| - | - | Immediatly runs the enhanced jpeg image size otimizations instead of doing it later asynchronously. See below for more infos. |
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
@@ -223,7 +224,9 @@ Important: A stack with dpr options applied, currently needs a resize operation.
 
 ### Additional image size optimizations
 
-rokka does some advanced image size optimizations on your images by default. As does optimizations are not always fast, it does those in the background to not slow down your first render request to an image. Therefore the first request on a newly rendered image will not have those optimizations applied, but requests made 10-30 seconds later will have those applied.
+rokka does some advanced image size optimizations on your images by default. As the optimizations are not always fast, it does those in the background to not slow down your first render request to an image. Therefore the first request on a newly rendered image will not have those optimizations applied, but requests made 10-30 seconds later will have those applied.
+
+For JPEGs you can prevent that delay with the stack option `optim.immediate.jpeg`. rokka then does it right on the first render and not only a few seconds later. This will make your first render a little bit slower, but won't make a difference for later requests.
 
 For PNG and lossless WebP we use [pngquant](https://pngquant.org/) to make the image size significantly smaller as long as the quality doesn't degrade. We additionally compress PNG with [zopflipng](https://github.com/google/zopfli) to make them even smaller.
 
