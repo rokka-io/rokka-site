@@ -226,7 +226,7 @@ Important: A stack with dpr options applied, currently needs a resize operation.
 
 rokka does some advanced image size optimizations on your images by default. As the optimizations are not always fast, it does those in the background to not slow down your first render request to an image. Therefore the first request on a newly rendered image will not have those optimizations applied, but requests made 10-30 seconds later will have those applied.
 
-For JPEGs you can prevent that delay with the stack option `optim.immediate.jpeg`. rokka then does it right on the first render and not only a few seconds later. This will make your first render a little bit slower, but won't make a difference for later requests.
+For JPEGs you can prevent that delay with the stack option `optim.immediate.jpeg`. rokka then does it right on the first render and not only a few seconds later. This will make your first render a little bit slower, but won't make a difference for later requests. This can also be very useful, if you want to see the final image during developing right away (eg. for deciding about the appropriate jpeg quality setting).
 
 For PNG and lossless WebP we use [pngquant](https://pngquant.org/) to make the image size significantly smaller as long as the quality doesn't degrade. We additionally compress PNG with [zopflipng](https://github.com/google/zopfli) to make them even smaller.
 
