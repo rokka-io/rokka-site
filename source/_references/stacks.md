@@ -22,15 +22,16 @@ The _options_ parameter is optional. You can use the following options in there.
 
 | Attribute | Default | Minimum | Maximum | Description |
 | --------- | ------- | ------- | ------- | ----------- |
-| basestack | - | - | - | Name of existing stack that will be executed before this stack. See below for details|
+| basestack | - | - | - | Name of existing stack that will be executed before this stack. See below.|
 | jpg.quality | 76 | 1 | 100 | Jpg quality setting, lower number means smaller file size and worse lossy quality. |
 | webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. |
 | png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images. |
 | source_file | false | - | - | - | For outputting just the original unprocessed source file, set this to true and configure an empty operations collection. Can not be used together with other stack options. |
-| autoformat | false | - | - | - | If set, rokka will return WebP instead of png/jpeg, if the client supports it. See below for more infos.|
-| dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See below for more infos. |
-| optim.disable_all |true| - | - | Disables all additional enhanced image size optimizations. See below for more infos. |
-| optim.immediate.jpeg |false| - | - | Immediatly runs the enhanced jpeg image size otimizations instead of doing it later asynchronously. See below for more infos. |
+| remote_basepath | - | - | - | To load images directly from a remote URL instead of uploading them to rokka via the API first. See below.|
+| autoformat | false | - | - | - | If set, rokka will return WebP instead of PNG/JPEG, if the client supports it. See below.|
+| dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See below. |
+| optim.disable_all |true| - | - | Disables all additional enhanced image size optimizations. See below.|
+| optim.immediate.jpeg |false| - | - | Immediatly runs the enhanced jpeg image size otimizations instead of doing it later asynchronously. See below. |
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
@@ -91,7 +92,7 @@ Be aware that currently there's no API call for deleting the CDN cache of a stac
 To actually use it, just append `?overwrite=true` to your URL, and it will overwrite an eventually existing stack. Or in PHP add true as the 5th parameter of `createStack`.
 
 ```language-bash
-curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack?overwrite=true' -d '{
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/mycompany/teststack?overwrite=true' -d '{
     "operations":
     [
         {
@@ -119,7 +120,7 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/tes
 use Rokka\Client\Core\StackOperation;
 use Rokka\Client\Core\StackOperationCollection;
 
-$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
 
 $resize = new StackOperation('resize', ['width' => 200, 'height' => 200]);
 $rotate = new StackOperation('rotate', ['angle' => 45]);
@@ -178,6 +179,61 @@ If you set the `autoformat: true` stack option, rokka will deliver an image in t
 If you didn't set `webp.quality` explicitly and requested a PNG, it will return a lossless image and a lossy compressed image, if a JPG was requested. If you set `webp.quality` to any value on that stack, it will always honor that, no matter what was requested.
 
 In the future, we may support more autoformat features, depending on demand.
+
+### Loading images from a remote URL (remote_basepath)
+
+Instead of uploading images to rokka via the API, you can also let them be fetched "on demand" by rokka. You define the first part of the URL (the `remote_basepath`) either globally on your organization or on the stacks directly. Then you give the second part of the path to your image in the rokka URL and rokka will automatically fetch that image, insert it into the rokka system and delivers it. It does this only the first time that image is accessed, for later requests it will deliver the image directly from rokka and not hit your backend again.
+
+#### Defining the remote_basepath
+
+You can either do this globally on the organisation with the following call:
+
+```language-bash
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/mycompany/remote_basepath' -d '"$REMOTE_BASEPATH"'
+```
+
+$REMOTE_BASEPATH can then be for example something like 'https://blog.liip.ch/content/uploads/', basically the place where your images live. A S3 bucket is also an option, but the images have to be publicly available.
+
+You can also set `remote_basepath` on individual stacks, if you want to have different ones for example.
+
+```language-bash
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/mycompany/teststack' -d '{
+    "operations":
+    [
+        {
+            "name": "resize",
+            "options": {
+                "width": 200,
+            }
+        }
+    ],
+    "options": {
+        "remote_basepath": $REMOTE_BASEPATH
+    }
+}'
+```
+
+#### Rendering a remote image
+
+To render now a remote image, you add the second part of your remote URL (the one after your `remote_basepath') to the URL instead of the rokka-hash and surround it with `-` and you're done.
+
+```
+https://{organization}.rokka.io/{stack-name}/{options}/-{image_path_after_basepath}-.{format}
+
+```
+
+All the usual possibilities - like SEO additions, stack options, dynamic stacks, etc. - work like when you would upload the image directly to rokka, eg:
+
+
+```
+https://mycompany.rokka.io/somestack/-2017/06/Relax_sabbatical.jpg-/some-seo-string.jpg
+```
+
+
+Please be aware, that rokka only downloads your image once and never checks again, if it changed. If you change your image, you should therefore also change the filename.
+
+Also be aware, that if you uploaded that same image already via the API and then via this way, then it will have two different hashes. The binary itself is only stored once, 'though. If you delete one of those hashes via the API, the other will still be in rokka.
+
 
 ### Device Pixel Ratio (DPR)
 
