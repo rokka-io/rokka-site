@@ -85,6 +85,10 @@ Adds a dropshadow to an image.
                  are good with leaving this at 0.
 - `color`: String. The hex code for the shadow colour. The default value is `000000`.
 
+### Grayscale
+
+Converts an image to grayscale.
+
 ### Resize
 
 Resizes an image.
@@ -127,6 +131,14 @@ Rotates an image clockwise.
 - `angle` (required): Number, between 0 and 360. The angle of rotation for the image.
 - `background_colour`: String. The hex code for the background colour. The default value is `000000`.
 - `background_opacity`: Number, between 0 and 100. 100 is fully opaque and 0 is fully transparent. The default value is 0.
+
+### Sepia
+
+Applies sepia toning to an image
+
+#### Properties
+
+- `threshold` : Positive Number. A measure of the extent of the sepia toning.
 
 ### Trim
 
