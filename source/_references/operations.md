@@ -129,7 +129,7 @@ Rotates an image clockwise.
 #### Properties
 
 - `angle` (required): Number, between 0 and 360. The angle of rotation for the image.
-- `background_colour`: String. The hex code for the background colour. The default value is `000000`.
+- `background_colour`: String. The hex code for the background colour. The default value is `FFFFFF`.
 - `background_opacity`: Number, between 0 and 100. 100 is fully opaque and 0 is fully transparent. The default value is 0.
 
 ### Sepia
