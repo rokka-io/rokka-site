@@ -32,6 +32,8 @@ The _options_ parameter is optional. You can use the following options in there.
 | dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See below. |
 | optim.disable_all |true| - | - | Disables all additional enhanced image size optimizations. See below.|
 | optim.immediate.jpeg |false| - | - | Immediatly runs the enhanced jpeg image size otimizations instead of doing it later asynchronously. See below. |
+| jpg.transparency.convert | false | - | - | Force converting an alpha channel to a jpg.transparency.color. | 
+| jpg.transparency.color | FFFFFF | - | - | The background color used to replace the alpha channel. |
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
