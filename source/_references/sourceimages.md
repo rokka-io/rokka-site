@@ -46,6 +46,26 @@ var_dump($sourceImage);
 
 It will return the same meta data as you get from retrieving a single image, with the only difference that it is wrapped in an array for future expansions of multi file uploads.
 
+### Supplying metadata while creating a source image
+
+You can also directly add [user metadata](usermetadata.html) or [dynamic metadata](dynamicmetadata.html) while creating an image.
+
+```language-bash
+curl -X POST -F filedata=@image.png \
+             -F 'meta_user[0]={"foo":"bar"}' \
+             -F 'meta_dynamic[0][subject_area]={"x":100,"y":100}' \
+             'https://api.rokka.io/sourceimages/mycompany'
+```
+```language-php
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
+
+$sourceImage = $client->uploadSourceImage(file_get_contents('image.png'), 'image.png', null, ['meta_user' => ['foo' => 'bar'], 'meta_dynamic' => ['subject_area' => ['x'=> 50, 'y' => 100]]]);
+
+var_dump($sourceImage);
+```
+
+In case that source image already exists and there's metadata fields which are not defined in the upload, they are not deleted.
+
 ## Retrieve data about a source image
 
 You can retrieve meta data about a source image by providing the identifying hash on the `/sourceimages` route.

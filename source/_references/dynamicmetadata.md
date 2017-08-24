@@ -44,6 +44,8 @@ echo 'Updated subject area. New image hash: ' . $newHash . PHP_EOL;
 
 ```
 
+You can also directly provide metadata when you first upload an image. See [Source images](sourceimages.html) for details.
+
 ## Delete dynamic metadata from a source image
 
 To delete dynamic metadata from a source image, you need to provide the organization, the identifying hash of the image and the name of the dynamic metadata. Do this by making a DELETE request to `https://api.rokka.io/sourceimages/{organization}/{hash}/meta/dynamic/{name}`
