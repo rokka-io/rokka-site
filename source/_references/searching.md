@@ -204,6 +204,13 @@ your sort field, eg. the biggest images first:
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/myorganization?sort=size desc'
 ```
 
+in PHP:
+```language-php
+$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+
+$sourceImageCollection = $client->searchSourceImages([], ['size' => 'desc']);
+```
+
 Sorting by multiple fields is possible, just add multiple sorting criteria separated by comma.
 The following example will sort images first by `create` descending and later by `size` ascending: 
 
