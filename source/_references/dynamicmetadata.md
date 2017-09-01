@@ -38,7 +38,7 @@ $hash = '0dcabb778d58d07ccd48b5ff291de05ba4374fb9';
 
 $dynamicMetadata = new SubjectArea(0, 0, 30, 230);
 
-$newHash = $client->setDynamicMetadata($dynamicMetadata, $hash, ['deletePrevious' => false]);
+$newHash = $client->setDynamicMetadata($dynamicMetadata, $hash, 'testorganization', ['deletePrevious' => false]);
 
 echo 'Updated subject area. New image hash: ' . $newHash . PHP_EOL;
 
