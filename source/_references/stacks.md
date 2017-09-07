@@ -32,8 +32,9 @@ The _options_ parameter is optional. You can use the following options in there.
 | dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See below. |
 | optim.disable_all |true| - | - | Disables all additional enhanced image size optimizations. See below.|
 | optim.immediate.jpeg |false| - | - | Immediatly runs the enhanced jpeg image size otimizations instead of doing it later asynchronously. See below. |
-| jpg.transparency.convert | false | - | - | Force converting an alpha channel to a jpg.transparency.color. | 
 | jpg.transparency.color | FFFFFF | - | - | The background color used to replace the alpha channel. |
+| jpg.transparency.autoformat | false | - | - | Delivers the best possible, alpha channel capable format instead of jpg (webp, svg or png), in case the rendered image has a visible alpha channel. See below for details. |
+| jpg.transparency.convert | false | - | - | Force converting an alpha channel to a jpg.transparency.color. Very rarely needded, as rokka will figure that out automatically.| 
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
@@ -181,6 +182,17 @@ If you set the `autoformat: true` stack option, rokka will deliver an image in t
 If you didn't set `webp.quality` explicitly and requested a PNG, it will return a lossless image and a lossy compressed image, if a JPG was requested. If you set `webp.quality` to any value on that stack, it will always honor that, no matter what was requested.
 
 In the future, we may support more autoformat features, depending on demand.
+
+### Delivering a transparency capable format instead of JPEG (jpg.transparency.autoformat)
+
+There are situations, where one needs an alpha channel on images which would be best suitable for the JPEG format and the alternatives are not ideal. PNG produces too large pictures for such images and WebP isn't supported on all browsers. To solve this problem, you can set the `jpg.transparency.autoformat: "true"` stack option and rokka will return an especially crafted SVG, if the result has a visible alpha channel (otherwise it sends a jpg). In case the browser supports WebP, it will use that instead of SVG. And if both are not detected, it will return PNG.
+
+Nowadays almost all browsers support [loading SVG images via the the HTML img element](https://caniuse.com/#feat=svg-img) and eg. Firefox and Safari send just "*/*" in the "accept" Header for img requests. Therefore rokka delivers SVG when "*/*" is in the accept header (as long as WebP isn't explicitly stated in that header). If there's no accept header, it sends PNG.
+
+You can also set `jpg.transparency.autoformat: "png"` to just return PNG instead of SVG, if the rendered image has a visible alpha channel (as above, it will return WebP instead of PNG, if the browser supports it). This will ensure support for rather old browsers, which don't support SVG properly. But then everyone will get the often much bigger PNG image instead of the smaller SVG. Alternatively you could detect SVG support on the client side and use two different stacks, one for the old browsers, the other for everything else. 
+
+For more info about this technique, [see our blog post](https://blog.liip.ch/archive/2017/08/28/how-to-compress-a-png-like-a-jpeg-with-rokka.html) and [the follow up here](https://blog.liip.ch/archive/2017/09/04/compressing-transparent-png-like-jpeg-rokka-got-even-easier.html).
+
 
 ### Loading images from a remote URL (remote_basepath)
 

@@ -1,4 +1,10 @@
 #!/bin/bash
+set -x
+
+# remove the whole rokka-dashboard dir, if no repo is there
+if [ ! -d rokka-dashboard/.git ]; then
+  rm -rf rokka-dashboard
+fi
 
 # clone repo and make sure we're up to date
 if [ ! -d rokka-dashboard ]; then
@@ -6,7 +12,7 @@ if [ ! -d rokka-dashboard ]; then
 fi
 
 cd rokka-dashboard
-git checkout -q master
+git checkout master
 git pull origin master
 
 # install deps and run prod build
