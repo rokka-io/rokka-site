@@ -78,6 +78,9 @@ text:
       free_space: 2GB Speicherplatz
       free_traffic: 5GB Datenvolumen
     disclaimer: Alle Preise in CHF und ohne Mehrwertsteuer.
+    tos:
+      text: Nutzungsbedingungen
+      link: https://rokka.io/assets/pdf/Rokka_Terms_of_use_DE.pdf
 
   cta:
     title: Testen Sie rokka kostenlos und ohne Verpflichtungen.

@@ -78,6 +78,9 @@ text:
       free_space: up to 2 GB of space
       free_traffic: up to 5 GB of traffic
     disclaimer: All prices in CHF and excl. VAT.
+    tos:
+      text: Terms of Use
+      link: https://rokka.io/assets/pdf/Rokka_Terms_of_use_EN.pdf
 
   cta:
     title: Try out rokka for 90 days.
