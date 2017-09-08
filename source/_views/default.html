@@ -48,7 +48,7 @@
             </div>
         </a>
         <div class="flex-item-1 text-right">
-            <a class="btn btn--negative btn--small rokka-navbar-cta" href="/{{ site.language }}/signup">
+            <a class="btn btn--negative btn--small rokka-navbar-cta" href="/dashboard/#/signup">
                 {{ site.text.navigation.cta|raw }}
             </a>
         </div>
@@ -74,7 +74,12 @@
                         {{ site.text.navigation.documentation|raw }}
                     </a>
                 </li>
-                <!-- <li><a href="#" class="navbar-menu__link">{{ site.text.navigation.login|raw }}</a></li> -->
+                <li>
+                  <a class="navbar-menu__link" target="_blank" href="https://blog.liip.ch/archive/category/products/rokka">
+                      Blog
+                  </a>
+                </li>
+                <li><a href="https://rokka.io/dashboard" class="navbar-menu__link">{{ site.text.navigation.login|raw }}</a></li>
                 <li class="navbar-language-item">
                     {% if page.multilang == true %}
                     	<a class="navbar-menu__link{% if site.language == "de" %} active{% endif %}" href="/de{{ page.url }}">DE</a>

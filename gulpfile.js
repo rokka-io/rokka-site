@@ -35,7 +35,9 @@ gulp.task('serve', () => {
 
     gulp.watch('source-assets/styles/**/*.scss', ['compile:styles']);
     gulp.watch('source-assets/scripts/**/*.js', ['compile:scripts']);
-    gulp.watch('source/**/*', ['compile:html']);
+    gulp.watch('source/**/*', () => {
+      runSequence('compile', 'inject');
+    });
 });
 
 /*
@@ -264,7 +266,7 @@ gulp.task('build', ['clean'], () => {
 });
 
 gulp.task('default', ['clean'], () => {
-  runSequence('compile', 'copy', 'dashboard', 'inject', 'serve');
+  runSequence('compile', 'copy', 'inject', 'serve');
 });
 
 
