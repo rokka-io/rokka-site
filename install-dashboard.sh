@@ -1,5 +1,7 @@
 #!/bin/bash
 set -x
+set -e
+set -o pipefail
 
 # remove the whole rokka-dashboard dir, if no repo is there
 if [ ! -d rokka-dashboard/.git ]; then
@@ -17,7 +19,7 @@ git pull origin master
 
 # install deps and run prod build
 npm install
-npm run build /assets/dashboard
+npm run build /assets/dashboard || cat /home/travis/.npm/_logs/*.log && exit 5
 
 # create target directories
 mkdir -p ../dist/assets/dashboard
