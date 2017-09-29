@@ -19,7 +19,7 @@ git pull origin master
 
 # install deps and run prod build
 npm install
-npm run build /assets/dashboard || cat /home/travis/.npm/_logs/*.log && exit 5
+npm run build /assets/dashboard
 
 # create target directories
 mkdir -p ../dist/assets/dashboard
