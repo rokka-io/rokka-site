@@ -26,6 +26,6 @@ mkdir -p ../dist/assets/dashboard
 mkdir -p ../dist/dashboard
 
 # copy build files
-cp build/*.{svg,json,ico} ../dist/assets/dashboard
+cp build/*.{json,ico} ../dist/assets/dashboard
 cp -R build/static ../dist/assets/dashboard
 cp build/index.html ../dist/dashboard/
