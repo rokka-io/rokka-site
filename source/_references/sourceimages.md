@@ -5,7 +5,9 @@ use: [references]
 
 ## Intro
 
-Source images are your original images you upload to Rokka. You should always select the highest quality you can, Rokka will take care of the rest. Usually it's best to use PNG files, as they are not compressed. Rokka handles PNG, JPG and GIF files in RGB only. 
+Source images are your original images you upload to Rokka. You should always select the highest quality you can, Rokka will take care of the rest. Usually it's best to use PNG files, as they are not compressed. Rokka can handle PNG, JPG, GIF, WEBP, PDF and SVG files (more possible, if there's a demand). To ensure the best possible results, we recommend to upload the pictures in sRGB (with or without alpha channel) and not for example in CMYK.
+
+
 
 ## The source image object
 
@@ -43,6 +45,26 @@ var_dump($sourceImage);
 
 
 It will return the same meta data as you get from retrieving a single image, with the only difference that it is wrapped in an array for future expansions of multi file uploads.
+
+### Supplying metadata while creating a source image
+
+You can also directly add [user metadata](usermetadata.html) or [dynamic metadata](dynamicmetadata.html) while creating an image.
+
+```language-bash
+curl -X POST -F filedata=@image.png \
+             -F 'meta_user[0]={"foo":"bar"}' \
+             -F 'meta_dynamic[0][subject_area]={"x":100,"y":100}' \
+             'https://api.rokka.io/sourceimages/mycompany'
+```
+```language-php
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
+
+$sourceImage = $client->uploadSourceImage(file_get_contents('image.png'), 'image.png', null, ['meta_user' => ['foo' => 'bar'], 'meta_dynamic' => ['subject_area' => ['x'=> 50, 'y' => 100]]]);
+
+var_dump($sourceImage);
+```
+
+In case that source image already exists and there's metadata fields which are not defined in the upload, they are not deleted.
 
 ## Retrieve data about a source image
 
@@ -104,11 +126,26 @@ Deleting a source image will not remove it from the cache. Access to it will fad
 
 Note: If the image you try to delete does not exist, the API responds with a 404 status code. This 404 can be ignored, though it might indicate a logic error in the client application.
 
+## Deleting source images with binary hash
+
+The same binary hash can have different entries in rokka, if they have different [dynamic metadata](dynamicmetadata.html). With this command you can delete all of them at once
+
+```language-bash
+curl -X DELETE 'https://api.rokka.io/sourceimages/mycompany?binaryHash=03b3e8a0bdd76ef55c021066642c9d2fa9c02799'
+```
+```language-php
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
+
+$isDeleted = $client->deleteSourceImagesWithBinaryHash('03b3e8a0bdd76ef55c021066642c9d2fa9c02799');
+
+var_dump($isDeleted);
+```
+
 ## List source images
 
 See [searching for images](searching-images.html) for more details about how to get a list of your images.
 
-## Finding by binary hash
+## Finding with binary hash
 
 You can limit the outputs of the list by using limit and offset parameters to page through them.
 
@@ -124,7 +161,7 @@ curl -X GET 'https://api.rokka.io/sourceimages/mycompany?binaryHash=03b3e8a0bdd7
 ```language-php
 $client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
 
-$sourceImage = $client->getSourceImage('03b3e8a0bdd76ef55c021066642c9d2fa9c02799', true);
+$sourceImage = $client->getSourceImageWithBinaryHash('03b3e8a0bdd76ef55c021066642c9d2fa9c02799');
 
 var_dump($sourceImage);
 ```

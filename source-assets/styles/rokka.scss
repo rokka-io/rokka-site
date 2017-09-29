@@ -54,6 +54,29 @@ html {
 }
 
 
+@keyframes arrow-bounce {
+    0% {
+        transform: none;
+    }
+    100% {
+        transform: translateY(0.5rem);
+    }
+}
+
+// .section__continue {
+//     position: absolute;
+//     bottom: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 2rem;
+//     text-align: center;
+//     svg {
+//         height: 2rem;
+//         width: auto;
+//         animation: arrow-bounce 1s infinite alternate ease-in-out;
+//     }
+// }
+
 .rokka-breadcrumbs {
     color: $muted-color;
     a {
@@ -202,7 +225,7 @@ html {
         margin-bottom: $spacing-unit-large;
     }
     @include media('sm') {
-        padding-bottom: 33vw;
+        padding-bottom: 20vw;
     }
     @include media('lg') {
         padding-bottom: 16rem;
@@ -301,11 +324,23 @@ html {
     }
 }
 
+.section-spacer {
+    height: 80vh;
+    min-height: 400px;
+    max-height: 900px;
+    @include media('md') {
+        min-height: 600px;
+    }
+}
+
 .rokka-hero-section {
-    height: 100vh;
-    min-height: auto;
+    height: 80vh;
+    min-height: 400px;
     max-height: 900px;
     // min-height: 550px;
+    @include media('md') {
+        min-height: 600px;
+    }
     .section__body {
         height: 100%;
         @include media('md') {
@@ -319,8 +354,8 @@ html {
     position: absolute;
     top: 50%;
     width: 100%;
-    transform: translateY(-50%) translateY(3rem);
-    @media (min-height: 500px) {
+    transform: translateY(-50%) translateY(5rem);
+    @media (min-height: 600px) {
         transform: translateY(-50%) translateY(8rem);
     }
     .h2 {
@@ -351,11 +386,6 @@ html {
     }
 }
 
-.section-spacer {
-    height: 100vh;
-    max-height: 900px;
-}
-
 .push-left {
     padding-left: 3rem;
 }
@@ -371,9 +401,6 @@ html {
     position: absolute;
     top: 50%;
     transform: translateY(-50%) translateY(-5rem);
-    @media (min-height: 500px) {
-
-    }
     @include media('sm') {
         font-size: 11px;
     }
@@ -403,7 +430,7 @@ html {
         z-index: 130;
         transform-style: preserve-3d;
         display: none;
-        @media (min-height: 500px) {
+        @media (min-height: 600px) {
             display: block;
         }
     }
@@ -769,24 +796,23 @@ html {
 }
 
 .rokka-feature--delivery {
-    padding-top: 10rem;
+    padding-bottom: 2rem;
     @include media('sm') {
-        padding-top: 0;
+        padding-bottom: 0;
     }
     .rokka-feature__image {
         position: absolute;
         width: 14rem;
-        top: 0;
-        right: 50%;
+        bottom: -40%;
+        right: -10%;
         z-index: -1;
-        transform: translate(50%, 0%) rotate(23deg);
         img {
             width: 100%;
         }
         @include media('sm') {
             position: static;
             width: auto;
-            top: auto;
+            bottom: auto;
             right: auto;
             transform: translateX(10%);
         }
@@ -877,7 +903,7 @@ html {
     top: 0;
     left: 0;
     z-index: 30;
-    background-image: url(../images/liip-photo.jpg);
+    background-image: url(https://rokka.rokka.io/dynamic/noop/68e13ab4522ccd1084e21b721c2b626f5c2634ef.jpg);
     background-size: cover;
     background-position: center;
 }
@@ -904,7 +930,7 @@ html {
     left: 0.05em;
     
 
-    margin-bottom: -200 / $rokka-uoso-base-imac + em;
+    margin-bottom: -300 / $rokka-uoso-base-imac + em;
     margin-top: -200 / $rokka-uoso-base-imac + em;
 
     perspective: 2860 / $rokka-uoso-base-imac + em;
@@ -924,8 +950,8 @@ html {
     }
 
     .rokka-uoso-device__hardware {
-        background-image: url(../images/rokka-device-imac.png);
-        @include image-2x("../images/rokka-device-imac@2x.png");
+        background-image: url(https://rokka.rokka.io/dynamic/noop/72200a1d224accbb7f2eb0e2b833fa1f96cc1f43.png);
+        @include image-2x("https://rokka.rokka.io/dynamic/noop/7029694e29afbc82e643c11fb7b97c9be13d1149.png");
         width: 1302 / $rokka-uoso-base-imac + em;;
         height:  603 / $rokka-uoso-base-imac + em;;
         left: -52 / $rokka-uoso-base-imac + em;
@@ -962,8 +988,8 @@ html {
         font-size: $rokka-uoso-base-iphone + px;
     }
     .rokka-uoso-device__hardware {
-        background-image: url(../images/rokka-device-iphone.png);
-        @include image-2x("../images/rokka-device-iphone@2x.png");
+        background-image: url(https://rokka.rokka.io/dynamic/noop/dcd9dcb739471efe9d61c688b4736ace20054f11.png);
+        @include image-2x("https://rokka.rokka.io/dynamic/noop/ddfb58bcad87fc6146a9572a36a7909209428b88.png");
     }
     .rokka-uoso-device__screen {
         width: 104 / $rokka-uoso-base-iphone + em;
@@ -1000,8 +1026,8 @@ html {
     }
 
     .rokka-uoso-device__hardware {
-        background-image: url(../images/rokka-device-ipad.png);
-        @include image-2x("../images/rokka-device-ipad@2x.png");
+        background-image: url(https://rokka.rokka.io/dynamic/noop/ebe74b1469ce0aa140ac0e0e63ed17ec0d88fbaa.png);
+        @include image-2x("https://rokka.rokka.io/dynamic/noop/793dff14fceef24f672dc7689bda834d47ea86df.png");
     }
     .rokka-uoso-device__screen {
         width: 406 / $rokka-uoso-base-ipad + em;
@@ -1060,8 +1086,8 @@ html {
     }
 
     .rokka-uoso-device__hardware {
-        background-image: url(../images/rokka-device-macbook.png);
-        @include image-2x("../images/rokka-device-macbook@2x.png");
+        background-image: url(https://rokka.rokka.io/dynamic/noop/c3dd85cf7dbe18585d60ddd12a37cd0b091b4d4e.png);
+        @include image-2x("https://rokka.rokka.io/dynamic/noop/29deb8c70b5e3945b6509a0b2b2116f0536ef9a5.png");
         width: 820 / $rokka-uoso-base-macbook + em;
         height: 458 / $rokka-uoso-base-macbook + em;
         top: -15 / $rokka-uoso-base-macbook + em;
@@ -1217,7 +1243,16 @@ html {
 
 .rokka-quotes {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    margin-left: -20px;
+    margin-right: -20px;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2rem;
+    @include media('md') {
+        flex-direction: column;
+        overflow-x: hidden;
+    }
     @include media('lg') {
         flex-direction: row;
         padding: 0 5%;
@@ -1226,6 +1261,16 @@ html {
 
 .rokka-quote {
     margin-top: 2rem;
+    flex: 1 0;
+    padding-left: 20px;
+    min-width: 300px;
+    &:last-child {
+        padding-right: 20px;
+    }
+    @include media('md') {
+        margin-left: 0;
+        flex: 0;
+    }
     @include media('lg') {
         margin-top: 0;
         flex: 1 1;
@@ -1293,7 +1338,7 @@ html {
         }
     }
     .rokka-quote__avatar {
-        background-image: url(../images/rokka-testimonial-freitag-benjamin.jpg);
+        background-image: url(https://rokka.rokka.io/dynamic/noop/d4ed81c5f43055f6032e6e57761d80303b135d7f.jpg);
     }
 }
 
@@ -1321,7 +1366,7 @@ html {
     flex-direction: column;
     @include media('md') {
         flex-direction: row;
-        align-items: center;
+        //align-items: center;
     }
 }
 
@@ -1331,9 +1376,13 @@ html {
     @include media('md') {
         margin-bottom: 0;
     }
-    svg {
+}
+
+.rokka-footer__logo {
+    .rokka-footer__logo-rokka {
         height: 1.5rem;
         width: 6.4rem;
+        margin-top: -0.3rem;
         @include media('md') {
             height: 2rem;
             width: 8rem;
@@ -1343,7 +1392,14 @@ html {
         }
     }
 }
-
+.rokka-footer__logo-liip {
+  height: 0.75rem;
+  width: auto;
+  margin-bottom: 0.7rem;
+  g {
+      fill: currentColor;
+  }
+}
 .rokka-footer__item  {
     @include media('md') {
         margin-left: $spacing-unit-small;

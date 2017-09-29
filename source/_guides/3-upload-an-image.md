@@ -71,6 +71,8 @@ var_dump($stack); // print out stack data
 
 This does a __PUT__ request that creates a __thumbnail__ stack for our __testorganization__. The body of the message defines the operations to use. As that argument is an array, you can define multiple operations that are applied in the specified order. A successful response returns the resulting stack definition.
 
+You can also create stacks which deliver just the original image, even unprocessed at all. See [stacks](/documentation/references/stacks.html) for more details.
+
 See [operations](/documentation/references/operations.html) for the definition of all available operations and their arguments.
 
 ## Rendering an Image
@@ -84,3 +86,5 @@ Notice that the organization name is a __subdomain__ of rokka.io and that the st
 `https://testorganization.rokka.io/thumbnail/c03683b067927d77973b458e0baa40aa7b5e5418/image.jpg`
 
 There is also the dynamic rendering that allows to specify operations in the URL without creating a stack. Dynamic rendering should __NOT__ be used in production systems, since its output  is not cached. You can however use stack rendering with custom options (explained in the [rendering reference](../references/render.html)), if you need for instance different resizing options. 
+
+Rokka supports most common image formats for generating images, mainly jpg, png, gif and webp.

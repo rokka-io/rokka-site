@@ -128,6 +128,13 @@ The following returns all images with height = 1200.
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/myorganization?height=1200'
 ```
 
+In PHP:
+```language-php
+$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+
+$sourceImageCollection = $client->searchSourceImages(['height' => 1200]);
+```
+
 The following fields are available for each image for filtering:
  - `hash` (string): the image hash;
  - `binaryhash` (string): the image binary-hash;
@@ -195,6 +202,13 @@ your sort field, eg. the biggest images first:
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/myorganization?sort=size desc'
+```
+
+in PHP:
+```language-php
+$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+
+$sourceImageCollection = $client->searchSourceImages([], ['size' => 'desc']);
 ```
 
 Sorting by multiple fields is possible, just add multiple sorting criteria separated by comma.

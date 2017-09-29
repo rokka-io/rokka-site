@@ -15,7 +15,7 @@ have overlapping images, having two separate organizations would be advisable.
 | Attribute | Description |
 | -------------- | ------------- |
 | id | UUID, doesn't change |
-| name | Websafe name to use in urls e.g. "rokka" |
+| name | Websafe name to use in urls e.g. "rokka". Only small letters, numbers and dashes ([a-z0-9-]) are allowed. |
 | display_name | A more pretty name that can be displayed e.g. "rokka.io" |
 | billing_email | Email address for billing purposes |
 

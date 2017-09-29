@@ -33,23 +33,15 @@ If you do not use the version header, rokka will always default to the latest ve
 
 Before you can use the rokka service, you need to register. The rokka API will offer an automated registration, but for now, you need to fill in the <a href="/signup">online form</a>.
 
-<!---
-To do so, you need only supply an email address. This call will register you at the service:
+To do so, you need only supply an email address. This call will register you at the service and create an organization for you:
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X POST 'https://api.rokka.io/users' -d '[
     {
-        "email": "my@email.com"
+        "email": "my@email.com",
+        "organization": "example-organization"
     }
 ]'
 ```
-```language-php
-$client = \Rokka\Client\Factory::getUserClient();
 
-$user = $client->createUser('my@email.com');
-
-var_dump($user); // print out important user data
-```
-
-The response will be a json object with key and secret in them. In addition they will be mailed to you, just to be sure. Keep them safe, you will need them for the next steps.
---->
+The response is a json object with the API-Key in it. In addition this information will be mailed to you, just to be sure. Keep them safe, you will need them for the next steps.

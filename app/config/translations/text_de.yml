@@ -36,7 +36,7 @@ text:
     title: Einmal hochladen,<br>vielfach verwenden
     lead: Mit rokka benötigen Sie jedes Ihrer Bilder nur einmal – in der bestmöglichen Auflösung. Dank Ihrer individuell definierten Bildformate und Bildoutputs übernimmt rokka die gesamte Konvertierung.
     feature_1: 
-      title: Fokus und auto-cropping
+      title: Subject Area und auto-cropping
       text: Definieren Sie den Fokus Ihres Bildes. rokka wählt beim Zuschneiden auf die von Ihnen definierten Bildformate den bestmöglichen Ausschnitt.
 
   counter:
@@ -78,6 +78,9 @@ text:
       free_space: 2GB Speicherplatz
       free_traffic: 5GB Datenvolumen
     disclaimer: Alle Preise in CHF und ohne Mehrwertsteuer.
+    tos:
+      text: Nutzungsbedingungen
+      link: https://rokka.io/assets/pdf/Rokka_Terms_of_use_DE.pdf
 
   cta:
     title: Testen Sie rokka kostenlos und ohne Verpflichtungen.

@@ -19,21 +19,38 @@ slug to the image URL for SEO purposes:
 curl -X GET 'https://{organization}.rokka.io/{stack-name}/{hash}/{slug}.{format}'
 ```
 
-## Dynamically render an image
+## Overwriting stack operation options
 
-For debugging, you can use the dynamic renderer to specify operations directly in the URL:
+If you want to overwrite some stack operation options within the URL, you can do that. For example, if you want to have different resize width, but leave the rest as is.
+It's the same format as mentioned below for dynamically rendering an image. You can also add/overwrite stack options.
 
 ```language-bash
-curl -X GET 'https://{organization}.rokka.io/dynamic/{operations}/{hash}.{format}'
+'https://{organization}.rokka.io/{stack-name}/resize-width-200--options-dpr-2-autoformat-true/{hash}.{format}'
+```
+
+
+## Dynamically render an image
+
+You can use the dynamic renderer to specify operations directly in the URL without the need for stacks:
+
+```language-bash
+https://{organization}.rokka.io/dynamic/{operations}/{hash}.{format}
 ```
 
 URL Operations are concatenated with double hyphens (`--`). For example, to do a resize and then a 
 rotate operation, the URL would look like this:
 
 ```language-bash
-'https://{organization}.rokka.io/dynamic/resize-width-200-height-150--rotate-angle-90/{hash}.{format}'
+https://{organization}.rokka.io/dynamic/resize-width-200-height-150--rotate-angle-90/{hash}.{format}
 ```
 
-Do not use the dynamic renderer for production output, but create stacks instead. The output is not cached.
+You can also add stack options do a dynamic stack, prefix them with `options-`, eg:
+
+```language-bash
+https://{organization}.rokka.io/dynamic/resize-width-200-height-150--rotate-angle-90--options-dpr-2/{hash}.{format}
+```
+
+
+We recommend using stacks instead of the dynamic renderer for a better reusability of your rendered images.
 
 See [operations](../references/operations.html) for the definition of URL operations.

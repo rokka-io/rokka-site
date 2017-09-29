@@ -6,33 +6,59 @@ use: [references]
 ## The stack object
 
 | Attribute | Description |
-| -------------- | ------------- |
+| --------- | ----------- |
 | organization | Name of the organization that the stack belongs to |
 | name | Name of the stack |
 | created | When this stack was created |
 | stackOperations | List of operations for this stack |
+| options | Optional options that influence the entire stack |
 
 ## Create a stack
 
 You can create a stack by providing an organization, the name and operations to apply on the stack.
 In the following example, the stack applies a resize of 200 x 200 and rotates it by 45 degrees. It's created in the testorganization and given the name teststack.
 
+The _options_ parameter is optional. You can use the following options in there.
+
+| Attribute | Default | Minimum | Maximum | Description |
+| --------- | ------- | ------- | ------- | ----------- |
+| basestack | - | - | - | Name of existing stack that will be executed before this stack. See below.|
+| jpg.quality | 76 | 1 | 100 | Jpg quality setting, lower number means smaller file size and worse lossy quality. |
+| webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. |
+| png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images. |
+| source_file | false | - | - | - | For outputting just the original unprocessed source file, set this to true and configure an empty operations collection. Can not be used together with other stack options. |
+| remote_basepath | - | - | - | To load images directly from a remote URL instead of uploading them to rokka via the API first. See below.|
+| autoformat | false | - | - | - | If set, rokka will return WebP instead of PNG/JPEG, if the client supports it. See below.|
+| dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See below. |
+| optim.disable_all |true| - | - | Disables all additional enhanced image size optimizations. See below.|
+| optim.immediate.jpeg |false| - | - | Immediatly runs the enhanced jpeg image size otimizations instead of doing it later asynchronously. See below. |
+| jpg.transparency.color | FFFFFF | - | - | The background color used to replace the alpha channel. |
+| jpg.transparency.autoformat | false | - | - | Delivers the best possible, alpha channel capable format instead of jpg (webp, svg or png), in case the rendered image has a visible alpha channel. See below for details. |
+| jpg.transparency.convert | false | - | - | Force converting an alpha channel to a jpg.transparency.color. Very rarely needded, as rokka will figure that out automatically.| 
+
 ```language-bash
-curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '[
-    {
-        "name": "resize",
-        "options": {
-            "width": 200,
-            "height": 200
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
+    "operations":
+    [
+        {
+            "name": "resize",
+            "options": {
+                "width": 200,
+                "height": 200
+            }
+        },
+        {
+            "name": "rotate",
+            "options": {
+                "angle": 45
+            }
         }
-    },
-    {
-        "name": "rotate",
-        "options": {
-            "angle": 45
-        }
+    ],
+    "options": {
+        "jpg.quality": 60
     }
-]'
+}
+'
 ```
 
 ```language-php
@@ -44,16 +70,241 @@ $client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'a
 $resize = new StackOperation('resize', ['width' => 200, 'height' => 200]);
 $rotate = new StackOperation('rotate', ['angle' => 45]);
 
-$stackOperationCollection = new StackOperationCollection([$resize, $rotate]);
+$stackOperationCollection = [$resize, $rotate];
 
-$stack = $client->createStack('teststack', $stackOperationCollection);
+$stack = $client->createStack('teststack', $stackOperationCollection, '', ['jpg.quality' => 60]);
 
 echo 'Created stack ' . $stack->getName() . PHP_EOL;
 print_r($stack);
 
 ```
 
-Note: The name "dynamic" is reserved and can't be chosen, as it's used for dynamic rendering.
+Note: The name "dynamic" (used for dynamic rendering) and names starting with "_" are reserved and can't be chosen as stack names.
+
+### Updating stacks
+
+Please read this carefully, if you want to update an existing stacks with new options/operations, since it may not work like you'd expect.
+
+rokka delivers images with a very long expire time (one year), so that endusers (eg. browsers) and the content delivery network (CDN) can keep them stored.
+rokka assumes, that an image with the same URL never changes, that's why we use hashes for the images to ensure that. rokka also assumes that a once defined stack does not change significantly and suddenly delivers a totally different style of pictures. You have to create a new stack with a different name, if you want to do this. Otherwise end users may not get those newly generated images. While we can delete the CDN caches, there's no way to delete a browser cache without a new URL.
+
+Nevertheless, there are situations where overwriting a stack with the same name may be useful. Basically, if you are fine when already delivered images stay the same and only newly generated get the new options/operations (eg. for changing the quality). Or you want to base an existing stack on a base stack to reorganize your stack with less repetition.
+
+Be aware that currently there's no API call for deleting the CDN cache of a stack. So even if you have the browser cache under control (eg. during development of a new site), you can't delete the CDN cache without talking to us. We're willing to implement this, if there's enough demand for it.
+
+To actually use it, just append `?overwrite=true` to your URL, and it will overwrite an eventually existing stack. Or in PHP add true as the 5th parameter of `createStack`.
+
+```language-bash
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/mycompany/teststack?overwrite=true' -d '{
+    "operations":
+    [
+        {
+            "name": "resize",
+            "options": {
+                "width": 200,
+                "height": 200
+            }
+        },
+        {
+            "name": "rotate",
+            "options": {
+                "angle": 45
+            }
+        }
+    ],
+    "options": {
+        "jpg.quality": 60
+    }
+}
+'
+```
+
+```language-php
+use Rokka\Client\Core\StackOperation;
+use Rokka\Client\Core\StackOperationCollection;
+
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
+
+$resize = new StackOperation('resize', ['width' => 200, 'height' => 200]);
+$rotate = new StackOperation('rotate', ['angle' => 45]);
+
+$stackOperationCollection = [$resize, $rotate];
+
+$stack = $client->createStack('teststack', $stackOperationCollection, '', ['jpg.quality' => 60], true);
+
+echo 'Created stack ' . $stack->getName() . PHP_EOL;
+print_r($stack);
+
+```
+
+### Configuring a stack with no operations
+
+If you want to deliver an image without any image altering stack operations, you can configure a stack without any operations, just an empty collection with `"operations": []`. This stack configuration still loads the image into our processing engine and converts them to the requested image format (even if input and output image are the same). It will also apply optimizations to make the image as small as possible for delivering to endusers.
+
+This configuration is useful if you want to deliver an image in its original size, don't want to have to take care about the input format and most imporantly, want to profit from our image optimizations. No matter in what format an image is uploaded, it will always be converted to your requested output format and made as small as possible.
+
+### Configuring a stack to just deliver the original source file
+
+Sometimes you want rokka to just deliver the exact original file you uploaded without any conversion and optimizations. For example delivering a PDF or SVG file in their original formats. Or a manually highly optimized PNG.
+
+To get such a stack, create a stack with an empty operations collection and the stack option `source_file: true`. Such a configuration can't have any stack operations or any other stack options, otherwise the creation of the stack will fail.
+
+```language-json
+{
+    "operations": [],
+    "options": {
+        "source_file": true
+    }
+}
+```
+
+Be aware that if you configure such a stack, everyone can download the original source file of all your uploaded images (as long as they know the hash of an image). If there's enough demand, we will implement a feature to only enable that for explicitely tagged pictures. Just tell us, if you'd like to use such a feature.
+
+### Basestacks
+
+Basestacks make it easy to create new stacks with the same base options. Basestacks can keep your stack configuration much simpler, but also have the advantage of making your first-hit responses faster, since the output of basestacks are stored internally. This is especially useful if you use computational expensive stack operations like "dropshadow".
+
+We recommend to not use basestacks as output stacks, for internal caching reasons. In case you want to deliver an image from a basestack, the best-practice way is to add another stack with no stack operations and use this stack for delivering your images.
+
+One way to build such a stack config would then be the following configurations:
+
+  * "base" with expensive stack operations like a rotation and a dropshadow
+    * "original" stack with no stack operations and "base" as basestack
+    * "large" stack with a "resize" operation and a size of 1000x1000 and "base" as basestack
+    * "medium" stack with a "resize" operation and a size of 500x500 and "base" as basestack
+    * etc..
+
+Later, if you want to add another size, you just base them on the same basestack and you don't have to repeat the same rotation/dropshadow options. Furthermore the rokka servers don't have to recalculate the expensive operations, just the quite simple resize operations for the new stack. Leading to much faster response times for your end users on the first hits.
+
+### Autoformat
+
+If you set the `autoformat: true` stack option, rokka will deliver an image in the usually smaller WebP format instead of PNG or JPG, if the client supports it.
+If you didn't set `webp.quality` explicitly and requested a PNG, it will return a lossless image and a lossy compressed image, if a JPG was requested. If you set `webp.quality` to any value on that stack, it will always honor that, no matter what was requested.
+
+In the future, we may support more autoformat features, depending on demand.
+
+### Delivering a transparency capable format instead of JPEG (jpg.transparency.autoformat)
+
+There are situations, where one needs an alpha channel on images which would be best suitable for the JPEG format and the alternatives are not ideal. PNG produces too large pictures for such images and WebP isn't supported on all browsers. To solve this problem, you can set the `jpg.transparency.autoformat: "true"` stack option and rokka will return an especially crafted SVG, if the result has a visible alpha channel (otherwise it sends a jpg). In case the browser supports WebP, it will use that instead of SVG. And if both are not detected, it will return PNG.
+
+Nowadays almost all browsers support [loading SVG images via the the HTML img element](https://caniuse.com/#feat=svg-img) and eg. Firefox and Safari send just "*/*" in the "accept" Header for img requests. Therefore rokka delivers SVG when "*/*" is in the accept header (as long as WebP isn't explicitly stated in that header). If there's no accept header, it sends PNG.
+
+You can also set `jpg.transparency.autoformat: "png"` to just return PNG instead of SVG, if the rendered image has a visible alpha channel (as above, it will return WebP instead of PNG, if the browser supports it). This will ensure support for rather old browsers, which don't support SVG properly. But then everyone will get the often much bigger PNG image instead of the smaller SVG. Alternatively you could detect SVG support on the client side and use two different stacks, one for the old browsers, the other for everything else. 
+
+For more info about this technique, [see our blog post](https://blog.liip.ch/archive/2017/08/28/how-to-compress-a-png-like-a-jpeg-with-rokka.html) and [the follow up here](https://blog.liip.ch/archive/2017/09/04/compressing-transparent-png-like-jpeg-rokka-got-even-easier.html).
+
+
+### Loading images from a remote URL (remote_basepath)
+
+Instead of uploading images to rokka via the API, you can also let them be fetched "on demand" by rokka. You define the first part of the URL (the `remote_basepath`) either globally on your organization or on the stacks directly. Then you give the second part of the path to your image in the rokka URL and rokka will automatically fetch that image, insert it into the rokka system and delivers it. It does this only the first time that image is accessed, for later requests it will deliver the image directly from rokka and not hit your backend again.
+
+#### Defining the remote_basepath
+
+You can either do this globally on the organisation with the following call:
+
+```language-bash
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/mycompany/remote_basepath' -d '"$REMOTE_BASEPATH"'
+```
+
+$REMOTE_BASEPATH can then be for example something like 'https://blog.liip.ch/content/uploads/', basically the place where your images live. A S3 bucket is also an option, but the images have to be publicly available.
+
+You can also set `remote_basepath` on individual stacks, if you want to have different ones for example.
+
+```language-bash
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/mycompany/teststack' -d '{
+    "operations":
+    [
+        {
+            "name": "resize",
+            "options": {
+                "width": 200,
+            }
+        }
+    ],
+    "options": {
+        "remote_basepath": $REMOTE_BASEPATH
+    }
+}'
+```
+
+#### Rendering a remote image
+
+To render now a remote image, you add the second part of your remote URL (the one after your `remote_basepath') to the URL instead of the rokka-hash and surround it with `-` and you're done.
+
+```
+https://{organization}.rokka.io/{stack-name}/{options}/-{image_path_after_basepath}-.{format}
+
+```
+
+All the usual possibilities - like SEO additions, stack options, dynamic stacks, etc. - work like when you would upload the image directly to rokka, eg:
+
+
+```
+https://mycompany.rokka.io/somestack/-2017/06/Relax_sabbatical.jpg-/some-seo-string.jpg
+```
+
+
+Please be aware, that rokka only downloads your image once and never checks again, if it changed. If you change your image, you should therefore also change the filename.
+
+Also be aware, that if you uploaded that same image already via the API and then via this way, then it will have two different hashes. The binary itself is only stored once, 'though. If you delete one of those hashes via the API, the other will still be in rokka.
+
+
+### Device Pixel Ratio (DPR)
+
+High resolution screens (Retina in some marketing terms) are very common today and modern browsers support this with the '<img srcset>' and '<picture>' element. The `dpr` stack option helps you implementing that easily without the need for different stacks. If `dpr` is set for example to 2.0, then rokka will return an image with twice the resolution than asked for.
+
+An example, let's assume you have a stack named `small which resizes your pictures to 200x200:
+
+```language-json
+{
+  "operations": [
+    {
+      "name": "resize",
+      "options": {
+        "width": 200,
+        "height": 200
+      }
+    }
+  ]
+}
+```
+
+A call to https://{yourorg}.rokka.io/small/{hash}.jpg will return a 200px image. But if you call it with https://{yourorg}.rokka.io/small/options-dpr-2/{hash}.jpg, you get a 400px image, looking much sharper on a retina screen. If you want to let the browser decide, which picture it should request, you can for example use the `srcset` attribute in an image tag.
+
+```language-html
+<img src="https://{yourorg}.rokka.io/small/{hash}.jpg"
+     srcset= "https://{yourorg}.rokka.io/small/options-dpr-2/{hash}.jpg 2x,
+              https://{yourorg}.rokka.io/small/options-dpr-3/{hash}.jpg 3x">
+```
+
+There's also a resize stack operation option called `upscale_dpr`, which applies in some cases. Assuming your picture in the above example is only 300px wide. Using a dpr setting of 2 will upscale that to 400px by default (otherwise the browser would display it smaller, as a 150 css pixel image). Settting `upscale_dpr` to `false` will not do that and return the image in its original dimensions (which in this example would be 300px).
+
+The more general `upscale` resize stack operation option also applies. If `upscale` is set to `false`, but `upscale_dpr` is set to `true` the above example would return a 200px picture in the dpr=1 case, but still a 400px in the dpr=2 case.
+
+In table form, with a 300px image:
+
+| stack operation options | dpr: 1, width: 200 | dpr: 2, width: 200 | dpr: 1, width: 400 | dpr: 2, width: 400 |
+|----------------------------------|---------------|----------------|--------------------|--------------------|
+| upscale: true, upscale_dpr: true | Return: 200px | Return: 400px | Return: 400px       | return 800px       |
+| upscale: false, upscale_dpr: true | Return: 200px | Return: 400px | Return: 300px      | return 600px       |
+| upscale: false, upscale_dpr: false | Return: 200px | Return: 300px | Return: 300px     | return 300px       |
+
+
+Important: A stack with dpr options applied, currently needs a resize operation. Otherwise the dpr setting won't work and the call will return a `400` error. We can't produce higher dpr resolution with the other operations. Furthermore, if you use a basestack, the same applies. The main stack needs a resize operation, one just in the basestack won't do it.
+
+### Additional image size optimizations
+
+rokka does some advanced image size optimizations on your images by default. As the optimizations are not always fast, it does those in the background to not slow down your first render request to an image. Therefore the first request on a newly rendered image will not have those optimizations applied, but requests made 10-30 seconds later will have those applied.
+
+For JPEGs you can prevent that delay with the stack option `optim.immediate.jpeg`. rokka then does it right on the first render and not only a few seconds later. This will make your first render a little bit slower, but won't make a difference for later requests. This can also be very useful, if you want to see the final image during developing right away (eg. for deciding about the appropriate jpeg quality setting).
+
+For PNG and lossless WebP we use [pngquant](https://pngquant.org/) to make the image size significantly smaller as long as the quality doesn't degrade. We additionally compress PNG with [zopflipng](https://github.com/google/zopfli) to make them even smaller.
+
+For JPEG we recompress the lossless rendered image with [MozJPEG](https://github.com/mozilla/mozjpeg) and [jpeg-archive](https://github.com/danielgtaylor/jpeg-archive) and match the quality of the initially rendered image. This makes the image size approx. 75% - 90% the size of the initially rendered one, sometimes even less.
+
+We never do any of those optimizations to your source images, they stay as they were uploaded.
+
+If you want to disable those optimizations, set `optim.disable_all` to `true` as a stack options. More refined options are in the backlog, tell us, if you definitely need one.
 
 ## Retrieve a stack
 
