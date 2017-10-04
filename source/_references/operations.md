@@ -69,6 +69,10 @@ Crops an image to a set size.
    The default value is `auto`, which will crop the image centering the crop box around the defined 
    [Subject Area](../references/dynamic-metadata.html#subject-area), if any.
    If no Subject Area is defined, the crop operation will fallback to `center_center`.
+- `mode`: String. If width and height should be taken as absolute values or as ratio. If ratio is chosen, rokka will try to find to largest possible crop fitting into the image with that ratio. The default value is `absolute`. Possible values are:
+    - `absolute`
+    - `ratio`
+- `scale`: Scales the crop box by that percentage. Especially useful when using the ratio mode and you want eg. only the middle 50% of the picture cropped. The default value is `100`
 
 ### Dropshadow
 
