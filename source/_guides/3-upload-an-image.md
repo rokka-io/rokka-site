@@ -62,9 +62,10 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/tes
 ```language-php
 
 $resize = new \Rokka\Client\Core\StackOperation('resize', ['width' => 200, 'height' => 200]);
-$stackOperationCollection = new \Rokka\Client\Core\StackOperationCollection([$resize]);
+$stack = new \Rokka\Client\Core\Stack();
+$stack->setName('thumbnail')->addStackOperation($resize);
 
-$stack = $imageClient->createStack('thumbnail', $stackOperationCollection);
+$stack = $client->saveStack($stack);
 
 var_dump($stack); // print out stack data
 ```

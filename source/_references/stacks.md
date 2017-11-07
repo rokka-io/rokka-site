@@ -62,17 +62,18 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/tes
 ```
 
 ```language-php
+use Rokka\Client\Core\Stack;
 use Rokka\Client\Core\StackOperation;
-use Rokka\Client\Core\StackOperationCollection;
 
-$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
 
-$resize = new StackOperation('resize', ['width' => 200, 'height' => 200]);
-$rotate = new StackOperation('rotate', ['angle' => 45]);
+$stack = new Stack(null, 'teststack');
 
-$stackOperationCollection = [$resize, $rotate];
+$stack->addStackOperation(new StackOperation('resize', ['width' => 200, 'height' => 200]));
+$stack->addStackOperation(new StackOperation('rotate', ['angle' => 45]));
+$stack->setStackOptions(['jpg.quality' => 80]);
 
-$stack = $client->createStack('teststack', $stackOperationCollection, '', ['jpg.quality' => 60]);
+$stack = $client->saveStack($stack);
 
 echo 'Created stack ' . $stack->getName() . PHP_EOL;
 print_r($stack);
@@ -81,7 +82,7 @@ print_r($stack);
 
 Note: The name "dynamic" (used for dynamic rendering) and names starting with "_" are reserved and can't be chosen as stack names.
 
-### Updating stacks
+### Updating existing stacks
 
 Please read this carefully, if you want to update an existing stacks with new options/operations, since it may not work like you'd expect.
 
@@ -92,7 +93,7 @@ Nevertheless, there are situations where overwriting a stack with the same name 
 
 Be aware that currently there's no API call for deleting the CDN cache of a stack. So even if you have the browser cache under control (eg. during development of a new site), you can't delete the CDN cache without talking to us. We're willing to implement this, if there's enough demand for it.
 
-To actually use it, just append `?overwrite=true` to your URL, and it will overwrite an eventually existing stack. Or in PHP add true as the 5th parameter of `createStack`.
+To actually use it, just append `?overwrite=true` to your URL, and it will overwrite an eventually existing stack. Or in PHP add the key `overwrite` with value `true` to the second parameter array of `saveStack`
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/mycompany/teststack?overwrite=true' -d '{
@@ -120,17 +121,18 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/myc
 ```
 
 ```language-php
+use Rokka\Client\Core\Stack;
 use Rokka\Client\Core\StackOperation;
-use Rokka\Client\Core\StackOperationCollection;
 
 $client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
 
-$resize = new StackOperation('resize', ['width' => 200, 'height' => 200]);
-$rotate = new StackOperation('rotate', ['angle' => 45]);
+$stack = new Stack(null, 'teststack');
 
-$stackOperationCollection = [$resize, $rotate];
+$stack->addStackOperation(new StackOperation('resize', ['width' => 200, 'height' => 200]));
+$stack->addStackOperation(new StackOperation('rotate', ['angle' => 45]));
+$stack->setStackOptions(['jpg.quality' => 80]);
 
-$stack = $client->createStack('teststack', $stackOperationCollection, '', ['jpg.quality' => 60], true);
+$stack = $client->saveStack($stack, ['overwrite' => true]);
 
 echo 'Created stack ' . $stack->getName() . PHP_EOL;
 print_r($stack);
