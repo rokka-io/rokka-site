@@ -22,20 +22,19 @@ The _options_ parameter is optional. You can use the following options in there.
 
 | Attribute | Default | Minimum | Maximum | Description |
 | --------- | ------- | ------- | ------- | ----------- |
-| basestack | - | - | - | Name of existing stack that will be executed before this stack. See below.|
-| jpg.quality | 76 | 1 | 100 | Jpg quality setting, lower number means smaller file size and worse lossy quality. |
-| webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. |
+| basestack | - | - | - | Name of existing stack that will be executed before this stack. See the [Basestacks chapter](#basestacks) below.|
+| jpg.quality | 76 | 1 | 100 | Jpg quality setting, lower number means smaller file size and worse lossy quality. Default is 65 for dpr >=2, see the [DPR chapter](#device-pixel-ratio-dpr) below.|
+| webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. Default is 65 for dpr >=2, see the [DPR chapter](#device-pixel-ratio-dpr) belowfor details. |
 | png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images. |
-| source_file | false | - | - | - | For outputting just the original unprocessed source file, set this to true and configure an empty operations collection. Can not be used together with other stack options. |
-| remote_basepath | - | - | - | To load images directly from a remote URL instead of uploading them to rokka via the API first. See below.|
-| autoformat | false | - | - | - | If set, rokka will return WebP instead of PNG/JPEG, if the client supports it. See below.|
-| dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See below. |
-| optim.disable_all |true| - | - | Disables all additional enhanced image size optimizations. See below.|
-| optim.immediate.jpeg |false| - | - | Immediatly runs the enhanced jpeg image size otimizations instead of doing it later asynchronously. See below. |
+| source_file | false | - | - | For outputting just the original unprocessed source file, set this to true and configure an empty operations collection. Can not be used together with other stack options. See the [source_file chapter](#configuring-a-stack-to-just-deliver-the-original-source-file) below.|
+| remote_basepath | - | - | - | To load images directly from a remote URL instead of uploading them to rokka via the API first. See the [remote_basepath chapter](#loading-images-from-a-remote-url-remote_basepath) below.|
+| autoformat | false | - | - | If set, rokka will return WebP instead of PNG/JPEG, if the client supports it. See the [autoformat chapter](#autoformat) below.|
+| dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See the [DPR chapter](#device-pixel-ratio-dpr) below. |
+| optim.disable_all |true| - | - | Disables all additional enhanced image size optimizations. See the [optimizations chapter](#additional-image-size-optimizations) below.|
+| optim.immediate.jpeg |false| - | - | Immediatly runs the enhanced jpeg image size otimizations instead of doing it later asynchronously. See the [optimizations chapter](#additional-image-size-optimizations) below. |
 | jpg.transparency.color | FFFFFF | - | - | The background color used to replace the alpha channel. |
-| jpg.transparency.autoformat | false | - | - | Delivers the best possible, alpha channel capable format instead of jpg (webp, svg or png), in case the rendered image has a visible alpha channel. See below for details. |
+| jpg.transparency.autoformat | false | - | - | Delivers the best possible, alpha channel capable format instead of jpg (webp, svg or png), in case the rendered image has a visible alpha channel.  See the [transparency chapter](#delivering-a-transparency-capable-format-instead-of-jpeg-jpg.transparency.autoformat) below. |
 | jpg.transparency.convert | false | - | - | Force converting an alpha channel to a jpg.transparency.color. Very rarely needded, as rokka will figure that out automatically.| 
-
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
     "operations":
@@ -162,6 +161,62 @@ To get such a stack, create a stack with an empty operations collection and the 
 
 Be aware that if you configure such a stack, everyone can download the original source file of all your uploaded images (as long as they know the hash of an image). If there's enough demand, we will implement a feature to only enable that for explicitely tagged pictures. Just tell us, if you'd like to use such a feature.
 
+### Expressions
+
+rokka can change some parameters based on other parameters dynamically with stack expressions. A typical usecase is that usually images for high resolution screens don't need a very high jpeg quality setting. With a lower setting, they still look much better than delivering an image in non-high-resolution dimensions, but also aren't that much bigger in file size.
+
+To apply that on a stack, provide an expression configuration during creation of the stack in the following format:
+
+```language-json
+{
+     "operations": [
+         {
+             "name": "resize",
+             "options": {
+                 "width": 200,
+                 "height": 200
+             }
+         }
+     ],
+     "options": {
+         "jpg.quality": 76
+         "autoformat": true
+     },
+     "expressions": [ {
+         "expression": "options.dpr >= 2",
+             "overrides": {
+                "options": {
+                   "jpg.quality": 60,
+                   "webp.quality": 60
+                }
+             }
+         }
+     ]
+}
+```
+
+And then, whenever you add "/options-dpr-2/" to your rokka URL, it will use the lower jpg.quality. Eg. `https://org.rokka.io/stackname/somehash.jpg` will return a 200x200 image with a jpg.quality of 76, and `https://org.rokka.io/stackname/options-dpr-2/somehash.jpg` will return a 400x400 image with a jpg.quality of 60.
+
+Expressions are applied from top to bottom and all matching will be applied, the last one applying for a certain option winning.
+
+Currently, you can only do expressions for stack options and override them. We may introduce more possibilities in the future (like matching on image metadata or overriding stack operation parameters), tell us, if you have a need for that.
+
+With the PHP client, the code would be the following
+
+```language-php
+$stack = new Stack(null, 'stackname');
+$stack->addStackOperation(new StackOperation('resize', ['width' => 200, 'height' => 200]));
+$stack->setStackOptions(['jpg.quality' => 76, 'autoformat' => true);
+
+$e = new \Rokka\Client\Core\StackExpression("options.dpr > 2");
+$e->setOptionsOverrides(['jpg.quality' => 60, 'webp.quality' => 60]);
+$stack->addStackExpression($e);
+
+$stack = $client->saveStack($stack);
+
+print_r($stack);
+```
+
 ### Basestacks
 
 Basestacks make it easy to create new stacks with the same base options. Basestacks can keep your stack configuration much simpler, but also have the advantage of making your first-hit responses faster, since the output of basestacks are stored internally. This is especially useful if you use computational expensive stack operations like "dropshadow".
@@ -253,7 +308,7 @@ Also be aware, that if you uploaded that same image already via the API and then
 
 ### Device Pixel Ratio (DPR)
 
-High resolution screens (Retina in some marketing terms) are very common today and modern browsers support this with the '<img srcset>' and '<picture>' element. The `dpr` stack option helps you implementing that easily without the need for different stacks. If `dpr` is set for example to 2.0, then rokka will return an image with twice the resolution than asked for.
+High resolution screens (Retina in some marketing terms) are very common today and modern browsers support this with the `<img srcset>` and `<picture>` element. The `dpr` stack option helps you implementing that easily without the need for different stacks. If `dpr` is set for example to 2.0, then rokka will return an image with twice the resolution than asked for.
 
 An example, let's assume you have a stack named `small which resizes your pictures to 200x200:
 
@@ -278,6 +333,9 @@ A call to https://{yourorg}.rokka.io/small/{hash}.jpg will return a 200px image.
      srcset= "https://{yourorg}.rokka.io/small/options-dpr-2/{hash}.jpg 2x,
               https://{yourorg}.rokka.io/small/options-dpr-3/{hash}.jpg 3x">
 ```
+
+By default, we also set a lower jpg and webp quality for those retina images, since it keeps the files small and the visual difference is very small.
+If you want to change that behaviour, set a `jpg.quality` and `webp.quality` stack option explicitly on your stack and it will always take that. If you want to have different quality settings for non-retina and retina and use other values than the defaults, see [stack expressions](#expressions) for more details into that.
 
 There's also a resize stack operation option called `upscale_dpr`, which applies in some cases. Assuming your picture in the above example is only 300px wide. Using a dpr setting of 2 will upscale that to 400px by default (otherwise the browser would display it smaller, as a 150 css pixel image). Settting `upscale_dpr` to `false` will not do that and return the image in its original dimensions (which in this example would be 300px).
 
