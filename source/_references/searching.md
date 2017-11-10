@@ -37,6 +37,7 @@ Example JSON response:
       "dynamic_metadata": {},
       "format": "jpg",
       "hash": "sha1hash",
+      "short_hash": "shorthash",
       "height": 42,
       "link": "/sourceimages/myorganization/sha1hash",
       "name": "somename.jpg",
