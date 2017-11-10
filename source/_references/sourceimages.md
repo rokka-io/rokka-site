@@ -14,16 +14,18 @@ Source images are your original images you upload to Rokka. You should always se
 | Attribute | Description |
 | -------------- | ------------- |
 | organization | Name of the organization that the image belongs to |
-| hash | Hash to access the image with, based on metadata |
-| binary_hash | Hash of image binary data |
-| user_metadata | Contains the following data set. Changing this will not alter the main hash identifying the image |
+| hash | Hash to access the image with, based on metadata. 40 characters long |
+| short_hash | A shorter, still unique version of the hash. Can be used instead of the hash. 6-40 characters |
+| binary_hash | Sha1 hash of image binary data |
 | name | Original filename |
-| format | Original format |
+| format | Original format as common file extension|
+| mimetype | Original mime type |
 | size | Size of images in bytes |
 | width | Width of image in pixels |
 | height | Height of image in pixels |
 | dynamic_metadata | Can contain data that will alter the image identifying hash if altered |
-| created | When this image was created |
+| user_metadata | Contains meta data set by the API user. Changing this will not alter the main hash identifying the image |
+| created | When this image was created on rokka |
 | link | Backlink to itself, useful when you have lists or search by binary hash |
 
 ## Create a source image
@@ -89,6 +91,7 @@ An example response looks like following.
 {
     "organization": "mycompany",
     "hash": "c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5",
+    "short_hash": "c03683",
     "binary_hash": "03b3e8a0bdd76ef55c021066642c9d2fa9c02799",
     "static_metadata": 
     {

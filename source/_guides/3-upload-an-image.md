@@ -24,24 +24,28 @@ The @ sign instructs cURL to send the binary data of the specified file. If the 
     "sourceimages": [
         {
             "hash": "c03683b067927d77973b458e0baa40aa7b5e5418",
-            "organization": "testorganization",
-            "created": {
-                "date": "2015-08-20 10:11:33.000000",
-                "timezone_type": 3,
-                "timezone": "UTC"
-            },
+            "short_hash": "c03683",
+            "binary_hash": "05bf2c88f637e6361db31b094b09cfce95a7809c",
+            "created": "2017-11-09T16:49:23+01:00",
             "name": "image.jpg",
+            "mimetype": "image/jpeg",
             "format": "jpg",
             "size": 426884,
             "width": 800,
             "height": 600,
-            "deleted": false
+            "organization": "testorganization",
+            "link": "/sourceimages/testorganization/c03683b067927d77973b458e0baa40aa7b5e5418"
         }
     ]
 }
 ```
 
-Keep track of the hash you where returned. You will need this hash to display the image. The hash does not change when you upload the same image again, but is guaranteed to change if the image changes in any way. When you display the image, it can be cached for a long time, as the URL changes when the image content changed.
+Keep track of the hash you were returned. You will need this hash to display the image. The hash does not change when you upload the same image again, but is guaranteed to change if the image changes in any way. When you display the image, it can be cached for a long time, as the URL changes when the image content changed.
+
+The short_hash is a shorter, still unique version of the hash and can be used everywhere (rendering and API request) instead of the full hash. Therefore it's enough if you save the short hash for referencing to that image later. 
+
+The full hash is always exactly 40 characters long, the short_hash is at least 6 character and at most 40 characters long.
+
 
 ## Creating a Stack
 
@@ -79,12 +83,12 @@ See [operations](/documentation/references/operations.html) for the definition o
 
 Now let's render our stack __thumbnail__ with the previously uploaded __image.jpg__. Open the following URL in the browser to see the rendered image:
 
-`https://testorganization.rokka.io/thumbnail/c03683b067927d77973b458e0baa40aa7b5e5418.jpg`
+`https://testorganization.rokka.io/thumbnail/c03683.jpg`
 
-Notice that the organization name is a __subdomain__ of rokka.io and that the stack is followed by the __hash__ of the source image (not the original filename). If you want to use a file name, e.g. for SEO reasons, you can append a file name to the URL. (Technically, a name after the hash is simply ignored.):
+Notice that the organization name is a __subdomain__ of rokka.io and that the stack is followed by the __hash__ (or __short_hash__ ) of the source image (not the original filename). If you want to use a file name, e.g. for SEO reasons, you can append a file name to the URL. (Technically, a name after the hash is simply ignored.):
 
-`https://testorganization.rokka.io/thumbnail/c03683b067927d77973b458e0baa40aa7b5e5418/image.jpg`
+`https://testorganization.rokka.io/thumbnail/c03683/image.jpg`
 
-There is also the dynamic rendering that allows to specify operations in the URL without creating a stack. Dynamic rendering should __NOT__ be used in production systems, since its output  is not cached. You can however use stack rendering with custom options (explained in the [rendering reference](../references/render.html)), if you need for instance different resizing options. 
+There is also the dynamic rendering that allows to specify operations in the URL without creating a stack. You can also use stack rendering with custom options (explained in the [rendering reference](../references/render.html)), if you need for instance different resizing options. 
 
 Rokka supports most common image formats for generating images, mainly jpg, png, gif and webp.

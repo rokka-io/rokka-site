@@ -6,7 +6,8 @@ use: [references]
 ## Render an image through a stack
 
 The recommended way to render images is through [stacks](stacks.html). Using a stack, the rendering
-instructions are stored centrally and the result can be cached:
+instructions are stored centrally and the result can be cached. 
+For __hash__ you can use either the full hash or the short_hash returned by the API.
 
 ```language-bash
 curl -X GET 'https://{organization}.rokka.io/{stack-name}/{hash}.{format}'
