@@ -42,7 +42,7 @@ The @ sign instructs cURL to send the binary data of the specified file. If the 
 
 Keep track of the hash you were returned. You will need this hash to display the image. The hash does not change when you upload the same image again, but is guaranteed to change if the image changes in any way. When you display the image, it can be cached for a long time, as the URL changes when the image content changed.
 
-The short_hash is a shorter, still unique version of the hash and can be used everywhere (rendering and API request) instead of the full hash. Therefore it's enough if you safe the short hash for referencing to that image later. 
+The short_hash is a shorter, still unique version of the hash and can be used everywhere (rendering and API request) instead of the full hash. Therefore it's enough if you save the short hash for referencing to that image later. 
 
 The full hash is always exactly 40 characters long, the short_hash is at least 6 character and at most 40 characters long.
 
