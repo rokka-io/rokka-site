@@ -287,7 +287,7 @@ html {
 @keyframes translate-bubble-1 {
     0% {
         transform: translate(0%,0%);
-        
+
     }
     100% {
         transform: translate(0%,-10%);
@@ -297,7 +297,7 @@ html {
 @keyframes translate-bubble-2 {
     0% {
         transform: translate(0%,0%);
-        
+
     }
     100% {
         transform: translate(0%,5%);
@@ -307,7 +307,7 @@ html {
 @keyframes translate-bubble-3 {
     0% {
         transform: translate(0%,0%);
-        
+
     }
     100% {
         transform: translate(0%,20%);
@@ -317,7 +317,7 @@ html {
 @keyframes translate-bubble-4 {
     0% {
         transform: translate(0%,0%);
-        
+
     }
     100% {
         transform: translate(0%,-20%);
@@ -366,7 +366,7 @@ html {
         .h2 {
             margin: 0;
         }
-        
+
         text-align: left;
         position: static;
     }
@@ -455,7 +455,7 @@ html {
             opacity: 1;
         }
         .rokka-hero-bubble {
-            
+
         }
         .rokka-hero-bubble--1 {
             transform: translate(0%, -290%);
@@ -623,7 +623,7 @@ html {
     Rokka Feature Animation
  */
 .rokka-feature--api {
-    
+
     .rokka-feature__image {
         perspective: 780px;
         @include media('md') {
@@ -707,7 +707,7 @@ html {
 
         }
         @include media('lg') {
-            
+
             position: absolute;
             right: 103%;
             top: 0.4em;
@@ -789,7 +789,7 @@ html {
 
 
 // Lightning fast delivery
-// 
+//
 
 .rokka-section--feature {
     overflow: hidden;
@@ -841,7 +841,7 @@ html {
 
 
 // Upload once, show often
-// 
+//
 
 .rokka-section-uoso {
     background-image: linear-gradient( 118deg, rgb(65,65,65) 0%, rgb(80,80,77) 100%);
@@ -928,7 +928,7 @@ html {
     position: relative;
     top: 0;
     left: 0.05em;
-    
+
 
     margin-bottom: -300 / $rokka-uoso-base-imac + em;
     margin-top: -200 / $rokka-uoso-base-imac + em;
@@ -1045,7 +1045,7 @@ html {
 .rokka-uoso-device--macbook {
     $rokka-uoso-base-macbook: 660;
 
-    
+
     width: 1em;
     height: 414 / $rokka-uoso-base-macbook + em;
     // transform: translateX(-100px);
@@ -1243,7 +1243,7 @@ html {
 
 .rokka-quotes {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin-left: -20px;
     margin-right: -20px;
     overflow-x: scroll;
@@ -1255,8 +1255,17 @@ html {
     }
     @include media('lg') {
         flex-direction: row;
-        padding: 0 5%;
+        padding: 0 2% 0 5%;
     }
+}
+
+.rokka-quotes-container {
+  flex: 1 1 auto;
+  margin-bottom: 40px;
+
+  @include media('lg') {
+    flex: 0 0 50%;
+  }
 }
 
 .rokka-quote {
@@ -1264,14 +1273,18 @@ html {
     flex: 1 0;
     padding-left: 20px;
     min-width: 300px;
+    padding-right: 20px;
+
     &:last-child {
         padding-right: 20px;
     }
     @include media('md') {
+        padding-right: 0;
         margin-left: 0;
         flex: 0;
     }
     @include media('lg') {
+        padding-right: 0;
         margin-top: 0;
         flex: 1 1;
     }
@@ -1315,11 +1328,6 @@ html {
     @include media('lg') {
         margin-right: $spacing-unit-default;
     }
-    .rokka-quote__bubble {
-        @include media('lg') {
-            
-        }
-    }
     .rokka-quote__avatar {
         background-image: url(../images/rokka-testimonial-migros-alain.svg);
     }
@@ -1334,7 +1342,7 @@ html {
     }
     .rokka-quote__bubble {
         @include media('lg') {
-            margin-top: 10rem;
+            margin-top: 40px;
         }
     }
     .rokka-quote__avatar {

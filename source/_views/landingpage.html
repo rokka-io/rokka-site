@@ -475,41 +475,44 @@
 <section class="section section--white rokka-section--testimonial">
   <div class="section__body">
     <div class="rokka-quotes">
-      <div class="rokka-quote rokka-quote--left">
-        <div class="rokka-quote__bubble">
-          <h3 class="mrg0 mrgb--">{{ site.text.testimonial2.title|raw }}</h3>
-          <p class="mrg0">{{ site.text.testimonial2.quote|raw }}</p>
-        </div>
-        <div class="rokka-quote__person">
-          <div class="flex flex-align-center">
-            <div class="flex-item-auto">
-              <div class="rokka-quote__avatar"></div>
-            </div>
-            <div class="flex-item-1">
-              <div class="h4 mrg0">{{ site.text.testimonial2.name|raw }}</div>
-              <span>{{ site.text.testimonial2.job_title|raw }}</span>
+      <div class="rokka-quotes-container">
+        <div class="rokka-quote rokka-quote--left">
+          <div class="rokka-quote__bubble">
+            <h3 class="mrg0 mrgb--">{{ site.text.testimonial2.title|raw }}</h3>
+            <p class="mrg0">{{ site.text.testimonial2.quote|raw }}</p>
+          </div>
+          <div class="rokka-quote__person">
+            <div class="flex flex-align-center">
+              <div class="flex-item-auto">
+                <div class="rokka-quote__avatar"></div>
+              </div>
+              <div class="flex-item-1">
+                <div class="h4 mrg0">{{ site.text.testimonial2.name|raw }}</div>
+                <span>{{ site.text.testimonial2.job_title|raw }}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="rokka-quote rokka-quote--right">
-        <div class="rokka-quote__bubble">
-          <h3 class="mrg0 mrgb--">{{ site.text.testimonial1.title|raw }}</h3>
-          <p class="mrg0">{{ site.text.testimonial1.quote|raw }}</p>
-        </div>
-        <div class="rokka-quote__person">
-          <div class="flex flex-align-center">
-            <div class="flex-item-auto">
-              <div class="rokka-quote__avatar"></div>
-            </div>
-            <div class="flex-item-1">
-              <div class="h4 mrg0">{{ site.text.testimonial1.name|raw }}</div>
-              <span>{{ site.text.testimonial1.job_title|raw }}</span>
+        <div class="rokka-quote rokka-quote--right">
+          <div class="rokka-quote__bubble">
+            <h3 class="mrg0 mrgb--">{{ site.text.testimonial1.title|raw }}</h3>
+            <p class="mrg0">{{ site.text.testimonial1.quote|raw }}</p>
+          </div>
+          <div class="rokka-quote__person">
+            <div class="flex flex-align-center">
+              <div class="flex-item-auto">
+                <div class="rokka-quote__avatar"></div>
+              </div>
+              <div class="flex-item-1">
+                <div class="h4 mrg0">{{ site.text.testimonial1.name|raw }}</div>
+                <span>{{ site.text.testimonial1.job_title|raw }}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <a class="twitter-timeline" data-chrome="nofooter noheader transparent" data-height="700" data-dnt="true" href="https://twitter.com/rokkaio?ref_src=twsrc%5Etfw"></a>
     </div>
 
   </div>
@@ -517,6 +520,7 @@
 {% endblock %}
 
 {% block additional_javascript %}
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <script>
       window.addEventListener('DOMContentLoaded', function() {
         var navbar = document.querySelector('.navbar');
