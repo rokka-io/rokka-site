@@ -27,6 +27,17 @@ var_dump($operations);
 
 ## Individual operations documentation
 
+### Alpha
+
+Does operations with the alpha (transparency) channel of an image.
+
+#### Properties
+
+- `mode`: String, mode to be applied. The default value is `mask`.
+    - `mask`: Returns the alpha channel as grayscale image, removing all other information, including the actual alpha channel.
+    - `extract`: Returns just the alpha channel of an image.
+    - `remove`: Removes the alpha channel from an image. 
+
 ### Autorotate
 
 Rotates the binary data to the correct physical orientation based on EXIF data.
