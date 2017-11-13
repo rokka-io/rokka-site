@@ -1328,11 +1328,6 @@ html {
     @include media('lg') {
         margin-right: $spacing-unit-default;
     }
-    .rokka-quote__bubble {
-        @include media('lg') {
-
-        }
-    }
     .rokka-quote__avatar {
         background-image: url(../images/rokka-testimonial-migros-alain.svg);
     }
@@ -1347,7 +1342,7 @@ html {
     }
     .rokka-quote__bubble {
         @include media('lg') {
-            margin-top: 10rem;
+            margin-top: 40px;
         }
     }
     .rokka-quote__avatar {
