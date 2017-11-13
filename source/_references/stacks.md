@@ -204,11 +204,15 @@ Currently, you can only do expressions for stack options and override them. We m
 With the PHP client, the code would be the following
 
 ```language-php
+use Rokka\Client\Core\Stack;
+use Rokka\Client\Core\StackOperation;
+use Rokka\Client\Core\StackExpression;
+
 $stack = new Stack(null, 'stackname');
 $stack->addStackOperation(new StackOperation('resize', ['width' => 200, 'height' => 200]));
 $stack->setStackOptions(['jpg.quality' => 76, 'autoformat' => true);
 
-$e = new \Rokka\Client\Core\StackExpression("options.dpr > 2");
+$e = new StackExpression("options.dpr > 2");
 $e->setOptionsOverrides(['jpg.quality' => 60, 'webp.quality' => 60]);
 $stack->addStackExpression($e);
 
