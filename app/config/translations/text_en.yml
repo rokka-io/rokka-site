@@ -35,7 +35,7 @@ text:
   uoso:
     title: Upload once,<br>show often
     lead: With rokka you upload your image just once – in the highest possible resolution. Working with your individually defined image formats and outputs, rokka takes care of the whole conversion.
-    feature_1: 
+    feature_1:
       title: Subject area and auto cropping
       text: Define the subject area of your image. Thanks to its clever auto cropping operations, rokka will identify the best possible sector and use it for all your pre-defined image formats.
 
@@ -49,7 +49,7 @@ text:
   fast_delivery:
     title: Lightning fast delivery
     text: No matter where in the world your viewers are, rokka delivers your images fast, safely and dependably. This also saves your server resources.
-  
+
   simple_api:
     title: Simple API &amp; libraries
     text: With the rokka image API you deliver your images easily on all your web sites. What’s more, we offer libraries for common languages, making rokka even easier to use.
@@ -59,6 +59,7 @@ text:
     paid:
       title: One plan fits all
       text: Only pay for what you effectively use. You get a quarterly invoice with a detailed listing of what you have used, so you have an exact overview of your costs.
+      monthly: per month
       storage_text1: per 1 GB of storage
       storage_text2: up to 400 GB
       traffic_text1: per 1 GB of traffic
@@ -69,7 +70,7 @@ text:
       storage: Storage
       traffic: Traffic
       amount: Amount (GB)
-      chf_per_gb: CHF per GB
+      chf_per_gb: CHF/Month per GB
       contact: Contact us for an individual offer
     free:
       title: Free plan
