@@ -40,9 +40,9 @@ curl -X POST -F filedata=@image.png 'https://api.rokka.io/sourceimages/mycompany
 ```language-php
 $client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
 
-$sourceImage = $client->uploadSourceImage(file_get_contents('image.png'), 'image.png');
+$sourceImages = $client->uploadSourceImage(file_get_contents('image.png'), 'image.png');
 
-var_dump($sourceImage);
+var_dump($sourceImages);
 ```
 
 
@@ -61,9 +61,9 @@ curl -X POST -F filedata=@image.png \
 ```language-php
 $client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
 
-$sourceImage = $client->uploadSourceImage(file_get_contents('image.png'), 'image.png', null, ['meta_user' => ['foo' => 'bar'], 'meta_dynamic' => ['subject_area' => ['x'=> 50, 'y' => 100]]]);
+$sourceImages = $client->uploadSourceImage(file_get_contents('image.png'), 'image.png', null, ['meta_user' => ['foo' => 'bar'], 'meta_dynamic' => ['subject_area' => ['x'=> 50, 'y' => 100]]]);
 
-var_dump($sourceImage);
+var_dump($sourceImages);
 ```
 
 In case that source image already exists and there's metadata fields which are not defined in the upload, they are not deleted.
@@ -89,20 +89,17 @@ An example response looks like following.
 
 ```language-js
 {
-    "organization": "mycompany",
     "hash": "c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5",
     "short_hash": "c03683",
     "binary_hash": "03b3e8a0bdd76ef55c021066642c9d2fa9c02799",
-    "static_metadata": 
-    {
-        "name": "image1.png",
-        "format": "png",
-        "size": 131284,
-        "width": 800,
-        "height": 1160
-    },
-    "dynamic_metadata": { },
     "created": "2015-08-24T12:17:12+0000",
+    "name": "image1.png",
+    "mimetype": "image/jpeg",
+    "format": "png",
+    "size": 131284,
+    "width": 800,
+    "height": 1160
+    "organization": "mycompany",
     "link": "/sourceimages/liip/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5"
 }
 ```
