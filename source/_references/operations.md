@@ -60,10 +60,7 @@ Blurs the entire image.
 
 #### Properties
 
-- `sigma`: Integer, minimum value 0. The default value is 4. Controls most of the blurring of the image.
-- `radius`: Number, minimum value 0. The default value is 0. Can be left at 0 for most operations. If you have a deep
-            understanding of how blurring operations work, you can use this to your advantage, otherwise you are good
-            with leaving this at 0.
+- `sigma`: Number, minimum value 0. The default value is 4. Controls most of the blurring of the image.
 
 ### Crop
 
@@ -77,7 +74,12 @@ Crops an image to a set size.
     - `XOFFSET` is either a number of pixels or "left", "center", "right"
     - `YOFFSET` is either a number of pixels or "top", "center", "bottom".
    
-   The default value is `auto`, which will crop the image centering the crop box around the defined 
+   Or it can also be
+    - `smart` for smart cropping (where the most attention of the image would be)
+    - `subjectarea` for cropping on the subjectarea, if one exists
+    - `auto`. Default value.
+   
+   `auto` will crop the image centering the crop box around the defined 
    [Subject Area](../references/dynamic-metadata.html#subject-area), if any.
    If no Subject Area is defined, the crop operation will fallback to `center_center`.
 - `mode`: String. If width and height should be taken as absolute values or as ratio. If ratio is chosen, rokka will try to find the largest possible crop fitting into the image with that ratio. The default value is `absolute`. Possible values are:
@@ -94,7 +96,7 @@ Adds a dropshadow to an image.
 - `horizontal`: Integer, between -100 and 100. The horizontal extent of the shadow in pixels. The default value is 0.
 - `vertical`: Integer, between -100 and 100. The vertical extent of the shadow in pixels. The default value is 0.
 - `opacity`: Integer, between 0 and 100. 100 is fully opaque and 0 is fully transparent. The default value is 0.
-- `sigma`: Integer, minimum value 0. The default value is 0.5. Controls most of the blurring of the shadow.
+- `sigma`: Number, minimum value 0. The default value is 0.5. Controls most of the blurring of the shadow.
 - `blur_radius`: Number, minimum value 0. The default value is 0. Can be left at 0 for most operations. If you have a
                  deep understanding of how blurring operations work, you can use this to your advantage, otherwise you
                  are good with leaving this at 0.
@@ -120,22 +122,6 @@ At least `width` or `height` is required.
     - `fill`: Resizes the image to keep its aspect ratio and completely fill a box of the dimensions given, i.e. the dimensions given are the minimum dimensions of the resized image.
 - `upscale`: Boolean. Whether to allow the resulting image to be bigger than the original one. The default value is `true`.
 - `upscale_dpr`: Boolean. Whether to allow the resulting image to be dpr times bigger than the original one, when the dpr stack option is set. Eg. If your image has 100x100 dimensions and you ask for a 60x60 image, this setting would upscale a `dpr: 2` setting  to 120x120 even when `upscale` is set to `false`. But it would upscale a request for a 120x120 image only to 200x200 (since a `dpr: 1` request would leave it at 100x100). This is to prevent, that a browser would display an image  with `dpr: 1` on a standard screen bigger than one with `dpr: 2` on a retina screen.  We recommend to leave this untouched. The default value is `true`.
-- `filter`: String. The filter to use when resizing the image. The default value is `blackman`. Possible values are:
-    - `blackman`
-    - `bessel`
-    - `box`
-    - `catrom`
-    - `cubic`
-    - `gaussian`
-    - `hamming`
-    - `hanning`
-    - `hermite`
-    - `lanczos`
-    - `mitchell`
-    - `quadratic`
-    - `point`
-    - `sinc`
-    - `triangle`
 
 ### Rotate
 
@@ -150,10 +136,6 @@ Rotates an image clockwise.
 ### Sepia
 
 Applies sepia toning to an image
-
-#### Properties
-
-- `threshold` : Positive Number. A measure of the extent of the sepia toning.
 
 ### Trim
 
