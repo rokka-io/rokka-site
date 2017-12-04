@@ -77,11 +77,14 @@ Crops an image to a set size.
    Or it can also be
     - `smart` for smart cropping (where the most attention of the image would be)
     - `subjectarea` for cropping on the subjectarea, if one exists
+    - `face` for cropping on a face detection area, if this was added.
     - `auto`. Default value.
    
    `auto` will crop the image centering the crop box around the defined 
-   [Subject Area](../references/dynamic-metadata.html#subject-area), if any.
-   If no Subject Area is defined, the crop operation will fallback to `center_center`.
+   [Subject Area](../references/dynamic-metadata.html#subject-area), if any exist, then around a face detection box , if any exist.
+   If both are not defined defined, the crop operation will fallback to `center_center`.
+   
+   
 - `mode`: String. If width and height should be taken as absolute values or as ratio. If ratio is chosen, rokka will try to find the largest possible crop fitting into the image with that ratio. The default value is `absolute`. Possible values are:
     - `absolute`
     - `ratio`
