@@ -450,6 +450,19 @@ It is possible to list all stacks for an organization.
 curl -X GET 'https://api.rokka.io/stacks/testorganization' -H 'Api-Key: key'
 ```
 
+```language-php
+use Rokka\Client\Core\Stack;
+
+$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+
+$stacks = $client->listStacks();
+
+foreach ($stacks as $stack) {
+    /** @var Stack $stack */
+    echo 'Stack ' . $stack->getName() . PHP_EOL;
+}
+```
+
 An example JSON response looks like this.
 
 ```language-js
