@@ -447,25 +447,31 @@ if (true === $deleted) {
 It is possible to list all stacks for an organization.
 
 ```language-bash
-curl -X GET 'https://api.rokka.io/stacks/testorganization'
+curl -X GET 'https://api.rokka.io/stacks/testorganization' -H 'Api-Key: key'
 ```
 
-```language-php
-use Rokka\Client\Core\Stack;
+An example JSON response looks like this.
 
-$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
-
-$stacks = $client->listStacks();
-
-foreach ($stacks as $stack) {
-    /** @var Stack $stack */
-    echo 'Stack ' . $stack->getName() . PHP_EOL;
+```language-js
+{
+    "items": [
+        {
+            "created": "2017-11-01T16:10:43+00:00",
+            "name": "test-stack",
+            "organization": "example",
+            "stack_operations": [
+                {
+                    "name": "resize",
+                    "options": {
+                        "height": 100,
+                        "width": 1000
+                    }
+                }
+            ],
+            "stack_options": {
+                "source_file": true
+            }
+        }
+    ]
 }
 ```
-
-### GET Parameters
-
-| Attribute | Description |
-| -------------- | ------------- |
-| limit | Optional limit |
-| offset | Optional offset |
