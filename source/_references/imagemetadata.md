@@ -1,16 +1,16 @@
 ---
-title: User metadata
+title: Image metadata
 use: [references]
 ---
 
 ## Intro
 
-User metadata is a metadata added to a source image by the API user that does not change the image
+Image metadata is metadata added to a source image by the API user that does not change the image
 identifying hash.
 
-## User metadata types
+## Image metadata types
 
-User metadata can be a string, integer, double, date, latitude/longitude or an array and also be
+Image metadata can be a string, integer, double, date, latitude/longitude or an array and also be
 changed after an image was uploaded.
 
 The default type is _String_, if you want to store it as any other type, you have to specify it with
@@ -31,9 +31,9 @@ Some limitations apply to each type, in particular:
  - the _Location_ type needs to be set as a `latitude, longitude` pair, eg: "47.38,8.52".
  - the elements of an _Array_ type will always be stored as string, you can't specify a type there.
 
-## Add user metadata to a source image
+## Add image metadata to a source image
 
-User metadata field names have a maximum length of 54 characters, and can be composed only of the following
+Image metadata field names have a maximum length of 54 characters, and can be composed only of the following
 characters:
 
  - `a-z` (lower-case letters);
@@ -67,7 +67,7 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimag
 
 You can also directly provide metadata when you first upload an image. See [Source images](sourceimages.html) for details.
 
-## Delete user metadata from a source image
+## Delete metadata from a source image
 
 Besides just setting a value of a field to null as shown above, you can also delete user
 metadata using a DELETE API call.
@@ -78,7 +78,7 @@ For a single field:
 curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/myorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/user/somefield'
 ```
 
-Deleting all user metadata of an image:
+Deleting all image metadata of an image:
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/myorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/user'
