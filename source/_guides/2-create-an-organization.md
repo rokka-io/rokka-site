@@ -27,7 +27,7 @@ This creates an organization called "testorganization" and returns a json struct
 ```language-js
 {
     "id": "c03683b067927d77973b458e0baa40aa7b5e5418",
-    "displayName": "Test Organization Ltd.",
+    "display_name": "Test Organization Ltd.",
     "name": "testorganization",
     "billing_email": "billing@testorganization.com"
 }
