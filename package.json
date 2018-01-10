@@ -19,5 +19,8 @@
     "gulp-uncss": "^1.0.6",
     "pump": "^1.0.2",
     "run-sequence": "^1.2.2"
+  },
+  "engines": {
+    "node": "~8"
   }
 }
