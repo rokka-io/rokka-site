@@ -23,6 +23,7 @@ The _options_ parameter is optional. You can use the following options in there.
 | Attribute | Default | Minimum | Maximum | Description |
 | --------- | ------- | ------- | ------- | ----------- |
 | basestack | - | - | - | Name of existing stack that will be executed before this stack. See the [Basestacks chapter](#basestacks) below.|
+| optim.quality | 4 | 1 | 10 | General image quality setting. If `jpeg.quality` resp. `webp.quality` is not set explicitely, rokka tries to find the best possible compression automatically.  See the [optimizations chapter](#additional-image-optimizations) below.
 | jpg.quality | 76 | 1 | 100 | Jpg quality setting, lower number means smaller file size and worse lossy quality. Default is 65 for dpr >=2, see the [DPR chapter](#device-pixel-ratio-dpr) below.|
 | webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. Default is 65 for dpr >=2, see the [DPR chapter](#device-pixel-ratio-dpr) belowfor details. |
 | png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images. |
@@ -30,8 +31,8 @@ The _options_ parameter is optional. You can use the following options in there.
 | remote_basepath | - | - | - | To load images directly from a remote URL instead of uploading them to rokka via the API first. See the [remote_basepath chapter](#loading-images-from-a-remote-url-remote_basepath) below.|
 | autoformat | false | - | - | If set, rokka will return WebP instead of PNG/JPEG, if the client supports it. See the [autoformat chapter](#autoformat) below.|
 | dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See the [DPR chapter](#device-pixel-ratio-dpr) below. |
-| optim.disable_all |true| - | - | Disables all additional enhanced image size optimizations. See the [optimizations chapter](#additional-image-size-optimizations) below.|
-| optim.immediate.jpeg |false| - | - | Immediatly runs the enhanced jpeg image size otimizations instead of doing it later asynchronously. See the [optimizations chapter](#additional-image-size-optimizations) below. |
+| optim.disable_all |true| - | - | Disables all additional enhanced image size optimizations. See the [optimizations chapter](#additional-image-optimizations) below.|
+| optim.immediate |false| - | - | Immediatly runs the enhanced image size otimizations instead of doing it later asynchronously. See the [optimizations chapter](#additional-image-optimizations) below. |
 | jpg.transparency.color | FFFFFF | - | - | The background color used to replace the alpha channel. |
 | jpg.transparency.autoformat | false | - | - | Delivers the best possible, alpha channel capable format instead of jpg (webp, svg or png), in case the rendered image has a visible alpha channel.  See the [transparency chapter](#delivering-a-transparency-capable-format-instead-of-jpeg-jpg.transparency.autoformat) below. |
 | jpg.transparency.convert | false | - | - | Force converting an alpha channel to a jpg.transparency.color. Very rarely needded, as rokka will figure that out automatically.| 
@@ -356,19 +357,27 @@ In table form, with a 300px image:
 
 Important: A stack with dpr options applied, currently needs a resize operation. Otherwise the dpr setting won't work and the call will return a `400` error. We can't produce higher dpr resolution with the other operations. Furthermore, if you use a basestack, the same applies. The main stack needs a resize operation, one just in the basestack won't do it.
 
-### Additional image size optimizations
+### Additional image optimizations
 
 rokka does some advanced image size optimizations on your images by default. As the optimizations are not always fast, it does those in the background to not slow down your first render request to an image. Therefore the first request on a newly rendered image will not have those optimizations applied, but requests made 10-30 seconds later will have those applied.
 
-For JPEGs you can prevent that delay with the stack option `optim.immediate.jpeg`. rokka then does it right on the first render and not only a few seconds later. This will make your first render a little bit slower, but won't make a difference for later requests. This can also be very useful, if you want to see the final image during developing right away (eg. for deciding about the appropriate jpeg quality setting).
+You can prevent that delay with the stack option `optim.immediate`. rokka then does it right on the first render and not only a few seconds later asynchronously. This will make your first render slower, but won't make a difference for later requests. This can also be very useful, if you want to see the final image during developing right away (eg. for deciding about the appropriate image quality setting). We recommend not to use this feature in production environments, since it can degrade your end user experience.
 
 For PNG and lossless WebP we use [pngquant](https://pngquant.org/) to make the image size significantly smaller as long as the quality doesn't degrade. We additionally compress PNG with [zopflipng](https://github.com/google/zopfli) to make them even smaller.
 
-For JPEG we recompress the lossless rendered image with [MozJPEG](https://github.com/mozilla/mozjpeg) and [jpeg-archive](https://github.com/danielgtaylor/jpeg-archive) and match the quality of the initially rendered image. This makes the image size approx. 75% - 90% the size of the initially rendered one, sometimes even less.
+For JPEG and lossy WebP images the approach choosen depends on your stack settings.
+
+By default or set `optim.quality` explicitly, rokka tries to find the best possible compression rate for your chosen `optim.quality`. It compresses the image several times (from the original image) with different quality settings and choses the one with the smallest filesize, which still looks good. This can lead to quite some savings in file size, but sometimes, depending on the image, it can produce a bigger image for a better perceived quality.
+
+We highly recommend to use this feature instead of the hard-wired compression settings with `jpeg.quality` and `webp.quality`.
+
+If you you used `jpg.quality` or `webp.quality` in your stack settings, rokka still tries to recompress the image to a lower filesize while keeping your set quality, but won't do much image depending and adaptive adjustments.
+
+If use set `optim.quality` and `jpg.quality`, rokka uses the `jpg.quality` setting for the inital rendering and `optim.quality` for the later adaptive optimization. 
 
 We never do any of those optimizations to your source images, they stay as they were uploaded.
 
-If you want to disable those optimizations, set `optim.disable_all` to `true` as a stack options. More refined options are in the backlog, tell us, if you definitely need one.
+If you want to disable those optimizations, set `optim.disable_all` to `true` as a stack options. More refined options are in the backlog, tell us, if you need one.
 
 ## Retrieve a stack
 
