@@ -373,7 +373,7 @@ We highly recommend to use this feature instead of the hard-wired compression se
 
 If you you used `jpg.quality` or `webp.quality` in your stack settings, rokka still tries to recompress the image to a lower filesize while keeping your set quality, but won't do much image depending and adaptive adjustments.
 
-If use set `optim.quality` and `jpg.quality`, rokka uses the `jpg.quality` setting for the inital rendering and `optim.quality` for the later adaptive optimization. 
+If you set `optim.quality` and also `jpg.quality`, rokka uses the `jpg.quality` setting for the initial rendering and `optim.quality` for the later adaptive optimization. 
 
 We never do any of those optimizations to your source images, they stay as they were uploaded.
 
