@@ -28,7 +28,9 @@ The _options_ parameter is optional. You can use the following options in there.
 | webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. Default is 65 for dpr >=2, see the [DPR chapter](#device-pixel-ratio-dpr) belowfor details. |
 | png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images. |
 | source_file | false | - | - | For outputting just the original unprocessed source file, set this to true and configure an empty operations collection. Can not be used together with other stack options. See the [source_file chapter](#configuring-a-stack-to-just-deliver-the-original-source-file) below.|
-| remote_basepath | - | - | - | To load images directly from a remote URL instead of uploading them to rokka via the API first. See the [remote_basepath chapter](#loading-images-from-a-remote-url-remote_basepath) below.|
+| remote_fullurl_allow | false | - | - | To load images directly from a remote URL instead of uploading them to rokka via the API first. See the [remote_basepath chapter](#loading-images-from-a-remote-url-remote_basepath) below.|
+| remote_fullurl_whitelist | null | - | - | To only allow certain domains to be used with the remote image feature. See the [remote_basepath chapter](#loading-images-from-a-remote-url-remote_basepath) below.|
+| remote_basepath | - | - | - | To load images directly from a remote URL with a basepath instead of uploading them to rokka via the API first. See the [remote_basepath chapter](#loading-images-from-a-remote-url-remote_basepath) below.|
 | autoformat | false | - | - | If set, rokka will return WebP instead of PNG/JPEG, if the client supports it. See the [autoformat chapter](#autoformat) below.|
 | dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See the [DPR chapter](#device-pixel-ratio-dpr) below. |
 | optim.disable_all |true| - | - | Disables all additional enhanced image size optimizations. See the [optimizations chapter](#additional-image-optimizations) below.|
@@ -256,16 +258,52 @@ You can also set `jpg.transparency.autoformat: "png"` to just return PNG instead
 For more info about this technique, [see our blog post](https://blog.liip.ch/archive/2017/08/28/how-to-compress-a-png-like-a-jpeg-with-rokka.html) and [the follow up here](https://blog.liip.ch/archive/2017/09/04/compressing-transparent-png-like-jpeg-rokka-got-even-easier.html).
 
 
-### Loading images from a remote URL (remote_basepath)
+### Loading images from a remote URL
 
-Instead of uploading images to rokka via the API, you can also let them be fetched "on demand" by rokka. You define the first part of the URL (the `remote_basepath`) either globally on your organization or on the stacks directly. Then you give the second part of the path to your image in the rokka URL and rokka will automatically fetch that image, insert it into the rokka system and delivers it. It does this only the first time that image is accessed, for later requests it will deliver the image directly from rokka and not hit your backend again.
+Instead of uploading images to rokka via the API, you can also let them be fetched "on demand" by rokka. There's two different ways to do it, either with a common `remote_basepath` or with the more open option `remote_fullurl_allow` (which then can be restricted again with `remote_fullurl_whitelist`). Both can be defined per stack or globally per org. 
+ 
+#### Using remote_fullurl_allow
 
-#### Defining the remote_basepath
+With the `remote_fullurl_allow` you basically open up your rokka configuration to include any publicly available image. So be careful. But you can restrict the allowed images with `remote_fullurl_whitelist`, which takes an array of regexes for allowed domains.
 
-You can either do this globally on the organisation with the following call:
+You can configure that option globally on the organisation with the following call (which would allow images from rokka.io to be loaded):
 
 ```language-bash
-curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/mycompany/remote_basepath' -d '"$REMOTE_BASEPATH"'
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/mycompany/options' \
+ -d '{
+        "remote_fullurl_allow": true,
+        "remote_fullurl_whitelist": ["\.rokka.io"]
+            
+     }'
+```
+You can also set `remote_fullurl_allow` on individual stacks, if you want to have different ones for example.
+
+```language-bash
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/mycompany/teststack' -d '{
+    "operations":
+    [
+        {
+            "name": "resize",
+            "options": {
+                "width": 200,
+            }
+        }
+    ],
+    "options": {
+       "remote_fullurl_allow": true,
+       "remote_fullurl_whitelist": ["\.rokka.io"]
+    }
+}'
+```
+ 
+#### Using remote_basepath
+ 
+You define the first part of the URL (the `remote_basepath`) in your configuration. Then you give the second part of the path to your image in the rokka URL surrounded with `-` and rokka will automatically fetch that image, insert it into the rokka system and delivers it. It does this only the first time that image is accessed, for later requests it will deliver the image directly from rokka and not hit your backend again.
+
+You can configure that option globally on the organisation with the following call:
+
+```language-bash
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/mycompany/options' -d '{"remote_basepath": $REMOTE_BASEPATH"}'
 ```
 
 $REMOTE_BASEPATH can then be for example something like 'https://blog.liip.ch/content/uploads/', basically the place where your images live. A S3 bucket is also an option, but the images have to be publicly available.
@@ -291,20 +329,25 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/myc
 
 #### Rendering a remote image
 
-To render now a remote image, you add the second part of your remote URL (the one after your `remote_basepath') to the URL instead of the rokka-hash and surround it with `-` and you're done.
+To render now a remote image, you surround your remote URL with `-` and add that to the rokka URL instead of the rokka-hash and you're done. 
+
+If you use `remote_basepath`, you just add the part after `remote_basepath` of your remote URL, with `remote_fullurl_allow` you add the full URL. 
 
 ```
-https://{organization}.rokka.io/{stack-name}/{options}/-{image_path_after_basepath}-.{format}
+https://{organization}.rokka.io/{stack-name}/{options}/-{remote_image_path}-.{format}
 
 ```
 
 All the usual possibilities - like SEO additions, stack options, dynamic stacks, etc. - work like when you would upload the image directly to rokka, eg:
 
-
+Concerete example with `remote_basepath`:
 ```
 https://mycompany.rokka.io/somestack/-2017/06/Relax_sabbatical.jpg-/some-seo-string.jpg
 ```
-
+Concerete example with `remote_fullurl_allow`:
+```
+https://mycompany.rokka.io/somestack/-https://blog.liip.ch/content/uploads/2017/06/Relax_sabbatical.jpg-/some-seo-string.jpg
+```
 
 Please be aware, that rokka only downloads your image once and never checks again, if it changed. If you change your image, you should therefore also change the filename.
 
