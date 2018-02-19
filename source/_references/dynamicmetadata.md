@@ -32,7 +32,7 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimag
 ```language-php
 use Rokka\Client\Core\DynamicMetadata\SubjectArea;
 
-$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey');
 
 $hash = '0dcabb778d58d07ccd48b5ff291de05ba4374fb9';
 

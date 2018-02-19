@@ -67,7 +67,7 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/tes
 use Rokka\Client\Core\Stack;
 use Rokka\Client\Core\StackOperation;
 
-$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey');
 
 $stack = new Stack(null, 'teststack');
 
@@ -126,7 +126,7 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/myc
 use Rokka\Client\Core\Stack;
 use Rokka\Client\Core\StackOperation;
 
-$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey');
 
 $stack = new Stack(null, 'teststack');
 
@@ -431,7 +431,7 @@ curl -X GET 'https://api.rokka.io/stacks/testorganization/teststack'
 ```
 
 ```language-php
-$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey');
 
 $stack = $client->getStack('teststack');
 
@@ -483,7 +483,7 @@ curl -X DELETE 'https://api.rokka.io/stacks/testorganization/teststack'
 ```
 
 ```language-php
-$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey');
 
 $deleted = $client->deleteStack('teststack');
 
@@ -505,7 +505,7 @@ curl -X GET 'https://api.rokka.io/stacks/testorganization' -H 'Api-Key: key'
 ```language-php
 use Rokka\Client\Core\Stack;
 
-$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey');
 
 $stacks = $client->listStacks();
 

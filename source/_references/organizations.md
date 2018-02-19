@@ -32,7 +32,7 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizati
 ```language-php
 $client = \Rokka\Client\Factory::getUserClient();
 
-$client->setCredentials('apiKey', 'apiSecret');
+$client->setCredentials('apiKey');
 
 $organization = $client->createOrganization('awesomecompany', 'my.email@mail.com', 'My Awesome Company');
 
@@ -55,7 +55,7 @@ curl -X GET 'https://api.rokka.io/organizations/awesomecompany'
 ```language-php
 $client = \Rokka\Client\Factory::getUserClient();
 
-$client->setCredentials('apiKey', 'apiSecret');
+$client->setCredentials('apiKey');
 
 $organization = $client->getOrganization('awesomecompany');
 

@@ -18,7 +18,7 @@ It is possible to list all operations.
 curl -X GET 'https://api.rokka.io/operations'
 ```
 ```language-php
-$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey');
 
 $operations = $client->listOperations();
 
