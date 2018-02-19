@@ -131,7 +131,7 @@ curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimag
 
 In PHP:
 ```language-php
-$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey');
 
 $sourceImageCollection = $client->searchSourceImages(['height' => 1200]);
 ```
@@ -207,7 +207,7 @@ curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimag
 
 in PHP:
 ```language-php
-$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey');
 
 $sourceImageCollection = $client->searchSourceImages([], ['size' => 'desc']);
 ```

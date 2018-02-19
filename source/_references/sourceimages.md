@@ -38,7 +38,7 @@ In the following example, __image.png__ is a image file in your current working 
 curl -X POST -F filedata=@image.png 'https://api.rokka.io/sourceimages/mycompany'
 ```
 ```language-php
-$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey');
 
 $sourceImages = $client->uploadSourceImage(file_get_contents('image.png'), 'image.png');
 
@@ -59,7 +59,7 @@ curl -X POST -F filedata=@image.png \
              'https://api.rokka.io/sourceimages/mycompany'
 ```
 ```language-php
-$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey');
 
 $sourceImages = $client->uploadSourceImage(file_get_contents('image.png'), 'image.png', null, ['meta_user' => ['foo' => 'bar'], 'meta_dynamic' => ['subject_area' => ['x'=> 50, 'y' => 100]]]);
 
@@ -78,7 +78,7 @@ In the following example the organization is set to __mycompany__ and the hash i
 curl -X GET 'https://api.rokka.io/sourceimages/mycompany/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5'
 ```
 ```language-php
-$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey');
 
 $sourceImage = $client->getSourceImage('c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5');
 
@@ -115,7 +115,7 @@ In the following example the organization is set to __mycompany__ and the hash i
 curl -X DELETE 'https://api.rokka.io/sourceimages/mycompany/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5'
 ```
 ```language-php
-$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey');
 
 $isDeleted = $client->deleteSourceImage('c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5');
 
@@ -134,7 +134,7 @@ The same binary hash can have different entries in rokka, if they have different
 curl -X DELETE 'https://api.rokka.io/sourceimages/mycompany?binaryHash=03b3e8a0bdd76ef55c021066642c9d2fa9c02799'
 ```
 ```language-php
-$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey');
 
 $isDeleted = $client->deleteSourceImagesWithBinaryHash('03b3e8a0bdd76ef55c021066642c9d2fa9c02799');
 
@@ -159,7 +159,7 @@ In the following example the organization is set to __mycompany__ and the binary
 curl -X GET 'https://api.rokka.io/sourceimages/mycompany?binaryHash=03b3e8a0bdd76ef55c021066642c9d2fa9c02799'
 ```
 ```language-php
-$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey', 'apiSecret');
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey');
 
 $sourceImage = $client->getSourceImageWithBinaryHash('03b3e8a0bdd76ef55c021066642c9d2fa9c02799');
 
