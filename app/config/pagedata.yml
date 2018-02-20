@@ -7,7 +7,25 @@ rokka_libraries:
     title: PHP
     alt: The PHP library provides api clients for user/organization management and for uploading images and managing stacks.
     link: https://github.com/rokka-io/rokka-client-php
-  - 
+  -
+    title: Go
+    alt: A library and CLI for Go
+    link: https://github.com/rokka-io/rokka-go
+
+rokka_framework_plugins:
+  -
     title: Symfony
     alt: The library is integrated into Symfony with the RokkaClientBundle. It provides you with configuration and provides the management and the image client as services.
     link: https://github.com/rokka-io/rokka-client-bundle
+  -
+    title: Drupal
+    alt: Drupal 7 and 8 library
+    link: https://www.drupal.org/project/rokka
+  -
+    title: WordPress
+    alt: WordPress Plugin
+    link: https://wordpress.org/plugins/rokka-integration/
+  -
+    title: Kirby
+    alt: Plugin for Kirby, a file‑based CMS
+    link: https://github.com/rokka-io/rokka-kirby-plugin

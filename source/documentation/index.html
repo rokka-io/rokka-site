@@ -24,6 +24,13 @@ use: [guides, references, libraries]
             {% endfor %}
         </ul>
 
+        <h2 class="h3">Framework and CMS Plugins</h2>
+        <ul class="list-stacked list-stacked--divided">
+            {% for library in site.rokka_framework_plugins %}
+            <li class="list-group-item"><a href="{{ library.link }}">{{ library.title }}</a></li>
+            {% endfor %}
+        </ul>
+
     </div>
 </div>
 {% endblock %}
