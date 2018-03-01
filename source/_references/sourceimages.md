@@ -143,11 +143,11 @@ var_dump($isDeleted);
 
 ## Restore a source image
 
-To restore a deleted image,  do a POST on the `/sourceimages` route with providing the identifying hash and appending '/restore'.
-Returns a 200 http code and the meta data for the image, if the image could be restored. Also if the images wasn't deleted and didn't need to be restored.
-Returns a 404, if the image could not be restored or was not fonud.
+To restore a deleted image,  do a `POST`request to `/sourceimages/{org}/{hash}/restore`.
+Returns a 200 http code and the meta data for the image, if the image could be restored. Also if the image wasn't deleted and didn't need to be restored.
+Returns a 404, if the image could not be restored or was not found.
 
-Images can be restored for about 30 days after their deletion.
+Images can be restored for 30 days after their deletion.
 
 You can also search for deleted images, if you add the search parameter "?deleted=true" to your searches. See [searching for images](searching-images.html) for more details.
 

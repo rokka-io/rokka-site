@@ -190,7 +190,7 @@ If you have a need for that, get in contact with us and we'll see what we can do
 ## Search for deleted images
 
 You can add the parameter `deleted=true` for searches and it will return deleted images, which then can be restored, 
-if needed. It only returns deleted images and only about 30 days after their deletion.
+if needed. It only returns deleted images and only for 30 days after their deletion. See the "[Restore a source image](sourceimages.html#restore-a-source-image)" for details.
 
 ## Different sorting
 
