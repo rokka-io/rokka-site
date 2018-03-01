@@ -141,6 +141,20 @@ $isDeleted = $client->deleteSourceImagesWithBinaryHash('03b3e8a0bdd76ef55c021066
 var_dump($isDeleted);
 ```
 
+## Restore a source image
+
+To restore a deleted image,  do a `POST`request to `/sourceimages/{org}/{hash}/restore`.
+Returns a 200 http code and the meta data for the image, if the image could be restored. Also if the image wasn't deleted and didn't need to be restored.
+Returns a 404, if the image could not be restored or was not found.
+
+Images can be restored for 30 days after their deletion.
+
+You can also search for deleted images, if you add the search parameter "?deleted=true" to your searches. See [searching for images](searching-images.html) for more details.
+
+```language-bash
+curl -X POST 'https://api.rokka.io/sourceimages/mycompany/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5/restore'
+```
+
 ## List source images
 
 See [searching for images](searching-images.html) for more details about how to get a list of your images.

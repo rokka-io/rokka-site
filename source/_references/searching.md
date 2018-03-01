@@ -187,6 +187,11 @@ You can filter in different fields at once, eg. `size=[30000,}&name=foo*` return
 OR and NOT filters are currently not possible.
 If you have a need for that, get in contact with us and we'll see what we can do.
 
+## Search for deleted images
+
+You can add the parameter `deleted=true` for searches and it will return deleted images, which then can be restored, 
+if needed. It only returns deleted images and only for 30 days after their deletion. See the "[Restore a source image](sourceimages.html#restore-a-source-image)" for details.
+
 ## Different sorting
 
 You can change the sort field by using the `sort` parameter, it accepts a field name and
