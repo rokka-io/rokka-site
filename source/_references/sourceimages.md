@@ -24,7 +24,7 @@ Source images are your original images you upload to Rokka. You should always se
 | width | Width of image in pixels |
 | height | Height of image in pixels |
 | dynamic_metadata | Can contain data that will alter the image identifying hash if altered. See [dynamic metadata](dynamic-metadata.html) |
-| user_metadata | Contains custom meta data set by the API user for later searches. Changing this will not alter the main hash identifying the image. See [user metadata](user-metadata.html) |
+| user_metadata | Contains custom meta data set by the API user that is returned when requesting the source image and can be used for searching. Changing this will not alter the main hash identifying the image. See [user metadata](user-metadata.html) |
 | created | When this image was created on rokka |
 | link | Backlink to itself, useful when you have lists or search by binary hash |
 
