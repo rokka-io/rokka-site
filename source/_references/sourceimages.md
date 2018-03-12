@@ -23,8 +23,8 @@ Source images are your original images you upload to Rokka. You should always se
 | size | Size of images in bytes |
 | width | Width of image in pixels |
 | height | Height of image in pixels |
-| dynamic_metadata | Can contain data that will alter the image identifying hash if altered |
-| user_metadata | Contains meta data set by the API user. Changing this will not alter the main hash identifying the image |
+| dynamic_metadata | Can contain data that will alter the image identifying hash if altered. See [dynamic metadata](dynamic-metadata.html) |
+| user_metadata | Contains custom meta data set by the API user for later searches. Changing this will not alter the main hash identifying the image. See [user metadata](user-metadata.html) |
 | created | When this image was created on rokka |
 | link | Backlink to itself, useful when you have lists or search by binary hash |
 
@@ -50,7 +50,7 @@ It will return the same meta data as you get from retrieving a single image, wit
 
 ### Supplying metadata while creating a source image
 
-You can also directly add [user metadata](usermetadata.html) or [dynamic metadata](dynamicmetadata.html) while creating an image.
+You can also directly add [user metadata](user-metadata.html) or [dynamic metadata](dynamic-metadata.html) while creating an image.
 
 ```language-bash
 curl -X POST -F filedata=@image.png \
@@ -143,7 +143,7 @@ var_dump($isDeleted);
 
 ## Restore a source image
 
-To restore a deleted image,  do a `POST`request to `/sourceimages/{org}/{hash}/restore`.
+To restore a deleted image and its metadata,  do a `POST`request to `/sourceimages/{org}/{hash}/restore`.
 Returns a 200 http code and the meta data for the image, if the image could be restored. Also if the image wasn't deleted and didn't need to be restored.
 Returns a 404, if the image could not be restored or was not found.
 

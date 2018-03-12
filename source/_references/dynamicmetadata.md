@@ -1,5 +1,5 @@
 ---
-title: Dynamic metadata
+title: Dynamic Metadata
 use: [references]
 ---
 
