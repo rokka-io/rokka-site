@@ -242,10 +242,17 @@ Later, if you want to add another size, you just base them on the same basestack
 
 ### Autoformat
 
-If you set the `autoformat: true` stack option, rokka will deliver an image in the usually smaller WebP format instead of PNG or JPG, if the client supports it.
+If you set the `autoformat: true` stack option, rokka will try to deliver the most appropriate format, not necessarily the one you requested.
+This currently consists of two stages. 
+
+In the first stage, rokka delivers the usually smaller WebP instead of PNG or JPEG, if the client supports that. 
 If you didn't set `webp.quality` explicitly and requested a PNG, it will return a lossless image and a lossy compressed image, if a JPG was requested. If you set `webp.quality` to any value on that stack, it will always honor that, no matter what was requested.
 
-In the future, we may support more autoformat features, depending on demand.
+In the second stage, during the [asynchronous optimization stage](#additional-image-optimizations), rokka analyses the image and changes the format, if another would be more appropriate. Currently, this only happens from a lossy image (eg. JPEG or lossy WebP) to a lossless image (PNG or lossless WebP), but not the other way round. That image may be a little bit larger (but sometimes also smaller), but with much better quality and no compression artifacts. This mainly applies to computer generated drawings with few colors and large uniform areas, where PNG is a better suited format. As this only happens during the asynchronous optimization, the first hit of such a request may return the lossy image, but subsequent requests later return the lossless format.
+
+Please make sure that your client can handle the different formats, if you set this features. We send the correct `Content-Type` headers, so the browsers will do the right thing.
+
+In the future, we may support more autoformat features or add more fine-grained options, depending on demand.
 
 ### Delivering a transparency capable format instead of JPEG (jpg.transparency.autoformat)
 
