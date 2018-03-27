@@ -245,12 +245,13 @@ Later, if you want to add another size, you just base them on the same basestack
 If you set the `autoformat: true` stack option, rokka will try to deliver the most appropriate format, not necessarily the one you requested.
 This currently consists of two stages. 
 
-In the first stage, rokka checks the `accept` header of the request and if it contains `image/webp`, rokka delivers in the usually smaller WebP format instead of PNG or JPEG. 
+In the first stage, rokka checks the `Accept` header of the request and if it contains `image/webp`, rokka delivers in the usually smaller WebP format instead of PNG or JPEG. 
 If you didn't set `webp.quality` explicitly and requested a PNG, it will return a lossless image and a lossy compressed image, if a JPG was requested. If you set `webp.quality` to any value on that stack, it will always honor that, no matter what was requested.
 
 In the second stage, during the [asynchronous optimization stage](#additional-image-optimizations), rokka analyses the image and changes the format, if another would be more appropriate. Currently, this only happens from a lossy image (eg. JPEG or lossy WebP) to a lossless image (PNG or lossless WebP), but not the other way round. That image may be a little bit larger (but sometimes also smaller), but with much better quality and no compression artifacts. This mainly applies to computer generated drawings with few colors and large uniform areas, where PNG is a better suited format. As this only happens during the asynchronous optimization, the first hit of such a request may return the lossy image, but subsequent requests later return the lossless format.
 
-If you download those rendered images with a non-web-browser client (eg. import them somewhere with a library or use it in a native app), make sure it can handle the different formats. Don't expect it to be in the format you have in the render URL. rokka sends the correct `Content-Type` header, you can use that to determine the actual format. Web-browsers only look at that, so they do know how to display these.
+If you download those rendered images with a non-web-browser client (eg. import them somewhere with a library or use it in a native app), make sure it can handle the different formats. Don't expect it to be in the format you have in the render URL. rokka sends the correct `Content-Type` header, you can use that to determine the actual format. Web-browsers only look at that, so they do know how to display these. 
+The `Accept` header in the request does only matter for stating that you want WebP or not, but does not play a role in determining the return format of the second stage. Meaning, even if your accept header is just `Accept: image/jpeg`, you may get a PNG back. The whole `Accept` header used by all the clients out there is quite a mess, therefore we decided not to support that. If you really need the exact format on a stack you have set with `autoformat: true`, add `/options-autoformat-false/` to the render URL right after the stack name and before the hash.
 
 In the future, we may support more autoformat features or add more fine-grained options, depending on demand.
 
