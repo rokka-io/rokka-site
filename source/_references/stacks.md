@@ -250,7 +250,7 @@ If you didn't set `webp.quality` explicitly and requested a PNG, it will return 
 
 In the second stage, during the [asynchronous optimization stage](#additional-image-optimizations), rokka analyses the image and changes the format, if another would be more appropriate. Currently, this only happens from a lossy image (eg. JPEG or lossy WebP) to a lossless image (PNG or lossless WebP), but not the other way round. That image may be a little bit larger (but sometimes also smaller), but with much better quality and no compression artifacts. This mainly applies to computer generated drawings with few colors and large uniform areas, where PNG is a better suited format. As this only happens during the asynchronous optimization, the first hit of such a request may return the lossy image, but subsequent requests later return the lossless format.
 
-Please make sure that your client can handle the different formats, if you set this features. We send the correct `Content-Type` headers, so the browsers will do the right thing.
+If you download those rendered images with a non-web-browser client (eg. import them somewhere with a library or use it in a native app), make sure it can handle the different formats. Don't expect it to be in the format you have in the render URL. rokka sends the correct `Content-Type` header, you can use that to determine the actual format. Web-browsers only look at that, so they do know how to display these.
 
 In the future, we may support more autoformat features or add more fine-grained options, depending on demand.
 
