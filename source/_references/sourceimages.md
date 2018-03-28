@@ -144,6 +144,7 @@ var_dump($isDeleted);
 ## Restore a source image
 
 To restore a deleted image and its metadata,  do a `POST`request to `/sourceimages/{org}/{hash}/restore`.
+
 Returns a 200 http code and the meta data for the image, if the image could be restored. Also if the image wasn't deleted and didn't need to be restored.
 Returns a 404, if the image could not be restored or was not found.
 
@@ -153,6 +154,27 @@ You can also search for deleted images, if you add the search parameter "?delete
 
 ```language-bash
 curl -X POST 'https://api.rokka.io/sourceimages/mycompany/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5/restore'
+```
+
+## Copy a source image to another organization
+
+To copy a source image to another organization (for example for copying images from a production to a test environment),
+you can do a `COPY` request to  `/sourceimages/{org}/{hash}` and send the `Destination` header with the destination organization.
+If you send a `Overwrite: F` header with it, it won't copy it, if it already exists at the destination.
+Your API user needs to have read permissions on the source organization and write permissions on the destination organization. 
+The [memberships endpoint](memberships.html) has methods to give an API user access to more organizations.
+
+Returns the following http status codes:
+
+* 201, if the image was newly created at the destination.
+* 204, if the image was overwritten at the destination.
+* 400, if the destination organization does not exist.
+* 403, if you're not allowed to write to the destination organization.
+* 404, if the source image was not found.
+* 412, if `Overwrite: F` was sent and the destination exists already.
+
+```language-bash
+curl -X COPY -H 'Destination: mycompany-stage' 'https://api.rokka.io/sourceimages/mycompany/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5' 
 ```
 
 ## List source images
