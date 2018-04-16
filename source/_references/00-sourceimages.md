@@ -141,6 +141,14 @@ $isDeleted = $client->deleteSourceImagesWithBinaryHash('03b3e8a0bdd76ef55c021066
 var_dump($isDeleted);
 ```
 
+With the [PHP CLI](https://github.com/rokka-io/rokka-client-php-cli) you can also delete all source images from one organization. 
+Be aware that this may take a while, if you have many images.
+
+```language-bash
+./bin/rokka-cli image:delete-all 
+```
+
+
 ## Restore a source image
 
 To restore a deleted image and its metadata,  do a `POST`request to `/sourceimages/{org}/{hash}/restore`.
@@ -155,6 +163,12 @@ You can also search for deleted images, if you add the search parameter "?delete
 ```language-bash
 curl -X POST 'https://api.rokka.io/sourceimages/mycompany/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5/restore'
 ```
+
+```language-php
+$client->restoreSourceImage($hash);
+```
+
+
 
 ## Copy a source image to another organization
 
@@ -175,6 +189,17 @@ Returns the following http status codes:
 
 ```language-bash
 curl -X COPY -H 'Destination: mycompany-stage' 'https://api.rokka.io/sourceimages/mycompany/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5' 
+```
+
+```language-php
+$client->copySourceImage($hash, $destinationOrg)
+```
+
+With the [PHP CLI](https://github.com/rokka-io/rokka-client-php-cli) you can also copy all source images from one organization to another, withouth having to down- and upload them again. 
+Be aware that this may take a while, if you have many images.
+
+```language-bash
+./bin/rokka-cli image:copy-all $DESTINATION_ORG
 ```
 
 ## List source images
