@@ -195,8 +195,14 @@ curl -X COPY -H 'Destination: mycompany-stage' 'https://api.rokka.io/sourceimage
 $client->copySourceImage($hash, $destinationOrg)
 ```
 
-With the [PHP CLI](https://github.com/rokka-io/rokka-client-php-cli) you can also copy all source images from one organization to another, withouth having to down- and upload them again. 
-Be aware that this may take a while, if you have many images.
+With the [Go CLI](https://github.com/rokka-io/rokka-go) you can also copy all source images from one organization to another, without having to down- and upload them again. 
+Be aware that this may take a while, if you have many images. If that's the case and you need it to be faster, talk to us, we can increase some limits.
+
+```language-bash
+rokka sourceimages copy-all $SOURCE_ORG $DESTINATION_ORG
+```
+
+You can also use the [PHP CLI](https://github.com/rokka-io/rokka-client-php-cli) for copying a whole organization. But it may be slower than the Go CLI, as it doesn't do parallel copying. 
 
 ```language-bash
 ./bin/rokka-cli image:copy-all $DESTINATION_ORG
