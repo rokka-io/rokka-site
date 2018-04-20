@@ -88,7 +88,7 @@ Note: The name "dynamic" (used for dynamic rendering) and names starting with "_
 
 Please read the [Render caches and invalidation document](../guides/caches-and-invalidation.html) carefully, if you want to update an existing stacks with new options/operations, since it may not work like you'd expect.
 
-To update an existing stack, just append `?overwrite=true` to your URL. Or in PHP add the key `overwrite` with value `true` to the second parameter array of `saveStack`
+To update an existing stack, just append `?overwrite=true` to your URL. Or use the corresponding parameters in one of the rokka client libraries.
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/mycompany/teststack?overwrite=true' -d '{
@@ -115,23 +115,10 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/myc
 '
 ```
 
+In the PHP client add the key `overwrite` with value `true` to the second parameter array of `saveStack`:
+
 ```language-php
-use Rokka\Client\Core\Stack;
-use Rokka\Client\Core\StackOperation;
-
-$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey');
-
-$stack = new Stack(null, 'teststack');
-
-$stack->addStackOperation(new StackOperation('resize', ['width' => 200, 'height' => 200]));
-$stack->addStackOperation(new StackOperation('rotate', ['angle' => 45]));
-$stack->setStackOptions(['jpg.quality' => 80]);
-
 $stack = $client->saveStack($stack, ['overwrite' => true]);
-
-echo 'Created stack ' . $stack->getName() . PHP_EOL;
-print_r($stack);
-
 ```
 
 ### Configuring a stack with no operations
