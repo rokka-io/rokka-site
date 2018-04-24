@@ -1,3 +1,13 @@
+rokka_more_links:
+  -
+    title: Changelog
+    alt: The changelog of the API
+    link: https://api.rokka.io/changelog.md
+  -
+    title: Swagger/OpenAPI docs
+    alt: Swagger/OpenAPI documentation and json
+    link: https://api.rokka.io/doc/
+
 rokka_libraries:
   -
     title: Javascript
