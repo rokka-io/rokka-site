@@ -4,6 +4,10 @@ rokka_more_links:
     alt: The changelog of the API
     link: https://api.rokka.io/changelog.md
   -
+    title: Dashboard
+    alt: Browser based dashboard
+    link: https://rokka.io/dashboard
+  -
     title: Swagger/OpenAPI documentation and sandbox
     alt: Swagger/OpenAPI documentation and json
     link: https://api.rokka.io/doc/
