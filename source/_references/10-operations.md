@@ -62,6 +62,61 @@ Blurs the entire image.
 
 - `sigma`: Number, minimum value 0. The default value is 4. Controls most of the blurring of the image.
 
+### Composition
+
+Adds a composition to an image. Currently there's only one mode: `foreground`. It adds a picture onto the foreground of an uniformly coloured image.
+This can be useful for putting a small image on a transparent bigger image:
+
+```
+{
+    "name": "resize",
+    "options": {
+        "height": 450
+    }
+},
+{
+    "name": "composition",
+    "options": {
+        "width": 1200,
+        "height": 550,
+        "anchor": "left_bottom"
+        "secondary_opacity": 0,
+    }
+}
+
+```
+
+Or to fit a 4:3 image into a 16:9 box with white borders:
+
+```
+{
+    "name": "resize",
+    "options": {
+        "height": 160,
+        "width": 90
+    }
+},
+{
+    "name": "composition",
+    "options": {
+        "width": 160,
+        "height": 90,
+        "secondary_color": "FFFFFF",
+    }
+} 
+```
+
+
+#### Properties
+
+- `mode`: Default and currently only option: `foreground`.
+- `width`: Width of the composed image.
+- `height`: Height of the composed image.
+- `anchor`: Anchor where to place the composition, based on mode. See the [Crop operation](#crop) for possible values. Default: center_center
+- `secondary_color`: Color to use as filler in hex without the # sign, example: "0F0F0F". Default: 000000
+- `secondary_opacity`: Opacity of filler. Default is 0, transparent. Goes up to 100 for opaque. Default: 100
+
+
 ### Crop
 
 Crops an image to a set size.
