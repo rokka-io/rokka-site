@@ -4,7 +4,7 @@ rokka_more_links:
     alt: The changelog of the API
     link: https://api.rokka.io/changelog.md
   -
-    title: Swagger/OpenAPI docs
+    title: Swagger/OpenAPI documentation and sandbox
     alt: Swagger/OpenAPI documentation and json
     link: https://api.rokka.io/doc/
 
