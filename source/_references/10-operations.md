@@ -12,7 +12,7 @@ use: [references]
 
 ## List operations
 
-It is possible to list all operations.
+It is possible to list all operations. [Try it out](https://api.rokka.io/doc/#/stacks/get_operations).
 
 ```language-bash
 curl -X GET 'https://api.rokka.io/operations'
@@ -67,7 +67,7 @@ Blurs the entire image.
 Adds a composition to an image. Currently there's only one mode: `foreground`. It adds a picture onto the foreground of an uniformly coloured image.
 This can be useful for putting a small image on a transparent bigger image:
 
-```
+```language-javascript
 {
     "name": "resize",
     "options": {
@@ -88,7 +88,7 @@ This can be useful for putting a small image on a transparent bigger image:
 
 Or to fit a 4:3 image into a 16:9 box with white borders:
 
-```
+```language-javascript
 {
     "name": "resize",
     "options": {
