@@ -23,6 +23,8 @@ rokka is controlled via a REST API. The API allows to manage organizations and s
 
 We provide a couple of API clients in popular programming languages, but the REST API is documented, in case you need to build your own client. If you open source a client, please send us a note so that we can list it in the documentation.
 
+You can also play with the API in our [Swagger UI](https://api.rokka.io/doc/) directly from the browser.
+
 ## Versioning
 
 Before we dive into the API more, you should be aware of versioning. The header `Api-Version` expects a full number as value, lowest being 1. You should always send the API version header when making requests. The pre built libraries already do that by default, sending the correct header for the version of the API they are using.
