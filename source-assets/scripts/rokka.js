@@ -5,6 +5,18 @@ window.addEventListener('DOMContentLoaded', function() {
   new Toolkit.Navbar(navbar, { mode: 'default' });
 });
 
+window.addEventListener('load', function() {
+  if (window.location.hash) {
+    window.scrollBy(0,-70);
+  }
+}, false);
+
+
+window.addEventListener('hashchange', function() {
+  window.scrollBy(0,-70);
+}, false);
+
+
 // window.addEventListener('DOMContentLoaded', function() {
 //   var el = document.querySelector('#section-multiplier');
 //   new Toolkit.Multiplier(el, '/assets/images/clouds-hero.png');

@@ -17,9 +17,15 @@
     ],
     "require": {
         "sculpin/sculpin": "^2.1@dev",
-        "dflydev/embedded-composer": "^1.0@dev"
+        "dflydev/embedded-composer": "^1.0@dev",
+        "masterminds/html5": "^2.3"
     },
     "config": {
         "component-dir": "source/components"
+    },
+    "autoload": {
+        "psr-4": {
+            "SculpinTools\\": "src/SculpinTools"
+        }
     }
 }

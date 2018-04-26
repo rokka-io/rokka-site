@@ -1454,3 +1454,8 @@ html {
 .rokka-contact__mail {
     font-size: $font-size-large;
 }
+
+.anchorLink, .anchorLink:hover {
+    color: inherit;
+    text-decoration: none;
+}

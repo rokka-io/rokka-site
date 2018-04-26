@@ -14,3 +14,9 @@ sculpin_content_types:
 
 sculpin_markdown:
     parser_class: Sculpin\Bundle\MarkdownBundle\PhpMarkdownExtraParser
+
+services:
+    add_links_to_id:
+        class: SculpinTools\AddLinksToId
+        tags:
+            - { name: kernel.event_subscriber }
