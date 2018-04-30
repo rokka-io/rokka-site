@@ -33,7 +33,7 @@ If you do not use the version header, rokka will always default to the latest ve
 
 ## Registration
 
-Before you can use the rokka service, you need to register. The rokka API will offer an automated registration, but for now, you need to fill in the <a href="/signup">online form</a>.
+Before you can use the rokka service, you need to register. The rokka API will offer an automated registration, but for now, you need to fill in the <a href="/dashboard/#/signup">online form</a>.
 
 To do so, you need only supply an email address. This call will register you at the service and create an organization for you:
 

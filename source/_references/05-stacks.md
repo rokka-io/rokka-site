@@ -86,7 +86,7 @@ Note: The name "dynamic" (used for dynamic rendering) and names starting with "_
 
 ### Updating existing stacks
 
-Please read the [Render caches and invalidation document](../guides/caches-and-invalidation.html) carefully, if you want to update an existing stacks with new options/operations, since it may not work like you'd expect.
+Please read the [Render caches and invalidation document](../guides/render-caches-and-invalidation.html) carefully, if you want to update an existing stacks with new options/operations, since it may not work like you'd expect.
 
 To update an existing stack, just append `?overwrite=true` to your URL. Or use the corresponding parameters in one of the rokka client libraries.
 
