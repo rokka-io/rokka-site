@@ -128,7 +128,7 @@ Note: If the image you try to delete does not exist, the API responds with a 404
 
 ## Deleting source images with binary hash
 
-The same binary hash can have different entries in rokka, if they have different [dynamic metadata](dynamicmetadata.html). With this command you can delete all of them at once
+The same binary hash can have different entries in rokka, if they have different [dynamic metadata](dynamic-metadata.html). With this command you can delete all of them at once
 
 ```language-bash
 curl -X DELETE 'https://api.rokka.io/sourceimages/mycompany?binaryHash=03b3e8a0bdd76ef55c021066642c9d2fa9c02799'
