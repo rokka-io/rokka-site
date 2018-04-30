@@ -15,6 +15,18 @@ composer install && npm install
 
 and then open [http://localhost:3000](http://localhost:3000) in your browser
 
+Check for broken links
+----------------------
+
+Run the local server as mentioned above, then do
+
+```
+./node_modules/.bin/blc http://localhost:3000/documentation --filter-level 3 -ro --exclude https://www.liip.ch/en/blog/tags/rokka --exclude https://www.drupal.org/project/rokka --exclude http://localhost:3000/dashboard/#/signup 
+
+```
+
+For some strange reason, the blog/tags and drupal links are 404, that's why we exclude them here.
+
 
 Documentation
 -----------------
