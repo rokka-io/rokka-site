@@ -44,7 +44,7 @@ echo 'Updated subject area. New image hash: ' . $newHash . PHP_EOL;
 
 ```
 
-You can also directly provide metadata when you first upload an image. See [Source images](sourceimages.html) for details.
+You can also directly provide metadata when you first upload an image. See [Source images](source-images.html) for details.
 
 ## Delete dynamic metadata from a source image
 

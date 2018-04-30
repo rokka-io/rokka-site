@@ -65,7 +65,7 @@ JSON encoded value in the body:
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/myorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/user/somefield' -d '"somevalue"'
 ```
 
-You can also directly provide metadata when you first upload an image. See [Source images](sourceimages.html) for details.
+You can also directly provide metadata when you first upload an image. See [Source images](source-images.html) for details.
 
 ## Delete metadata from a source image
 
