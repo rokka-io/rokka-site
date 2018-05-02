@@ -25,6 +25,10 @@ rokka_libraries:
     title: Go
     alt: A library and CLI for Go
     link: https://github.com/rokka-io/rokka-go
+  -
+    title: Python
+    alt: A Package for Python generate with swagger-codegen
+    link: https://github.com/rokka-io/rokka-python-codegen
 
 rokka_framework_plugins:
   -
