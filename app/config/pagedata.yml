@@ -33,6 +33,10 @@ rokka_libraries:
     title: Java
     alt: A Package for Java generate with swagger-codegen
     link: https://github.com/rokka-io/rokka-java-codegen
+  -
+    title: Ruby
+    alt: A Gem for Java generate with swagger-codegen
+    link: https://github.com/rokka-io/rokka-ruby-codegen
 
 rokka_framework_plugins:
   -
