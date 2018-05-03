@@ -29,6 +29,10 @@ rokka_libraries:
     title: Python
     alt: A Package for Python generate with swagger-codegen
     link: https://github.com/rokka-io/rokka-python-codegen
+  -
+    title: Java
+    alt: A Package for Java generate with swagger-codegen
+    link: https://github.com/rokka-io/rokka-java-codegen
 
 rokka_framework_plugins:
   -
