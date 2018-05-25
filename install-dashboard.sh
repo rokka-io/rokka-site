@@ -14,6 +14,7 @@ fi
 
 cd rokka-dashboard
 git checkout master
+git reset --hard
 git pull origin master
 
 export PUBLIC_URL='/assets/dashboard'
