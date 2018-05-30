@@ -24,7 +24,7 @@ The _options_ parameter is optional. You can use the following options in there.
 | --------- | ------- | ------- | ------- | ----------- |
 | basestack | - | - | - | Name of existing stack that will be executed before this stack. See the [Basestacks chapter](#basestacks) below.|
 | optim.quality | 4 | 1 | 10 | General image quality setting. If `jpeg.quality` resp. `webp.quality` is not set explicitely, rokka tries to find the best possible compression automatically.  See the [optimizations chapter](#additional-image-optimizations) below.
-| jpg.quality | 76 | 1 | 100 | Jpg quality setting, lower number means smaller file size and worse lossy quality. Default is 65 for dpr >=2, see the [DPR chapter](#device-pixel-ratio-dpr) below.|
+| jpg.quality | 80 | 1 | 100 | Jpg quality setting, lower number means smaller file size and worse lossy quality. Default is 65 for dpr >=2, see the [DPR chapter](#device-pixel-ratio-dpr) below.|
 | webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. Default is 65 for dpr >=2, see the [DPR chapter](#device-pixel-ratio-dpr) belowfor details. |
 | heif.quality | 70 | 1 | 100 | Heif/Heic quality setting, lower number means smaller file size and worse lossy quality.  |
 | png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images. |
