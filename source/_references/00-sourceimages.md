@@ -5,7 +5,7 @@ use: [references]
 
 ## Intro
 
-Source images are your original images you upload to Rokka. You should always select the highest quality you can, Rokka will take care of the rest. Usually it's best to use PNG files, as they are not compressed. Rokka can handle PNG, JPEG, GIF, HEIC, WebP, PDF and SVG files (more possible, if there's a demand). To ensure the best possible results, we recommend to upload the pictures in sRGB (with or without alpha channel) and not for example in CMYK.
+Source images are your original images you upload to Rokka. You should always select the highest quality you can, Rokka will take care of the rest. Usually it's best to use PNG files, as they are not compressed. Rokka can handle PNG, JPEG, GIF, HEIC, WebP, TIFF, PDF and SVG files (more possible, if there's a demand). To ensure the best possible results, we recommend to upload the pictures in sRGB (with or without alpha channel) and not for example in CMYK.
 
 
 
