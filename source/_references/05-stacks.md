@@ -34,6 +34,7 @@ The _options_ parameter is optional. You can use the following options in there.
 | remote_basepath | - | - | - | To load images directly from a remote URL with a basepath instead of uploading them to rokka via the API first. See the [remote_basepath chapter](#loading-images-from-a-remote-url) below.|
 | autoformat | false | - | - | If set, rokka will return WebP instead of PNG/JPEG, if the client supports it. See the [autoformat chapter](#autoformat) below.|
 | dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See the [DPR chapter](#device-pixel-ratio-dpr) below. |
+| content_disposition | inline | - | - | Sets a "Content-Disposition: attachment", if value is set to "attachment". |
 | optim.disable_all |true| - | - | Disables all additional enhanced image size optimizations. See the [optimizations chapter](#additional-image-optimizations) below.|
 | optim.immediate |false| - | - | Immediatly runs the enhanced image size otimizations instead of doing it later asynchronously. See the [optimizations chapter](#additional-image-optimizations) below. |
 | jpg.transparency.color | FFFFFF | - | - | The background color used to replace the alpha channel. |
