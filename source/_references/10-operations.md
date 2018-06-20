@@ -139,7 +139,7 @@ Crops an image to a set size.
    [Subject Area](../references/dynamic-metadata.html#subject-area), if any exist, then around a face detection box , if any exist.
    If both are not defined defined, the crop operation will fallback to `center_center`.
    
-   
+- `fallback`: String. What "anchor" should be used, when no subject area was found. Default: "center_center"
 - `mode`: String. If width and height should be taken as absolute values or as ratio. If ratio is chosen, rokka will try to find the largest possible crop fitting into the image with that ratio. The default value is `absolute`. Possible values are:
     - `absolute`
     - `ratio`
