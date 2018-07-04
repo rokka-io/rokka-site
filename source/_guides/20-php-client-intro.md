@@ -3,13 +3,13 @@ title: PHP client library intro
 use: [guides]
 ---
 
-## Note about CMS Clients
+# Note about CMS Clients
 
-Note: If you just want to use rokka in a CMS like Drupal, Wordpress or Kirby, we recommend using the respective plugins (add links). If you want to know, how the PHP library works and what it provides, this intro may be a good start nevertheless.
+Note: If you just want to use rokka in a CMS like Drupal, Wordpress or Kirby, we recommend using the respective plugins (see the right side on the [documentation overview](/documentation/)). If you want to know, how the PHP library works and what it provides, this intro may be a good start nevertheless.
 
 # Preparation
 
-If you already know the basics of rokka and have uploaded an image and created a stack, you can directly skip to the "The PHP library" chapter below.
+If you already know the basics of rokka and have uploaded an image and created a stack, you can directly skip to the "[The PHP library](#the-php-library)" chapter below.
 
 ## Get a rokka account
 
@@ -122,20 +122,22 @@ $rokka = new TemplateHelper('$YOUR_ORG', '$YOUR_API_KEY');
 </html>
 ```
 
-Alternative, you can also just use the `\Rokka\Client\UriHelper:composeUri ` static method.
+Alternatively, you can also just use the `\Rokka\Client\UriHelper:composeUri ` static method.
 
 ```
 <img src="https://liip-development.rokka.io<?= UriHelper::composeUri(['stack' => 'test-stack', 'hash' => 'dba893', 'format' => 'jpg']);?>">
 ```
 
+Both examples return an URL like `https://$YOUR_ORG.rokka.io/test-stack/dba893.jpg`.
+
 ## Retina and responsive images
 
 Nowadays you want to deliver high resolution images to your clients with "retina" screens. A service like rokka makes that easy and this library even more so.
 
-You can add stack options to any render URL (or stack definition), and one of those options is the "dpr" (device pixel ration) of the client. So let's say you have a retina screen with a DPR of 2, then you add "options-dpr-2" to your URL just before the hash, eg.
+You can add stack options to any render URL (or stack definition), and one of those options is the "dpr" (device pixel ratio) of the client. So let's say you have a retina screen with a DPR of 2, then you add "options-dpr-2" to your URL just before the hash, eg.
 `https://$YOUR_ORG.rokka.io/test-stack/options-dpr-2/dba893.jpg` and you'll get an image twice the size.
 
-The PHP library has some helper functions to generate such URLs. The following returns the same URL as above. And does the right thing, even if you already have options in your URL. No need for you to manually parsing or concating that URL-
+The PHP library has some helper functions to generate such URLs. The following returns the same URL as above. And does the right thing, even if you already have options in your URL. No need for you to manually parse or concatenate that URL.
 
 ```
 UriHelper::addOptionsToUriString('https://$YOUR_ORG.rokka.io/test-stack/dba893.jpg','options-dpr-2');
@@ -149,13 +151,13 @@ UriHelper::addOptionsToUriString('https://$YOUR_ORG.rokka.io/test-stack/dba893.j
 
 There's also `addOptionsToUri` which takes a `\Psr\Http\Message\UriInterface` instead of a string as input for the uri.
 
-The above methods may give you an appropriate retina enabled render URL, but you'd still have to write the right HTML attributes to actually enable them. But with the method `TemplateHelper::getSrcAttributes`, this gets much easier. Call it like the following:
+The above methods may give you an appropriate retina enabled render URL, but you'd still have to write the right HTML attributes to actually enable them. With the method `TemplateHelper::getSrcAttributes`, this gets much easier. Call it like the following:
 
 ```
 <img <?= TemplateHelper::getSrcAttributes($rokka->getStackUrl('dba893', 'test-stack', 'jpg'), ['2x', '3x']);?>>
 ```
 
-And you get a string back with  `src` and a `srcset` attributes and the correct values (in this example with srcset for '2x' and '3x', you can also use "w" values instead of "x" there, but don't mix them). If you you want to know more about srcset, see [this blog post about responsive images](https://www.liip.ch/en/blog/things-you-should-know-about-responsive-images).
+And you get a string back with `src` and a `srcset` attributes and the correct values (in this example with srcset for '2x' and '3x', you can also use "w" values instead of "x" there, but don't mix them). If you you want to know more about srcset, see [this blog post about responsive images](https://www.liip.ch/en/blog/things-you-should-know-about-responsive-images).
 
 There's also a similar method for responsive images in CSS background-images, `TemplateHelper::getBackgroundImageStyle`.
 
@@ -163,7 +165,7 @@ There's also a similar method for responsive images in CSS background-images, `T
 
 There are some more helper methods, if you need to resize some pictures quickly without creating a stack. The URLs may be long and if you need the same size often, we recommend to still create stacks for them.
 
-Renders an image resized to a width of 400 pixels (you may also specify a height):
+Rendering an image resized to a width of 400 pixels (you may also specify a height in the 3rd parameter):
 
 ```
 <img src="<?= $rokka->getResizeUrl('dba893', 400);?>">
@@ -172,7 +174,7 @@ Renders an image resized to a width of 400 pixels (you may also specify a height
 Renders an image resized and cropped to specific dimensions. Very useful when you want to ensure that all pictures have the same size.
 
 ```
-<img src="<?= $rokka->getResizeCropUrl('dba893',400, 20, 'jpg');?>">
+<img src="<?= $rokka->getResizeCropUrl('dba893', 400, 200, 'jpg');?>">
 ```
 
 Renders the image in it's original size.
@@ -200,13 +202,13 @@ https://$YOUR_ORG.rokka.io/test-stack/dba893/a-picture-with-things.jpg
 
 ## Twig
 
-The twig extension for rokka is still a work in progress. It mainly exposes the above mentioned helper methods. A first documentation can be found at the github repo at [github.com/rokka-io/rokka-client-php-twig](https://github.com/rokka-io/rokka-client-php-twig)
+The twig extension for rokka is also available. It mainly exposes the above mentioned helper methods. Documentation can be found at the github repo at [github.com/rokka-io/rokka-client-php-twig](https://github.com/rokka-io/rokka-client-php-twig). It will also be included in the [rokka symfony bundle](https://github.com/rokka-io/rokka-client-bundle/tree/twig) in the near future. 
 
 # Working with "local" images
 
-Uploading images manually to rokka is not a very efficient way to deliver them.  You could integrate the uploading part into your Framework/CMS and use the PHP API for that (see below about that). 
+Uploading images manually to rokka is not a very efficient way to have them ready. You could integrate the uploading part into your Framework/CMS and use the PHP API for that ([see below about that](#managing-via-api)), which is often the best approach.
 
-Or you can use the built in functionalities of the  `TemplateHelper` class to help you in that. Some methods of that class not only take a rokka image hash as first argument, but also a path to an existing local file, a `SplFileInfo`  object or an object which implements [Rokka\Client\LocalImage\AbstractLocalImage](https://rokka.io/client-php-api/master/Rokka/Client/LocalImage/AbstractLocalImage.html) (more about that later)
+Or you can use the built in functionality of the `TemplateHelper` class to help you in that. Some methods of that class not only take a rokka image hash as first argument, but also a path to an existing local file, a `SplFileInfo` object or an object which implements [Rokka\Client\LocalImage\AbstractLocalImage](https://rokka.io/client-php-api/master/Rokka/Client/LocalImage/AbstractLocalImage.html) (more about that later)
 
 The TemplateHelper then automatically uploads the image to rokka, if it can't find a corresponding hash locally and does all the rest for you. 
 ```
@@ -268,7 +270,7 @@ There are more methods you can implement in a LocalImage class to make your life
 
 # Managing via API
 
-The PHP client library also offers a full blown API to all the REST API endpoints rokka provides. This may be very useful, when you for example want to upload your images as soon as their uploaded to your framework/cms or you want automatically import them to rokka periodically and not only when they're accessed the first time (what the TemplateHelper classes do)
+The PHP client library also offers a full blown API to all the REST API endpoints rokka provides. This may be very useful, when you for example want to upload your images as soon as they're uploaded to your framework/cms or you want automatically import them to rokka periodically and not only when they're accessed the first time (what the TemplateHelper classes do).
 
 ## Upload images
 
