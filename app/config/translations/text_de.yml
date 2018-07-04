@@ -64,21 +64,23 @@ text:
       storage_text1: pro 1 GB Speicherplatz
       storage_text2: bis 400 GB
       traffic_text1: pro 1 GB Datenvolumen
-      traffic_text2: bis 2000 GB
+      traffic_text2: bis 2000 GB pro Monat
     details:
       title: Ab 400 GB Speicherplatz oder 2000 GB Datenvolumen zahlen Sie weniger.
       text: Mehr erfahren
       storage: Speicherplatz
       traffic: Datenvolumen
       amount: Menge (GB)
-      chf_per_gb: CHF/Monat pro GB
+      amount_monthly: Menge (GB pro Monat)
+      chf_per_gb_monthly: CHF/Monat pro GB
+      chf_per_gb: CHF pro GB
       contact: Kontaktieren Sie uns für eine individuelle Offerte.
     free:
       title: Kostenlose Version
       text: Sie möchten die Katze nicht im Sack kaufen? Das verstehen wir und deshalb können sie alle Funktionen von rokka bis zu 2GB Speicherplatz und 5GB Datenvolumen kostenlos nutzen.
       free: GRATIS
       free_space: 2GB Speicherplatz
-      free_traffic: 5GB Datenvolumen
+      free_traffic: 5GB Datenvolumen pro Monat
     disclaimer: Alle Preise in CHF und ohne Mehrwertsteuer.
     tos:
       text: Nutzungsbedingungen
