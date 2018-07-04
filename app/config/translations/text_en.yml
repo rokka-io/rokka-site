@@ -64,21 +64,23 @@ text:
       storage_text1: per 1 GB of storage
       storage_text2: up to 400 GB
       traffic_text1: per 1 GB of traffic
-      traffic_text2: up to 2000 GB
+      traffic_text2: up to 2000 GB per month
     details:
       title: Pay less when using more than 400 GB storage or 2000 GB traffic.
       text: See details
       storage: Storage
       traffic: Traffic
       amount: Amount (GB)
-      chf_per_gb: CHF/Month per GB
+      amount_monthly: Amount (GB) per month
+      chf_per_gb: CHF per GB
+      chf_per_gb_monthly: CHF/Month per GB
       contact: Contact us for an individual offer
     free:
       title: Free plan
       text: You don't want to buy a pig in a poke? Up to 2GB of space and 5GB of traffic, rokka is free for everyone.
       free: FREE
       free_space: up to 2 GB of space
-      free_traffic: up to 5 GB of traffic
+      free_traffic: up to 5 GB of traffic per month
     disclaimer: All prices in CHF and excl. VAT.
     tos:
       text: Terms of Use
