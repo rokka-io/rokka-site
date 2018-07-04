@@ -48,6 +48,25 @@ var_dump($sourceImages);
 
 It will return the same meta data as you get from retrieving a single image, with the only difference that it is wrapped in an array for future expansions of multi file uploads.
 
+### Create a source image with a remote URL
+
+Instead of directly uploading an image within the POST request, you can also provide an URL do a remote image, which then will be 
+downloaded by rokka and inserted into your repository. This happens synchronously, so you will get the same hashes and metadata back as with directly uploading an image.
+
+The image at the URL has to be publicly accessible. There's currently no way to add authentication. If you need that, talk to us.
+
+```language-bash
+curl -X POST -F url[0]='https://rokka.rokka.io/dynamic/noop/f4d3f334ba90d2b4b00e82953fe0bf93e7ad9912.png' 'https://api.rokka.io/sourceimages/mycompany'
+```
+```language-php
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey');
+
+$sourceImages = $client->uploadSourceImageByUrl('https://rokka.rokka.io/dynamic/noop/f4d3f334ba90d2b4b00e82953fe0bf93e7ad9912.png');
+
+var_dump($sourceImages);
+```
+
+
 ### Supplying metadata while creating a source image
 
 You can also directly add [user metadata](user-metadata.html) or [dynamic metadata](dynamic-metadata.html) while creating an image.
