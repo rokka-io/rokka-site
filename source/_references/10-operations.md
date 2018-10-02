@@ -167,7 +167,8 @@ Converts an image to grayscale.
 ### Modulate
 
 Modulates an image for Brightness, Saturation and Hue. Use this to for example brighten up or darken an image or 
-remove its colors. The value is meant as percentage, 100 leaves the property untouched, 0 removes all of it. 
+remove its colors. The value is meant as percentage, with which the different values are multiplied. 
+100 leaves the property untouched, 0 removes all of it. 
 
 #### Properties
 
