@@ -164,6 +164,17 @@ Adds a dropshadow to an image.
 
 Converts an image to grayscale.
 
+### Modulate
+
+Modulates an image for Brightness, Saturation and Hue. Use this to for example brighten up or darken an image or 
+remove its colors. The value is meant as percentage, 100 leaves the property untouched, 0 removes all of it. 
+
+#### Properties
+
+- `brightness`: Integer, between 0 and 500. The default value is 100.
+- `saturation`: Integer, between 0 and 500. The default value is 100.
+- `hue`: Integer, between 0 and 500. The default value is 100.
+
 ### Resize
 
 Resizes an image.
