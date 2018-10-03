@@ -172,9 +172,9 @@ remove its colors. The value is meant as percentage, with which the different va
 
 #### Properties
 
-- `brightness`: Integer, between 0 and 500. The default value is 100.
-- `saturation`: Integer, between 0 and 500. The default value is 100.
-- `hue`: Integer, between 0 and 500. The default value is 100.
+- `brightness`: Integer, between 0 and 100. The default value is 100.
+- `saturation`: Integer, between 0 and 100. The default value is 100.
+- `hue`: Integer, between 0 and 100. The default value is 100.
 
 ### Resize
 
