@@ -166,15 +166,22 @@ Converts an image to grayscale.
 
 ### Modulate
 
-Modulates an image for Brightness, Saturation and Hue. Use this to for example brighten up or darken an image or 
-remove its colors. The value is meant as percentage, with which the different values are multiplied. 
-100 leaves the property untouched, 0 removes all of it. 
+Modulates an image for brightness, saturation and hue. Use this to for example brighten up or darken an image or remove its colors. 
+
+For brightness and saturation, the input is an integer between 0 and 500, which is meant as percentage. The maximum value of 500 is pretty arbitrary, but more usually doesn't make any sense.
+
+The brightness parameter applies a linear multiplier to the input image, making it appear brighter or darker. A value under 100 darkens the image, while a value over 100 brightens it.
+A value of 0 will create an image that is completely black, while a value of 100 leaves the input unchanged. A value of for example 200 doubles the brightness of the image.
+
+The saturation parameter super-saturates or desaturates the input image. A value under 100 desaturates the image, while a value over 100 super-saturates it. A value of 0 returns a completely unsaturated (no colors) image, while a value of 100 leaves the input unchanged. A value of for example 200 doubles the saturation of the image.
+
+For the hue parameter, the input is an integer defining how many degrees the color should be shifted on a color wheel. A value of 0 and 360 leaves the input unchanged. A value of for example 180 inverts all colors to their opposite color on the wheel. 
 
 #### Properties
 
-- `brightness`: Integer, between 0 and 500. The default value is 100.
-- `saturation`: Integer, between 0 and 500. The default value is 100.
-- `hue`: Integer, between 0 and 500. The default value is 100.
+- `brightness`: Integer. Percentage of brightness change between 0 and 500. The default value is 100.
+- `saturation`: Integer. Percentage of saturation change between 0 and 500. The default value is 100.
+- `hue`: Integer. Degrees for hue rotation between 0 and 360. The default value is 0.
 
 ### Resize
 
