@@ -64,8 +64,12 @@ Blurs the entire image.
 
 ### Composition
 
-Adds a composition to an image. Currently there's only one mode: `foreground`. It adds a picture onto the foreground of an uniformly coloured image.
-This can be useful for putting a small image on a transparent bigger image:
+Merges two images together to one. The to be added image (called secondary image) can either be another image uploaded to rokka or a fixed box with a defined size and color. You can also add additional transparency to both of them. This second image can be put into the background or the foreground of the initial image.
+
+One usecase is to extend the canvas size of an image without resizing it. For this you define a new box with `width` and `height` and the optional `secondary_opacity`, `secondary_color` and `anchor`. Then you use `mode: "foreground"` to put the initial image in front of that defined box. 
+
+The returned image is never smaller than the initial image. If eg. the dimensions of `width` and `height` are smaller than the initial image, it will return the full initial image. Therefore you can't count on having all the images returned from this operation having the same size, except if you put a `resize` operation before.
+
 
 ```language-javascript
 {
@@ -77,6 +81,7 @@ This can be useful for putting a small image on a transparent bigger image:
 {
     "name": "composition",
     "options": {
+        "mode": "foreground",
         "width": 1200,
         "height": 550,
         "anchor": "left_bottom"
@@ -99,6 +104,7 @@ Or to fit a 4:3 image into a 16:9 box with white borders:
 {
     "name": "composition",
     "options": {
+        "mode": "foreground",
         "width": 160,
         "height": 90,
         "secondary_color": "FFFFFF",
@@ -106,14 +112,31 @@ Or to fit a 4:3 image into a 16:9 box with white borders:
 } 
 ```
 
+Another use case is to add a watermark to your images. For this you have to upload your "watermark" to rokka as you would do with any other image and use the hash of that image in the option `secondary_image`. Then you use `mode: "background"` to put the initial image in the background of that secondary image.
+ You can also use the optional `width`, `height`, `secondary_opacity`, `resize_mode` and `anchor` options in this mode.
+
+```language-javascript
+{
+    "name": "composition",
+    "options": {
+        "mode": "background",
+        "width": 160,
+        "height": 90,
+        "secondary_image": "ddc45f",
+        "anchor": "right_bottom"
+    }
+} 
+```
+
 
 #### Properties
 
-- `mode`: Default and currently only option: `foreground`.
-- `width`: Width of the composed image.
-- `height`: Height of the composed image.
+- `mode`: Where to put the initial image, `foreground` and `background` are possible options.
+- `width`: Width of the secondary image. 
+- `height`: Height of the secondary image.
+- `resize_mode`: If `secondary_image` is used and `width` or `height` are set, the image is resized with this resize mode. See the [Resize operation](#resize) for possible values. Default: box
 - `anchor`: Anchor where to place the composition, based on mode. See the [Crop operation](#crop) for possible values. Default: center_center
-- `secondary_color`: Color to use as filler in hex without the # sign, example: "0F0F0F". Default: 000000
+- `secondary_color`: Color to use as filler in hex without the # sign, example: "0F0F0F". Not used in when `secondary_image` is set. Default: 000000
 - `secondary_opacity`: Opacity of filler. Default is 0, transparent. Goes up to 100 for opaque. Default: 100
 
 
