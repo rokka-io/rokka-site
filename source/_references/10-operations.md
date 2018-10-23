@@ -12,7 +12,7 @@ use: [references]
 
 ## List operations
 
-It is possible to list all operations. [Try it out](https://api.rokka.io/doc/#/stacks/get_operations).
+It is possible to list all operations. [Try it out](https://api.rokka.io/doc/#/stacks/listOperations).
 
 ```language-bash
 curl -X GET 'https://api.rokka.io/operations'
