@@ -201,7 +201,7 @@ To copy a source image to another organization (for example for copying images f
 you can do a `COPY` request to  `/sourceimages/{org}/{hash}` and send the `Destination` header with the destination organization.
 If you send a `Overwrite: F` header with it, it won't copy it, if it already exists at the destination.
 Your API user needs to have read permissions on the source organization and write permissions on the destination organization. 
-The [memberships endpoint](memberships.html) has methods to give an API user access to more organizations.
+The [memberships endpoint](users-and-memberships.html) has methods to give an API user access to more organizations.
 
 Returns the following http status codes:
 
