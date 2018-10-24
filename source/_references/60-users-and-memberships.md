@@ -71,6 +71,14 @@ Response:
 }
 ```
 
+```language-php
+
+$client = \Rokka\Client\Factory::getUserClient('awesomecompany', 'apiKey');
+
+$user_id = $client->getCurrentUserId();
+var_dump($user_id);
+```
+
 ## Create a new user object and automatically assign it to an organisation
 
 If you need a new user, either for example for different roles (a write user) or you need a new Api-Key, you can do that in one call. [Try it out](https://api.rokka.io/doc/#/admin/createMembershipAndUser)
@@ -95,6 +103,15 @@ It will return a new user object with a membership to the current organisation, 
     "write"
   ]
 }
+```
+
+```language-php
+use \Rokka\Client\Core\Membership;
+
+$client = \Rokka\Client\Factory::getUserClient('awesomecompany', 'apiKey');
+
+$membership = $client->createUserAndMembership([Membership::ROLE_READ]);
+var_dump($membership);
 ```
 
 
@@ -148,6 +165,13 @@ This returns something like
 }
 ```
 
+```language-php
+$client = \Rokka\Client\Factory::getUserClient('awesomecompany', 'apiKey');
+
+$memberships = $client->listMemberships();
+var_dump($memberships);
+```
+
 ## Assign a user to an organization
 
 If you have admin rights (given when creating a new organization automatically), you can add a user to the organization with this call.  [Try it out](https://api.rokka.io/doc/#/admin/createMembership)
@@ -172,9 +196,10 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizati
 ```language-php
 use \Rokka\Client\Core\Membership;
 
-$client = \Rokka\Client\Factory::getUserClient();
+$client = \Rokka\Client\Factory::getUserClient('awesomecompany', 'apiKey');
 
-$membership = $client->createMembership('awesomecompany', 'c8791715-a873-475e-96b2-5ffd488112e7', Membership::ROLE_READ);
+$membership = $client->createMembership('c8791715-a873-475e-96b2-5ffd488112e7', [Membership::ROLE_READ]);
+var_dump($membership);
 ```
 
 If the membership didn't exist yet, it will return a 201 code.
@@ -189,6 +214,12 @@ To remove a member from an organization, send a DELETE request with the user_id 
 
 ```language-bash
 curl -H -X DELETE 'https://api.rokka.io/organizations/awesomecompany/memberships/c8791715-a873-475e-96b2-5ffd488112e7'
+```
+
+```language-php
+$client = \Rokka\Client\Factory::getUserClient('awesomecompany', 'apiKey');
+
+client->deleteMembership('c8791715-a873-475e-96b2-5ffd488112e7');
 ```
 
 If the user is removed from the organization, it will return a 204 code.
