@@ -44,7 +44,7 @@ echo 'Updated subject area. New image hash: ' . $newHash . PHP_EOL;
 
 ```
 
-You can also directly provide metadata when you first upload an image. See [Source images](source-images.html) for details.
+You can also directly provide metadata when you first upload an image. See [Source images](source-images.html#supplying-metadata-while-creating-a-source-image) for details.
 
 ## Delete dynamic metadata from a source image
 
@@ -57,7 +57,7 @@ If you don't need the previous image to be kept on rokka, you can directly delet
 ```language-bash
 curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/subject_area?deletePrevious=true'
 ```
-## Supported formats
+## Supported metadata objects
 
 ### Subject area
 
@@ -79,7 +79,7 @@ retained at any size.
 
 ### Crop area
 
-Works similarly to the subject area format. But an image will always be cropped exactly at the defined area. 
+Works similarly to the subject area object. But an image will always be cropped exactly at the defined area. 
 This is especially useful with the Multi area format mentioned below. 
 
 If Subject area and Crop area are set, Subject area is used.
@@ -93,7 +93,7 @@ If Subject area and Crop area are set, Subject area is used.
 
 ### Multi areas
 
-With the  Mulit areas format, you can assign multiple Crop or Subject areas to one image and use them in a stack.
+With the  Mulit areas object, you can assign multiple Crop or Subject areas to one image and use them in a stack.
 This is especially useful, when you want to use a different section of a picture for different stacks. For example a 9:16 image should focus on different parts of an image than a 4:3 image. 
 
 Setting multi areas on an image:
@@ -114,5 +114,33 @@ $newHash = $client->setDynamicMetadata($dynamicMetadata, $hash, 'test', ['delete
 After you set Multi areas on a picture, you can reference to them via stack settings for the crop operation and the parameter `area`. Eg.
 `https://YOURORG.rokka.io/dynamic/crop-width-16-height-9-mode-ratio-area-landscape_16_9/0dcabb778d58d07ccd48b5ff291de05ba4374fb9.jpg` and if that image has one defined for that `area`, this Subject or Crop area is used. If not, if falls back to the standard settings (in this case would just crop the image with a 16:9 ratio).
 
+### Version
 
+The version object just takes one parameter `text`. You can give it any string you want and it will change your image hash based on that.
 
+One usecase is, when you'd like to manage different user metadata for the same image for different use cases. If you add a unique version dynamic
+metadata for each of them, you can organize them independently.
+
+Another use case is that if you want to be sure, that an image embedded somewhere won't be deleted by another client, which also 
+used this exact same image with the same hash. Then you would generate a different hash for both with a different version, and they won't delete each others images. 
+Of course they still can via [deleting by binary hash](source-images.html#deleting-source-images-with-binary-hash), if they really want to. But with
+a different hash for each client (or article for example), they don't have to know about each other and you don't need to keep track of where
+that image is also used. But keep in mind, that even if it's the same image, due to a different hash, an end user has to download it again
+for each hash.
+
+```language-bash
+curl -H 'Content-Type: application/json' -X PUT  https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/version \
+  -d '{
+  "text": "someVersionHere"
+}'
+```
+
+```language-php
+$newHash = $client->setDynamicMetadata(new Version("someVersionHere"), $hash, 'test', ['deletePrevious' => false]);
+```
+
+You can also search for that version string with eg.
+
+```language-bash
+curl https://api.rokka.io/sourceimages/testorganization/?dynamic:str:version:text=someVersionHere
+```

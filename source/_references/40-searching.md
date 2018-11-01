@@ -137,6 +137,7 @@ $sourceImageCollection = $client->searchSourceImages(['height' => 1200]);
 ```
 
 The following fields are available for each image for filtering:
+
  - `hash` (string): the image hash;
  - `binaryhash` (string): the image binary-hash;
  - `size` (integer): the image filesize, in bytes;

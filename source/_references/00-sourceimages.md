@@ -82,6 +82,9 @@ $client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey');
 
 $sourceImages = $client->uploadSourceImage(file_get_contents('image.png'), 'image.png', null, ['meta_user' => ['foo' => 'bar'], 'meta_dynamic' => ['subject_area' => ['x'=> 50, 'y' => 100]]]);
 
+// you can also use a metadata object for dynamic metadata instead eg.
+// $sourceImages = $client->uploadSourceImage(file_get_contents('image.png'), 'image.png', null, ['meta_user' => ['foo' => 'bar'], 'meta_dynamic' => [new SubjectArea(50, 100)]]);
+
 var_dump($sourceImages);
 ```
 
