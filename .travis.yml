@@ -4,7 +4,7 @@ php:
   - '7.0'
 
 env:
-  - NODE_JS_VERSION=8
+  - NODE_JS_VERSION=10
 
 install:
   - composer install
