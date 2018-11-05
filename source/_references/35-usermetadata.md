@@ -6,7 +6,7 @@ use: [references]
 ## Intro
 
 Image metadata is metadata added to a source image by the API user that does not change the image
-identifying hash.
+identifying hash. You can later also search for them, see the [filtering for particular images chapter](./searching-images.html#filtering-for-particular-images).
 
 ## Image metadata types
 
