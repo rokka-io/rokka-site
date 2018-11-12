@@ -903,7 +903,7 @@ html {
     top: 0;
     left: 0;
     z-index: 30;
-    background-image: url(https://rokka.rokka.io/dynamic/noop/68e13ab4522ccd1084e21b721c2b626f5c2634ef.jpg);
+    background-image: url(https://rokka.rokka.io/plain/68e13ab4522ccd1084e21b721c2b626f5c2634ef.jpg);
     background-size: cover;
     background-position: center;
 }
@@ -950,8 +950,8 @@ html {
     }
 
     .rokka-uoso-device__hardware {
-        background-image: url(https://rokka.rokka.io/dynamic/noop/72200a1d224accbb7f2eb0e2b833fa1f96cc1f43.png);
-        @include image-2x("https://rokka.rokka.io/dynamic/noop/7029694e29afbc82e643c11fb7b97c9be13d1149.png");
+        background-image: url(https://rokka.rokka.io/plain/72200a1d224accbb7f2eb0e2b833fa1f96cc1f43.png);
+        @include image-2x("https://rokka.rokka.io/plain/7029694e29afbc82e643c11fb7b97c9be13d1149.png");
         width: 1302 / $rokka-uoso-base-imac + em;;
         height:  603 / $rokka-uoso-base-imac + em;;
         left: -52 / $rokka-uoso-base-imac + em;
@@ -988,8 +988,8 @@ html {
         font-size: $rokka-uoso-base-iphone + px;
     }
     .rokka-uoso-device__hardware {
-        background-image: url(https://rokka.rokka.io/dynamic/noop/dcd9dcb739471efe9d61c688b4736ace20054f11.png);
-        @include image-2x("https://rokka.rokka.io/dynamic/noop/ddfb58bcad87fc6146a9572a36a7909209428b88.png");
+        background-image: url(https://rokka.rokka.io/plain/dcd9dcb739471efe9d61c688b4736ace20054f11.png);
+        @include image-2x("https://rokka.rokka.io/plain/ddfb58bcad87fc6146a9572a36a7909209428b88.png");
     }
     .rokka-uoso-device__screen {
         width: 104 / $rokka-uoso-base-iphone + em;
@@ -1026,8 +1026,8 @@ html {
     }
 
     .rokka-uoso-device__hardware {
-        background-image: url(https://rokka.rokka.io/dynamic/noop/ebe74b1469ce0aa140ac0e0e63ed17ec0d88fbaa.png);
-        @include image-2x("https://rokka.rokka.io/dynamic/noop/793dff14fceef24f672dc7689bda834d47ea86df.png");
+        background-image: url(https://rokka.rokka.io/plain/ebe74b1469ce0aa140ac0e0e63ed17ec0d88fbaa.png);
+        @include image-2x("https://rokka.rokka.io/plain/793dff14fceef24f672dc7689bda834d47ea86df.png");
     }
     .rokka-uoso-device__screen {
         width: 406 / $rokka-uoso-base-ipad + em;
@@ -1086,8 +1086,8 @@ html {
     }
 
     .rokka-uoso-device__hardware {
-        background-image: url(https://rokka.rokka.io/dynamic/noop/c3dd85cf7dbe18585d60ddd12a37cd0b091b4d4e.png);
-        @include image-2x("https://rokka.rokka.io/dynamic/noop/29deb8c70b5e3945b6509a0b2b2116f0536ef9a5.png");
+        background-image: url(https://rokka.rokka.io/plain/c3dd85cf7dbe18585d60ddd12a37cd0b091b4d4e.png);
+        @include image-2x("https://rokka.rokka.io/plain/29deb8c70b5e3945b6509a0b2b2116f0536ef9a5.png");
         width: 820 / $rokka-uoso-base-macbook + em;
         height: 458 / $rokka-uoso-base-macbook + em;
         top: -15 / $rokka-uoso-base-macbook + em;
@@ -1346,7 +1346,7 @@ html {
         }
     }
     .rokka-quote__avatar {
-        background-image: url(https://rokka.rokka.io/dynamic/noop/d4ed81c5f43055f6032e6e57761d80303b135d7f.jpg);
+        background-image: url(https://rokka.rokka.io/plain/d4ed81c5f43055f6032e6e57761d80303b135d7f.jpg);
     }
 }
 
