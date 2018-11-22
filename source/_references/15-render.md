@@ -55,3 +55,71 @@ https://{organization}.rokka.io/dynamic/resize-width-200-height-150--rotate-angl
 We recommend using stacks instead of the dynamic renderer for a better reusability of your rendered images.
 
 See [operations](../references/operations.html) for the definition of URL operations.
+
+## Rendering animated GIFs
+
+rokka can also render and output animated GIFs in different formats, like animated WebP, MP4 and WebM. 
+And can basically do all the stack operations you can use on a still image. It also automatically delivers in the usually 
+much smaller WebP format instead of GIF, if you set `autoformat` to true on the stack. Additionally it optimizes the original GIF to make
+it as small as possible in the [asynchronous optimization step](.()stacks.html#additional-image-optimizations).
+
+Currently, only animated GIFs are supported as source image. Animated WebP or even videos are not, those are only
+supported on the output side. We may add that, if there's demand.
+
+If you just want to return the original animated gif in an optimized format to save bandwidth, create a stack without
+operations and set `autoformat` to true.
+
+```language-javascript
+{
+    "stack_operations": [],
+    "stack_options": {
+        "autoformat": true
+    }
+}
+```
+
+The following stack definition would for example add a watermark to your gif and resize it to a width of 300
+```language-javascript
+{
+    "stack_operations": [
+        {
+            "name": "composition",
+            "options": {
+                "mode": "background",
+                "secondary_image": "0dee47",
+                "anchor": "right_bottom"
+            }
+        }
+        {
+            "name": "resize",
+            "options": {
+                "width": 300
+            }
+        }
+    ],
+    "stack_options": {
+        "autoformat": true
+    }
+}
+```
+
+
+Be aware, that the transformation - especially with stack operations on large gifs - will take quite some time on the first hit and you 
+may run into time-outs. If that's an issue for you, please report, and we will see, if we can increase some limitations
+for you. 
+
+### Output as video
+To save even more bandwidth, it's advised to display the animations as video, instead of as a GIF. They will be much smaller.
+You have to use the `<video>` on your HTML tag to do this. Eg.
+
+```language-html
+<video autoplay loop muted playsinline poster="https://yourorg.rokka.io/animation/options-autoformat-false/12a82d.jpg">
+    <source src="https://yourorg.rokka.io/animation/12a82d.webm" type="video/webm">
+    <source src="https://yourorg.rokka.io/animation/12a82d.mp4" type="video/mp4">
+</video>
+```
+
+
+
+
+
