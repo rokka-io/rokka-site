@@ -8,13 +8,13 @@ text:
     contact: Kontakt
     documentation: Dokumentation
     login: Login
-    cta: Jetzt kostenlos testen
+    cta: Jetzt kostenloses Konto eröffnen
     pricing: Preise
   hero:
     heading_1: digital image processing
     heading_2: done right.
     lead: Bilder verwalten, verändern und verteilen.<span class="nbsp"> </span>Einfach und unglaublich schnell.
-    cta: Jetzt kostenlos testen
+    cta: Jetzt kostenloses Konto eröffnen
     feature_1: Bilder hochladen und anzeigen
     feature_2: ad-hoc Bildverarbeitung
     feature_3: Blitzschnelle Verteilung
@@ -89,7 +89,7 @@ text:
   cta:
     title: Testen Sie rokka kostenlos und ohne Verpflichtungen.
     text: Machen Sie es wie die Migros oder FREITAG und starten Sie jetzt mit rokka.
-    cta_button: Kostenlose Testversion starten
+    cta_button: Kostenloses Konto eröffnen
 
   testimonial1:
     title: FREITAG
@@ -104,8 +104,8 @@ text:
     job_title: Leiter Online Entwicklung und Betrieb, Migros-Genossenschafts-Bund
 
   signup:
-    title: Starten Sie die 3-monatige Testversion.
-    text: Keine monatlichen Kosten und keine Kreditkarte nötig. Testen Sie rokka 90 Tage lang kostenlos.
+    title: Starten Sie die 3-monatige Testversion ohne Limiten.
+    text: Keine monatlichen Kosten und keine Kreditkarte nötig. Testen Sie rokka 90 Tage lang kostenlos ohne Limiten.
 
   contact:
     title: Herzlichen Dank für Ihr Interesse.
