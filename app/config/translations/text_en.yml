@@ -8,13 +8,13 @@ text:
     contact: Contact
     documentation: Documentation
     login: Login
-    cta: Start your free trial
+    cta: Start your free account
     pricing: Pricing
   hero:
     heading_1: digital image processing
     heading_2: done right.
     lead: Store, render and deliver images.<span class="nbsp"> </span>Easy and blazingly fast.
-    cta: Start your free trial
+    cta: Start your free account
     feature_1: Upload and render images
     feature_2: image processing on the fly
     feature_3: Lightning fast delivery
@@ -89,7 +89,7 @@ text:
   cta:
     title: Try out rokka for 90 days.
     text: Follow companies like Migros or FREITAG – start now with rokka.
-    cta_button: Start your free trial
+    cta_button: Start your free account
 
   testimonial1:
     title: FREITAG
@@ -104,7 +104,7 @@ text:
     job_title: Leiter Online Entwicklung und Betrieb, Migros-Genossenschafts-Bund
 
   signup:
-    title: Try out rokka for 90 days.
+    title: Try out rokka with no limits for 90 days.
     text: rokka is free to use for 90 days. No monthly costs, no credit card required.
 
   contact:
