@@ -61,7 +61,8 @@ See [operations](../references/operations.html) for the definition of URL operat
 rokka can also render and output animated GIFs in different formats, like animated WebP, MP4 and WebM. 
 And can basically do all the stack operations you can use on a still image. It also automatically delivers in the usually 
 much smaller WebP format instead of GIF, if you set `autoformat` to true on the stack. Additionally it optimizes the original GIF to make
-it as small as possible in the [asynchronous optimization step](.()stacks.html#additional-image-optimizations).
+it as small as possible in the [asynchronous optimization step](./stacks.html#additional-image-optimizations). The `gif.quality` stack
+options defines, how much it should be compressed in this phase. Default is 60, 100 means lossless compression, minimum is 1.
 
 Currently, only animated GIFs are supported as source image. Animated WebP or even videos are not, those are only
 supported on the output side. We may add that, if there's demand.
