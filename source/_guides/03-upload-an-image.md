@@ -92,4 +92,4 @@ Notice that the organization name is a __subdomain__ of rokka.io and that the st
 
 There is also the dynamic rendering that allows to specify operations in the URL without creating a stack. You can also use stack rendering with custom options (explained in the [rendering reference](../references/render.html)), if you need for instance different resizing options. 
 
-Rokka supports most common image formats for generating images, mainly JPEG, PNG, (animated) GIF, WebP and HEIC.
+Rokka supports most common image formats for generating images, mainly JPEG, PNG, (animated) GIF, WebP, JPEG 2000, HEIC and many more.
