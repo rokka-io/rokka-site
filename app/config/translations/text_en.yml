@@ -75,6 +75,7 @@ text:
       chf_per_gb: CHF per GB
       chf_per_gb_monthly: CHF/Month per GB
       contact: Contact us for an individual offer
+      owncdn:  Have your own CDN?
     free:
       title: Free plan
       text: You don't want to buy a pig in a poke? Up to 2GB of space and 5GB of traffic, rokka is free for everyone.

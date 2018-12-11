@@ -75,6 +75,7 @@ text:
       chf_per_gb_monthly: CHF/Monat pro GB
       chf_per_gb: CHF pro GB
       contact: Kontaktieren Sie uns für eine individuelle Offerte.
+      owncdn:  Haben Sie Ihr eigenes CDN?
     free:
       title: Kostenlose Version
       text: Sie möchten die Katze nicht im Sack kaufen? Das verstehen wir und deshalb können sie alle Funktionen von rokka bis zu 2GB Speicherplatz und 5GB Datenvolumen kostenlos nutzen.
