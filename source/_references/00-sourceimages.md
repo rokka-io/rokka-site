@@ -245,6 +245,8 @@ You can also use the [PHP CLI](https://github.com/rokka-io/rokka-client-php-cli)
 ./bin/rokka-cli image:copy-all $DESTINATION_ORG
 ```
 
+If you just want to have a fallback organisation, while rendering images (but not for API operations), see the [Use another organization as fallback for rendering images chapter](./render.html#use-another-organization-as-fallback-for-rendering-images).
+
 ## List source images
 
 See [searching for images](searching-images.html) for more details about how to get a list of your images.
