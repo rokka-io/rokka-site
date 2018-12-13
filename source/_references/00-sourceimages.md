@@ -225,6 +225,13 @@ curl -X COPY -H 'Destination: mycompany-stage' 'https://api.rokka.io/sourceimage
 $client->copySourceImage($hash, $destinationOrg)
 ```
 
+You can also copy up to 100 images at once for a little bit better performance.
+
+```language-bash
+curl -X POST -H 'Destination: mycompany-stage' 'https://api.rokka.io/sourceimages/mycompany/copy' -d '["abcdef","fedcba"]' 
+```
+
+
 With the [Go CLI](https://github.com/rokka-io/rokka-go) you can also copy all source images from one organization to another, without having to down- and upload them again. 
 Be aware that this may take a while, if you have many images. If that's the case and you need it to be faster, talk to us, we can increase some limits.
 
