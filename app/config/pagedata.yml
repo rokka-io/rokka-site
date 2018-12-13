@@ -44,6 +44,10 @@ rokka_framework_plugins:
     alt: The library is integrated into Symfony with the RokkaClientBundle. It provides you with configuration and provides the management and the image client as services.
     link: https://github.com/rokka-io/rokka-client-bundle
   -
+    title: Laravel
+    alt: A thin wrapper around the php library with some convenience functions to play nice with Laravel.
+    link: https://github.com/rokka-io/rokka-laravel-package
+  -
     title: Drupal
     alt: Drupal 7 and 8 library
     link: https://www.drupal.org/project/rokka
