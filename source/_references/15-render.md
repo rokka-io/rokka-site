@@ -120,7 +120,9 @@ You have to use the `<video>` on your HTML tag to do this. Eg.
 </video>
 ```
 
+## Rendering images from a remote URL
 
+See the [Loading images from a remote URL chapter](./stacks.html#loading-images-from-a-remote-url) for more details about that.
 
 
 
