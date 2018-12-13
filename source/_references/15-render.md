@@ -126,3 +126,24 @@ See the [Loading images from a remote URL chapter](./stacks.html#loading-images-
 
 
 
+## Use another organization as fallback for rendering images
+
+Sometimes you have different rokka organizations for test/stage and production environments, but need the same images 
+in both of them. You can easily [copy all images from one org to another](./source-images.html#copy-a-source-image-to-another-organization), 
+but this is a long and resource intensive process, when you have many images. 
+
+Another approach, if you only need all the images for rendering and not via API operations, you can set the `render_org_fallback` 
+organization option to another organisation. With this setting, whenever an image is not found for rendering in the original
+organization, rokka checks the fallback organisation and loads it from there, if available. 
+
+As said, they don't show up in the API, for example the image search. So if your CMS does interact with rokka to read from
+those images, you won't get them. But you can still upload or copy the same images later, if you need to.
+Also, you still have to copy the stacks from one organization to the other, there's no fallback for them.
+
+To actually be able to link two organizations with this, you need to be admin on both organizations.
+
+```language-bash
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/mycompany/options' -d '{"render_org_fallback": "$FALLBACK_ORG"}'
+```
+
+
