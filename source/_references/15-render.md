@@ -147,3 +147,7 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizati
 ```
 
 
+## Signed URLs for limited access
+
+rokka has the possibility to let you sign render URLs, so that those URLs are only valid for a certain time or can only be accessed
+from certain IP ranges. If you need that feature, get in contact with us.
