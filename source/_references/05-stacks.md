@@ -185,7 +185,6 @@ And then, whenever you add "/options-dpr-2/" to your rokka URL, it will use the 
 
 Expressions are applied from top to bottom and all matching will be applied, the last one applying for a certain option winning.
 
-Currently, you can only do expressions for stack options and override them. We may introduce more possibilities in the future (like matching on image metadata or overriding stack operation parameters), tell us, if you have a need for that.
 
 With the PHP client, the code would be the following
 
@@ -206,6 +205,48 @@ $stack = $client->saveStack($stack);
 
 print_r($stack);
 ```
+
+
+#### Expression for detecting the Save-Data HTTP Header 
+
+Some browsers (mainly chrome based ones currently) support the HTTP Client Hint Header "Save-Data". It's supposed to indicate that either the end user wants to save bandwidth because they are on a bandwidth capped connection or the connection is slow and using less bandwidth may help with faster delivery of a webpage. See [this article by Google for more details](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/save-data/).
+
+With rokka you can define a stack expression to apply different stack options when this header is set. For example define a lower image quality or force a DPR of 1, even on retina screens. The config would look like the following (be aware that you need to write `save_data` in the expression and not `save-data`)
+
+```language-json
+{
+     "operations": [
+         {
+             "name": "resize",
+             "options": {
+                 "width": 200,
+                 "height": 200
+             }
+         }
+     ],
+     "options": {
+         "autoformat": true
+     },
+     "expressions": [ {
+         "expression": "request.headers.save_data == 'on'",
+             "overrides": {
+                "options": {
+                   "jpg.quality": 50,
+                   "webp.quality": 50,
+                   "dpr": 1
+                }
+             }
+         }
+     ]
+}
+```
+
+The first time you define an expression for Save-Data, we update your CDN config, so it may take some minutes until it is actually available. 
+
+#### Supported expressions
+
+Currently, you can only do expressions for stack options and the request headers `Save-Data` and `Accept` and override stack options. We may introduce more possibilities in the future (like matching on image metadata or overriding stack operation parameters), tell us, if you have a need for that.
+
 
 ### Basestacks
 
