@@ -56,20 +56,20 @@ text:
     text: Mit der rokka image API verteilen Sie Ihre Bilder ganz einfach auf Ihre Web-Präsenzen. Noch einfacher wird die Bedienung von rokka durch unsere Libraries für die gängigen Sprachen.
 
   pricing:
-    title: 'Preise: Einfach und transparent.'
+    title: 'Preise: Fair und transparent.'
     paid:
-      title: Ein Angebot für alle.
-      text: Bei rokka bezahlen Sie nur das, was Sie effektiv brauchen. Die Kosten werden Ihnen quartalsweise in Rechnung gestellt und anhand der monatlichen Aufstellung haben Sie eine genaue Übersicht über Ihre Kosten.
+      title: Professionell einsteigen
+      text: Bei rokka bezahlen Sie nur das, was Sie effektiv brauchen. Wir unterscheiden dabei in Speicherplatz und Traffic. Die Kosten werden Ihnen quartalsweise in Rechnung gestellt.
       monthly: pro monat
       storage_text1: pro 1 GB Speicherplatz
       storage_text2: bis 400 GB
-      traffic_text1: pro 1 GB Datenvolumen
+      traffic_text1: pro 1 GB Traffic
       traffic_text2: bis 2000 GB pro Monat
     details:
-      title: Ab 400 GB Speicherplatz oder 2000 GB Datenvolumen zahlen Sie weniger.
-      text: Mehr erfahren
+      title: Sie wollen noch mehr? Je mehr Sie verbrauchen, desto weniger zahlen Sie. Profitieren Sie von unseren
+      text: günstigen Tarifen.
       storage: Speicherplatz
-      traffic: Datenvolumen
+      traffic: Traffic
       amount: Menge (GB)
       amount_monthly: Menge (GB pro Monat)
       chf_per_gb_monthly: CHF/Monat pro GB
@@ -77,19 +77,19 @@ text:
       contact: Kontaktieren Sie uns für eine individuelle Offerte.
       owncdn:  Haben Sie Ihr eigenes CDN?
     free:
-      title: Kostenlose Version
-      text: Sie möchten die Katze nicht im Sack kaufen? Das verstehen wir und deshalb können sie alle Funktionen von rokka bis zu 2GB Speicherplatz und 5GB Datenvolumen kostenlos nutzen.
+      title: Kostenlos testen
+      text: Sie möchten die Katze nicht im Sack kaufen? Das verstehen wir. Deshalb können Sie alle Funktionen von rokka bis zu 2GB Speicherplatz und 5GB Traffic kostenlos nutzen.
       free: GRATIS
       free_space: 2GB Speicherplatz
-      free_traffic: 5GB Datenvolumen pro Monat
+      free_traffic: 5GB Traffic pro Monat
     disclaimer: Alle Preise in CHF und ohne Mehrwertsteuer.
     tos:
       text: Nutzungsbedingungen
       link: https://rokka.io/assets/pdf/Rokka_Terms_of_use_DE.pdf
 
   cta:
-    title: Testen Sie rokka kostenlos und ohne Verpflichtungen.
-    text: Machen Sie es wie die Migros oder FREITAG und starten Sie jetzt mit rokka.
+    title: Aller Anfang ist kostenlos. Testen Sie rokka, ganz ohne Verpflichtungen.
+    text: Sie können alle Funktionen von rokka bis zu 2GB Speicherplatz und 5GB Traffic pro Monat kostenlos testen.
     cta_button: Kostenloses Konto eröffnen
 
   testimonial1:
