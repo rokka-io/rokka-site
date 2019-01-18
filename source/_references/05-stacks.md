@@ -241,7 +241,10 @@ With rokka you can define a stack expression to apply different stack options wh
 }
 ```
 
-The first time you define an expression for Save-Data, we update your CDN config, so it may take some minutes until it is actually available. 
+The first time you define an expression for Save-Data, we update your CDN config, so it may take some minutes until it is actually available.
+
+If you want to test it in your desktop browser, you can install a browser extension: [Chrome](https://developer.chrome.com/multidevice/data-compression), [Firefox](https://addons.mozilla.org/en-US/firefox/addon/save-data/). 
+ 
 
 #### Supported expressions
 
