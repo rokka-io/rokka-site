@@ -5,7 +5,7 @@ use: [references]
 
 ## Intro
 
-Source images are your original images you upload to Rokka. You should always select the highest quality you can, Rokka will take care of the rest. Usually it's best to use PNG files, as they are not compressed. Rokka can handle PNG, JPEG, (animated) GIF, HEIC, WebP, TIFF, PDF and SVG files (more possible, just inquire). It also can deliver videos, see the [video chapter](videos.html) for more.
+Source images are your original images you upload to Rokka. You should always select the highest quality you can, Rokka will take care of the rest. Usually it's best to use PNG files, as they are not compressed. Rokka can handle PNG, JPEG, (animated) GIF, HEIC, WebP, TIFF, PSD, EPS, PDF and SVG files (more possible, just inquire). It also can deliver videos, see the [video chapter](videos.html) for more.
  
  To ensure the best possible results, we recommend to upload the pictures in sRGB (with or without alpha channel) and not for example in CMYK.
 
@@ -94,7 +94,7 @@ In case that source image already exists and there's metadata fields which are n
 
 ### Optimizing source images before saving
 
-Sometimes source images contain too much data not really needed for just rendering images. Setting the `optimize_source` parameter to `true` can save you some storage space for such cases. Currently rokka  (losslessly) recompresses TIFF images, when this is set, but leaves the other formats alone (may change in the future). This saves you some storage space if you for example had layers from Photoshop in your TIFF. After setting this parameter, they'll be gone in the sourceimage and not retrievable anymore.
+Sometimes source images contain too much data not really needed for just rendering images. Setting the `optimize_source` parameter to `true` can save you some storage space for such cases. Currently rokka  (losslessly) recompresses TIFF and PSD (to PNG) images, when this is set, but leaves the other formats alone (may change in the future). This saves you some storage space if you for example had layers from Photoshop. After setting this parameter, they'll be gone in the sourceimage and not retrievable anymore.
 
 The binary hash generated for that source image is the one of the original image (before the recompression), and not the one actually stored. So you still can search for that image, if you have to original binary hash generated from the image later.
 
