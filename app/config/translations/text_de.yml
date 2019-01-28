@@ -59,17 +59,17 @@ text:
     title: 'Preise: Fair und transparent.'
     paid:
       title: Professionell einsteigen
-      text: Bei rokka bezahlen Sie nur das, was Sie effektiv brauchen. Wir unterscheiden dabei in Speicherplatz und Traffic. Die Kosten werden Ihnen quartalsweise in Rechnung gestellt.
+      text: Bei rokka bezahlen Sie nur das, was Sie effektiv brauchen. Wir unterscheiden dabei in Speicherplatz und übermittelte Daten. Die Kosten werden Ihnen quartalsweise in Rechnung gestellt.
       monthly: pro monat
       storage_text1: pro 1 GB Speicherplatz
       storage_text2: bis 400 GB
-      traffic_text1: pro 1 GB Traffic
+      traffic_text1: pro 1 GB übermittelte Daten
       traffic_text2: bis 2000 GB pro Monat
     details:
       title: Sie wollen noch mehr? Je mehr Sie verbrauchen, desto weniger zahlen Sie. Profitieren Sie von unseren
       text: günstigen Tarifen.
       storage: Speicherplatz
-      traffic: Traffic
+      traffic: übermittelte Daten
       amount: Menge (GB)
       amount_monthly: Menge (GB pro Monat)
       chf_per_gb_monthly: CHF/Monat pro GB
@@ -78,10 +78,10 @@ text:
       owncdn:  Haben Sie Ihr eigenes CDN?
     free:
       title: Kostenlos testen
-      text: Sie möchten die Katze nicht im Sack kaufen? Das verstehen wir. Deshalb können Sie alle Funktionen von rokka bis zu 2GB Speicherplatz und 5GB Traffic kostenlos nutzen.
+      text: Sie möchten die Katze nicht im Sack kaufen? Das verstehen wir. Deshalb können Sie alle Funktionen von rokka bis zu 2GB Speicherplatz und 5GB übermittelte Daten kostenlos nutzen.
       free: GRATIS
       free_space: 2GB Speicherplatz
-      free_traffic: 5GB Traffic pro Monat
+      free_traffic: 5GB übermittelte Daten pro Monat
     disclaimer: Alle Preise in CHF und ohne Mehrwertsteuer.
     tos:
       text: Nutzungsbedingungen
@@ -89,7 +89,7 @@ text:
 
   cta:
     title: Aller Anfang ist kostenlos. Testen Sie rokka, ganz ohne Verpflichtungen.
-    text: Sie können alle Funktionen von rokka bis zu 2GB Speicherplatz und 5GB Traffic pro Monat kostenlos testen.
+    text: Sie können alle Funktionen von rokka bis zu 2GB Speicherplatz und 5GB übermittelte Daten pro Monat kostenlos testen.
     cta_button: Kostenloses Konto eröffnen
 
   testimonial1:
