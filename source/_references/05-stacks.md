@@ -28,12 +28,14 @@ The _options_ parameter is optional. You can use the following options in there.
 | webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. Default is 65 for dpr >=2, see the [DPR chapter](#device-pixel-ratio-dpr) below. |
 | heif.quality | 40 | 1 | 100 | Heif/Heic quality setting, lower number means smaller file size and worse lossy quality.  |
 | gif.quality | 60 | 1 | 100 | Gif quality setting in the [optimization phase](#additional-image-optimizations). Choose a setting of 100 for lossless quality. Lower values also means lower file size. See the [rendering animated GIFs chapter](./render.html#rendering-animated-gifs).|
+| pngquant.quality | 98 | 10 | 100 | We lossy compress (PNG and lossless WebP) images by default to make them much smaller (and hardly noticable). You can try some quality setting with this option. If set to 100, we don't apply any lossy compression.|
 | png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images. |
 | source_file | false | - | - | For outputting just the original unprocessed source file, set this to true and configure an empty operations collection. Can not be used together with other stack options. See the [source_file chapter](#configuring-a-stack-to-just-deliver-the-original-source-file) below.|
 | remote_fullurl_allow | false | - | - | To load images directly from a remote URL instead of uploading them to rokka via the API first. See the [remote_basepath chapter](#loading-images-from-a-remote-url) below.|
 | remote_fullurl_whitelist | null | - | - | To only allow certain domains to be used with the remote image feature. See the [remote_basepath chapter](#loading-images-from-a-remote-url) below.|
 | remote_basepath | - | - | - | To load images directly from a remote URL with a basepath instead of uploading them to rokka via the API first. See the [remote_basepath chapter](#loading-images-from-a-remote-url) below.|
 | autoformat | false | - | - | If set, rokka will return WebP instead of PNG/JPEG, if the client supports it. See the [autoformat chapter](#autoformat) below.|
+| autoformat.exclude | null | - | - | You can exclude some autoformat operations. See the [autoformat chapter](#autoformat) below.|
 | dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See the [DPR chapter](#device-pixel-ratio-dpr) below. |
 | content_disposition | inline | - | - | Sets a "Content-Disposition: attachment", if value is set to "attachment". |
 | optim.disable_all |false| - | - | Disables all additional enhanced image size optimizations. See the [optimizations chapter](#additional-image-optimizations) below.|
@@ -275,7 +277,19 @@ This currently consists of two stages.
 In the first stage, rokka checks the `Accept` header of the request and if it contains `image/webp`, rokka delivers in the usually smaller WebP format instead of PNG or JPEG. 
 If you didn't set `webp.quality` explicitly and requested a PNG, it will return a lossless image and a lossy compressed image, if a JPG was requested. If you set `webp.quality` to any value on that stack, it will always honor that, no matter what was requested.
 
-In the second stage, during the [asynchronous optimization stage](#additional-image-optimizations), rokka analyses the image and changes the format, if another would be more appropriate. Currently, this only happens from a lossy image (eg. JPEG or lossy WebP) to a lossless image (PNG or lossless WebP), but not the other way round. That image may be a little bit larger (but sometimes also smaller), but with much better quality and no compression artifacts. This mainly applies to computer generated drawings with few colors and large uniform areas, where PNG is a better suited format. As this only happens during the asynchronous optimization, the first hit of such a request may return the lossy image, but subsequent requests later return the lossless format.
+In the second stage, during the [asynchronous optimization stage](#additional-image-optimizations), rokka analyses the image and changes the format, if another would be more appropriate. It can return a lossy image, even if a lossless was requested and vice versa. That image may be a little bit larger (but often also smaller), but with much better quality and no compression artifacts. This for example applies to computer generated drawings with few colors and large uniform areas, where PNG is a better suited format. Or if you ask for a photo as PNG, then JPG or lossless WebP may be a more suited format (and saves you lots of bytes). As this only happens during the asynchronous optimization, the first hit of such a request may return the lossy image, but subsequent requests later return the lossless format.
+
+### Exclude some autoformat conversions
+
+You can prevent some of the conversions a little with the `autoformat.exclude` stack option. It takes a comma-seperated list of the conversions you don't want to have applied.
+
+| Attribute | Description |
+| --------- | ----------- |
+| webp | The image will never be converted to WebP, even if the browser would understand it. |
+| lossy | If you requested a lossless image (either as PNG or with webp.quality set to 100), rokka will not convert it to a lossy image, even if that would be much smaller.|
+| lossless | If you requested a lossy image, rokka will not convert it to a lossless image, even if that would be much smaller and better quality. |
+| lossless_if_bigger | If you requested a lossy image, rokka will not convert it to a lossless image, when the resulting lossless image is bigger than the lossy one. |
+
 
 If you download those rendered images with a non-web-browser client (eg. import them somewhere with a library or use it in a native app), make sure it can handle the different formats. Don't expect it to be in the format you have in the render URL. rokka sends the correct `Content-Type` header, you can use that to determine the actual format. Web-browsers only look at that, so they do know how to display these. 
 The `Accept` header in the request does only matter for stating that you want WebP or not, but does not play a role in determining the return format of the second stage. Meaning, even if your accept header is just `Accept: image/jpeg`, you may get a PNG back. The whole `Accept` header used by all the clients out there is quite a mess, therefore we decided not to support that. If you really need the exact format on a stack you have set with `autoformat: true`, add `/options-autoformat-false/` to the render URL right after the stack name and before the hash.
@@ -441,6 +455,7 @@ rokka does some advanced image size optimizations on your images by default. As 
 
 You can prevent that delay with the stack option `optim.immediate`. rokka then does it right on the first render and not only a few seconds later asynchronously. This will make your first render slower, but won't make a difference for later requests. This can also be very useful, if you want to see the final image during developing right away (eg. for deciding about the appropriate image quality setting). We recommend not to use this feature in production environments, since it can degrade your end user experience.
 
+
 For PNG and lossless WebP we use [pngquant](https://pngquant.org/) to make the image size significantly smaller as long as the quality doesn't degrade. We additionally compress PNG with [zopflipng](https://github.com/google/zopfli) to make them even smaller.
 
 For JPEG and lossy WebP images the approach choosen depends on your stack settings.
@@ -453,9 +468,13 @@ If you you used `jpg.quality` or `webp.quality` in your stack settings, rokka st
 
 If you set `optim.quality` and also `jpg.quality`, rokka uses the `jpg.quality` setting for the initial rendering and `optim.quality` for the later adaptive optimization. 
 
+rokka additionally checks, if your image better would be served as lossless or lossy, depending on the image and the resulting size.
+
 We never do any of those optimizations to your source images, they stay as they were uploaded.
 
-If you want to disable those optimizations, set `optim.disable_all` to `true` as a stack options. More refined options are in the backlog, tell us, if you need one.
+You can disable some of the optimizations with the `autoformat.exclude` stack option, see the [autoformat chapter](#autoformat) for details.
+
+If you want to disable all those optimizations, set `optim.disable_all` to `true` as a stack options, but we'd advise to not do that. 
 
 ## Retrieve a stack
 
