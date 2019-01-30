@@ -277,7 +277,12 @@ This currently consists of two stages.
 In the first stage, rokka checks the `Accept` header of the request and if it contains `image/webp`, rokka delivers in the usually smaller WebP format instead of PNG or JPEG. 
 If you didn't set `webp.quality` explicitly and requested a PNG, it will return a lossless image and a lossy compressed image, if a JPG was requested. If you set `webp.quality` to any value on that stack, it will always honor that, no matter what was requested.
 
+We also do some conversion to SVG (or SVG to PNG), if SVG is involved and choose the best format (SVG or Bitmap, depending on the sourceimage and 
+stack operations), no matter which format was requested. See below for options how to turn some of those chonversions off.
+
 In the second stage, during the [asynchronous optimization stage](#additional-image-optimizations), rokka analyses the image and changes the format, if another would be more appropriate. It can return a lossy image, even if a lossless was requested and vice versa. That image may be a little bit larger (but often also smaller), but with much better quality and no compression artifacts. This for example applies to computer generated drawings with few colors and large uniform areas, where PNG is a better suited format. Or if you ask for a photo as PNG, then JPG or lossless WebP may be a more suited format (and saves you lots of bytes). As this only happens during the asynchronous optimization, the first hit of such a request may return the lossy image, but subsequent requests later return the lossless format.
+
+We also do optimize SVG images in this stage to make them smaller.
 
 ### Exclude some autoformat conversions
 
@@ -286,9 +291,11 @@ You can prevent some of the conversions a little with the `autoformat.exclude` s
 | Attribute | Description |
 | --------- | ----------- |
 | webp | The image will never be converted to WebP, even if the browser would understand it. |
-| lossy | If you requested a lossless image (either as PNG or with webp.quality set to 100), rokka will not convert it to a lossy image, even if that would be much smaller.|
-| lossless | If you requested a lossy image, rokka will not convert it to a lossless image, even if that would be much smaller and better quality. |
-| lossless_if_bigger | If you requested a lossy image, rokka will not convert it to a lossless image, when the resulting lossless image is bigger than the lossy one. |
+| lossless_to_lossy | If you requested a lossless image (either as PNG or with webp.quality set to 100), rokka will not convert it to a lossy image, even if that would be much smaller.|
+| lossy_to_lossless | If you requested a lossy image, rokka will not convert it to a lossless image, even if that would be much smaller and better quality. |
+| lossy_to_lossless_if_bigger | If you requested a lossy image, rokka will not convert it to a lossless image, when the resulting lossless image is bigger than the lossy one. |
+| svg | If the sourceimage is a SVG file and we can do all stack operations in SVG, autoformat outputs it as SVG, even if you requested a different format. This option prevents that. |
+| svg_to_png | If you requested a SVG rendering, but the result is just an image wrapped in SVG, autoformat outputs it as PNG (or WebP). This option prevents that, the otput will always be an SVG. | 
 
 
 If you download those rendered images with a non-web-browser client (eg. import them somewhere with a library or use it in a native app), make sure it can handle the different formats. Don't expect it to be in the format you have in the render URL. rokka sends the correct `Content-Type` header, you can use that to determine the actual format. Web-browsers only look at that, so they do know how to display these. 
