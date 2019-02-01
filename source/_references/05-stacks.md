@@ -280,7 +280,7 @@ If you didn't set `webp.quality` explicitly and requested a PNG, it will return 
 We also do some conversion to SVG (or SVG to PNG), if SVG is involved and choose the best format (SVG or Bitmap, depending on the sourceimage and 
 stack operations), no matter which format was requested. See below for options how to turn some of those chonversions off.
 
-In the second stage, during the [asynchronous optimization stage](#additional-image-optimizations), rokka analyses the image and changes the format, if another would be more appropriate. It can return a lossy image, even if a lossless was requested and vice versa. That image may be a little bit larger (but often also smaller), but with much better quality and no compression artifacts. This for example applies to computer generated drawings with few colors and large uniform areas, where PNG is a better suited format. Or if you ask for a photo as PNG, then JPG or lossless WebP may be a more suited format (and saves you lots of bytes). As this only happens during the asynchronous optimization, the first hit of such a request may return the lossy image, but subsequent requests later return the lossless format.
+In the second stage, during the [asynchronous 2nd stage optimization stage](#additional-image-optimizations), rokka analyses the image and changes the format, if another would be more appropriate. It can return a lossy image, even if a lossless was requested and vice versa. That image may be a little bit larger (but often also smaller), but with much better quality and no compression artifacts. This for example applies to computer generated drawings with few colors and large uniform areas, where PNG is a better suited format. Or if you ask for a photo as PNG, then JPG or lossless WebP may be a more suited format (and saves you lots of bytes). As this only happens during the asynchronous optimization, the first hit of such a request may return the lossy image, but subsequent requests later return the lossless format.
 
 We also do optimize SVG images in this stage to make them smaller.
 
@@ -462,8 +462,9 @@ rokka does some advanced image size optimizations on your images by default. As 
 
 You can prevent that delay with the stack option `optim.immediate`. rokka then does it right on the first render and not only a few seconds later asynchronously. This will make your first render slower, but won't make a difference for later requests. This can also be very useful, if you want to see the final image during developing right away (eg. for deciding about the appropriate image quality setting). We recommend not to use this feature in production environments, since it can degrade your end user experience.
 
-
 For PNG and lossless WebP we use [pngquant](https://pngquant.org/) to make the image size significantly smaller as long as the quality doesn't degrade. We additionally compress PNG with [zopflipng](https://github.com/google/zopfli) to make them even smaller.
+
+SVG images are also optimized to make them as small as possible in this stage.
 
 For JPEG and lossy WebP images the approach choosen depends on your stack settings.
 
