@@ -47,7 +47,9 @@ $sourceImages = $client->uploadSourceImage(file_get_contents('image.png'), 'imag
 var_dump($sourceImages);
 ```
 
-
+The current limit for uploading images are 150 MB in file size. For source images not in the JPEG or WebP format there's
+ an additional limit of 225 Megapixels (equals an image of 15'000 x 15'000 size) .
+ 
 It will return the same meta data as you get from retrieving a single image, with the only difference that it is wrapped in an array for future expansions of multi file uploads.
 
 ### Create a source image with a remote URL
