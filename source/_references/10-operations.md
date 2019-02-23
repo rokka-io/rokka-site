@@ -37,6 +37,7 @@ Does operations with the alpha (transparency) channel of an image.
     - `mask`: Returns the alpha channel as grayscale image, removing all other information, including the actual alpha channel.
     - `extract`: Returns just the alpha channel of an image.
     - `remove`: Removes the alpha channel from an image. 
+    - `apply`: Applies an opacity to an image, needs also the property `opacity`
 
 ### Autorotate
 
@@ -138,7 +139,7 @@ Another use case is to add a watermark to your images. For this you have to uplo
 - `anchor`: Anchor where to place the composition, based on mode. See the [Crop operation](#crop) for possible values. Default: center_center
 - `secondary_color`: Color to use as filler in hex without the # sign, example: "0F0F0F". Not used in when `secondary_image` is set. Default: 000000
 - `secondary_opacity`: Opacity of filler. Default is 0, transparent. Goes up to 100 for opaque. Default: 100
-
+- `resize_to_primary`: A `secondary_image` is resized to the primary `width` and `height`
 
 ### Crop
 
