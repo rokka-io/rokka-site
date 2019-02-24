@@ -29,6 +29,7 @@ It's the same format as mentioned below for dynamically rendering an image. You 
 'https://{organization}.rokka.io/{stack-name}/resize-width-200--options-dpr-2-autoformat-true/{hash}.{format}'
 ```
 
+See also the [stack variables chapter](/documentation/references/stacks.html#stack-variables) for another way to overwrite stack operation options.
 
 ## Dynamically render an image
 
