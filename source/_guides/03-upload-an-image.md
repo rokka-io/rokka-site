@@ -80,6 +80,9 @@ You can also create stacks which deliver just the original image, even unprocess
 
 See [operations](/documentation/references/operations.html) for the definition of all available operations and their arguments.
 
+Also a highly recommended reading is the "[Best practices for stack configurations
+](/best-practices-for-stack-configurations.html)" chapter.
+
 ## Rendering an Image
 
 Now let's render our stack __thumbnail__ with the previously uploaded __image.jpg__. Open the following URL in the browser to see the rendered image:

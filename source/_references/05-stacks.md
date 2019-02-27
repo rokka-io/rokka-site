@@ -126,6 +126,12 @@ In the PHP client add the key `overwrite` with value `true` to the second parame
 $stack = $client->saveStack($stack, ['overwrite' => true]);
 ```
 
+### Best practices for configuring a stack
+
+There's a whole page for that. We highly recomment reading this "[Best practices for stack configurations
+](/best-practices-for-stack-configurations.html)" chapter.
+
+
 ### Configuring a stack with no operations
 
 If you want to deliver an image without any image altering stack operations, you can configure a stack without any operations, just an empty collection with `"operations": []`. This stack configuration still loads the image into our processing engine and converts them to the requested image format (even if input and output image are the same). It will also apply optimizations to make the image as small as possible for delivering to endusers.
@@ -507,7 +513,7 @@ Also be aware, that if you uploaded that same image already via the API and then
 
 High resolution screens (Retina in some marketing terms) are very common today and modern browsers support this with the `<img srcset>` and `<picture>` element. The `dpr` stack option helps you implementing that easily without the need for different stacks. If `dpr` is set for example to 2.0, then rokka will return an image with twice the resolution than asked for.
 
-An example, let's assume you have a stack named `small which resizes your pictures to 200x200:
+An example, let's assume you have a stack named `small` which resizes your pictures to 200x200:
 
 ```language-json
 {
@@ -523,7 +529,7 @@ An example, let's assume you have a stack named `small which resizes your pictur
 }
 ```
 
-A call to https://{yourorg}.rokka.io/small/{hash}.jpg will return a 200px image. But if you call it with https://{yourorg}.rokka.io/small/options-dpr-2/{hash}.jpg, you get a 400px image, looking much sharper on a retina screen. If you want to let the browser decide, which picture it should request, you can for example use the `srcset` attribute in an image tag.
+A call to `https://{yourorg}.rokka.io/small/{hash}.jpg` will return a 200px image. But if you call it with https://{yourorg}.rokka.io/small/options-dpr-2/{hash}.jpg, you get a 400px image, looking much sharper on a retina screen. If you want to let the browser decide, which picture it should request, you can for example use the `srcset` attribute in an image tag.
 
 ```language-html
 <img src="https://{yourorg}.rokka.io/small/{hash}.jpg"
@@ -532,7 +538,7 @@ A call to https://{yourorg}.rokka.io/small/{hash}.jpg will return a 200px image.
 ```
 
 By default, we also set a lower jpg and webp quality for those retina images, since it keeps the files small and the visual difference is very small.
-If you want to change that behaviour, set a `jpg.quality` and `webp.quality` stack option explicitly on your stack and it will always take that. If you want to have different quality settings for non-retina and retina and use other values than the defaults, see [stack expressions](#expressions) for more details into that.
+If you want to change that behaviour, set a `jpg.quality` and `webp.quality` stack option explicitly on your stack and it will always take that. If you want to have different quality settings for non-retina and retina and use other values than the defaults, see [stack expressions](#stack-expressions-for-stack-options-and-stack-variables) for more details into that.
 
 There's also a resize stack operation option called `upscale_dpr`, which applies in some cases. Assuming your picture in the above example is only 300px wide. Using a dpr setting of 2 will upscale that to 400px by default (otherwise the browser would display it smaller, as a 150 css pixel image). Settting `upscale_dpr` to `false` will not do that and return the image in its original dimensions (which in this example would be 300px).
 
