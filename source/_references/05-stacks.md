@@ -163,6 +163,7 @@ for more information. If there's a property missing you'd like to have, we can a
 | image.width / image.height | Returns the width or height of the current source image. |
 | image.format | Returns the format of the current source image, like 'jpeg' or 'gif'. |
 | image.hasSubjectArea | Returns true, if the source image has a [dynamic subject area](/documentation/references/dynamic-metadata.html#subject-area). |
+| image.isAnimated | Returns true, if the source image is an animated image, like an animated gif. |
 | image.hash | Returns the hash of the current source image.|
 | request.headers.save_data | Returns "on" if the [http header save-data is set](#expression-for-detecting-the-save-data-http-header). |
 | options.* | Returns any stack option, eg `options.dpr` returns the currently set "[Device Pixel Ratio](documentation/references/stacks.html#device-pixel-ratio-dpr)". |
