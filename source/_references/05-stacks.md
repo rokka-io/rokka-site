@@ -151,7 +151,106 @@ Be aware that if you configure such a stack, everyone can download the original 
 
 ### Expressions
 
-rokka can change some parameters based on other parameters dynamically with stack expressions. A typical usecase is that usually images for high resolution screens don't need a very high jpeg quality setting. With a lower setting, they still look much better than delivering an image in non-high-resolution dimensions, but also aren't that much bigger in file size.
+Expressions can be used to dynamically define [stack operations options](#expressions-in-stack-operation-options), [stack options](#stack-expressions-for-stack-options-and-stack-variables) or [stack variables](#stack-variables). They are quite powerful and are based on [Symfony Expressions](https://symfony.com/doc/current/components/expression_language/syntax.html#component-expression-arrays).
+
+The simplest example of an expression is to just return a [stack variable](#stack-variables) with `$variable`, but you can also do more advanced stuff like `$w < 500 ? $w : 500` and much more.
+
+Besides stack variables you can also use some other properties with  information about the used source image, the current request or any defined stack option. See the following table
+for more information. If there's a property missing you'd like to have, we can almost certainly add them.
+
+| Property | Description |
+| -------- | ----------- |
+| image.width / image.height | Returns the width or height of the current source image. |
+| image.format | Returns the format of the current source image, like 'jpeg' or 'gif'. |
+| image.hasSubjectArea | Returns true, if the source image has a [dynamic subject area](/documentation/references/dynamic-metadata.html#subject-area). |
+| image.isAnimated | Returns true, if the source image is an animated image, like an animated gif. |
+| image.hash | Returns the hash of the current source image.|
+| request.headers.save_data | Returns "on" if the [http header save-data is set](#expression-for-detecting-the-save-data-http-header). |
+| options.* | Returns any stack option, eg `options.dpr` returns the currently set "[Device Pixel Ratio](documentation/references/stacks.html#device-pixel-ratio-dpr)". |
+
+ 
+### Stack variables
+
+Variables are defined on the top level of a stack configuration. They have two main functions. You can avoid repeating
+definitions in your stack configuration, but more importantly, you can overwrite them via the render URL and then
+set some options accordingly (as an additional benefits, it makes your URL shorter than with directly [overwrite stack operation options](/documentation/references/render.html#overwriting-stack-operation-options))
+ 
+To use them in a render URLs as `variables` or `v` to our URL after the stack and followed by '-' for separating the variables and values, eg.:
+
+```language-bash
+https://{organization}.rokka.io/{stack-name}/v-w-200/{hash}.{format}
+ 
+```
+
+Stack variables can be used in stack operation options or in stack expressions, but not stack options yet. If there's a need for that, we maybe can implement it, but see the "[Expressions for Stack Options](#expressions-for-stack-options)" below for another way to do that.
+
+You can also use expressions to define stack variables, but if you use another stack variable, that has to be defined first.
+
+The following examples sets two variables, `w` with a value of 500 and `h` with half of that. Now, you can use them in other places of your stack configuration and
+overwrite both via the render URL. If you don't set it via the URL, the defined values are taken.   
+
+```language-json
+{
+  "operations": [...]
+  "variables": {
+    "w": 500
+    "h": "$w / 2"
+  }
+}
+
+```
+
+### Expressions in stack operation options
+
+Stack operation options can be configured via stack variables and expressions. This can be useful if 
+you need to use the same value at different options and want to overwrite that via the render URL. Or need some
+dynamic options.
+
+To make this work, you need to define those options in an `expression` property of an operation. You can use any 
+[expression](#expressions) supported by rokka, which also can be just a stack variable.
+
+One example is a resize & crop stack:
+
+
+```language-json
+{
+  "operations": [
+    {
+      "name": "resize",
+      "options": {
+        "mode": "fill"
+      },
+      "expressions": {
+        "width": "$w",
+        "height": "$h"
+      }
+    },
+    {
+      "name": "crop",
+      "expressions": {
+        "width": "$w",
+        "height": "$h"
+      }
+    }
+  ],
+  "variables": {
+    "w": 500
+    "h": "$w / 2"
+  }
+}
+```
+
+If you call this stack, it will return an image resized and cropped to 500 x 250px. But if you overwrite that variable in a render URL like: `https://org.rokka.io/resizecrop/variables-w-800/abcdef.jpg`,
+it would return an image sized 800 x 400px.
+
+Options set via `expressions` will always take precedence over options set via the `options` property.
+
+### Stack expressions for stack options and stack variables
+
+rokka can change stack options based on other parameters dynamically with expressions. A typical usecase is that usually images for high resolution screens don't need a very high jpeg quality setting. With a lower setting, they still look much better than delivering an image in non-high-resolution dimensions, but also aren't that much bigger in file size.
+
+Currently you can't use stack variables or expressions to directly define stack options (like with stack operations options). But you can use them in a stack expression for evaluating, if 
+stack options should be defined with other values. 
 
 To apply that on a stack, provide an expression configuration during creation of the stack in the following format:
 
@@ -167,15 +266,14 @@ To apply that on a stack, provide an expression configuration during creation of
          }
      ],
      "options": {
-         "jpg.quality": 76
+         "optim.quality": 4
          "autoformat": true
      },
      "expressions": [ {
          "expression": "options.dpr >= 2",
              "overrides": {
                 "options": {
-                   "jpg.quality": 60,
-                   "webp.quality": 60
+                   "optim.quality": 2
                 }
              }
          }
@@ -183,10 +281,12 @@ To apply that on a stack, provide an expression configuration during creation of
 }
 ```
 
-And then, whenever you add "/options-dpr-2/" to your rokka URL, it will use the lower jpg.quality. Eg. `https://org.rokka.io/stackname/somehash.jpg` will return a 200x200 image with a jpg.quality of 76, and `https://org.rokka.io/stackname/options-dpr-2/somehash.jpg` will return a 400x400 image with a jpg.quality of 60.
 
-Expressions are applied from top to bottom and all matching will be applied, the last one applying for a certain option winning.
+And then, whenever you add "/options-dpr-2/" to your rokka URL, it will use the lower optim.quality. Eg. `https://org.rokka.io/stackname/somehash.jpg` will return a 200x200 image with a optim.quality of 4, and `https://org.rokka.io/stackname/options-dpr-2/somehash.jpg` will return a 400x400 image with a optim.quality of 2.
 
+You can also change stack variables this way, use the property `variables` instead of `options` within `overrides`.
+
+Expressions are applied from top to bottom and all the matching ones will be applied, the last one applying for a certain option winning.
 
 With the PHP client, the code would be the following
 
@@ -197,10 +297,10 @@ use Rokka\Client\Core\StackExpression;
 
 $stack = new Stack(null, 'stackname');
 $stack->addStackOperation(new StackOperation('resize', ['width' => 200, 'height' => 200]));
-$stack->setStackOptions(['jpg.quality' => 76, 'autoformat' => true);
+$stack->setStackOptions(['optim.quality' => 4, 'autoformat' => true);
 
 $e = new StackExpression("options.dpr > 2");
-$e->setOptionsOverrides(['jpg.quality' => 60, 'webp.quality' => 60]);
+$e->setOptionsOverrides(['optim.quality' => 2]);
 $stack->addStackExpression($e);
 
 $stack = $client->saveStack($stack);
@@ -233,8 +333,7 @@ With rokka you can define a stack expression to apply different stack options wh
          "expression": "request.headers.save_data == 'on'",
              "overrides": {
                 "options": {
-                   "jpg.quality": 50,
-                   "webp.quality": 50,
+                   "optim.quality": 2,
                    "dpr": 1
                 }
              }
@@ -247,11 +346,6 @@ The first time you define an expression for Save-Data, we update your CDN config
 
 If you want to test it in your desktop browser, you can install a browser extension: [Chrome](https://developer.chrome.com/multidevice/data-compression), [Firefox](https://addons.mozilla.org/en-US/firefox/addon/save-data/). 
  
-
-#### Supported expressions
-
-Currently, you can only do expressions for stack options and the request headers `Save-Data` and `Accept` and override stack options. We may introduce more possibilities in the future (like matching on image metadata or overriding stack operation parameters), tell us, if you have a need for that.
-
 
 ### Basestacks
 
