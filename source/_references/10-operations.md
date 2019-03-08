@@ -25,6 +25,11 @@ $operations = $client->listOperations();
 var_dump($operations);
 ```
 
+## Properties for all operations
+
+All operations support the `enabled` property. It is set to `true` by default. If set to false, the particular operation
+will be ignored for the rendering. This can be useful together with [stack variables and expressions](/documentation/references/stacks.html#expressions).
+
 ## Individual operations documentation
 
 ### Alpha
