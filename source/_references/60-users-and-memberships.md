@@ -189,7 +189,7 @@ If you want for example assign an existing user with just a read role to your or
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/awesomecompany/memberships/c8791715-a873-475e-96b2-5ffd488112e7' -d '{
-    "role": ["read"]
+    "roles": ["read"]
 }'
 ```
 
