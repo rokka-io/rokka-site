@@ -400,7 +400,7 @@ Just take whatever you think is appropriate for your use case, but you can also 
 
 ```language-json
 {
-  "_operations": [
+  "operations": [
     {
       "expressions": {
         "width": "$finalWidth",
