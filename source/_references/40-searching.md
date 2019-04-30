@@ -15,7 +15,7 @@ Listing source images allows searching and sorting of images.
 The images are by default sorted by their created date in a descending order (latest first).
 
 Be aware: newly uploaded images or changed metadata may take a few seconds until
-they appear in the results.
+they appear in the results (usually about up to 10 seconds).
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/myorganization'
