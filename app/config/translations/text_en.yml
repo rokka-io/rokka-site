@@ -111,7 +111,10 @@ text:
 
   contact:
     title: Thank you for your interest.
+    subtitle: Contact us
     text: rokka supports you in storing, rendering and delivering your images. Easy and blazingly fast.
+    body: Please contact us with one of the methods mentioned on the right side.
+    body2: We're happy to hear from you.
     mail: E-mail
     phone: Phone
     sales: Sales
