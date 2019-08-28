@@ -42,7 +42,9 @@ The _options_ parameter is optional. You can use the following options in there.
 | optim.immediate |false| - | - | Immediatly runs the enhanced image size otimizations instead of doing it later asynchronously. See the [optimizations chapter](#additional-image-optimizations) below. |
 | jpg.transparency.color | FFFFFF | - | - | The background color used to replace the alpha channel. |
 | jpg.transparency.autoformat | false | - | - | Delivers the best possible, alpha channel capable format instead of jpg (webp, svg or png), in case the rendered image has a visible alpha channel.  See the [transparency chapter](#delivering-a-transparency-capable-format-instead-of-jpeg-jpg.transparency.autoformat) below. |
-| jpg.transparency.convert | false | - | - | Force converting an alpha channel to a jpg.transparency.color. Very rarely needded, as rokka will figure that out automatically.| 
+| jpg.transparency.convert | false | - | - | Force converting an alpha channel to a jpg.transparency.color. Very rarely needded, as rokka will figure that out automatically.|
+| timestamp | - | - | - | Use a thumbnail from a video at this timestamp for rendering. See the [video chapter](videos.html#generating-a-thumbnail-from-a-video-for-rendering) for details. | 
+ 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
     "operations":

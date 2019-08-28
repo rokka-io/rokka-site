@@ -137,10 +137,38 @@ The single segments of your video file.
 Be aware that the hashes for the segments are not actual source images you can search for. It's more of an internal hash.
 
 
-## Generating a thumbnail
+## Generating a thumbnail from a video for rendering
 
-You can also generate a thumbnail from the video. Just use one of the supported image formats as ending (jpg, png, etc) 
-and it will be generated. You can also apply all stack operations and use your own stacks for further operations on it.
+You can also generate a thumbnail from an uploaded video. Just use one of the supported image formats as ending (jpg, png, etc) 
+and an appropropriate one from the beginning of the video will be generated. 
+
+If you want a thumbnail for a specific time in the video, you can use the stack option `timestamp` for that. 
+
+You can also apply all stack operations and use your own stacks for further operations on it, eg.
+
+```
+http://liip.rokka.io/dynamic/options-timestamp-00:00:40/56b4956d028d4e0b354d02dab1f6a2128673fe93.jpg
+```
+
+## Extracting and importing a thumbnail into rokka from a video
+
+If all you need is one or more thumbnail from a (maybe remotely hosted) video in rokka, you can also extract them
+directly from a video, without importing the video, but just that thumbnail. 
+
+You can do this by appending an `@` and the timestamp to an URL and then use either the  ["upload by URL" through the sourceimages API](source-images.html#create-a-source-image-with-a-remote-url) the following way:
+
+```
+curl -X POST -F url[0]='https://liip.rokka.io/dynamic/56b4956d028d4e0b354d02dab1f6a2128673fe93.mp4@00:00:22' 'https://api.rokka.io/sourceimages/mycompany'
+```
+
+or use the "[rendering a remote image](stacks.html#rendering-a-remote-image)" method to directly use a remote video in a rendering call, eg.
+
+```
+https://mycompany.rokka.io/somestack/-https://liip.rokka.io/dynamic/56b4956d028d4e0b354d02dab1f6a2128673fe93.mp4@00:00:22-/some-seo-string.jpg
+```
+
+Both methods will just import that thumbnail into rokka for later reuse and not the whole video. It also just downloads the parts needed from the video 
+to extract that thumbnail and not the full video. 
 
 ## Using video.js for adaptive streams
 
