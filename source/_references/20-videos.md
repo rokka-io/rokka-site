@@ -137,10 +137,10 @@ The single segments of your video file.
 Be aware that the hashes for the segments are not actual source images you can search for. It's more of an internal hash.
 
 
-## Generating a thumbnail from a video for rendering
+## Generating a thumbnail from an imported video for rendering
 
-You can also generate a thumbnail from an uploaded video. Just use one of the supported image formats as ending (jpg, png, etc) 
-and an appropropriate one from the beginning of the video will be generated. 
+You can also generate a thumbnail from an imported video. Just use one of the supported image formats as ending (jpg, png, etc) 
+and an appropriate one from the beginning of the video will be generated. 
 
 If you want a thumbnail for a specific time in the video, you can use the stack option `timestamp` for that. 
 
