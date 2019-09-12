@@ -133,7 +133,7 @@ An example response looks like following.
     "width": 800,
     "height": 1160
     "organization": "mycompany",
-    "link": "/sourceimages/liip/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5"
+    "link": "/sourceimages/mycompany/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5"
 }
 ```
 
