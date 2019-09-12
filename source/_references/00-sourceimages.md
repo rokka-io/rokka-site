@@ -55,10 +55,10 @@ The current limit for uploading images are 150 MB in file size. For source image
 
 ### Create a source image with a remote URL
 
-Instead of directly uploading an image within the POST request, you can also provide an URL do a remote image, which then will be 
+Instead of directly uploading an image within the POST request, you can also provide an URL to a remote image, which then will be 
 downloaded by rokka and inserted into your repository. This happens synchronously, so you will get the same hashes and metadata back as with directly uploading an image.
 
-The image at the URL has to be publicly accessible. There's currently no way to add authentication. If you need that, talk to us.
+The image at the URL has to be publicly accessible. There's currently no way to add authentication. If you need that, (talk to us)[https://rokka.io/en/contact/].
 
 ```language-bash
 curl -X POST -F url[0]='https://rokka.rokka.io/dynamic/noop/f4d3f334ba90d2b4b00e82953fe0bf93e7ad9912.png' 'https://api.rokka.io/sourceimages/mycompany'
@@ -93,13 +93,13 @@ $sourceImages = $client->uploadSourceImage(file_get_contents('image.png'), 'imag
 var_dump($sourceImages);
 ```
 
-In case that source image already exists and there's metadata fields which are not defined in the upload, they are not deleted.
+In case that source image already exists and there are metadata fields which are not defined in the upload, they are not deleted.
 
 ### Optimizing source images before saving
 
-Sometimes source images contain too much data not really needed for just rendering images. Setting the `optimize_source` parameter to `true` can save you some storage space for such cases. Currently rokka  (losslessly) recompresses TIFF and PSD (to PNG) images, when this is set, but leaves the other formats alone (may change in the future). This saves you some storage space if you for example had layers from Photoshop. After setting this parameter, they'll be gone in the sourceimage and not retrievable anymore.
+Sometimes source images contain too much data not really needed for just rendering images. Setting the `optimize_source` parameter to `true` can save you some storage space for such cases. Currently rokka  (losslessly) recompresses TIFF and PSD (to PNG) images when this is set, but leaves the other formats alone (may change in the future). This saves you some storage space if you for example had layers from Photoshop. After setting this parameter, they'll be gone in the sourceimage and not retrievable anymore.
 
-The binary hash generated for that source image is the one of the original image (before the recompression), and not the one actually stored. So you still can search for that image, if you have to original binary hash generated from the image later.
+The binary hash generated for that source image is the one of the original image (before the recompression), and not the one actually stored. So you still can search for that image if you have to, using the original binary hash generated from the image.
 
 ## Retrieve data about a source image
 
@@ -118,7 +118,7 @@ $sourceImage = $client->getSourceImage('c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5
 var_dump($sourceImage);
 ```
 
-An example response looks like following.
+An example response would be:
 
 ```language-js
 {
