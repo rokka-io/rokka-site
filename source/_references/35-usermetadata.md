@@ -17,16 +17,24 @@ The default type is _String_, if you want to store it as any other type, you hav
 a prefix.
 Refer to the following table for a prefix/type documentation:
 
-| Type     | Prefix  |
------------|----------
-| String   | str:    |
-| Int      | int:    |
-| Double   | double: |
-| Date     | date:   |
-| Location | latlon: |
-| Array    | array:  |
+| Type               | Prefix  |
+---------------------|----------
+| String             | str:    |
+| Text               | text:   |
+| Int                | int:    |
+| Double             | double: |
+| Date               | date:   |
+| Location           | latlon: |
+| Array with strings | array:  |
+| Array with text    | array_text:  |
+
+
+The difference between _String_ and _Text_ is that _String_ fields are not tokenized and decompounded, it's stored
+as a literal string, you can only search the whole string or from the beginning with prefix searches.
+_Text_ fields on the other hand are tokenized, decompounded and stemmed, so that you can search for all the words in that field.
 
 Some limitations apply to each type, in particular:
+ 
  - the _Date_ type accepts values with the following format:`YYYY-MM-DDThh:mm:ssZ`;
  - the _Location_ type needs to be set as a `latitude, longitude` pair, eg: "47.38,8.52".
  - the elements of an _Array_ type will always be stored as string, you can't specify a type there.

@@ -145,6 +145,8 @@ The following fields are available for each image for filtering:
  - `width` (integer): the image width, in pixels;
  - `height` (integer): the image height, in pixels;
  - `created` (date): the image creation date;
+ - `name` (string): the name of the image;
+ - `name_text` (string): the name of the image tokenized and decompounded for better searching within the name;
 
 You can also filter by fields defined in the [User Metadata](/documentation/references/user-metadata.html),
 those fields are accessible by using the `user:` and the correct [field type](user-metadata.html) prefixes.
@@ -185,7 +187,10 @@ You can filter in different fields at once, eg. `size=[30000,}&name=foo*` return
 
 ## OR / NOT filtering
 
-OR and NOT filters are currently not possible.
+You can add `operator=or`, if you want to do an OR filter over all mentioned fields.
+
+NOT filters are currently not possible. Also combining AND and OR is not possible yet.
+
 If you have a need for that, get in contact with us and we'll see what we can do.
 
 ## Search for deleted images
