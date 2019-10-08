@@ -185,29 +185,28 @@ Also don't forget to use the new hash, after you linked different videos togethe
 
 ```html
 <head>
-    <link href="https://vjs.zencdn.net/6.9.0/video-js.css" rel="stylesheet">
+    <link href="https://vjs.zencdn.net/7.6.5/video-js.min.css" rel="stylesheet">
+    <script src='https://vjs.zencdn.net/7.6.5/video.min.js'></script>
 
-    <script src="https://unpkg.com/video.js/dist/video.js"></script>
-    <script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
     <!-- the libraries below are optional, if you want to have quality selector for the end user. -->
-    <script src="https://unpkg.com/videojs-contrib-quality-levels/dist/videojs-contrib-quality-levels.min.js"></script>
-    <script src="https://unpkg.com/videojs-hls-quality-selector/dist/videojs-hls-quality-selector.min.js"></script>
-
+    <script src="https://unpkg.com/videojs-contrib-quality-levels@2.0.9/dist/videojs-contrib-quality-levels.min.js"></script>
+    <script src="https://unpkg.com/videojs-hls-quality-selector@1.0.5/dist/videojs-hls-quality-selector.min.js"></script>
 </head>
 
 <body>
-<video  id="my-video" class="video-js" controls preload="metadata"
-       poster="https://liip.rokka.io/dynamic/56b4956d028d4e0b354d02dab1f6a2128673fe93.jpg" data-setup='{"fluid": true}'>
-            <source src="https://liip.rokka.io/dynamic/56b4956d028d4e0b354d02dab1f6a2128673fe93.m3u" type='application/x-mpegURL'>
+<video-js id="my-video" class="video-js" controls preload="metadata"
+          poster="https://liip.rokka.io/dynamic/56b4956d028d4e0b354d02dab1f6a2128673fe93.jpg"
+          data-setup='{"html5":{"hls": {"smoothQualityChange": true}},"fluid": true}'>
+    <source src="https://liip.rokka.io/dynamic/56b4956d028d4e0b354d02dab1f6a2128673fe93.m3u"" type='application/x-mpegURL'>
     <p class="vjs-no-js">
         To view this video please enable JavaScript, and consider upgrading to a web browser that
         <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
     </p>
-</video>
-
+</video-js>
 <script>
-  var player = videojs('my-video');
-  player.hlsQualitySelector();
+    // only needed, when you want the quality selector. Otherwise you can skip the whole script block
+    var player = videojs('my-video');
+    player.hlsQualitySelector();
 </script>
 </body>
 ```
