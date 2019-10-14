@@ -1,7 +1,7 @@
 Rokka
 =====
 
-This is the repository for the __Rokka Site__ which includes documentation and general information about the service.
+This is the repository for [rokka.io](https://rokka.io/) which includes documentation and general information about the image delivery service.
 
 Local Development
 -----------------
