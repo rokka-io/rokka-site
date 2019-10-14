@@ -238,3 +238,49 @@ The following will sort by the user defined field `my_integer_field` in a descen
 ```language-bash
 curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/myorganization?sort=user:int:my_integer_field desc'
 ```
+
+## Facets
+
+You can also get facets for [user defined metadata](./usermetadata.html) stored as `String` or `Array with String`.
+This is for example useful, if you label your images and want to get a list of all used labels.
+To get facets for a search query, use the `facets` parameter and a comma separated list of the fields
+you'd like to have facets for. 
+
+
+```language-bash
+curl -H 'Content-Type: application/json' -X GET 'https://api.rokka.io/sourceimages/myorganization?facets=user:array:labels'
+```
+
+This will return something like (it returns currently up to 1000 facets) and you can also add "limit=0", if you don't need the actual sourceimages.
+
+```language-json
+{
+    "total": 1905,
+    "items": [
+        {
+           "...."
+        }
+    ],
+    "cursor": "VaOsN4hoQW9KdzVQKzQ1TzBDUHlSd2NtOWtMV2RzYjJKaGJEUTRPVFF6WkdJMVkyWmlNRE0zTm1WaU4yRTBNVGt3WVdWbE1ESXdPRGN6TWpka05ESTFaalZzYVdsd0xXUmxkbVZzYjNCdFpXNTAB",
+    "facets": {
+        "user:array:labels": [
+            {
+                "value": "mountain",
+                "count": 4
+            },
+            {
+                "value": "lake",
+                "count": 3
+            },
+            {
+                "value": "river",
+                "count": 1
+            }
+        ]
+    }
+}
+
+```
+
+
+
