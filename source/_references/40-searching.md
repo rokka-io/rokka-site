@@ -147,8 +147,9 @@ The following fields are available for each image for filtering:
  - `created` (date): the image creation date;
  - `name` (string): the name of the image;
  - `name_text` (string): the name of the image tokenized and decompounded for better searching within the name;
+ - `user:xxx:xxx`: user metadata fields, see below;
 
-You can also filter by fields defined in the [User Metadata](/documentation/references/user-metadata.html),
+You can filter by fields defined in the [User Metadata](/documentation/references/user-metadata.html),
 those fields are accessible by using the `user:` and the correct [field type](user-metadata.html) prefixes.
 
 The following example will return all images where the field `my_integer_field` has a value of `3`:
