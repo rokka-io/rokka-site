@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "b93da12ab354caa43d4b57ff7a02673a",
@@ -605,7 +605,7 @@
                 "embedded",
                 "extensibility"
             ],
-            "time": "2018-04-18 14:50:04"
+            "time": "2018-04-18T14:50:04+00:00"
         },
         {
             "name": "dflydev/placeholder-resolver",
@@ -1524,7 +1524,7 @@
                 "site",
                 "static"
             ],
-            "time": "2018-02-04 04:05:39"
+            "time": "2018-02-04T04:05:39+00:00"
         },
         {
             "name": "sculpin/sculpin-theme-composer-plugin",
@@ -1878,16 +1878,16 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v2.8.38",
+            "version": "v2.8.52",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "3d7cbf34cd75ede7f94b9b990f85bd089e15cd55"
+                "reference": "c306198fee8f872a8f5f031e6e4f6f83086992d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/3d7cbf34cd75ede7f94b9b990f85bd089e15cd55",
-                "reference": "3d7cbf34cd75ede7f94b9b990f85bd089e15cd55",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/c306198fee8f872a8f5f031e6e4f6f83086992d8",
+                "reference": "c306198fee8f872a8f5f031e6e4f6f83086992d8",
                 "shasum": ""
             },
             "require": {
@@ -1937,7 +1937,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2018-02-19T16:23:47+00:00"
+            "time": "2019-04-16T11:33:46+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
