@@ -18,7 +18,7 @@ Source images are your original images you upload to Rokka. You should always se
 | organization | Name of the organization that the image belongs to |
 | hash | Hash to access the image with, based on metadata. 40 characters long |
 | short_hash | A shorter, still unique version of the hash. Can be used instead of the hash. 6-40 characters |
-| binary_hash | Sha1 hash of image binary data |
+| binary_hash | Sha1 hash of image binary data [(1)](#about-the-usage-of-sha1-in-hashes) |
 | name | Original filename |
 | format | Original format as common file extension|
 | mimetype | Original mime type |
@@ -286,3 +286,13 @@ curl -X GET 'https://api.rokka.io/sourceimages/mycompany/c412d8d6e4b9b7b058320b0
 ```
 
 It will return the binary data as the response and contain the name of the file in the header of the response.
+
+
+## About the usage of sha1 in hashes
+
+We use sha1 for generating hashes and binary hashes of sourceimages, but not for cryptography or other security related matters. 
+For this purpose, sha1 is still fine. All rokka needs is an unique hash per source image and sha1 does guarantee that.
+
+We furthermore separate the storage of images by organization. Even if someone would create an image with the
+same sha1 hash as one of yours and upload it to rokka, it wouldn't affect your image or renderings.
+
