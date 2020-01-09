@@ -290,9 +290,8 @@ It will return the binary data as the response and contain the name of the file 
 
 ## About the usage of sha1 in hashes
 
-We use sha1 for generating hashes and binary hashes of sourceimages, but not for cryptography or other security related matters. 
-For this purpose, sha1 is still fine. All rokka needs is an unique hash per source image and sha1 does guarantee that.
+We use sha1 for generating hashes and binary hashes of sourceimages, but not for cryptography or other security related matters.
+All rokka needs is an unique hash per source image and sha1 does guarantee that.
 
-We furthermore separate the storage of images by organization. Even if someone would create an image with the
-same sha1 hash as one of yours and upload it to rokka, it wouldn't affect your image or renderings.
+We also separate the storage of images by organization. Images with the same hash in different organizations are treated separately and would not influence each other.
 
