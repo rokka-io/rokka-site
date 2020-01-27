@@ -420,6 +420,8 @@ For more info about this technique, [see our blog post](https://blog.liip.ch/arc
 ### Loading images from a remote URL
 
 Instead of uploading images to rokka via the API, you can also let them be fetched "on demand" by rokka. There's two different ways to do it, either with a common `remote_basepath` or with the more open option `remote_fullurl_allow` (which then can be restricted again with `remote_fullurl_whitelist`). Both can be defined per stack or globally per org. 
+
+If you include a rokka image from your own organisation, that's always allowed, eg. `https://mycompany.rokka.io/dynamic/-https://mycompany.rokka.io/dynamic/abcdef.jpg-.jpg`. Depending on your CMS or system and how you store the image URLs to rokka, this can make your life easier in writing the correct templates.
  
 #### Using remote_fullurl_allow
 
