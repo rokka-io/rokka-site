@@ -59,3 +59,7 @@ rokka_framework_plugins:
     title: Kirby
     alt: Plugin for Kirby, a file‑based CMS
     link: https://github.com/rokka-io/rokka-kirby-plugin
+  -
+    title: Ghost
+    alt: Storage Adapter for Ghost, a JavaScript based blogging and publishing system
+    link: https://github.com/rokka-io/ghost-adapter-rokka
