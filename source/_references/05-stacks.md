@@ -44,7 +44,9 @@ The _options_ parameter is optional. You can use the following options in there.
 | jpg.transparency.autoformat | false | - | - | Delivers the best possible, alpha channel capable format instead of jpg (webp, svg or png), in case the rendered image has a visible alpha channel.  See the [transparency chapter](#delivering-a-transparency-capable-format-instead-of-jpeg-jpg.transparency.autoformat) below. |
 | jpg.transparency.convert | false | - | - | Force converting an alpha channel to a jpg.transparency.color. Very rarely needded, as rokka will figure that out automatically.|
 | timestamp | - | - | - | Use a thumbnail from a video at this timestamp for rendering. See the [video chapter](videos.html#generating-a-thumbnail-from-an-imported-video-for-rendering) for details. | 
- 
+| fps | 10 | 1 | 25 | Sets frame per second for movie to animated gif conversion. |
+| dpi | - | 1 | 5000 | Sets some dpi metadata info to an image, but doesn't resize them. It only works for PNG and TIFF (but not JPEG), currently, and you do have to set `optim.disable_all` to true. DPI doesn't matter in the web context, usually you don't need this. |
+
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
     "operations":
