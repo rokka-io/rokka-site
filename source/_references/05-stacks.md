@@ -308,7 +308,7 @@ use Rokka\Client\Core\StackExpression;
 
 $stack = new Stack(null, 'stackname');
 $stack->addStackOperation(new StackOperation('resize', ['width' => 200, 'height' => 200]));
-$stack->setStackOptions(['optim.quality' => 4, 'autoformat' => true);
+$stack->setStackOptions(['optim.quality' => 4, 'autoformat' => true]);
 
 $e = new StackExpression("options.dpr > 2");
 $e->setOptionsOverrides(['optim.quality' => 2]);
