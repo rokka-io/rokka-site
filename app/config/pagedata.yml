@@ -8,6 +8,10 @@ rokka_more_links:
     alt: Browser based dashboard
     link: https://rokka.io/dashboard
   -
+    title: Gallery
+    alt: Browser based gallery
+    link: https://rokka.io/gallery
+  -
     title: Swagger/OpenAPI documentation and sandbox
     alt: Swagger/OpenAPI documentation and json
     link: https://api.rokka.io/doc/
