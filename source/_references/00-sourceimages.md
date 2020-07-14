@@ -97,9 +97,18 @@ In case that source image already exists and there are metadata fields which are
 
 ### Optimizing source images before saving
 
-Sometimes source images contain too much data not really needed for just rendering images. Setting the `optimize_source` parameter to `true` can save you some storage space for such cases. Currently rokka  (losslessly) recompresses TIFF and PSD (to PNG) images when this is set, but leaves the other formats alone (may change in the future). This saves you some storage space if you for example had layers from Photoshop. After setting this parameter, they'll be gone in the sourceimage and not retrievable anymore.
+Sometimes source images contain too much data not really needed for just rendering images. 
+Setting the `optimize_source` parameter to `true` can save you some storage space for such cases. 
 
-The binary hash generated for that source image is the one of the original image (before the recompression), and not the one actually stored. So you still can search for that image if you have to, using the original binary hash generated from the image.
+When this parameter is set, rokka  (losslessly) recompresses TIFF and PSD (to PNG) images when this is set, but leaves the other formats 
+alone (may be extended to other formats in the future). Helpful if you for example have layers from Photoshop. After setting this parameter, the original image (the PSD/TIFF one) 
+will be gone and not retrievable anymore, just the optimized ones.
+
+Additional you can set this parameter to `jpg` or `png`. Then rokka will convert TIFF and PSD files to high quality JPEG (or WebP, 
+if the image is not opaque) or PNG before storing, saving even more space.
+
+The binary hash generated for that source image is the one of the original image (before the recompression), and not the one actually stored. 
+So you still can search for that image if you have to, using the original binary hash generated from the image.
 
 ## Retrieve data about a source image
 
