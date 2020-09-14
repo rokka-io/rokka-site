@@ -62,7 +62,8 @@ curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourcei
 ### Subject area
 
 The subject area of an image is a box defined by its width, height and the coordinates of its
-starting point (top-left corner).
+starting point (top-left corner). In pixels (of the full sized image) or percentage.
+
 Setting the subject area of an image allows the Crop operation (when used with the `auto` anchor),
 to center the cropping box around the defined SubjectArea.
 For further details see the [Crop operation](../references/operations.html#crop) 
@@ -72,11 +73,11 @@ retained at any size.
 
 #### Properties
 
-- `x` (required): Integer. The x-offset of the starting point, in pixels.
-- `y` (required): Integer. The y-offset of the starting point, in pixels.
-- `width`: Integer. The width of the subject area, in pixels. The default value is 1.
-- `height`: Integer. The height of the subject area, in pixels. The default value is 1.
-
+- `x` (required): Integer. The x-offset of the starting point, in pixels or percentage.
+- `y` (required): Integer. The y-offset of the starting point, in pixels or percentage.
+- `width`: Integer. The width of the subject area, in pixels or percentage. The default value is 1.
+- `height`: Integer. The height of the subject area, in pixels or percentage. The default value is 1.
+- `percentage`: Boolean. If the parameters above are in percentage instead of pixels 
 ### Crop area
 
 Works similarly to the subject area object. But an image will always be cropped exactly at the defined area. 
