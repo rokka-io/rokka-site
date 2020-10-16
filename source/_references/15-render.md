@@ -121,6 +121,40 @@ You have to use the `<video>` on your HTML tag to do this. Eg.
 </video>
 ```
 
+## Getting a blurhash from a rendered image
+
+[BlurHash](https://blurha.sh/) is a compact representation of a placeholder for an image. With this short hash you can display "blurry" placeholders
+in a webpage before the actual image is loaded. See [https://blurha.sh/](https://blurha.sh/) for more details about this
+technique.
+
+Rokka can provide this short hash to you, directly for each rendered image, so you don't have to build/compute that by yourself. 
+Use the `blur` "format", eg `https://rokka.rokka.io/plain/68e13ab4522ccd1084e21b721c2b626f5c2634ef.blur`, make a GET request to this and
+you'll get the blurhash back. This hash you can then store in your database or similar (along with the rokka hash for example)
+and later use it for the blurhash library.
+
+The result looks like this:
+
+<script type="module" src="https://unpkg.com/blurhash-img?module"></script>
+<blurhash-img 
+  hash="L[JbHoogofbb?wkCRjofxvjroLae"
+  style="--aspect-ratio: 840/1260; width: 50%">
+</blurhash-img>
+
+for this image
+
+<img src="https://rokka.rokka.io/plain/68e13ab4522ccd1084e21b721c2b626f5c2634ef.jpg" style="width: 50%">
+
+The code for this example using [blurhash-img](https://github.com/fpapado/blurhash-img) is:
+
+```html
+<script type="module" src="https://unpkg.com/blurhash-img?module"></script>
+<blurhash-img 
+  hash="L[JbHoogofbb?wkCRjofxvjroLae"
+  style="--aspect-ratio: 840/1260; width: 50%">
+</blurhash-img>
+```
+
+
 ## Rendering images from a remote URL
 
 See the [Loading images from a remote URL chapter](./stacks.html#loading-images-from-a-remote-url) for more details about that.
