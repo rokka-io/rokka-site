@@ -273,3 +273,21 @@ Trims edges that are the background color from an image.
 #### Properties
 
 - `fuzzy`: Number, between 0 and 100. Sets the degree of tolerance for pixel colour when calculating how much to trim from the image. The default value is 0.
+
+
+### Text
+
+#### Properties
+
+- `font`: (required) The rokka hash of a font to be used.
+- `text`: (required) The text to be written on the image.
+- `size`: The size of the text in pixels. Default: 16
+- `color`: Color to use for the text in hex without the # sign, example: "0F0F0F". 
+- `opacity`: Opacity of text. 0 is transparent. Goes up to 100 for opaque. Default: 100
+- `angle`: Rotate the overlay by degrees. Default: 0
+- `anchor`: Anchor where to place the text, based on mode. See the [Crop operation](#crop) for possible values. Default: center_center
+- `width`: The width of the box the text should be fit in. If set, the words will break, if they reach that width. Default: null
+- `height`: The height of the box the text should be fit in. If `resize_to_box` and `width` is set, the text will be resized to fit this box. If `resize_to_box` is false, the text will be cut off at this height.
+- `align`:  How to align the text (if `width` is given). Allowed values: left, centre, right
+- `resize_to_box`: 
+
