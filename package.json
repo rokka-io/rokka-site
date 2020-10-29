@@ -5,7 +5,7 @@
   "author": "Liip",
   "homepage": "https://rokka.io",
   "devDependencies": {
-    "browser-sync": "^2.26.7",
+    "browser-sync": "^2.26.13",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
@@ -21,7 +21,7 @@
     "run-sequence": "^1.2.2"
   },
   "engines": {
-    "node": "~8"
+    "node": "~10"
   },
   "dependencies": {
     "broken-link-checker": "^0.7.8"

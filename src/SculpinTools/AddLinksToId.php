@@ -99,7 +99,6 @@ final class AddLinksToId implements EventSubscriberInterface {
 
             if ($toc !== '') {
                 $toc = '<h2> Table of Contents</h2><p>' . $toc;
-                var_dump($levelBefore);
                 $toc .= str_repeat( '</ul>',$levelBefore). '</p>';
 
             }
