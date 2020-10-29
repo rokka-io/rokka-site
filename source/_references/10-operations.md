@@ -277,6 +277,124 @@ Trims edges that are the background color from an image.
 
 ### Text
 
+For writing text on an image, use this operation. 
+
+But before using it, you have to upload the fonts you want to use  to your organisation through the normal sourceimage operations and then
+use the hash (or short_hash) in the definition of this operation. A simple example writing a text in black in 
+the middle of your image with font size 20 and the font with the hash "398a83":
+
+```language-javascript
+{
+    "name": "text",
+    "options": {
+        "font": "398a83",
+        "text": "Hello world",
+        "size": 20
+    }
+}
+```
+
+See below for some more common parameters like `color`, `angle`, `opacity` and `anchor`.
+
+
+#### Variable text through an URL
+
+If you want to be flexible about the text written on the image, you can this like with any other parameter, eg:
+
+```
+https://$YOUR_ORG.rokka.io/text-stack/text-text-anothertext/dba893/a-picture-with-text.jpg
+```
+
+But we recommend using [stack variables](./stacks.html#stack-variables) and the `v` query parameter, since you
+can't use any string in the middle of an URL. Stack variables also make it much more flexible, if you have
+different texts on different parts of an image. The above example, you'd write the as the following:
+
+```language-javascript
+{
+    "operations": [
+        {
+            "name": "text",
+            "options": {
+                "font": "398a83",
+                "size": 20
+            },
+            "expressions": {
+                "text": "$text1"
+            }
+        }
+    ],
+    "variables": {
+        "text1": "Some example text"
+    }
+}
+```
+
+And then you send the content of `text1` in a json encoded object.
+
+```
+https://$YOUR_ORG.rokka.io/text-stack/dba893/a-picture-with-text.jpg?v={"text1":"Hello - Word"}
+```
+
+You can use that for any variable, not only for variables related to text
+
+#### Watermarking example
+
+To watermark your images, you can take the following example as an inspiration.
+It puts a half transparent text in the middle of your image with an angle of -55 degress
+and a size, which is calculated from the output width of the rendering.
+
+With variables and expressions, you could also calculate or choose different angles, depending
+on the width/height ratio of your image.
+
+```
+{
+    "operations": [
+        {
+            "name": "resize",
+            "options": {
+                "mode": "fill",
+                "upscale": false
+            },
+            "expressions": {
+                "width": "$width"
+            }
+        },
+        {
+            "name": "text",
+            "options": {
+                "angle": -55,
+                "resize_to_box": true,
+                "text": "My Watermark",
+                "font": "84ec63",
+                "opacity": 30
+            },
+            "expressions": {
+                "size": "$s"
+            }
+        }
+    ],
+    "variables": {
+        "width": "500",
+        "s": "$width / 7"
+    }
+}
+```
+
+#### The width and height parameters
+
+Width and height are a little bit special compared to other operations. You don't have to define them,
+then your text is just written on one line.
+
+If you define `width`, then your text is line wrapped at that point. With the `align` option you can choose
+how those different lines then should be aligned (left, centre or right).
+
+If you additionally define the `height` option, the text will not extend over that "box", but cut off (and
+centred vertically within the box, if it fits).
+
+If you define `width` and `height` and also the option `resize_to_box`, the whole text will always fit in
+that box. But the font size is chosen accordingly to make that happen. The longer the text, the smaller the font size.
+
+ 
 #### Properties
 
 - `font`: (required) The rokka hash of a font to be used.
@@ -286,8 +404,8 @@ Trims edges that are the background color from an image.
 - `opacity`: Opacity of text. 0 is transparent. Goes up to 100 for opaque. Default: 100
 - `angle`: Rotate the overlay by degrees. Default: 0
 - `anchor`: Anchor where to place the text, based on mode. See the [Crop operation](#crop) for possible values. Default: center_center
-- `width`: The width of the box the text should be fit in. If set, the words will break, if they reach that width. Default: null
+- `width`: The width of the box the text should be fit in. If set, the words will wrap, if they reach that width. Default: null
 - `height`: The height of the box the text should be fit in. If `resize_to_box` and `width` is set, the text will be resized to fit this box. If `resize_to_box` is false, the text will be cut off at this height.
 - `align`:  How to align the text (if `width` is given). Allowed values: left, centre, right
-- `resize_to_box`: 
+- `resize_to_box`: Fit the whole text into the text box defined by `width` and `height`. 
 
