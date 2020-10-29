@@ -3,21 +3,21 @@ title: PHP client library intro
 use: [guides]
 ---
 
-# Note about CMS Clients
+## Note about CMS Clients
 
 Note: If you just want to use rokka in a CMS like Drupal, Wordpress or Kirby, we recommend using the respective plugins (see the right side on the [documentation overview](/documentation/)). If you want to know, how the PHP library works and what it provides, this intro may be a good start nevertheless.
 
-# Preparation
+## Preparation
 
 If you already know the basics of rokka and have uploaded an image and created a stack, you can directly skip to the "[The PHP library](#the-php-library)" chapter below.
 
-## Get a rokka account
+### Get a rokka account
 
 Before we start with the actual PHP stuff, we do some preparation. First, you of course need a rokka account. Head over to [the signup page](https://rokka.io/dashboard/#/signup) and get one. It's free for 90 days and afterwards still free for up to 5 GB of traffic and 2 GB of storage.
 
 After you signed up, you'll get an email with your api key, don't lose that.
 
-## Install the rokka CLI
+### Install the rokka CLI
 
 For some basic setup, we'll use the rokka CLI, go and [get it](https://github.com/rokka-io/rokka-go) and follow the instructions to install it.
 
@@ -29,7 +29,7 @@ After you installed the rokka CLI, store your rokka api key in a config file wit
 rokka login --apiKey $YOUR_API_KEY
 ```
 
-## Upload an image
+### Upload an image
 
 Now you can upload your first image to rokka. We recommend to upload a high resolution image in a lossless image format like PNG. But there's no use in converting eg. a JPEG to PNG, if the JPEG version is the only version you have, then the JPEG is just fine.
 
@@ -63,7 +63,7 @@ You can also change many parameters for the appearance of an image, eg. you want
 
 All the possible stack options and operations can be seen at the [stacks documentation](https://rokka.io/documentation/references/stacks.html) and at the [operations documentation](https://rokka.io/documentation/references/operations.html).
 
-## Creating a stack
+### Creating a stack
 
 Another central concept of rokka are stacks. Stacks are a collection of one or more operations together with stack options. It abstracts away the implementation details of how your images are rendered, "users" of your images (like front end developers) don't have to know them, just the stack name. And it also makes your URLs way nicer.
 
@@ -89,12 +89,13 @@ If you want to overwrite some operation parameters or stack options, you can do 
 
 `https://$YOUR_ORG.rokka.io/test-stack/resize-width-300--options-dpr-2/dba893.jpg` would return an image with a width of 300 px but in a device-pixel-ratio of 2 (for retina), which makes the picture actually 600px wide. This way you can easily have complex stacks (cropping and resizing for example) and just overwrite some parameters via URL, if you need to.
 
-# The PHP library
+## The PHP library
 
 After having uploaded a first image and created a first stack, let's finally move to the PHP part.
 
 
-## Installation
+
+### Installation
 
 Install the library using [composer](https://getcomposer.org/) in your project directory:
 
@@ -102,7 +103,7 @@ Install the library using [composer](https://getcomposer.org/) in your project d
 composer require rokka/client
 ```
 
-## First steps
+### First steps
 
 You may use rokka within a bigger framework (like Symfony), a CMS (like WordPress or Drupal) or within Twig, the following steps may not be needed or different, but they give a good feeling, how it works.
 
@@ -130,7 +131,7 @@ Alternatively, you can also just use the `\Rokka\Client\UriHelper:composeUri ` s
 
 Both examples return an URL like `https://$YOUR_ORG.rokka.io/test-stack/dba893.jpg`.
 
-## Retina and responsive images
+### Retina and responsive images
 
 Nowadays you want to deliver high resolution images to your clients with "retina" screens. A service like rokka makes that easy and this library even more so.
 
@@ -161,7 +162,7 @@ And you get a string back with `src` and a `srcset` attributes and the correct v
 
 There's also a similar method for responsive images in CSS background-images, `TemplateHelper::getBackgroundImageStyle`.
 
-## Some other helper methods
+### Some other helper methods
 
 There are some more helper methods, if you need to resize some pictures quickly without creating a stack. The URLs may be long and if you need the same size often, we recommend to still create stacks for them.
 
@@ -185,7 +186,7 @@ Renders the image in it's original size.
 
 You can use all those returned URLs also on the responsive images methods mentioned above.
 
-## SEO 
+### SEO 
 
 It can be helpful for SEO purposes to have self-describing image names. That's why almost all URL generating methods also take a "SEO" parameter. It also slugifies the input automatically.
 
@@ -204,7 +205,7 @@ https://$YOUR_ORG.rokka.io/test-stack/dba893/a-picture-with-things.jpg
 
 The twig extension for rokka is also available. It mainly exposes the above mentioned helper methods. Documentation can be found at the github repo at [github.com/rokka-io/rokka-client-php-twig](https://github.com/rokka-io/rokka-client-php-twig). It will also be included in the [rokka symfony bundle](https://github.com/rokka-io/rokka-client-bundle/tree/twig) in the near future. 
 
-# Working with "local" images
+## Working with "local" images
 
 Uploading images manually to rokka is not a very efficient way to have them ready. You could integrate the uploading part into your Framework/CMS and use the PHP API for that ([see below about that](#managing-via-api)), which is often the best approach.
 
@@ -268,16 +269,16 @@ You maybe also want to store the rokka hashes somewhere else (in the same databa
 
 There are more methods you can implement in a LocalImage class to make your life easier. See the [API docs](https://rokka.io/client-php-api/master/) or the [sources](https://github.com/rokka-io/rokka-client-php/tree/master/src) for details.
 
-# Managing via API
+## Managing via API
 
 The PHP client library also offers a full blown API to all the REST API endpoints rokka provides. This may be very useful, when you for example want to upload your images as soon as they're uploaded to your framework/cms or you want automatically import them to rokka periodically and not only when they're accessed the first time (what the TemplateHelper classes do).
 
-## Upload images
+### Upload images
 
 For uploading images, see the [Sourceimages](https://rokka.io/documentation/references/source-images.html) documentation. It contains PHP code how to upload source images and more. 
 
 Once you uploaded an image, get the hash (or short hash) returned by that API call and store it somewhere for later use and generating URLs.
 
-## Create stacks
+### Create stacks
 
 You can also create stacks via the PHP API. It's documented in the [Stacks](https://rokka.io/documentation/references/stacks.html) reference. Head over there, also to have an overview of all the possible stack options and [operations](https://rokka.io/documentation/references/operations.html).

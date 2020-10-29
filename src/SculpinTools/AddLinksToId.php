@@ -49,7 +49,8 @@ final class AddLinksToId implements EventSubscriberInterface {
             return;
         }
         $content = $event->source()->content();
-
+        $toc = "";
+        $levelBefore = 0;
         if ( !empty($content)) {
             $html5 = new HTML5();
             $dom = $html5->loadHTML($content);
@@ -69,7 +70,22 @@ final class AddLinksToId implements EventSubscriberInterface {
                 $node->appendChild($a);
                 $a->setAttribute("href", "#" . $node->getAttribute("id"));
                 $a->setAttribute("class", "anchorLink");
+                $level =  (int) substr($node->nodeName,1,1) - 1;
+                if ($level  < 3) {
+                    $line = '<li><a href="#' . $node->getAttribute("id") . '">' . $node->textContent . '</a></li>' . "\n";
+                    if ($level > $levelBefore) {
+                        $toc .= '<ul>'. $line;
+                        $levelBefore++;
+                    } else if ($level < $levelBefore) {
+                        $toc .= '</ul>'.$line ;
+                        $levelBefore--;
+                    } else {
+                        $toc .= $line;
+                    }
+
+                }
                 // append all existing children to the new a node
+
                 foreach($childNodes as $childNode) {
                     $a->appendChild($childNode);
                 }
@@ -80,7 +96,14 @@ final class AddLinksToId implements EventSubscriberInterface {
             foreach ($dom->documentElement->childNodes as $node) {
                 $html .= $html5->saveHTML($node);
             }
-            $event->source()->setContent($html);
+
+            if ($toc !== '') {
+                $toc = '<h2> Table of Contents</h2><p>' . $toc;
+                var_dump($levelBefore);
+                $toc .= str_repeat( '</ul>',$levelBefore). '</p>';
+
+            }
+            $event->source()->setContent($toc . $html);
         }
     }
 }

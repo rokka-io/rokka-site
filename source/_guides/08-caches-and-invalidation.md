@@ -3,7 +3,7 @@ title: Render caches and invalidation
 use: [guides]
 ---
 
-# General info about rokka's render caches
+## General info about rokka's render caches
 
 rokka assumes that a picture rendered and delivered via a unique URL never changes and be cached for a long time. That's one of the reasons, why we use unique hashes for an image and its output-changing metadata (like subject areas). This has some implications you should be aware of.
 
