@@ -134,17 +134,39 @@ Another use case is to add a watermark to your images. For this you have to uplo
 } 
 ```
 
+You can also use another stack for being included, if you have more complex rendering wishes and rotate it
+
+```language-javascript
+{
+    "name": "composition",
+    "options": {
+        "mode": "background",
+        "width": 160,
+        "height": 90,
+        "secondary_stack": "anotherstack",
+        "anchor": "right_bottom",
+        "angle": "45"
+    }
+} 
+```
+
+
+
 
 #### Properties
 
 - `mode`: Where to put the initial image, `foreground` and `background` are possible options.
 - `width`: Width of the secondary image. 
 - `height`: Height of the secondary image.
-- `resize_mode`: If `secondary_image` is used and `width` or `height` are set, the image is resized with this resize mode. See the [Resize operation](#resize) for possible values. Default: box
+- `resize_mode`: If `secondary_image` or `secondary_stack` is used and `width` or `height` are set, the image is resized with this resize mode. See the [Resize operation](#resize) for possible values. Default: box
 - `anchor`: Anchor where to place the composition, based on mode. See the [Crop operation](#crop) for possible values. Default: center_center
 - `secondary_color`: Color to use as filler in hex without the # sign, example: "0F0F0F". Not used in when `secondary_image` is set. Default: 000000
 - `secondary_opacity`: Opacity of filler. 0 is transparent. Goes up to 100 for opaque. Default: 100
 - `resize_to_primary`: A `secondary_image` is resized to the primary `width` and `height`
+- `secondary_image`: The hash of another image to be used.
+- `secondary_stack`: The name of another stack to be used.
+- `angle`: Rotate the overlay by degrees. Default: 0
+
 
 ### Crop
 
