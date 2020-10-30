@@ -1,5 +1,6 @@
 ---
 title: Templates with Text
+slug: template
 use: [demos]
 header_include: demos/templates-head.html
 body_attributes: onload="updateImage()"

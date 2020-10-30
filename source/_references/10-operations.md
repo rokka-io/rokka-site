@@ -337,48 +337,6 @@ https://$YOUR_ORG.rokka.io/text-stack/dba893/a-picture-with-text.jpg?v={"text1":
 
 You can use that for any variable, not only for variables related to text
 
-#### Watermarking example
-
-To watermark your images, you can take the following example as an inspiration.
-It puts a half transparent text in the middle of your image with an angle of -55 degress
-and a size, which is calculated from the output width of the rendering.
-
-With variables and expressions, you could also calculate or choose different angles, depending
-on the width/height ratio of your image.
-
-```
-{
-    "operations": [
-        {
-            "name": "resize",
-            "options": {
-                "mode": "fill",
-                "upscale": false
-            },
-            "expressions": {
-                "width": "$width"
-            }
-        },
-        {
-            "name": "text",
-            "options": {
-                "angle": -55,
-                "resize_to_box": true,
-                "text": "My Watermark",
-                "font": "84ec63",
-                "opacity": 30
-            },
-            "expressions": {
-                "size": "$s"
-            }
-        }
-    ],
-    "variables": {
-        "width": "500",
-        "s": "$width / 7"
-    }
-}
-```
 
 #### The width and height parameters
 
@@ -394,6 +352,12 @@ centred vertically within the box, if it fits).
 If you define `width` and `height` and also the option `resize_to_box`, the whole text will always fit in
 that box. But the font size is chosen accordingly to make that happen. The longer the text, the smaller the font size.
 
+
+#### Examples and demos
+
+See the [Watermark with Text Demo](/documentation/demos/watermark.html#watermark-with-text-demo) and
+the [Templates with Text Demo](/documentation/demos/template.html#templates-with-text-demo) 
+for some working examples
  
 #### Properties
 

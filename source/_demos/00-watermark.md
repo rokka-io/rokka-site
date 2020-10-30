@@ -1,11 +1,12 @@
 ---
-title: Watermark
+title: Watermark with Text
+slug: watermark
 use: [demos]
 header_include: demos/watermark-head.html
 body_attributes: onload="updateImage()"
 ---
  
-# Watermark demo
+# Watermark with Text Demo
 
 Uses a [text operation](/documentation/references/operations.html#text) to apply a watermark
 on your images diagonally. An expression in the stack config (see below) calculates the needed
