@@ -12,15 +12,15 @@ Uses some complexer stack configuration with stack expressions and variables and
 <div id="demoForm">   
 <form id="form" onkeyup="updateImage()" onchange="updateImage()">
     <p>Image: <select name="imagehash" id="imagehash">
-    <option value="ab329e" selected>1</option>
-    <option value="ceb95d">2</option>
-    <option value="807fd9">3</option>
+    <option selected>ab329e</option>
+    <option >ceb95d</option>
+    <option >807fd9</option>
 </select>
     Font Size: <input type="text" name="s"  size="3" value="50">
     Font: <select name="font">
-    <option selected>1</option>
-    <option >2</option>
-    <option>3</option>
+        <option selected>86d7ee</option>
+    <option >1d9e7c</option>
+    <option>1249b3</option>
 </select>
     </p>
     <p>
