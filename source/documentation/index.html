@@ -11,6 +11,9 @@ use: [guides, references, libraries, demos]
     <div class="grid__item md-w-1/3">
         <h2 class="h3">Guide</h2>
         {% include 'article_list' with { 'articles': data.guides } %}
+        <h2 class="h3">Demos</h2>
+        {% include 'article_list' with { 'articles': data.demos } %}
+
     </div>
     <div class="grid__item md-w-1/3">
         <h2 class="h3">API Reference</h2>
