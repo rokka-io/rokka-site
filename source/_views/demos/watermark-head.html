@@ -1,18 +1,19 @@
 <script type="application/javascript">
-    var rootimgurl = "https://rokka-demos.rokka.io/template/"
-    var rootimgurl = "http://test.rokka.test/watermark/"
+    var rootimgurl = "https://rokka-demos.rokka.io/watermark/"
+    //var rootimgurl = "http://test.rokka.test/watermark/"
     var timeout = null
 
     var defaults = {
         "font": "86d7ee",
         "color": "000000",
         "o": "20",
-        "t": "My Watermark"
+        "t": "My Watermark",
+        "width": "500"
 
     }
     function updateImage() {
 
-        var hash = document.getElementById('imagehash').value +".png"
+        var hash = document.getElementById('imagehash').value +".jpg"
 
         var props = {}
         var elements = document.getElementById('form').elements
@@ -29,6 +30,13 @@
             if (name === "color" ) {
                 if ( value.length !== 6) {
                     value = ""
+                }
+            }
+            if (name === "width" ) {
+                if (value < 101) {
+                    value = "100"
+                } if (value > 800) {
+                    value = "800"
                 }
             }
             if (defaults[name] && defaults[name] === value){
