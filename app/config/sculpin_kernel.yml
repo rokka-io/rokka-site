@@ -6,6 +6,9 @@ sculpin_content_types:
     guides:
         permalink: documentation/guides/:slug_title.html
 
+    demos:
+        permalink: documentation/demos/:slug_title.html
+
     # libraries:
     #     permalink: documentation/libraries/:slug_title.html
 

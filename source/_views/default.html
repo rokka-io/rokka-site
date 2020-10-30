@@ -38,8 +38,9 @@
 <meta content="{{ site.sharing_title }}" name="twitter:title"/>
 <meta content="{{ site.text.lead.text }}" name="twitter:description"/>
 <meta content="/assets/images/sharing-image.png" name="twitter:image"/>
+{% block additional_head %} {% endblock %}
 </head>
-<body class="rokka-lang-{{ site.language }}">
+<body class="rokka-lang-{{ site.language }}" {{ page.body_attributes|raw }}>
 {% include("tag_manager.html") %}
 <div class="navbar navbar--sticky navbar--negative">
     <div class="navbar__body">

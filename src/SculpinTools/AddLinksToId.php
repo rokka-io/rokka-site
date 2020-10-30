@@ -71,7 +71,7 @@ final class AddLinksToId implements EventSubscriberInterface {
                 $a->setAttribute("href", "#" . $node->getAttribute("id"));
                 $a->setAttribute("class", "anchorLink");
                 $level =  (int) substr($node->nodeName,1,1) - 1;
-                if ($level  < 3) {
+                if ($level  < 3 && $level > 1) {
                     $line = '<li><a href="#' . $node->getAttribute("id") . '">' . $node->textContent . '</a></li>' . "\n";
                     if ($level > $levelBefore) {
                         $toc .= '<ul>'. $line;
