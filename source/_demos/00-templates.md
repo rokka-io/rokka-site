@@ -54,3 +54,129 @@ Uses some complexer stack configuration with stack expressions and variables and
 </p>
 
 See the [text operation chapter](/documentation/references/operations.html#text) for more info. 
+
+
+**The main template config:**
+
+```javascript
+{
+    "stack_operations": [
+        {
+            "name": "resize",
+            "options": {
+                "width": 700
+            }
+        },
+        {
+            "expressions": {
+                "width": "300 + ($shadow ? 4 :0)",
+                "enabled": "$t2 != \"_no_text_\" ? true : false"
+            },
+            "name": "composition",
+            "options": {
+                "mode": "background",
+                "secondary_stack": "subtemplate",
+                "cache": true,
+                "secondary_image": "83d1ca",
+                "anchor": "15_65"
+            }
+        },
+        {
+            "expressions": {
+                "text": "$t",
+                "opacity": "$o",
+                "size": "$s",
+                "font": "$font"
+            },
+            "name": "text",
+            "options": {
+                "angle": 0,
+                "anchor": "20_20"
+            }
+        },
+        {
+            "expressions": {
+                "width": "$wlogo",
+                "enabled": "$logo"
+            },
+            "name": "composition",
+            "options": {
+                "mode": "background",
+                "secondary_image": "0cf76f",
+                "anchor": "right_bottom"
+            }
+        }
+    ],
+    "stack_variables": {
+        "font": "86d7ee",
+        "logo": false,
+        "wlogo": 150,
+        "shadow": false,
+        "a": -5,
+        "o": 100,
+        "s": 50,
+        "t2": "_no_text_",
+        "t": ""
+    }
+}
+```
+
+**The subtemplate template config:**
+
+```javascript
+{
+    "stack_operations": [
+        {
+            "expressions": {
+                "secondary_color": "$color"
+            },
+            "name": "composition",
+            "options": {
+                "mode": "background",
+                "width": 600,
+                "empty_primary": true,
+                "height": 120
+            }
+        },
+        {
+            "expressions": {
+                "font": "$font",
+                "text": "$t2"
+            },
+            "name": "text",
+            "options": {
+                "width": 560,
+                "resize_to_box": true,
+                "color": "ffffff",
+                "height": 80
+            }
+        },
+        {
+            "expressions": {
+                "angle": "$a"
+            },
+            "name": "rotate",
+            "options": {}
+        },
+        {
+            "expressions": {
+                "enabled": "$shadow"
+            },
+            "name": "dropshadow",
+            "options": {
+                "sigma": 2,
+                "horizontal": 0,
+                "vertical": 0,
+                "opacity": 50
+            }
+        }
+    ],
+    "stack_variables": {
+        "t2": "",
+        "a": "-5",
+        "font": "86d7ee",
+        "shadow": false,
+        "color": "7DAD41"
+    }
+}
+```
