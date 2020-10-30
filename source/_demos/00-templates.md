@@ -122,7 +122,7 @@ See the [text operation chapter](/documentation/references/operations.html#text)
 }
 ```
 
-**The subtemplate template config:**
+**The subtemplate template config for the rotated text box with a possible shadow:**
 
 ```javascript
 {
