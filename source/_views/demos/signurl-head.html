@@ -1,0 +1,70 @@
+<script src="https://unpkg.com/rokka@%5E3.0.0-beta.6/dist/index.umd.min.js"></script>
+
+<script type="application/javascript">
+    var rootimgurl = "https://rokka-demos.rokka.io/template/"
+
+    //var rootimgurl = "http://test.rokka.test/watermark/"
+    var timeout = null
+    var rka = new rokka()
+
+    function updateImage() {
+
+
+        var elements = document.getElementById('form').elements
+        var signKey = elements['signKey'].value
+        var inputUrl = elements['inputUrl'].value
+        var text = elements['inputText'].value
+        var until = elements['until'].value
+        var roundUp =  elements['roundUp'].value
+        var untilDate = null
+        if (until === 'now') {
+            untilDate = new Date()
+            untilDate.setTime((Math.ceil(untilDate.getTime() / (60 * 1000)) * 60 * 1000) + 3600 * 1000)
+            elements['until'].value = untilDate.toISOString()
+        } else if ( until !== '') {
+            try {
+                untilDate = new Date(until)
+            } catch {
+                console.log("Invalid Date: ", until)
+            }
+        }
+
+        if (text) {
+            inputUrl = rka.render.addStackVariables(inputUrl, {t: text, s: 50, o: 100})
+        }
+        if (untilDate && isNaN(untilDate.getTime())) {
+            document.getElementById("url").value = "Invalid Date"
+            document.getElementById("options").textContent = ''
+            return
+        }
+
+        imgurl = rka.render.signUrl(inputUrl, signKey,{until: untilDate, roundDateUpTo: roundUp})
+
+        document.getElementById("url").value = imgurl
+        var parsedUrl = new URL(imgurl)
+        document.getElementById("options").textContent = parsedUrl.searchParams.get("sigopts")
+        if (timeout !== null) {
+            window.clearTimeout(timeout)
+        }
+        timeout = window.setTimeout(function () {
+            document.getElementById('image').src = imgurl
+        }, 150)
+
+
+    }
+    function urlchange() {
+        document.getElementById('image').src  = document.getElementById("url").value
+    }
+</script>
+<style>
+    #demoForm input, #demoForm  select {
+      width: inherit ! important;
+      height: 30px !important;
+    }
+
+    #demoForm select {
+      padding-left: 10px ! important;
+    }
+
+
+</style>
