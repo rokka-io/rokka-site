@@ -1,7 +1,10 @@
+<script src="https://unpkg.com/rokka@%5E3.0.0-beta/dist/index.umd.min.js"></script>
+
 <script type="application/javascript">
     var rootimgurl = "https://rokka-demos.rokka.io/template/"
  //   var rootimgurl = "http://test.rokka.test/template4/"
     var timeout = null
+    var rka = new rokka()
 
     var defaults = {
         "s": "50",
@@ -16,14 +19,11 @@
 
         var hash = document.getElementById('imagehash').value +".png"
 
-        var props = {}
         var elements = document.getElementById('form').elements
-        var urlStringOptions = []
-        var vQueryOptions = {}
+        var variables = {}
         for (i = 0; i < elements.length; i++) {
             var name = elements[i].getAttribute('name')
             if (name === "imagehash") {
-                //     hash = document.getElementById('image').value +".png"
                 continue;
             }
             var value = elements[i].value
@@ -36,39 +36,10 @@
             if (defaults[name] && defaults[name] === value){
                 value = ""
             }
-            if (value) {
-                if (value.includes("/")
-                  || value.includes("-")
-                  ||  value.includes("\\")
-                  ||  value.includes("%")
-                  ||  value.includes("#")
-                  ||  value.includes("&")
-                  ||  value.includes("?")
-                  ||  value.includes(";")
-                ) {
+            variables[name] = value
 
-                    vQueryOptions[name] = value
-                } else {
-                    urlStringOptions.push(name + "-" + value)
-                }
-            }
         }
-        imgurl = rootimgurl
-        if (urlStringOptions.length > 0) {
-            imgurl += 'v-' + urlStringOptions.join("-") + '/'
-        }
-        imgurl += hash
-        var stringified = JSON.stringify(vQueryOptions)
-        if (stringified !== '{}') {
-            imgurl += '?v=' + encodeURIComponent(stringified)
-              .replace(/%22/g, '"')
-              .replace(/%20/g, ' ')
-              .replace(/%2C/g, ",")
-              .replace(/%7B/g, "{")
-              .replace(/%7D/g, "}")
-              .replace(/%3A/g, ":");
-        }
-
+        imgurl = rka.render.addStackVariables(rootimgurl +  hash, variables, true)
         document.getElementById("url").value = imgurl
 
         if (timeout !== null) {
@@ -77,11 +48,8 @@
         timeout = window.setTimeout(function () {
             document.getElementById('image').src = imgurl
         }, 150)
-
-
     }
     function urlchange() {
-        console.log(document.getElementById("url").value)
         document.getElementById('image').src  = document.getElementById("url").value
     }
 </script>
@@ -93,8 +61,6 @@
 
     #demoForm select {
       padding-left: 10px ! important;
-      //height: 30px !important;
-
     }
 
 </style>
