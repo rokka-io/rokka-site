@@ -16,7 +16,7 @@ script:
   - curl -o ~/.nvm/nvm.sh https://raw.githubusercontent.com/creationix/nvm/v0.31.0/nvm.sh # update nvm
   - bash -c "source ~/.nvm/nvm.sh; nvm install $NODE_JS_VERSION;"
   - bash -c "source ~/.nvm/nvm.sh; nvm use $NODE_JS_VERSION;  node --version; npm ci"
-  - bash -c "source ~/.nvm/nvm.sh; nvm use $NODE_JS_VERSION; npx run gulp $BUILD_CMD"
+  - bash -c "source ~/.nvm/nvm.sh; nvm use $NODE_JS_VERSION; ./node_modules/.bin/gulp $BUILD_CMD"
 
 deploy:
   # How to deploy to S3: https://docs.travis-ci.com/user/deployment/s3/
