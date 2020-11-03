@@ -308,4 +308,38 @@ var signedUrl = rokka.render.signUrl(url, key)
 
 You can also make a signed URL time limited. A signed URL is then only valid until a certain time in the future.
 
-Docs for that will follow
+For this, you create a stringified JSON object with the property `until` and a valid date as value of this, then add 
+this with the `sigopts` query parameter and create a signature of this whole URL.
+
+Our official libraries also support this.
+
+PHP:
+```language-php
+$url = https://mycompany.rokka.io/somestack/somehash.jpg";
+# make it valid for a day
+$validUntil = (new DateTime())->add(new DateInterval('PT1D'))
+$signedUrl = (string) \Rokka\Client\UriHelper::signUrl($url, $key, $validUntil); 
+``` 
+
+JavaScript:
+
+```language-javascript
+var rokka = require('rokka')()
+var url = https://mycompany.rokka.io/somestack/somehash.jpg";
+var until = new Date()
+until.setDate(until.getDate() + 1)
+var signedUrl = rokka.render.signUrl(url, key, until)
+``` 
+
+Those two libraries round the date up to 5 minutes slices to improve caching, you can change that with 
+the fourth parameter and define this in seconds. The higher this value, the better the CDN caching will be. For example, 
+you can set this to 7200 seconds (two hours), if you want to give access for several hours and you don't care much
+about up to two hours more.
+
+See also the live example of calculating a signature at the [sign url demo](../demos/signurl.html) which also includes 
+this option.
+
+### Limiting signed URLs by other parameters
+
+Currently you can only limit signed URLs by time. If you need limiting access by other parameters (like source IP), talk
+to us, we may be able to make that possible. 
