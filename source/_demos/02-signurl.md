@@ -1,12 +1,12 @@
 ---
-title: Sign an URL
+title: Sign a URL
 slug: signurl
 use: [demos]
 header_include: demos/signurl-head.html
 body_attributes: onload="updateImage()"
 ---
  
-# Sign an rokka URL Demo
+# Sign a rokka URL Demo
 
 This feature is not live yet on the server side. Will come soon.
 
@@ -14,7 +14,7 @@ This feature is not live yet on the server side. Will come soon.
 <div id="demoForm">   
 <form id="form" onkeyup="updateImage()" onchange="updateImage()">
     <p>
-     Sign Key: <input id="signKey"  size="35" value="tfqmGZMb4yfC4OTjmu9j5UyeuHExXQ">
+     Sign Key: <input id="signKey"  size="35" value="PoJUJTX4u0ZON12e0tVaMHRyizL8fs">
      </p>
     <p>
     Valid until: <input id="until"  type="datetime-local" value="now" size="20">
@@ -22,7 +22,7 @@ This feature is not live yet on the server side. Will come soon.
      </p>
 
     <p>
-     Input URL: <input id="inputUrl" value="https://rokka-demos.rokka.io/template/ab329e.png" size="120">
+     Input URL: <input id="inputUrl" value="https://rokka-demos.rokka.io/template/92147e.png" size="120">
      </p>
 
     <p>
