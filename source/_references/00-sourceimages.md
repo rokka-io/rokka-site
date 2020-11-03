@@ -110,6 +110,10 @@ if the image is not opaque) or PNG before storing, saving even more space.
 The binary hash generated for that source image is the one of the original image (before the recompression), and not the one actually stored. 
 So you still can search for that image if you have to, using the original binary hash generated from the image.
 
+### Protecting images
+
+See the [Protected Images and Stacks chapter](./protected-images-stacks.html) for details. 
+
 ## Retrieve data about a source image
 
 You can retrieve meta data about a source image by providing the identifying hash on the `/sourceimages` route.

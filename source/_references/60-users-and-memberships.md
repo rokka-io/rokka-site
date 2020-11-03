@@ -178,11 +178,15 @@ If you have admin rights (given when creating a new organization automatically),
 
 __awesomecompany__ would be your organization name, __userId__ the id of the to be added user. (You can [get the user_id](#get-the-current-user_id) with a `GET /user` call, if you know the Api-Key of that user)
 
-Role can be `read`, `write`, `upload`, `sourceimages:read`, `sourceimages:write`, `admin`.
+Role can be `read`, `write`, `upload`, `sourceimages:read`, `sourceimages:download:protected`, `sourceimages:write`, `admin`.
 
 - Read role can only read metadata, including the organization, but not memberships. This could be used for a display-only application.
 - Write can add images and stacks, as well as reading metadata. This would be the role you would want to give your application interacting with rokka, mainly.
-- If you just want to give access to sourceimages, but not other data (like stacks), you can create a user with `sourceimages:read` or `sourceimages:write`.
+- If you just want to give access to sourceimages, but not other data (like stacks), you can create a user with
+  `sourceimages:read` or `sourceimages:write`.
+- The roles `sourceimages:read` and `sourceimages:write` can't download the original binaries, when they are from 
+  protected images. You have to explicitly give the `sourceimages:download:protected` role then. Other roles
+  can download them. 
 - Upload can just upload pictures, nothing else. Useful if you want to let other people directly upload images to your organization.
 - Admin can do everything, including adding, removing and promoting users in the organization.
 
