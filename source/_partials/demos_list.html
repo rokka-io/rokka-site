@@ -1,0 +1,9 @@
+<hr>
+<h4>More Demos:</h4>
+<ul class="list-inline list-inline--divided">
+    {% for article in articles %}
+    {% if page.url != article.url %}
+    <li class="list-group-item"><a href="{{ article.url }}">{{ article.title }}</a></li>
+    {% endif %}
+    {% endfor %}
+</ul>

@@ -28,6 +28,13 @@
                 </div>
             </div>
         </div>
+        <div class="grid grid--huge">
+        <div class="grid__item md-w-1">
+            {% block articles %}
+            {% include 'demos_list' with { 'articles': data.demos } %}
+            {% endblock articles %}
+        </div>
+        </div>
     </div>
 </section>
 {% endblock %}
