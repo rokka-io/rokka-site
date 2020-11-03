@@ -191,11 +191,13 @@ URLPATH=/somestack/hash.jpg
 SIGNATURE=$(echo -n ${URLPATH}:${KEY} | sha256sum | cut -c 1-16)
 echo https://mycompany.rokka.io/${URLPATH}?sig=${SIGNATURE}
 ```
+
 PHP:
 ```language-php
 $url = https://mycompany.rokka.io/somestack/somehash.jpg";
 $signedUrl = (string) \Rokka\Client\UriHelper::signUrl($url, $key); 
 ``` 
+
 JavaScript:
 ```language-javascript
 var rokka = require('rokka')()
