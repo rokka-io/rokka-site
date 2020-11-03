@@ -9,8 +9,8 @@ Local Development
 Do have the rendered output immediatly on your development environment, do:
 
 ```
-composer install && npm install
-./node_modules/.bin/gulp
+composer install && npm ci
+npx run gulp
 ```
 
 and then open [http://localhost:3000](http://localhost:3000) in your browser
