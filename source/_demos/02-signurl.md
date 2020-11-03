@@ -8,7 +8,7 @@ body_attributes: onload="updateImage()"
  
 # Sign a rokka URL Demo
 
-This feature is not live yet on the server side. Will come soon.
+This feature is not yet documented. Will come soon.
 
 
 <div id="demoForm">   
