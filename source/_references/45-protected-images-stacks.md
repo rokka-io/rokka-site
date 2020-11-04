@@ -21,7 +21,8 @@ your organization's signing key.
 
 If you want certain images to only be accessible with a signed URL - for example some high resolution photographs people
 shouldn't be able to just download through changing the rokka render URL - you can mark an image as protected. Then no matter how, they always need
-a signed url to be downloaded.
+a signed url to be accessed. Be aware, that people still can just download that image to their device and then send
+it to other people.
 
 Furthermore, API users with just the roles `sourceimages:read` and `sourceimages:write` can't download the original binaries of such
 protected images. You have to explicitly give the `sourceimages:download:protected` role to those users. Other roles
@@ -306,10 +307,11 @@ var signedUrl = rokka.render.signUrl(url, key)
 
 ### Doing a time limited signed URL
 
-You can also make a signed URL time limited. A signed URL is then only valid until a certain time in the future.
+You can also make a signed URL time limited. A signed URL is then only valid until a certain time in the future. 
 
-For this, you create a stringified JSON object with the property `until` and a valid date as value of this, then add 
-this with the `sigopts` query parameter and create a signature of this whole URL.
+For this, you create a stringified JSON object with the property `until` and a valid date as string 
+(ISO 8601 works best, others may work too) as value of this, then add  this with the `sigopts` query parameter and
+create a signature of this whole URL.
 
 Our official libraries also support this.
 
