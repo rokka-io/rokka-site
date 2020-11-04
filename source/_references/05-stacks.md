@@ -195,6 +195,15 @@ https://{organization}.rokka.io/{stack-name}/v-w-200/{hash}.{format}
  
 ```
 
+Some characters are not suitable for our URL format, like ?, & or /. Therefore you can also encode the variables
+as stringified und erlencoded JSON object.  See the [template demo](../demos/template.html) for an example, where this is added
+if there's a special character. Our rokka client libraries also have methods for doing that automatically.
+
+```language-bash
+https://{organization}.rokka.io/{stack-name}/{hash}.{format}?v={"text":"Some+%26+Some"}
+ 
+```
+
 Stack variables can be used in stack operation options or in stack expressions, but not stack options yet. If there's a need for that, we maybe can implement it, but see the "[Expressions for Stack Options](#expressions-for-stack-options)" below for another way to do that.
 
 You can also use expressions to define stack variables, but if you use another stack variable, that has to be defined first.
