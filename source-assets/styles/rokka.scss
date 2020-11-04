@@ -410,7 +410,7 @@ html {
         font-size: 12px;
     }
     @include media('lg') {
-        @media (min-height: $breakpoint-header-narrow) {
+        @media (min-height: 800px) {
           font-size: 14px;
         }
     }
