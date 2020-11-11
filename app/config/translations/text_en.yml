@@ -8,6 +8,7 @@ text:
     contact: Contact
     documentation: Documentation
     login: Login
+    signup: Sign Up
     cta: Start your free account
     pricing: Pricing
   hero:

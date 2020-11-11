@@ -84,12 +84,8 @@
                 </li>
 
 
-                <li>
-                  <a class="navbar-menu__link" target="_blank" href="https://www.liip.ch/en/blog/tags/rokka">
-                      Blog
-                  </a>
-                </li>
                 <li><a href="https://rokka.io/dashboard" class="navbar-menu__link">{{ site.text.navigation.login|raw }}</a></li>
+                <li><a href="https://rokka.io/dashboard/#/signup" class="navbar-menu__link">{{ site.text.navigation.signup|raw }}</a></li>
                 <li class="navbar-language-item">
                     {% if page.multilang == true %}
                     	<a class="navbar-menu__link{% if site.language == "de" %} active{% endif %}" href="/de{{ page.url }}">DE</a>
