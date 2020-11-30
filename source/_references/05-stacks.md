@@ -135,7 +135,7 @@ $stack = $client->saveStack($stack, ['overwrite' => true]);
 ### Best practices for configuring a stack
 
 There's a whole page for that. We highly recomment reading this "[Best practices for stack configurations
-](/best-practices-for-stack-configurations.html)" chapter.
+](../guides/best-practices-for-stack-configurations.html)" chapter.
 
 
 ### Configuring a stack with no operations

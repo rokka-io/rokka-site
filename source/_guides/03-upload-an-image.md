@@ -81,7 +81,7 @@ You can also create stacks which deliver just the original image, even unprocess
 See [operations](/documentation/references/operations.html) for the definition of all available operations and their arguments.
 
 Also a highly recommended reading is the "[Best practices for stack configurations
-](/best-practices-for-stack-configurations.html)" chapter.
+](./best-practices-for-stack-configurations.html)" chapter.
 
 ## Rendering an Image
 
