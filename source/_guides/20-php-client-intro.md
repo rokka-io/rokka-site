@@ -13,7 +13,7 @@ If you already know the basics of rokka and have uploaded an image and created a
 
 ### Get a rokka account
 
-Before we start with the actual PHP stuff, we do some preparation. First, you of course need a rokka account. Head over to [the signup page](https://rokka.io/dashboard/#/signup) and get one. It's free for 90 days and afterwards still free for up to 5 GB of traffic and 2 GB of storage.
+Before we start with the actual PHP stuff, we do some preparation. First, you of course need a rokka account. Head over to [the signup page](https://rokka.io/dashboard/#/signup) and get one. It's free for 90 days and afterwards still free for up to 10 GB of traffic and 2 GB of storage.
 
 After you signed up, you'll get an email with your api key, don't lose that.
 

@@ -80,10 +80,10 @@ text:
       owncdn:  Have your own CDN?
     free:
       title: Free plan
-      text: You don't want to buy a pig in a poke? Up to 2GB of space and 5GB of traffic, rokka is free for everyone.
+      text: You don't want to buy a pig in a poke? Up to 2 GB of space and 10 GB of traffic, rokka is free for everyone.
       free: FREE
       free_space: up to 2 GB of space
-      free_traffic: up to 5 GB of traffic per month
+      free_traffic: up to 10 GB of traffic per month
     disclaimer: All prices in CHF and excl. VAT.
     tos:
       text: Terms of Use
@@ -91,7 +91,7 @@ text:
 
   cta:
     title: Start for free. Try out rokka without any risk.
-    text: You can use rokka with up to 2 GB of space and 5 GB of traffic per month for free.
+    text: You can use rokka with up to 2 GB of space and 10 GB of traffic per month for free.
     cta_button: Start your free account
 
   testimonial1:

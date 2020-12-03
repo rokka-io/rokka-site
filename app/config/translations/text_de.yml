@@ -81,10 +81,10 @@ text:
       owncdn:  Haben Sie Ihr eigenes CDN?
     free:
       title: Kostenlose Version
-      text: Sie möchten die Katze nicht im Sack kaufen? Das verstehen wir. Deshalb können Sie alle Funktionen von rokka bis zu 2GB Speicherplatz und 5GB übermittelter Daten kostenlos nutzen.
+      text: Sie möchten die Katze nicht im Sack kaufen? Das verstehen wir. Deshalb können Sie alle Funktionen von rokka bis zu 2 GB Speicherplatz und 10 GB übermittelter Daten kostenlos nutzen.
       free: GRATIS
-      free_space: 2GB Speicherplatz
-      free_traffic: 5GB übermittelte Daten pro Monat
+      free_space: 2 GB Speicherplatz
+      free_traffic: 10 GB übermittelte Daten pro Monat
     disclaimer: Alle Preise in CHF und ohne Mehrwertsteuer.
     tos:
       text: Nutzungsbedingungen
@@ -92,7 +92,7 @@ text:
 
   cta:
     title: Aller Anfang ist kostenlos. Testen Sie rokka, ganz ohne Verpflichtungen.
-    text: Sie können alle Funktionen von rokka mit bis zu 2GB Speicherplatz und 5GB übermittelter Daten pro Monat kostenlos testen.
+    text: Sie können alle Funktionen von rokka mit bis zu 2 GB Speicherplatz und 10 GB übermittelter Daten pro Monat kostenlos testen.
     cta_button: Kostenloses Konto eröffnen
 
   testimonial1:
