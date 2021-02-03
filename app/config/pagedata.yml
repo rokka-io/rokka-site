@@ -53,8 +53,12 @@ rokka_framework_plugins:
     link: https://github.com/rokka-io/rokka-laravel-package
   -
     title: Drupal
-    alt: Drupal 7 and 8 library
+    alt: Drupal 7, 8 and 9 library
     link: https://www.drupal.org/project/rokka
+  -
+    title: Drupal GraphQL Plugin
+    alt: Drupal 8+ library
+    link: https://www.drupal.org/project/graphql_rokka
   -
     title: WordPress
     alt: WordPress Plugin
