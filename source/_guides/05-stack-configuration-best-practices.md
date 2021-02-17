@@ -18,6 +18,23 @@ what they are and for what they're good and for what not. We're sure with this y
 At the end of the article, you'll find a complete example of all the recommendations here. You can pick the things you 
 want or apply to your use cases and leave the other things out. 
 
+### Get the "original" image without scaling
+
+While you can use the `dynamic` route without any parameters to get the image in the size as it was uploaded, we recommend
+to create a stack dedicated to that purpose. Create the stack without any operations. We recommend to enable the `autoformat`
+option to have the stack deliver webp if supported by the client:
+
+```language-json
+{
+  "options": { "autoformat": true }
+}
+```
+
+We like to call this stack `original`.
+
+Note: This stack (nor the `dynamic` route) return you the exact same binary data of the image. The image size is preserved
+but rokka re-encodes the image to optimize size and quality.
+
 ### The "traditional" resize & crop stack
 
 One of the most common stack configurations is the resize & crop an image to ensure that all images have the exactly same
