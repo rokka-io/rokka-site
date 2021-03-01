@@ -216,51 +216,76 @@ Also don't forget to use the new hash, after you linked different videos togethe
 
 ```html
 <head>
-    <link href="https://vjs.zencdn.net/7.6.5/video-js.min.css" rel="stylesheet">
-    <script src='https://vjs.zencdn.net/7.6.5/video.min.js'></script>
+    <link href="https://vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
+    <script src='https://vjs.zencdn.net/7.10.2/video.min.js'></script>
 
     <!-- the libraries below are optional, if you want to have quality selector for the end user. -->
     <script src="https://unpkg.com/videojs-contrib-quality-levels@2.0.9/dist/videojs-contrib-quality-levels.min.js"></script>
-    <script src="https://unpkg.com/videojs-hls-quality-selector@1.0.5/dist/videojs-hls-quality-selector.min.js"></script>
+    <script src="https://unpkg.com/videojs-hls-quality-selector@1.1.4/dist/videojs-hls-quality-selector.min.js"></script>
 </head>
 
 <body>
-<video-js id="my-video" class="video-js" controls preload="metadata"
-          poster="https://liip.rokka.io/dynamic/c97fc8.jpg"
-          data-setup='{"html5":{"hls": {"smoothQualityChange": true}},"fluid": true,"aspectRatio":"1920:1080"}'>
-    <source src="https://liip.rokka.io/dynamic/c97fc8.m3u"" type='application/x-mpegURL'>
+<video id="my-video" class="video-js" controls preload="metadata"
+          poster="https://liip.rokka.io/dynamic/22dcd5.jpg"
+>
+    <source src="https://liip.rokka.io/dynamic/22dcd5.m3u" type="application/x-mpegURL">
     <p class="vjs-no-js">
         To view this video please enable JavaScript, and consider upgrading to a web browser that
         <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
     </p>
-</video-js>
+</video>
 <script>
+    var overrideNative = !videojs.browser.IS_ANY_SAFARI // needed for making it work on Chrome based mobile phones properly
+    var player = videojs('my-video',
+            {
+                html5: {
+                    vhs: {
+                        "smoothQualityChange": true,
+                        overrideNative: overrideNative
+                    },
+                    nativeAudioTracks: !overrideNative,
+                    nativeVideoTracks: !overrideNative
+                },
+                "fluid": true,
+                "aspectRatio":"1920:1080"
+            }
+    )
     // only needed, when you want the quality selector. Otherwise you can skip the whole script block
-    var player = videojs('my-video');
-    player.hlsQualitySelector();
+    player.hlsQualitySelector()
 </script>
 </body>
 ```
 
 And here's the result of the code above:
 
-<link href="https://vjs.zencdn.net/7.6.5/video-js.min.css" rel="stylesheet">
-<script src='https://vjs.zencdn.net/7.6.5/video.min.js'></script>
+<link href="https://vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
+<script src='https://vjs.zencdn.net/7.10.2/video.min.js'></script>
 <script src="https://unpkg.com/videojs-contrib-quality-levels@2.0.9/dist/videojs-contrib-quality-levels.min.js"></script>
-<script src="https://unpkg.com/videojs-hls-quality-selector@1.0.5/dist/videojs-hls-quality-selector.min.js"></script>
+<script src="https://unpkg.com/videojs-hls-quality-selector@1.1.4/dist/videojs-hls-quality-selector.min.js"></script>
 
-
-<video  style="background-color: inherit" id="my-video" class="video-js" controls preload="metadata"
-       poster="https://liip.rokka.io/dynamic/c97fc8.jpg" 
-       data-setup='{"html5":{"hls": {"smoothQualityChange": true}},"fluid": true,"aspectRatio":"1920:1080"}'>
-            <source src="https://liip.rokka.io/dynamic/c97fc8.m3u" type='application/x-mpegURL'>
+<video id="my-video" class="video-js" controls preload="metadata" poster="https://liip.rokka.io/dynamic/22dcd5.jpg">
+    <source src="https://liip.rokka.io/dynamic/22dcd5.m3u" type="application/x-mpegURL">
     <p class="vjs-no-js">
         To view this video please enable JavaScript, and consider upgrading to a web browser that
         <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
     </p>
 </video>
-
 <script>
-  var player = videojs('my-video');
-  player.hlsQualitySelector();
+    var overrideNative = !videojs.browser.IS_ANY_SAFARI // needed for making it work on Chrome based mobile phones properly
+    var player = videojs('my-video',
+            {
+                html5: {
+                    vhs: {
+                        "smoothQualityChange": true,
+                        overrideNative: overrideNative
+                    },
+                    nativeAudioTracks: !overrideNative,
+                    nativeVideoTracks: !overrideNative
+                },
+                "fluid": true,
+                "aspectRatio":"1920:1080"
+            }
+    )
+    // only needed, when you want the quality selector. Otherwise you can skip the whole script block
+    player.hlsQualitySelector()
 </script>
