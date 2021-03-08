@@ -77,7 +77,7 @@ text:
       chf_per_gb: CHF per GB
       chf_per_gb_monthly: CHF/Month per GB
       contact: Contact us for an individual offer
-      owncdn:  Have your own CDN? Special constraints? Other needs?
+      owncdn:  Have your own CDN? Special constraints? Other needs? We can also offer very competitive rates for high volumes.
     free:
       title: Free plan
       text: You don't want to buy a pig in a poke? Up to 2 GB of space and 10 GB of traffic, rokka is free for everyone.
@@ -88,7 +88,12 @@ text:
     tos:
       text: Terms of Use
       link: https://rokka.io/assets/pdf/Rokka_Terms_of_use_EN.pdf
-
+    calculator:
+      gbmonth: GB/month
+      chfmonth: CHF per month
+      title: Calculator
+      text: Calculate your estimated monthly costs
+      total: Total estimated costs per month
   cta:
     title: Start for free. Try out rokka without any risk.
     text: You can use rokka with up to 2 GB of space and 10 GB of traffic per month for free.

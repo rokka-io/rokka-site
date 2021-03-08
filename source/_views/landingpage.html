@@ -7,6 +7,17 @@
 {% block title %}{{ site.sharing_title }}{% endblock %}
 
 {% block content_wrapper %}
+<style>
+  #calculateForm input, #calculateForm  select {
+    width: inherit ! important;
+    height: 30px !important;
+  }
+
+  #calculateForm select {
+    padding-left: 10px ! important;
+  }
+
+</style>
 <div class="section-spacer">
   <section class="section section--primary section--fit section--middle section--fixed rokka-hero-section">
     <div class="section__body">
@@ -413,11 +424,115 @@
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
       </div>
+      <script type="application/javascript">
+        var trafficPrices = {
+          2000:	0.5,
+          4000:	0.42,
+          6000:	0.34,
+          8000:	0.26,
+
+        }
+
+        var storagePrices = {
+          400:	0.4,
+          800:	0.3,
+          1200:	0.2,
+          1600:	0.1,
+          999999: 0.08
+        }
+
+        function getPrice(storageInput, tierPrices) {
+          var price =  Object.keys(tierPrices).reduce((prev, tierLimit) => {
+            tierLimit = parseInt(tierLimit)
+            var price = tierPrices[tierLimit]
+
+            if (storageInput > prev.tierLimitBefore) {
+              prev.total += price * (Math.min(tierLimit, storageInput) - prev.tierLimitBefore)
+            }
+            prev.tierLimitBefore = tierLimit
+            return prev
+
+          }, {total: 0, tierLimitBefore: 0})
+          return price.total
+        }
+
+        function calculatePrice() {
+
+
+          var form = document.getElementById('form')
+
+          var storageInput = parseInt(form.storage.value)
+          var trafficInput = parseInt(form.traffic.value)
+          var storagePrice =0
+          var trafficPrice = 0
+
+          if (storageInput > 2 || trafficInput > 10) {
+             storagePrice = getPrice(storageInput, storagePrices)
+             trafficPrice = getPrice(trafficInput, trafficPrices)
+
+          }
+          document.getElementById('storagePrice').innerText = storagePrice.toFixed(2).replace('.00', '.-') + ' {{ site.text.pricing.calculator.chfmonth|raw }}'
+          if (trafficInput > 8000) {
+            document.getElementById('trafficPrice').innerText = "{{ site.text.pricing.details.contact|raw }}"
+
+          } else{
+            document.getElementById('trafficPrice').innerText = trafficPrice.toFixed(2).replace('.00', '.-') + ' {{ site.text.pricing.calculator.chfmonth|raw }}'
+          }
+          if (trafficInput > 8000) {
+            document.getElementById('totalPrice').innerText = "{{ site.text.pricing.details.contact|raw }}"
+          } else {
+            document.getElementById('totalPrice').innerText = (storagePrice + trafficPrice).toFixed(2).replace('.00', '.-') + ' {{ site.text.pricing.calculator.chfmonth|raw }} '
+          }
+
+        }
+
+      </script>
+        <div class="rokka-pricing rokka-pricing__free" id="calculateForm">
+        <form id="form" onkeyup="calculatePrice()" onchange="calculatePrice()">
+
+        <div class="grid">
+          <div class="grid__item md-w-1/2">
+            <h3 class="mrg0 mrgb--">{{ site.text.pricing.calculator.title|raw }}</h3>
+            <p class="mrg0 rokka-pricing-box__desc">{{ site.text.pricing.calculator.text|raw }}</p>
+
+            <p class="mrg0 rokka-pricing-box__desc text-bold">{{ site.text.pricing.calculator.total|raw }}: <span id="totalPrice">0.- {{ site.text.pricing.calculator.chfmonth|raw }}</span> </p>
+          </div>
+          <div class="grid__item md-w-1/2">
+            <div class="flex">
+              <div class="number flex-item-1">
+                <div class="flex pdgr-">
+                  <div class="number__text">
+                    <div class="number__value h3 mrg0 text-bold">{{ site.text.pricing.details.storage|raw }}</div>
+                    <div class="number__description " style="padding-top: 10px"> <input  autocomplete="off" type="text" name="storage" value="0" size="5"> {{ site.text.pricing.calculator.gbmonth|raw }}</div>
+                    <div class="number__description " style="padding-top: 10px"> <span id="storagePrice">0.-  {{ site.text.pricing.calculator.chfmonth|raw }}</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="number flex-item-1">
+                <div class="flex pdgr-">
+                  <div class="number__text">
+
+                    <div class="number__value h3 mrg0 text-bold">{{ site.text.pricing.details.traffic|raw }}</div>
+                    <div class="number__description " style="padding-top: 10px"> <input  autocomplete="off" type="text" name="traffic" value="0" size="5"> {{ site.text.pricing.calculator.gbmonth|raw }}</div>
+                    <div class="number__description " style="padding-top: 10px"> <span id="trafficPrice">0.- {{ site.text.pricing.calculator.chfmonth|raw }}</span> </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+        </form>
+      </div>
     </div>
+
 
     <p class="text-tiny text-right text-muted">
       <a href="{{ site.text.pricing.tos.link|raw }}" target="_blank">{{ site.text.pricing.tos.text|raw }}</a>
