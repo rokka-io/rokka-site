@@ -279,7 +279,8 @@ Trims edges that are the background color from an image.
 
 For writing text on an image, use this operation. 
 
-But before using it, you have to upload the fonts you want to use  to your organisation through the normal sourceimage operations and then
+But before using it, you have to upload the fonts (as TTF format, there are online tools to convert other font formats to TTF)
+you want to use  to your organisation through the normal sourceimage operations and then
 use the hash (or short_hash) in the definition of this operation. A simple example writing a text in black in 
 the middle of your image with font size 20 and the font with the hash "398a83":
 
