@@ -28,6 +28,7 @@ The _options_ parameter is optional. You can use the following options in there.
 | webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. Default is 65 for dpr >=2, see the [DPR chapter](#device-pixel-ratio-dpr) below. |
 | heif.quality | 40 | 1 | 100 | Heif/Heic quality setting, lower number means smaller file size and worse lossy quality.  |
 | avif.quality | 50 | 1 | 100 | AVIF quality setting, lower number means smaller file size and worse lossy quality.  |
+| jxl.quality | 70 | 1 | 100 | JPEG XL quality setting, lower number means smaller file size and worse lossy quality.  |
 | gif.quality | 60 | 1 | 100 | Gif quality setting in the [optimization phase](#additional-image-optimizations). Choose a setting of 100 for lossless quality. Lower values also means lower file size. See the [rendering animated GIFs chapter](./render.html#rendering-animated-gifs).|
 | pngquant.quality | 98 | 10 | 100 | We lossy compress (PNG and lossless WebP) images by default to make them much smaller (and hardly noticable). You can try some quality setting with this option. If set to 100, we don't apply any lossy compression.|
 | png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images. |

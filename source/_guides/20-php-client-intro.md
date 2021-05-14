@@ -55,7 +55,7 @@ Note: Don't just take the first 6 chars from the hash for the short hash, that m
 
 After the upload, you can already let rokka render the image for you. Just go to `http://$YOUR_ORG.rokka.io/dynamic/dba893.jpg` in a browser. Of course, you have to replace the short hash `dba893` with the value you got from the upload in that URL.
 
-You can also directly resize an image now with eg. `http://$YOUR_ORG.rokka.io/dynamic/resize-width-200/dba893.jpg`, which will return an image with a width of 200 pixels. If you want a PNG, WebP, AVIF or a HEIF image instead of a JPEG, just change the ending. And you can also use more desprictive filenames for SEO reasons. `http://$YOUR_ORG.rokka.io/dynamic/resize-width-200/dba893/someone-on-a-balcony.png` would return the same as above, but this time as PNG.
+You can also directly resize an image now with eg. `http://$YOUR_ORG.rokka.io/dynamic/resize-width-200/dba893.jpg`, which will return an image with a width of 200 pixels. If you want a PNG, WebP, JPEG XL, AVIF or a HEIF image instead of a JPEG, just change the ending. And you can also use more desprictive filenames for SEO reasons. `http://$YOUR_ORG.rokka.io/dynamic/resize-width-200/dba893/someone-on-a-balcony.png` would return the same as above, but this time as PNG.
 
 You can also change many parameters for the appearance of an image, eg. you want an image for a retina screen, set the DPR stack option to 2 with the following URL:
 
