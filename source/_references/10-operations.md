@@ -120,9 +120,6 @@ Output:
 <img src="https://rokka.rokka.io/dynamic/crop-anchor-face-width-[image.detection_face.height*1.5]-height-[image.detection_face.height*1.5]--circlemask--resize-width-150/o-af-1/5adad6.png"/>
 
 
-If you have images with and some without face detection, the login in the expressions may be a little bit more
-complex, but it's doable. Ask us, if you need help.
-
 You can of course also just use fixed values for width and height, if for example what you need is always in the 
 middle of the picture.
 
