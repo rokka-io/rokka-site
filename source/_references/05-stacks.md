@@ -179,6 +179,7 @@ for more information. If there's a property missing you'd like to have, we can a
 | image.isAnimated | Returns true, if the source image is an animated image, like an animated gif. |
 | image.hash | Returns the hash of the current source image.|
 | image.subject_area.* | Returns subject area data for width, height, x and y.  |
+| image.face_detection.* | Returns face detection subject area data for width, height, x and y.  |
 | request.headers.save_data | Returns "on" if the [http header save-data is set](#expression-for-detecting-the-save-data-http-header). |
 | options.* | Returns any stack option, eg `options.dpr` returns the currently set "[Device Pixel Ratio](documentation/references/stacks.html#device-pixel-ratio-dpr)". |
 
