@@ -108,7 +108,10 @@ Stack config:
             }
         }
     ],
-      "variables": {
+      "options": {
+        "autoformat": true
+    },
+    "variables": {
         "cropwidth": "image.hasDetectionFace ? image.detection_face.height * 1.5 : (image.height > image.width ? image.width : image.height) "
     }
 }
