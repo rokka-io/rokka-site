@@ -82,17 +82,16 @@ Example without any cropping:
 (Photo by <a href="https://unsplash.com/@junojo?utm_source=unsplash&utm_medium=referral">Juno Jo</a> on <a href="https://unsplash.com/s/photos/face?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>)
 
 
-Complexer example with cropping on the face (if you enabled face detection):
+Complexer example with cropping on the face, if the image has face detection metadata. Otherwise it just crops the image to a square:
 
 Stack config:
 ```javascript
 {
-    "created": "2020-04-09T08:27:28+00:00",
-    "stack_operations": [
+    "operations": [
         {
             "expressions": {
-                "width": "image.detection_face.height * 1.5",
-                "height": "image.detection_face.height * 1.5"
+                "width": "$cropwidth",
+                "height": "$cropwidth"
             },
             "options": {
                 "anchor": "face"
@@ -108,7 +107,10 @@ Stack config:
                 "width": 150
             }
         }
-    ]
+    ],
+      "variables": {
+        "cropwidth": "image.hasDetectionFace ? image.detection_face.height * 1.5 : (image.height > image.width ? image.width : image.height) "
+    }
 }
 ```
 Output:
