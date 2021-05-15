@@ -13,6 +13,11 @@ composer install && npm ci
 npx run gulp
 ```
 
+or also 
+```
+./node_modules/.bin/gulp
+```
+
 and then open [http://localhost:3000](http://localhost:3000) in your browser
 
 Check for broken links

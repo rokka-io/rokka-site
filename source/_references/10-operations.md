@@ -68,6 +68,67 @@ Blurs the entire image.
 
 - `sigma`: Number, minimum value 0. The default value is 4. Controls most of the blurring of the image.
 
+### Circlemask
+
+Puts a circle in the maximum possible area and alpha channels the outside of it to total transparency.
+You most certainly have to crop the image before to get the desired result.
+
+Example without any cropping: 
+
+`https://rokka.rokka.io/dynamic/circlemask--resize-width-150/o-af-1/5adad6.png`
+
+<img src="https://rokka.rokka.io/dynamic/circlemask--resize-width-150/o-af-1/5adad6.png"/>
+
+(Photo by <a href="https://unsplash.com/@junojo?utm_source=unsplash&utm_medium=referral">Juno Jo</a> on <a href="https://unsplash.com/s/photos/face?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>)
+
+
+Complexer example with cropping on the face (if you enabled face detection):
+
+Stack config:
+```javascript
+{
+    "created": "2020-04-09T08:27:28+00:00",
+    "stack_operations": [
+        {
+            "expressions": {
+                "width": "image.detection_face.height * 1.5",
+                "height": "image.detection_face.height * 1.5"
+            },
+            "options": {
+                "anchor": "face"
+            },
+            "name": "crop"
+        },
+        {
+            "name": "circlemask"
+        },
+        {
+            "name": "resize",
+            "options": {
+                "width": 150
+            }
+        }
+    ]
+}
+```
+Output:
+<img src="https://rokka.rokka.io/dynamic/crop-anchor-face-width-[image.detection_face.height*1.5]-height-[image.detection_face.height*1.5]--circlemask--resize-width-150/o-af-1/5adad6.png"/>
+
+
+If you have images with and some without face detection, the login in the expressions may be a little bit more
+complex, but it's doable. Ask us, if you need help.
+
+You can of course also just use fixed values for width and height, if for example what you need is always in the 
+middle of the picture.
+
+
+
+#### Properties
+
+None yet
+
+
+
 ### Composition
 
 Merges two images together to one. The to be added image (called secondary image) can either be another image uploaded to rokka or a fixed box with a defined size and color. You can also add additional transparency to both of them. This second image can be put into the background or the foreground of the initial image.
