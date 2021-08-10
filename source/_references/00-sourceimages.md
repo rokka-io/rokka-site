@@ -115,6 +115,7 @@ So you still can search for that image if you have to, using the original binary
 
 See the [Protected Images and Stacks chapter](./protected-images-stacks.html) for details. 
 
+
 ### Uploading non image type files
 
 Paying rokka customers can also upload certain types of non-image files, like Word, Text, etc. This can be helpful, if you want to
