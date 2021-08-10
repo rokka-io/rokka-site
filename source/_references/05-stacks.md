@@ -160,7 +160,9 @@ To get such a stack, create a stack with an empty operations collection and the 
 }
 ```
 
-Be aware that if you configure such a stack, everyone can download the original source file of all your uploaded images (as long as they know the hash of an image). If there's enough demand, we will implement a feature to only enable that for explicitely tagged pictures. Just tell us, if you'd like to use such a feature.
+Be aware that if you configure such a stack, everyone can download the original source file of all your uploaded images 
+(as long as they know the hash of an image). If you want to avoid that, you can use
+the [Protected Stacks feature](./protected-images-and-stacks.html#protected-stacks) to limit access with signed URLs.
 
 ### Expressions
 

@@ -115,6 +115,20 @@ So you still can search for that image if you have to, using the original binary
 
 See the [Protected Images and Stacks chapter](./protected-images-stacks.html) for details. 
 
+### Uploading non image type files
+
+Paying rokka customers can also upload certain types of non-image files, like Word, Text, etc. This can be helpful, if you want to
+provide some downloads for such files and don't wanna setup another CDN/file storage just for that.
+
+You can't do image operations on them (it will just show a placeholder image instead), but you can
+[configure a stack to just deliver the original file](./stacks.html#configuring-a-stack-to-just-deliver-the-original-source-file)
+and use that one. 
+
+If you want to start a direct download of such an image and not being opened in the browser, 
+you can set `content_disposition: attachment` as stack option.
+
+The allowed file types for this is whitelisted on our side. Ask us, if you need more available.
+
 ## Retrieve data about a source image
 
 You can retrieve meta data about a source image by providing the identifying hash on the `/sourceimages` route.
