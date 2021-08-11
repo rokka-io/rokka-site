@@ -4,11 +4,13 @@ set -o pipefail
 
 # remove the whole rokka-dashboard dir, if no repo is there
 if [ ! -d rokka-dashboard/.git ]; then
+  echo "Delete rokka-dashboard"
   rm -rf rokka-dashboard
 fi
 
 # clone repo and make sure we're up to date
 if [ ! -d rokka-dashboard ]; then
+  echo "Clone rokka-dashboard"
   git clone -q https://github.com/rokka-io/rokka-dashboard.git rokka-dashboard
 fi
 
@@ -22,6 +24,7 @@ export REACT_APP_HEAD_TAG='<!-- Google Tag Manager --><script>(function(w,d,s,l,
 export REACT_APP_BODY_TAG='<!-- Google Tag Manager (noscript) --><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WVCKFW" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><!-- End Google Tag Manager (noscript) -->'
 
 # install deps and run prod build
+npm update caniuse-lite browserslist
 npm install
 npm run build
 
