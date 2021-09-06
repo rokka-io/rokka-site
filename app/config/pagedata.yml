@@ -71,3 +71,12 @@ rokka_framework_plugins:
     title: Ghost
     alt: Storage Adapter for Ghost, a JavaScript based blogging and publishing system
     link: https://github.com/rokka-io/ghost-adapter-rokka
+  -
+    title: Vue
+    alt: A Vue 2.x component for the image processing service rokka.io
+    link: https://github.com/rokka-io/vue-rokka-image
+  -
+    title: next.js
+    alt: How to integrate rokka images in next.js
+    link: https://www.liip.ch/en/blog/delivering-images-with-next-js-and-rokka
+
