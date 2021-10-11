@@ -9,6 +9,7 @@ use: [references]
 | --------- | ----------- |
 | organization | Name of the organization that the stack belongs to |
 | name | Name of the stack |
+| description | Optional description of a stack. For documentation purposes |
 | created | When this stack was created |
 | stackOperations | List of operations for this stack |
 | options | Optional options that influence the entire stack |
@@ -51,7 +52,8 @@ The _options_ parameter is optional. You can use the following options in there.
 | protected | false | - | - | If a stack should be protected and [needing signed urls](./protected-images-and-stacks.html) |
 
 ```language-bash
-curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{ 
+    "description" : "This stack does resize and rotate",
     "operations":
     [
         {

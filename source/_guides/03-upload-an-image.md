@@ -21,7 +21,7 @@ The @ sign instructs cURL to send the binary data of the specified file. If the 
 ```language-js
 {
     "total": 1,
-    "sourceimages": [
+    "items": [
         {
             "hash": "c03683b067927d77973b458e0baa40aa7b5e5418",
             "short_hash": "c03683",
