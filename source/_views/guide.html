@@ -10,6 +10,11 @@
 </section>
 {% endblock %}
 
+{% block additional_head  %}
+    {% if page.header_include %}
+        {{ include(page.header_include) }}
+{% endif %}
+{% endblock %}
 
 {% block content_wrapper %}
 <section class="section">

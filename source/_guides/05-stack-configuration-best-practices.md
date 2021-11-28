@@ -402,24 +402,24 @@ Just take whatever you think is appropriate for your use case, but you can also 
 {
   "operations": [
     {
+      "name": "resize",
       "expressions": {
         "width": "$finalWidth",
         "height": "$finalHeight ",
         "upscale": "$s == 1 ? true : false",
         "upscale_dpr": "$s == 1 ? true : false"
       },
-      "name": "resize",
       "options": {
         "mode": "fill"
       }
     },
     {
+      "name": "crop",
       "expressions": {
         "anchor": "$a === 'notset' ? ((image.hasSubjectArea || image.hasDetectionFace || image.isAnimated) ? 'auto' : 'smart') : $a",
         "width": "$finalWidth",
         "height": "$finalHeight"
       },
-      "name": "crop",
       "options": {}
     }
   ],

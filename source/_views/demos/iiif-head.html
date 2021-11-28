@@ -1,0 +1,41 @@
+<script src="https://cdn.jsdelivr.net/npm/openseadragon@2.4/build/openseadragon/openseadragon.min.js"></script>
+<script type="text/javascript">
+    var viewer = null
+
+    function drawDragon(org, hash) {
+        var url = `https://${org}.rokka.io/_iiif/${hash}/info.json`
+        //  var url = `http://${org}.rokka.test/_iiif/${hash}/info.json`
+        var container = document.getElementById('container')
+        viewer = document.getElementById('openseadragon1')
+        if (viewer) {
+            container.removeChild(viewer)
+        }
+        var div = document.createElement("div")
+        div.setAttribute("id", "openseadragon1")
+        div.setAttribute("style","height: 800px; width: 100%")
+        container.appendChild(div)
+
+        viewer = OpenSeadragon({
+            id: "openseadragon1",
+            prefixUrl: "https://cdn.jsdelivr.net/npm/openseadragon@2.4/build/openseadragon/images/",
+            tileSources: url,
+
+            imageLoaderLimit: 2
+
+        });
+
+    }
+    function loaded() {
+
+        drawDragon("rokka", "283eaf")
+    }
+    function submitted() {
+        var org = document.getElementById('org').value
+        var hash = document.getElementById('hash').value
+        viewer.close()
+
+        drawDragon(org, hash)
+        return false;
+
+    }
+</script>

@@ -316,6 +316,15 @@ curl -X GET 'https://api.rokka.io/sourceimages/mycompany/c412d8d6e4b9b7b058320b0
 
 It will return the binary data as the response and contain the name of the file in the header of the response.
 
+## Change the name of a source image
+
+If you want to update the name of a source image, you can  do this by making a PUT request to
+`https://api.rokka.io/sourceimages/{organization}/{hash}/name` and include the
+JSON encoded name in the body:
+
+```language-bash
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/myorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/name' -d '"somenewname.jpg"'
+```
 
 ## About the usage of sha1 in hashes
 
