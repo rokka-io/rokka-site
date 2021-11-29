@@ -254,10 +254,13 @@ Crops an image to a set size.
    If both are not defined defined, the crop operation will fallback to `center_center`.
    
 - `fallback`: String. What "anchor" should be used, when no subject area was found. Default: "center_center"
-- `mode`: String. If width and height should be taken as absolute values or as ratio. If ratio is chosen, rokka will try to find the largest possible crop fitting into the image with that ratio. The default value is `absolute`. Possible values are:
+- `mode`: String. If width and height should be taken as absolute values or as ratio. If `ratio` is chosen, rokka will try to find the largest possible crop fitting into the image with that ratio. The default value is `absolute`. With `box` it takes a SubjectArea box for cropping, with `area` it tries to fit a SubjectArea into the ratio given by width and height. Possible values are:
     - `absolute`
     - `ratio`
+    - `box`
+    - `area`
 - `scale`: Scales the crop box by that percentage. Especially useful when using the ratio mode and you want eg. only the middle 50% of the picture cropped. The default value is `100`
+- `movearea_y` / `movearea_x`: Moves a SubjectArea by this percentage along the corresponding axes. Can be useful, if a face shouldn't be in the middle of an image for example. 
 
 ### Dropshadow
 
