@@ -1,6 +1,7 @@
 ---
 title: Operations
 use: [references]
+description: All rokka stack operations you can apply to images, like resize, crop, rotate, trim, text, etc.
 ---
 
 ## The operation object

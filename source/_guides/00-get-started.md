@@ -1,6 +1,7 @@
 ---
 title: Get started
 use: [guides]
+description: How to get started with rokka
 ---
 
 ## Concepts

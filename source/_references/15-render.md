@@ -1,6 +1,8 @@
 ---
 title: Render
 use: [references]
+description: How to render a source image through rokka into your desired format
+
 ---
 
 ## Render an image through a stack

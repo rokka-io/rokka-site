@@ -11,9 +11,16 @@
 {% endblock %}
 
 {% block additional_head  %}
+<meta content="{{ page.title }} | {{ site.title }}" property="og:title"/>
+<meta content="{{ page.description ? page.description : site.text.lead.text }}" property="og:description"/>
+<meta content="{{ page.title }} | {{ site.title }}" name="twitter:title"/>
+<meta content="{{ page.description ? page.description : site.text.lead.text }}" name="twitter:description"/>
+<meta content="summary" name="twitter:card"/>
+
     {% if page.header_include %}
         {{ include(page.header_include) }}
-{% endif %}
+    {% endif %}
+
 {% endblock %}
 
 {% block content_wrapper %}

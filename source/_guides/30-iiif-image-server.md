@@ -3,7 +3,7 @@ title: Rokka as IIIF Image Server
 use: [guides]
 header_include: demos/iiif-head.html
 body_attributes: onload="loaded()"
-
+description: You can use rokka as an iiif.io Image Server to deliver zoomable (high resolution) images
 ---
 
 ## Use rokka as an IIIF Image Server

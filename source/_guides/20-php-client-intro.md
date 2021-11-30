@@ -1,6 +1,8 @@
 ---
 title: PHP client library intro
 use: [guides]
+description: An intro for the rokka php CLI client.
+
 ---
 
 ## Note about CMS Clients

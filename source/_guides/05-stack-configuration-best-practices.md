@@ -1,6 +1,7 @@
 ---
 title: Best practices for stack configurations 
 use: [guides]
+description: We present some of our recommended best practice for configuring a rokka stack to get the most out of rokka's possiblities.
 ---
 
 ## Best practices for stack configurations 

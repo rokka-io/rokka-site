@@ -635,3 +635,16 @@
       });
   </script>
 {% endblock %}
+
+{% block additional_head %}
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://rokka.rokka.io/dynamic/ab9144.jpg" name="twitter:image"/>
+<meta content="https://rokka.rokka.io/dynamic/ab9144.jpg" property="og:image"/>
+
+<meta content="{{ site.sharing_title }}" name="twitter:title"/>
+<meta content="{{ site.text.lead.text }}" name="twitter:description"/>
+<meta content="{{ site.sharing_title }}" name="og:title"/>
+<meta content="{{ site.text.lead.text }}" name="og:description"/>
+
+
+{% endblock %}

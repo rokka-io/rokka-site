@@ -1,6 +1,7 @@
 ---
 title: Render caches and invalidation
 use: [guides]
+description: In depth info about rokka's render caches
 ---
 
 ## General info about rokka's render caches

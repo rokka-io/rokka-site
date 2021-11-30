@@ -1,6 +1,8 @@
 ---
 title: Videos
 use: [references]
+description: rokka also can handle videos, stream and convert them.
+
 ---
 
 ## Video support in rokka

@@ -4,6 +4,7 @@ slug: watermark
 use: [demos]
 header_include: demos/watermark-head.html
 body_attributes: onload="updateImage()"
+description: A demo using a text operation to apply a watermark on your images.
 ---
  
 # Watermark with Text Demo

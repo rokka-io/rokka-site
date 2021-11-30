@@ -1,6 +1,7 @@
 ---
 title: Protected Images and Stacks
 use: [references]
+description: rokka can protect your images with signed urls, so that they're for example only are accessible for a certain time.
 ---
 
 ## Intro

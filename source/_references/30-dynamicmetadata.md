@@ -1,6 +1,7 @@
 ---
 title: Dynamic Metadata
 use: [references]
+description: Dynamic metadata is metadata added to a source image that changes the image identifying hash. Like a SubjectArea or a Version
 ---
 
 ## Intro

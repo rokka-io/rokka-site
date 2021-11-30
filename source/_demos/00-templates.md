@@ -4,6 +4,8 @@ slug: template
 use: [demos]
 header_include: demos/templates-head.html
 body_attributes: onload="updateImage()"
+description: A demo with fonts and some complexer stack configuration with stack expressions and variables and "substacks" inclusion
+
 ---
  
 # Templates with Text Demo

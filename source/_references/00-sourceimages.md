@@ -1,6 +1,7 @@
 ---
 title: Source images
 use: [references]
+description: All about the basic concept of source images in rokka, how to upload, delete, restore, etc. them
 ---
 
 ## Intro

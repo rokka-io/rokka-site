@@ -1,6 +1,8 @@
 ---
 title: Upload and Render an Image
 use: [guides]
+description: How to upload an image to to a rokka organization
+
 ---
 
 ## Upload Image into an Organization

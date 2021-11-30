@@ -1,6 +1,7 @@
 ---
 title: Authentication
 use: [guides]
+description: How to authenticate with the rokka API
 ---
 
 ## If you are using a Library

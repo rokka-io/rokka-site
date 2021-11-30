@@ -1,6 +1,8 @@
 ---
 title: Create an Organization
 use: [guides]
+description: How to create an organization with the rokka API
+
 ---
 
 ## Organizations own Images

@@ -1,6 +1,7 @@
 ---
 title: Organizations
 use: [references]
+descriptions: All about rokka organizations and how to handle them
 ---
 
 ## Intro

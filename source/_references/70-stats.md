@@ -1,6 +1,8 @@
 ---
 title: Stats
 use: [references]
+descriptions: All about rokka stats like traffic and storage space.
+
 ---
 
 ## Get traffic and storage stats for your organization

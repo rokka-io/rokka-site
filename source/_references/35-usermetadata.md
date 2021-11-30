@@ -1,6 +1,7 @@
 ---
 title: User Metadata
 use: [references]
+description: rokka can accept user defined metadata for each image and let's you search for them
 ---
 
 ## Intro

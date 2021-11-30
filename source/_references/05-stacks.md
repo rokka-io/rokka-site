@@ -1,6 +1,7 @@
 ---
 title: Stacks
 use: [references]
+description: All about the basic concept of stacks in rokka, how to create and delete them and all the options you have with them
 ---
 
 ## The stack object

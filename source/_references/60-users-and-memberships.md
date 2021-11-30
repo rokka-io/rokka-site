@@ -1,6 +1,8 @@
 ---
 title: Users and Memberships
 use: [references]
+descriptions: All about rokka users and memberships and how to handle them
+
 ---
 
 ## Intro

@@ -4,6 +4,8 @@ slug: signurl
 use: [demos]
 header_include: demos/signurl-head.html
 body_attributes: onload="updateImage()"
+description: Generating signatures for protected rokka images and stacks
+
 ---
  
 # Sign a rokka URL Demo

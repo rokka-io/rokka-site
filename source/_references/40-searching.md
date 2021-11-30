@@ -1,13 +1,12 @@
 ---
 title: Searching Images
 use: [references]
+description: rokka let's you list images and their metadata in your organization and also filter by their metadata.
 ---
 
 ## Intro
 
 It's possible to list images and their metadata in your organization and also filter by their metadata.
-The filter options are pretty basic right now, but may be improved in the future.
-
 
 ## Listing source images
 
