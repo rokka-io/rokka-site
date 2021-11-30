@@ -16,11 +16,9 @@
 <meta content="{{ page.title }} | {{ site.title }}" name="twitter:title"/>
 <meta content="{{ page.description ? page.description : site.text.lead.text }}" name="twitter:description"/>
 <meta content="summary" name="twitter:card"/>
-
     {% if page.header_include %}
         {{ include(page.header_include) }}
     {% endif %}
-
 {% endblock %}
 
 {% block content_wrapper %}
