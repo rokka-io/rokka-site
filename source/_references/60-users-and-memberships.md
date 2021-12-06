@@ -12,7 +12,7 @@ This is automatically done, when you create a new account in [signup screen](htt
 with the corresponding API call.
 
 Each user has an unique Api-Key, can belong to different organizations and can have different access level on each
-of those organisations. The Api-Key currently can't be changed,  but it is easy to create a new user with a new Api-Key and connect that to an organization via a membership. This is currently the recommended way, if you need to change an 
+of those organisations. The Api-Key currently can't be changed, but it is easy to create a new user with a new Api-Key and connect that to an organization via a membership. This is currently the recommended way, if you need to change an 
 Api-Key, eg. because the current one shouldn't be used anymore.
 
 Each user object has also an unique id, this should be used to add a user to a different organization with the membership
