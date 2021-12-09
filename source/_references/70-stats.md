@@ -1,7 +1,7 @@
 ---
 title: Stats
 use: [references]
-descriptions: All about rokka stats like traffic and storage space.
+description: All about rokka stats like traffic and storage space.
 
 ---
 

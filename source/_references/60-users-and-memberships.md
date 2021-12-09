@@ -1,19 +1,20 @@
 ---
 title: Users and Memberships
 use: [references]
-descriptions: All about rokka users and memberships and how to handle them
+description: All about rokka users and memberships and how to handle them
 
 ---
 
 ## Intro
 
 To access the rokka API, you need an user and a membership of that user to the organization you want to access. 
-This is automatically done, when you create a new account in [signup screen](https://rokka.io/dashboard/#/signup) or 
+This is automatically done, when you create a new account in the [signup screen](https://rokka.io/dashboard/#/signup) or 
 with the corresponding API call.
 
-Each user has an unique Api-Key, can belong to different organizations and can have different access level on each
-of those organisations. The Api-Key currently can't be changed, but it is easy to create a new user with a new Api-Key and connect that to an organization via a membership. This is currently the recommended way, if you need to change an 
-Api-Key, eg. because the current one shouldn't be used anymore.
+Each user has one or several Api-Keys, can belong to different organizations and can have different access level on each
+of those organisations. 
+You can have up to 5 different Api-Keys per user. Useful if you want to change an Api-Key via key rotation, or
+you just want to use different ones in different places. See below for details. 
 
 Each user object has also an unique id, this should be used to add a user to a different organization with the membership
 calls explained below.
@@ -226,18 +227,149 @@ curl -H -X DELETE 'https://api.rokka.io/organizations/awesomecompany/memberships
 ```language-php
 $client = \Rokka\Client\Factory::getUserClient('awesomecompany', 'apiKey');
 
-client->deleteMembership('c8791715-a873-475e-96b2-5ffd488112e7');
+$client->deleteMembership('c8791715-a873-475e-96b2-5ffd488112e7');
 ```
 
 If the user is removed from the organization, it will return a 204 code.
 If the user is not found or not a member of this organization, it will return a 404 code.
 If the specified user is the only admin of this organization, it will return a 409 code. The last admin of an organization can not be removed
                       
-## Rotate your API Key
+## Rotate your Api Key
 
-A common usecase is to rotate/change your API key from time to time (or if your key leaked somehow). 
+A common usecase is to rotate/change your Api key from time to time (or if your key leaked somehow).
 
-First you [create a new user with a membership association](./users-and-memberships.html#create-a-new-user-object-and-automatically-assign-it-to-an-organisation) to the current organization with the same permissions as the one with old key.
+There are two ways to rotate an Api key. Either directly on the User or you create a new User and add it to an organization via a membership.
+
+### Via Dashboard
+
+The easiest way to manage your Api Keys is via the Dashboard at [https://rokka.io/dashboard/#/apikeys](https://rokka.io/dashboard/#/apikeys).
+
+### Adding, listing and deleting Api Keys of a user
+
+In general, if a user has `read`, `upload` or `sourceimages:read` rights somewhere, all this methods won't work.
+We assume, that such a user is used for public use and people could otherwise just changed your key, if they 
+know the Api Key. If you want to change an Api Key of such a user, you should use the 2nd method with creating
+a new user and associating it to an organization.
+
+#### Adding an Api Key to a user
+
+You can have up to 5 Api Keys per user. To add a new one, you POST to the `/user/apikeys` endpoint. It can have an
+optional comment, too. [Try it out](https://api.rokka.io/doc/#/admin/createUserApiKey)
+
+```language-bash
+curl -X POST "https://api.rokka.io/user/apikeys" -H "Content-Type: application/json"  -d '{ 
+    "comment": [ "some comment" ]
+    }'
+```
+
+PHP:
+```language-php
+$client = \Rokka\Client\Factory::getUserClient('awesomecompany', 'apiKey');
+$userApiKey = $client->addUserApiKey('some comment');
+echo $userApiKey->getApiKey();
+```  
+
+JavaScript:
+```language-javascript
+const userApiKey = (await rokka.user.addApiKey('foo')).body
+console.log(userApiKey.api_key);
+```  
+
+You'll get back an object, which contains the new Api Key. Store that somewhere safe, you or us can't get it later.
+
+#### Listing Api Keys of a user
+
+You can get all Api Keys (except the actual key, of course, just the info about it) with either
+```language-bash
+curl -X GET "https://api.rokka.io/user" -H "Content-Type: application/json"  
+```
+or 
+```language-bash
+curl -X GET "https://api.rokka.io/user/apikeys" -H "Content-Type: application/json" 
+```
+ [Try it out.](https://api.rokka.io/doc/#/admin/listUserApiKeys)
+
+#### Deleting an Api Key of a user
+
+You can delete an existing Api Key with a delete request on `/user/apikeys/$ApiKeyId`. You can't delete the
+currently used key.  [Try it out.](https://api.rokka.io/doc/#/admin/deleteUserApiKey)
+
+
+```language-bash
+curl -X DELETE "https://api.rokka.io/user/apikeys/$ApiKeyId" -H "Content-Type: application/json"  
+```
+
+PHP:
+```language-php
+$client = \Rokka\Client\Factory::getUserClient('awesomecompany', 'apiKey');
+$userApiKey = $client->deleteUserApiKey($id);
+``` 
+Javascript:
+
+```language-javascript
+rokka.user.deleteApiKey(id)
+```
+
+
+#### Getting currently used Api Key Info
+
+If you don't remember, which Api Key ID the currently used Api Key has, you can do the following request.
+[Try it out.](https://api.rokka.io/doc/#/admin/getUserApiKeyCurrent)
+
+```language-bash
+curl -X GET "https://api.rokka.io/user/apikeys/current" -H "Content-Type: application/json"  
+```
+
+PHP:
+```language-php
+$client = \Rokka\Client\Factory::getUserClient('awesomecompany', 'apiKey');
+echo $client->getCurrentUserApiKey()->getId();
+``` 
+Javascript:
+```language-javascript
+console.log((await rokka.user.getCurrentApiKey()).body)
+```
+
+#### Deleting all Api Keys (except the currently used one)
+
+If you want to delete all Api Keys, except the currently used one, you can use the following code. 
+Since you can't delete the currently used Api Key, we have to check for that and not try to delete that one.
+
+PHP:
+```language-php
+$client = \Rokka\Client\Factory::getUserClient('awesomecompany', 'apiKey');
+$user = $client->getCurrentUser();
+$current = $client->getCurrentUserApiKey()->getId();
+
+foreach ($user->getApiKeys() as $apiKey) {
+    $id = $apiKey->getId();
+    if ($current->getId() !== $id) {
+        echo("Delete $id\n");
+        $userClient->deleteUserApiKey($apiKey->getId());
+    }
+}
+
+```
+
+JavaScript:
+```language-javascript
+const currentKey = (await rokka.user.getCurrentApiKey()).body
+const apiKeys = (await rokka.user.listApiKeys()).body
+for (let key of apiKeys) {
+    if (key.id !== currentKey.id) {
+        console.log(`Delete ${key.id}`)
+        await rokka.user.deleteApiKey(key.id)
+    }
+}
+
+```
+
+
+### Creating a new user to get a new Api Key
+
+The other option to get a new Api Key is to create a new user and add it to an organization. You can do this in one call. 
+
+You [create a new user with a membership association](./users-and-memberships.html#create-a-new-user-object-and-automatically-assign-it-to-an-organisation) to the current organization with the same permissions as the one with old key.
 
 ```language-bash
 curl -X POST "https://api.rokka.io/organizations/awesomecompany/memberships" -H "Content-Type: application/json"  -d '{ 
@@ -245,7 +377,7 @@ curl -X POST "https://api.rokka.io/organizations/awesomecompany/memberships" -H 
     }'
 ```
 
-Copy the `api_key` returned here and change all your keys with it in you applications. When done and deployed, you can [remove the old user from this organization](./users-and-memberships.html#remove-a-user-from-an-organization) with its user_id.
+Then copy the `api_key` returned here and change all your keys with it in you applications. When done and deployed, you can [remove the old user from this organization](./users-and-memberships.html#remove-a-user-from-an-organization) with its user_id.
 
 ```language-bash
 curl  -X DELETE 'https://api.rokka.io/organizations/awesomecompany/memberships/c8791715-a873-475e-96b2-5ffd488112e7'
@@ -254,6 +386,5 @@ curl  -X DELETE 'https://api.rokka.io/organizations/awesomecompany/memberships/c
 You can [get the user_id](./users-and-memberships.html#get-the-current-user_id) with the following command, in case you don't have it at hand anymore (while using the old Api-Key for authorization):
 
 ```language-bash
-curl 'https://api.rokka.io/user'
-
+curl -X GET 'https://api.rokka.io/user' -H "Content-Type: application/json" 
 ``` 
