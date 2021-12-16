@@ -407,6 +407,8 @@ In the second stage, during the [asynchronous 2nd stage optimization stage](#add
 
 We also do optimize SVG images in this stage to make them smaller.
 
+Even though rokka supports JPEG XL and AVIF, it's not enabled by default when setting autoformat to true. But we're happy to enable that for you.
+
 ### Exclude some autoformat conversions
 
 You can prevent some of the conversions a little with the `autoformat.exclude` stack option. It takes a comma-seperated list of the conversions you don't want to have applied.
