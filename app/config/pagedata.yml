@@ -79,4 +79,8 @@ rokka_framework_plugins:
     title: next.js
     alt: How to integrate rokka images in next.js
     link: https://www.liip.ch/en/blog/delivering-images-with-next-js-and-rokka
+  -
+    title: Strapi
+    alt: How to integrate rokka images in Strapi
+    link: https://github.com/rokka-io/strapi-provider-upload-rokka
 
