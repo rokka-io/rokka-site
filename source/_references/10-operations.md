@@ -318,10 +318,15 @@ At least `width` or `height` is required.
 - `upscale`: Boolean. Whether to allow the resulting image to be bigger than the original one. The default value is `true`.
 We advise to read [this blog post about resizing and responsive images](https://www.liip.ch/en/blog/things-you-should-know-about-responsive-images), if you want to turn this off.
 - `upscale_dpr`: Boolean. Whether to allow the resulting image to be dpr times bigger than the original one, when the dpr stack option is set. Eg. If your image has 100x100 dimensions and you ask for a 60x60 image, this setting would upscale a `dpr: 2` setting  to 120x120 even when `upscale` is set to `false`. But it would upscale a request for a 120x120 image only to 200x200 (since a `dpr: 1` request would leave it at 100x100). This is to prevent, that a browser would display an image  with `dpr: 1` on a standard screen bigger than one with `dpr: 2` on a retina screen.  We advise to read [this blog post about resizing and responsive images](https://www.liip.ch/en/blog/things-you-should-know-about-responsive-images), if you want to turn this off. The default value is `true`.
-- `sharpen`:  If set to `true`, rokka will sharpen an image when it's downsized. If set to `false`
-  it will not be sharpened. The parameters used are the default values of the Sharpen operators. If you want to have
-  more control over the paramters, you can use the [Sharpen](#sharpen) operation below. Default: `false`
+- `sharpen`:  If set to `true`, rokka will sharpen an image when it's downsized and has an entropy > 5 (indicating that
+  it's a photo or similar). 
+  If set to `false` it will not be sharpened. The parameters used are the default values of 
+    the Sharpen operator. If you want to have more control over those parameters, you can use the [Sharpen](#sharpen) operation below.
+  You can increase also the entropy threshold via a stack expression, eg. `"sharpen": "image.entropy > 6"`.
+  If you want to lower it, you have to use the Sharpen operation and set this here to `false`.
+  Default: `false` 
 
+  
 ### Rotate
 
 Rotates an image clockwise.
@@ -342,6 +347,18 @@ Sharpens an image. Can be useful after downsizing an image, for example (when no
 operation). The properties are a little bit hard to understand, but the defaults can be fine already. All the details
 to the properties are explained in more details on [the vips documentation page about its sharpen method](https://www.libvips.org/API/current/libvips-convolution.html#vips-sharpen).
 If you want more or less sharpening, we suggest you just change the m2 parameter (from the vips docs).
+If you only want to sharpen picture above a certain entropy (pictures with low entropy, like diagrams, often don't benefit 
+from sharpening), you can use a stack expression and the `image.entropy` parameter. The following would for example
+only sharpen pictures with a entropy > 6.
+
+```language-javascript
+{
+   "name": "sharpen",
+   "expressions": {
+      "enabled" : "image.entropy > 6"
+   }
+}
+```
 
 #### Properties
 
