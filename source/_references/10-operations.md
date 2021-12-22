@@ -318,10 +318,9 @@ At least `width` or `height` is required.
 - `upscale`: Boolean. Whether to allow the resulting image to be bigger than the original one. The default value is `true`.
 We advise to read [this blog post about resizing and responsive images](https://www.liip.ch/en/blog/things-you-should-know-about-responsive-images), if you want to turn this off.
 - `upscale_dpr`: Boolean. Whether to allow the resulting image to be dpr times bigger than the original one, when the dpr stack option is set. Eg. If your image has 100x100 dimensions and you ask for a 60x60 image, this setting would upscale a `dpr: 2` setting  to 120x120 even when `upscale` is set to `false`. But it would upscale a request for a 120x120 image only to 200x200 (since a `dpr: 1` request would leave it at 100x100). This is to prevent, that a browser would display an image  with `dpr: 1` on a standard screen bigger than one with `dpr: 2` on a retina screen.  We advise to read [this blog post about resizing and responsive images](https://www.liip.ch/en/blog/things-you-should-know-about-responsive-images), if you want to turn this off. The default value is `true`.
-- `sharpen`: If not set, rokka automatically sharpens an image, if it was downsized and could be a photo (meaning, has enough entropy). 
-  Otherwise it doesn't sharpen it. If set to `true`, it will always be sharpened when it's downsized. If set to `false`
-  it will never be sharpened. For example if you really don't want that or have more control over the sharpening
-  parameters via the [Sharpen](#sharpen) operation below. The parameters used are the default values of the Sharpen operators.
+- `sharpen`:  If set to `true`, rokka will sharpen an image when it's downsized. If set to `false`
+  it will not be sharpened. The parameters used are the default values of the Sharpen operators. If you want to have
+  more control over the paramters, you can use the [Sharpen](#sharpen) operation below. Default: `false`
 
 ### Rotate
 
@@ -339,7 +338,7 @@ Applies sepia toning to an image
 
 ### Sharpen
 
-Sharpens an image. Can be useful after downsizing an image, for example (when not already automatically done in a resize
+Sharpens an image. Can be useful after downsizing an image, for example (when not already enabled in a resize
 operation). The properties are a little bit hard to understand, but the defaults can be fine already. All the details
 to the properties are explained in more details on [the vips documentation page about its sharpen method](https://www.libvips.org/API/current/libvips-convolution.html#vips-sharpen).
 If you want more or less sharpening, we suggest you just change the m2 parameter (from the vips docs).
