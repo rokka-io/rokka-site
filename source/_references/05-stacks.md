@@ -50,6 +50,7 @@ The _options_ parameter is optional. You can use the following options in there.
 | timestamp | - | - | - | Use a thumbnail from a video at this timestamp for rendering. See the [video chapter](videos.html#generating-a-thumbnail-from-an-imported-video-for-rendering) for details. | 
 | fps | 10 | 1 | 25 | Sets frame per second for movie to animated gif conversion. |
 | dpi | - | 1 | 5000 | Sets some dpi metadata info to an image, but doesn't resize them. It only works for PNG and TIFF (but not JPEG), currently, and you do have to set `optim.disable_all` to true. DPI doesn't matter in the web context, usually you don't need this. |
+| pdf.dpi | 200 | 10 | 1000 / Define the DPI a PDF is converted to a bitmap image. If the result would be smaller than 1000px wide, rokka doubles it automatically. The default value is usually fine |
 | protected | false | - | - | If a stack should be protected and [needing signed urls](./protected-images-and-stacks.html) |
 
 ```language-bash
