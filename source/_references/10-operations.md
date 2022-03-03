@@ -399,7 +399,7 @@ stack variables.
 Can also be used together with the [`composition`](#composition) operation to put logos or graphics on to an image and dynamically 
 change them, if you use it together with the `secondary_stack` and maybe `secondary_stack_variables` options there.
 
-To do this, you set the attributes you want to add/replace in an URL Search Parameters encoded string, with the element id
+To do this, you define the attributes you want to set in an URL Search Parameters encoded string in the `set` option, with the element id
 concatenated with a dot and the attribute name as key and the new attribute value as value. See the example, which makes that hopefully more clear.
 
 Let's take this SVG as a simple example, you need to upload that to rokka like any other image.
@@ -417,9 +417,9 @@ you'd define your stack like this
 
 ```language-json
 {
-   "name": "svgreplace",
+   "name": "svgdynamic",
    "options": {
-      "add" : "line.stroke=#ff00ff&line.stroke-width=5"
+      "set" : "line.stroke=#ff00ff&line.stroke-width=5"
    }
 }
 ```
@@ -431,9 +431,9 @@ But this feature is best used with stack variables and expressions.
 {
   "operations": [
     {
-      "name": "svgreplace",
+      "name": "svgdynamic",
       "expressions": {
-        "add": "'line.stroke=#' ~ $color ~ '&line.stroke-width='  ~ $sw"
+        "set": "'line.stroke=#' ~ $color ~ '&line.stroke-width='  ~ $sw"
       }
     }
   ],
