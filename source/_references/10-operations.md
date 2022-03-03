@@ -214,6 +214,25 @@ You can also use another stack for being included, if you have more complex rend
 } 
 ```
 
+If you want to add some special stack variables to this secondary Stack, you can do so with using the `secondary_stack_variables`
+option and setting them in an URL Search Query format. Search Variables defined in the secondary stack are also
+automatically inserted, if you use them in the Render URL.
+The following example would send the source image width to the secondary stack as stack variable `w` (and the height)
+and could be reused there.
+
+```language-javascript
+{
+    "name": "composition",
+    "options": {
+        "mode": "background",
+        "secondary_stack": "anotherstack",
+    },
+    "expressions": {
+        "secondary_stack_variabels": "'w=' ~ image.width ~ '&h=' ~ image.height"
+    }
+} 
+```
+
 
 
 
@@ -229,6 +248,7 @@ You can also use another stack for being included, if you have more complex rend
 - `resize_to_primary`: A `secondary_image` is resized to the primary `width` and `height`
 - `secondary_image`: The hash of another image to be used.
 - `secondary_stack`: The name of another stack to be used.
+- `secondary_stack_variables`: The stack variables to be sent to the secondary stack encoded as URL Query Parameters.
 - `angle`: Rotate the overlay by degrees. Default: 0
 
 
@@ -368,6 +388,68 @@ only sharpen pictures with a entropy > 6.
 - `x1`: Number. Flat/jaggy threshold. Default: 2.0
 - `y2`: Number. Maximum amount of brightening. Default: 10.0
 - `y3`: Number. Maximum amount of darkening. Default: 20.0
+
+### SvgDynamic
+
+Adds/replaces dynamically attributes in an SVG Source Image.
+
+Can be useful, if you need to change attributes like stroke-width, color or sizes depending on some input values or 
+stack variables.
+
+Can also be used together with the [`composition`](#composition) operation to put logos or graphics on to an image and dynamically 
+change them, if you use it together with the `secondary_stack` and maybe `secondary_stack_variables` options there.
+
+To do this, you set the attributes you want to add/replace in an URL Search Parameters encoded string, with the element id
+concatenated with a dot and the attribute name as key and the new attribute value as value. See the example, which makes that hopefully more clear.
+
+Let's take this SVG as a simple example, you need to upload that to rokka like any other image.
+
+```language-svg
+
+<svg id="root" width="1000" height="1000" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" >
+  <polyline id="line" stroke="#FF6840" stroke-width="10" points="10 500, 190 10"/>
+</svg>
+
+```
+
+Then assuming you want to change the "stroke" and the "stroke-width" attribute of the element with the id "line", 
+you'd define your stack like this
+
+```language-javascipt
+{
+   "name": "svgreplace",
+   "options": {
+      "add" : "line.stroke=#ff00ff&line.stroke-width=5"
+   }
+}
+```
+
+
+But this feature is best used with stack variables and expressions. 
+
+```language-javascipt
+{
+    "operations": [
+        {
+            "name": "svgreplace",
+            "expressions": {
+                "add": "'line.stroke=#' ~ $color ~ '&line.stroke-width='  ~ $sw"
+            }
+        }
+    ],
+    "variables": {
+        "color": "ff00ff",
+        "sw": 5,
+    }
+}
+```
+
+With this you can now control the control and stroke width via the render URL, eg. `https://your-org.rokka.io/stackname/v-color-663388-sw-10/$HASH.svg`.
+
+
+#### Properties
+
+- `add` (required): String. The Element-ID and attribute pair as key and the new value as value encoded as URL-Query-Parameter
 
 ### Trim
 
