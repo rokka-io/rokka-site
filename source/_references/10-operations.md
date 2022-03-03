@@ -371,7 +371,7 @@ If you only want to sharpen picture above a certain entropy (pictures with low e
 from sharpening), you can use a stack expression and the `image.entropy` parameter. The following would for example
 only sharpen pictures with a entropy > 6.
 
-```language-javascript
+```language-json
 {
    "name": "sharpen",
    "expressions": {
@@ -415,7 +415,7 @@ Let's take this SVG as a simple example, you need to upload that to rokka like a
 Then assuming you want to change the "stroke" and the "stroke-width" attribute of the element with the id "line", 
 you'd define your stack like this
 
-```language-javascipt
+```language-json
 {
    "name": "svgreplace",
    "options": {
@@ -427,20 +427,20 @@ you'd define your stack like this
 
 But this feature is best used with stack variables and expressions. 
 
-```language-javascipt
+```language-json
 {
-    "operations": [
-        {
-            "name": "svgreplace",
-            "expressions": {
-                "add": "'line.stroke=#' ~ $color ~ '&line.stroke-width='  ~ $sw"
-            }
-        }
-    ],
-    "variables": {
-        "color": "ff00ff",
-        "sw": 5,
+  "operations": [
+    {
+      "name": "svgreplace",
+      "expressions": {
+        "add": "'line.stroke=#' ~ $color ~ '&line.stroke-width='  ~ $sw"
+      }
     }
+  ],
+  "variables": {
+    "color": "ff00ff",
+    "sw": 5
+  }
 }
 ```
 
