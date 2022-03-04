@@ -215,8 +215,8 @@ You can also use another stack for being included, if you have more complex rend
 ```
 
 If you want to add some special stack variables to this secondary Stack, you can do so with using the `secondary_stack_variables`
-option and setting them in an URL Search Query format. Search Variables defined in the secondary stack are also
-automatically inserted, if you use them in the Render URL.
+option and setting like you would normal variables. Search Variables defined in the secondary stack are also
+automatically inserted, if you use them in the render URL.
 The following example would send the source image width to the secondary stack as stack variable `w` (and the height)
 and could be reused there.
 
@@ -228,7 +228,10 @@ and could be reused there.
         "secondary_stack": "anotherstack",
     },
     "expressions": {
-        "secondary_stack_variabels": "'w=' ~ image.width ~ '&h=' ~ image.height"
+        "secondary_stack_variabels": {
+          "w": "image.width",
+          "h": "image.height"
+        }
     }
 } 
 ```
@@ -399,8 +402,8 @@ stack variables.
 Can also be used together with the [`composition`](#composition) operation to put logos or graphics on to an image and dynamically 
 change them, if you use it together with the `secondary_stack` and maybe `secondary_stack_variables` options there.
 
-To do this, you define the attributes you want to set in an URL Search Parameters encoded string in the `set` option, with the element id
-concatenated with a dot and the attribute name as key and the new attribute value as value. See the example, which makes that hopefully more clear.
+To do this, you define the attributes you want to set in the `changes` option as an array with objects containing the keys 
+`id` (for the element id), `attr` (for the attribute you want to change) and `value` (for the value it should be changed to).
 
 Let's take this SVG as a simple example, you need to upload that to rokka like any other image.
 
@@ -417,10 +420,21 @@ you'd define your stack like this
 
 ```language-json
 {
-   "name": "svgdynamic",
-   "options": {
-      "set" : "line.stroke=#ff00ff&line.stroke-width=5"
-   }
+  "name": "svgdynamic",
+  "options": {
+    "changes": [
+      {
+        "id": "line",
+        "attr": "stroke",
+        "value": "#ff00ff"
+      },
+      {
+        "id": "line",
+        "attr": "stroke-width",
+        "value": "5"
+      }
+    ]
+  }
 }
 ```
 
@@ -432,9 +446,18 @@ But this feature is best used with stack variables and expressions.
   "operations": [
     {
       "name": "svgdynamic",
-      "expressions": {
-        "set": "'line.stroke=#' ~ $color ~ '&line.stroke-width='  ~ $sw"
-      }
+      "expressions": [
+        {
+          "id": "line",
+          "attr": "stroke",
+          "value": "'#' ~ $color"
+        },
+        {
+          "id": "line",
+          "attr": "stroke-width",
+          "value": "$sw"
+        }
+      ]
     }
   ],
   "variables": {
