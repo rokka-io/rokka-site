@@ -1,9 +1,5 @@
 rokka_more_links:
   -
-    title: Changelog
-    alt: The changelog of the API
-    link: https://api.rokka.io/changelog.md
-  -
     title: Dashboard
     alt: Browser based dashboard
     link: https://rokka.io/dashboard
@@ -15,6 +11,14 @@ rokka_more_links:
     title: Swagger/OpenAPI documentation and sandbox
     alt: Swagger/OpenAPI documentation and json
     link: https://api.rokka.io/doc/
+  -
+    title: Service Status
+    alt: Status of rokka services
+    link: https://status.rokka.io/
+  -
+    title: Changelog
+    alt: The changelog of the API
+    link: https://api.rokka.io/changelog.md
 
 rokka_libraries:
   -
