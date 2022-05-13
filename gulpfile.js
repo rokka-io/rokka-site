@@ -54,6 +54,14 @@ gulp.task('copy:pdf', () => {
   return gulp.src('source-assets/pdf/**/*')
     .pipe(gulp.dest('dist/assets/pdf/'))
 });
+gulp.task('copy:wellknown', () => {
+    return gulp.src('source-assets/.well-known/**/*')
+      .pipe(gulp.dest('dist/.well-known/'))
+});
+gulp.task('copy:securitytxt', () => {
+    return gulp.src('source-assets/.well-known/security.txt')
+      .pipe(gulp.dest('dist/'))
+});
 
 
 gulp.task('copy:fonts', () => {
@@ -72,7 +80,7 @@ gulp.task('copy:images', () => {
 });
 
 
-gulp.task('copy', ['copy:favicons', 'copy:fonts', 'copy:images', 'copy:pdf']);
+gulp.task('copy', ['copy:favicons', 'copy:fonts', 'copy:images', 'copy:pdf', 'copy:wellknown', 'copy:securitytxt']);
 
 
 /*

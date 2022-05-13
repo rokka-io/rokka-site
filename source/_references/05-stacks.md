@@ -137,10 +137,23 @@ In the PHP client add the key `overwrite` with value `true` to the second parame
 $stack = $client->saveStack($stack, ['overwrite' => true]);
 ```
 
+#### Invalidating the CDN cache for a stack
+
+For paying customers, it's possible to invalidate the cache of a stack at the CDN. This should only be used rarely and not be used on a regular basis, see again
+the [Render caches and invalidation document](../guides/render-caches-and-invalidation.html) for how our caching works.
+
+To invalidate the CDN cache for a stack, call the [https://api.rokka.io/stacks/$NAME/cache](https://api.rokka.io/doc/#/stacks/deleteStackCache) endpoint with a DELETE http method.
+
+```language-bash
+curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/stacks/mycompany/teststack/cache' 
+```
+
+This endpoint is rate limited, you can do max 5 calls to this per hour. If you need more or need to clear the whole cache, please get in contact with us.
+
+
 ### Best practices for configuring a stack
 
-There's a whole page for that. We highly recomment reading this "[Best practices for stack configurations
-](../guides/best-practices-for-stack-configurations.html)" chapter.
+There's a whole page for that. We highly recomment reading this "[Best practices for stack configurations](../guides/best-practices-for-stack-configurations.html)" chapter.
 
 
 ### Configuring a stack with no operations

@@ -60,10 +60,12 @@ The current limit for uploading images are 150 MB in file size. For source image
 Instead of directly uploading an image within the POST request, you can also provide an URL to a remote image, which then will be 
 downloaded by rokka and inserted into your repository. This happens synchronously, so you will get the same hashes and metadata back as with directly uploading an image.
 
-The image at the URL has to be publicly accessible. There's currently no way to add authentication. If you need that, (talk to us)[https://rokka.io/en/contact/].
+The image at the URL has to be publicly accessible. There's currently no way to add authentication. If you need that, [talk to us](https://rokka.io/en/contact/).
 
 ```language-bash
-curl -X POST -F url[0]='https://rokka.rokka.io/dynamic/noop/f4d3f334ba90d2b4b00e82953fe0bf93e7ad9912.png' 'https://api.rokka.io/sourceimages/mycompany'
+curl -X POST \ 
+-F url[0]='https://rokka.rokka.io/dynamic/noop/f4d3f334ba90d2b4b00e82953fe0bf93e7ad9912.png' \
+'https://api.rokka.io/sourceimages/mycompany'
 ```
 ```language-php
 $client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey');
