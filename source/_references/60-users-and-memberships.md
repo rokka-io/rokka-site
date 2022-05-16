@@ -247,8 +247,8 @@ The easiest way to manage your Api Keys is via the Dashboard at [https://rokka.i
 ### Adding, listing and deleting Api Keys of a user
 
 In general, if a user has `read`, `upload` or `sourceimages:read` rights somewhere, all this methods won't work.
-We assume, that such a user is used for public use and people could otherwise just changed your key, if they 
-know the Api Key. If you want to change an Api Key of such a user, you should use the 2nd method with creating
+We assume, that such a user is used for public use and people could otherwise just change your key, if they 
+know the Api Key. If you want to change an Api Key of such a user, you should use [the 2nd method](#creating-a-new-user-to-get-a-new-api-key) with creating
 a new user and associating it to an organization.
 
 #### Adding an Api Key to a user
@@ -377,7 +377,7 @@ curl -X POST "https://api.rokka.io/organizations/awesomecompany/memberships" -H 
     }'
 ```
 
-Then copy the `api_key` returned here and change all your keys with it in you applications. When done and deployed, you can [remove the old user from this organization](./users-and-memberships.html#remove-a-user-from-an-organization) with its user_id.
+Then copy the `api_key` returned here and change all your keys with it in your applications. When done and deployed, you can [remove the old user from this organization](./users-and-memberships.html#remove-a-user-from-an-organization) with its user_id.
 
 ```language-bash
 curl  -X DELETE 'https://api.rokka.io/organizations/awesomecompany/memberships/c8791715-a873-475e-96b2-5ffd488112e7'
@@ -388,3 +388,7 @@ You can [get the user_id](./users-and-memberships.html#get-the-current-user_id) 
 ```language-bash
 curl -X GET 'https://api.rokka.io/user' -H "Content-Type: application/json" 
 ``` 
+
+## Using JWT tokens instead of the API key for authentication
+
+See [the Authentication guide](../guides/authentication.html) for details about how to get expiring JWT tokens for authentication.
