@@ -21,6 +21,8 @@ calls explained below.
 
 It's a good idea to create a user for your application with only write access (and not admin rights) when you start using the service in earnest.
 
+You can easily add new users with different membership rights in the [dashboard](https://rokka.io/dashboard/#/memberships).
+
 ## The user object
 
 | Attribute | Description |
@@ -86,7 +88,11 @@ var_dump($user_id);
 
 If you need a new user, either for example for different roles (a write user) or you need a new Api-Key, you can do that in one call. [Try it out](https://api.rokka.io/doc/#/admin/createMembershipAndUser)
 
+
 It's best practice to create a user with only write access for general operations, and only use the admin user when necessary.
+
+You can also to this directly in the [dashboard](https://rokka.io/dashboard/#/memberships).
+
 
 ```language-bash
 curl -X POST "https://api.rokka.io/organizations/awesomecompany/memberships" -H "Content-Type: application/json"  -d '{ 
@@ -121,6 +127,11 @@ var_dump($membership);
 ## Memberships
 
 Membership is the connection between a user and an organization. It defines their access rights to that organization as well.
+
+You can organize the memberships of an organization directly in the [dashboard](https://rokka.io/dashboard/#/memberships).
+
+Or with the API calls mentioned here.
+
 
 ## The membership object
 
