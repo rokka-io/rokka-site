@@ -247,3 +247,22 @@ const isExpired = rka.user.getTokenIsValidFor() < 0
 You can't revoke a JWT token by itself, but you can [delete/rotate the API key](..references/users-and-memberships.html#rotate-your-api-key) used for generating the token, then the token will also be invalid. But beware that this makes all tokens invalid which are based on this
 API key.
 
+### HTTP Status Codes
+
+The rokka API returns a 401 HTTP Status, when you use an invalid token (be it expired or IP protected or just not in the right format). Renewing tokens on the other hand throws a 403, if this doesn't work (because for example you try to extend it for a longer period than the initial token).
+
+The JavaScript library clears the token in the storage in both of those cases. So you can check for this token or a 401 if you want 
+to show a login screen, when something goes not as expected.
+
+If you try to do API calls with just an invalid API Key, that throws also a 403 and not a 401. This is due to historical
+reasons, and maybe important to know if you support API Keys and API JWT Tokens. But we do add the property `invalid_authentication`
+in all cases to the response, if the authentication was invalid, see the example below. This property is missing, if you are properly authenticated, 
+but just not allowed to do that API call (which will also get you a 403 usually)
+
+```language-js
+{
+    "code": 403,
+    "message": "API credentials are not supplied or not a valid format.",
+    "invalid_authentication": true
+}
+```
