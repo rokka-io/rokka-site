@@ -105,6 +105,13 @@ Sample Response
 /dynamic/42aa0a69a074ae0bf2864d92c21907edb58e2d98/224-256x144.m3u8
 ```
 
+There's also two stack options `min_video_width` and `min_video_height` you can use to define the minimum width/height
+a video should have, the following URL would only provide links to videos with at least a hight of 480
+
+```
+http://liip.rokka.io/dynamic/o-min_video_height-480/c97fc8.m3u
+```
+
 ### .m3u8
 
 This returns the list of segments for a HLS enabled video. This is the URL you use, if you just have one encoding of a video and don't need adaptive streaming and don't want to automatically generate smaller versions.
