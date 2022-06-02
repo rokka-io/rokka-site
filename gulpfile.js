@@ -167,19 +167,6 @@ gulp.task('compile:html', ['compile:sculpin'], () => {
 
 gulp.task('compile', ['compile:styles', 'compile:scripts', 'compile:html']);
 
-gulp.task('dashboard', (cb) => {
-  exec('./install-dashboard.sh', (err, stdout, stderr) => {
-    if (err) {
-      throw err;
-    }
-
-    gutil.log('Dashboard: \n\n' + stdout);
-    gutil.log(gutil.colors.red(stderr));
-
-    cb();
-  })
-})
-
 gulp.task('inject', () => {
   gulp.src('dist/**/*.svg')
     .pipe(svgmin({
