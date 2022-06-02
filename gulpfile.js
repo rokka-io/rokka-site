@@ -257,7 +257,7 @@ gulp.task('build:prod', () => {
 
 
 gulp.task('build', ['clean'], () => {
-  runSequence('compile', 'copy', 'dashboard', 'inject', 'minify');
+  runSequence('compile', 'copy', 'inject', 'minify');
 });
 
 gulp.task('default', ['clean'], () => {
