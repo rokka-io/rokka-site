@@ -100,7 +100,7 @@ print_r($stack);
 
 Note: The name "dynamic" (used for dynamic rendering) and names starting with "_" are reserved and can't be chosen as stack names.
 
-### Using the "_preview" stack
+### Using a temporary "_preview" stack
 
 If you want to try out different stack configurations during development, you can name a stack starting with `_preview`. All requests
 to those stacks are not cached anywhere, not on our servers, not on the CDN nor in the browser. Ideal to test different
