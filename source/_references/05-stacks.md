@@ -100,6 +100,14 @@ print_r($stack);
 
 Note: The name "dynamic" (used for dynamic rendering) and names starting with "_" are reserved and can't be chosen as stack names.
 
+### Using the "_preview" stack
+
+If you want to try out different stack configurations during development, you can name a stack starting with `_preview`. All requests
+to those stacks are not cached anywhere, not on our servers, not on the CDN nor in the browser. Ideal to test different
+settings until you have the perfect one and not to think about caching. And once you're satisfied, you can create
+the "real" stack. **Do not use `_preview` stacks on live websites!**. It will be slow and more importantly, they get
+deleted automatically after a few days.
+
 ### Updating existing stacks
 
 Please read the [Render caches and invalidation document](../guides/render-caches-and-invalidation.html) carefully, if you want to update an existing stacks with new options/operations, since it may not work like you'd expect.
