@@ -16,7 +16,7 @@ curl -X GET 'https://{organization}.rokka.io/{stack-name}/{hash}.{format}'
 ```
 
 Note: Additional text after the hash is ignored. You can use this for example to add a
-slug to the image URL for SEO purposes. This slug can contain all characters except a `.` and a `/`.
+slug to the image URL for SEO purposes. This slug can contain all characters except a `/`.
 
 ```language-bash
 curl -X GET 'https://{organization}.rokka.io/{stack-name}/{hash}/{slug}.{format}'
