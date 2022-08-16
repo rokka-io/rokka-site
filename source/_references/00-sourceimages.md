@@ -329,6 +329,37 @@ JSON encoded name in the body:
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/myorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/name' -d '"somenewname.jpg"'
 ```
 
+## Lock a source image to prevent deletion
+
+A source image can be locked to prevent deletion of a source image. It also prevents changes to user metadata. 
+Anyone with at least `sourceimages:write` role can lock an image, but it can only be unlocked with the `sourceimages:unlock` 
+or `admin` role.
+
+Bash:
+```language-bash
+curl -X PUT 'https://api.rokka.io/sourceimages/mycompany/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/options/protected' \ 
+      --data-raw 'true'
+```
+
+PHP:
+```language-php
+$client = \Rokka\Client\Factory::getImageClient('mycompany', 'apiKey');
+$newHash = $client->setLocked(
+    true, 
+    '0dcabb778d58d07ccd48b5ff291de05ba4374fb9' 
+);
+```
+
+JavaScript:
+```language-javascript
+var rokka = require('rokka')({apiKey: 'apiKey'})
+var response = rokka.sourceimages.setLocked(
+    org, 
+    '0dcabb778d58d07ccd48b5ff291de05ba4374fb9', 
+    true 
+)
+```
+
 ## About the usage of sha1 in hashes
 
 We use sha1 for generating hashes and binary hashes of sourceimages, but not for cryptography or other security related matters.
