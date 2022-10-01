@@ -21,7 +21,10 @@
         "masterminds/html5": "^2.3"
     },
     "config": {
-        "component-dir": "source/components"
+        "component-dir": "source/components",
+        "allow-plugins": {
+            "sculpin/sculpin-theme-composer-plugin": true
+        }
     },
     "autoload": {
         "psr-4": {
