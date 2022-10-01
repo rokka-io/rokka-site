@@ -332,8 +332,9 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimag
 ## Lock a source image to prevent deletion
 
 A source image can be locked to prevent deletion of a source image. It also prevents changes to user metadata. 
-Anyone with at least `sourceimages:write` role can lock an image, but it can only be unlocked with the `sourceimages:unlock` 
-or `admin` role.
+Only users with an `admin` or `sourceimages:unlock` role can change this.
+
+If an image is locked, no one can delete an image before it's not unlocked, not even an admin.
 
 Bash:
 ```language-bash
