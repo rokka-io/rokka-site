@@ -5,7 +5,7 @@
   "author": "Liip",
   "homepage": "https://rokka.io",
   "devDependencies": {
-    "browser-sync": "^2.26.13",
+    "browser-sync": "^2.27.10",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
@@ -13,7 +13,7 @@
     "gulp-htmlmin": "^3.0.0",
     "gulp-include": "^2.4.1",
     "gulp-inject-svg": "^0.1.9",
-    "gulp-sass": "^4.1.0",
+    "gulp-sass": "^4.1.1",
     "gulp-svgmin": "^1.2.3",
     "gulp-uglify": "^2.0.1",
     "gulp-uncss": "^1.0.6",
@@ -21,7 +21,7 @@
     "run-sequence": "^1.2.2"
   },
   "engines": {
-    "node": "~10"
+    "node": "^10"
   },
   "dependencies": {
     "broken-link-checker": "^0.7.8"
