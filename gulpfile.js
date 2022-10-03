@@ -1,10 +1,9 @@
 const gulp = require('gulp')
-const sass = require('gulp-sass')
+const sass = require('gulp-sass')(require('sass'));
+
 const gutil = require('gulp-util')
 const uglify = require('gulp-uglify')
-const uncss = require('gulp-uncss')
 const autoprefixer = require('gulp-autoprefixer')
-const cleancss = require('gulp-clean-css')
 const htmlmin = require('gulp-htmlmin')
 const svgmin = require('gulp-svgmin')
 const include = require('gulp-include')
@@ -14,7 +13,6 @@ const del = require('del')
 const pump = require('pump')
 const browserSync = require('browser-sync').create()
 const runSequence = require('gulp4-run-sequence')
-
 const config = require('./gulpconfig.js')
 
 let env = 'local'
@@ -247,6 +245,10 @@ gulp.task('minify', gulp.series(/*'minify:styles',*/ 'minify:scripts' /*'minify:
     done()
 })
 
+gulp.task('build:stage', (done) => {
+    env = 'stage'
+    runSequence('build', done)
+})
 
 gulp.task('build:prod', (done) => {
     env = 'prod'

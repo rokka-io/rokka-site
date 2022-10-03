@@ -13,16 +13,16 @@
     "gulp-htmlmin": "^4.0.0",
     "gulp-include": "^2.4.1",
     "gulp-inject-svg": "^0.1.18",
-    "gulp-sass": "^4.1.1",
+    "gulp-sass": "^5.1.0",
     "gulp-svgmin": "^4.1.0",
     "gulp-uglify": "^3.0.2",
-    "gulp-uncss": "^1.0.6",
     "gulp4-run-sequence": "^1.0.1",
     "pump": "^3.0.0",
-    "run-sequence": "^1.2.2"
+    "run-sequence": "^1.2.2",
+    "sass": "^1.55.0"
   },
   "engines": {
-    "node": "^14"
+    "node": "^18"
   },
   "dependencies": {
     "broken-link-checker": "^0.7.8"

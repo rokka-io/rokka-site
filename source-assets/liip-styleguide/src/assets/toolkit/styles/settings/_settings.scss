@@ -6,11 +6,13 @@
  * Layout
  */
 
+@use "sass:math";
+
 $container-width:           1120px;
 $navbar-height-small:       61px;
 $navbar-height:             160px;
 
-$screen-navbar-full-min:    1500px / 16px * 1em !default;
+$screen-navbar-full-min:    math.div(1500px, 16px) * 1em !default;
 
 /**
  * Colors
