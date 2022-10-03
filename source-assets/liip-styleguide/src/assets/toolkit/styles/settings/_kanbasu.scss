@@ -13,6 +13,8 @@
  * Colors
  */
 
+@use "sass:math";
+
 $brand-color:                       $green-700;
 // $alt-color-lighter:                 #eee;
 // $alt-color-light:                   #999;
@@ -57,18 +59,18 @@ $spacing-unit-default:              20px;
 
 // Use EM media-queries for better browser consistency
 // See http://zellwk.com/blog/media-query-units
-$screen-xs-max:                     640px  / 16px * 1em;
-$screen-sm-min:                     641px  / 16px * 1em;
-$screen-sm-max:                     768px  / 16px * 1em;
-$screen-md-min:                     769px  / 16px * 1em;
-$screen-md-max:                     1024px / 16px * 1em;
-$screen-lg-min:                     1025px / 16px * 1em;
-$screen-lg-max:                     1439px / 16px * 1em;
-$screen-xl-min:                     1440px / 16px * 1em;
-$screen-xl-max:                     1679px / 16px * 1em;
-$screen-xxl-min:                    1680px / 16px * 1em;
-$screen-xxl-max:                    1919px / 16px * 1em;
-$screen-xxxl-min:                   1920px / 16px * 1em;
+$screen-xs-max:                     math.div(640px, 16px) * 1em;
+$screen-sm-min:                     math.div(641px, 16px) * 1em;
+$screen-sm-max:                     math.div(768px, 16px) * 1em;
+$screen-md-min:                     math.div(769px, 16px) * 1em;
+$screen-md-max:                     math.div(1024px, 16px) * 1em;
+$screen-lg-min:                     math.div(1025px, 16px) * 1em;
+$screen-lg-max:                     math.div(1439px, 16px) * 1em;
+$screen-xl-min:                     math.div(1440px, 16px) * 1em;
+$screen-xl-max:                     math.div(1679px, 16px) * 1em;
+$screen-xxl-min:                    math.div(1680px, 16px) * 1em;
+$screen-xxl-max:                    math.div(1919px, 16px) * 1em;
+$screen-xxxl-min:                   math.div(1920px, 16px) * 1em;
 
 $breakpoints-default:               (
                                      'sm' '(min-width: #{$screen-sm-min})',

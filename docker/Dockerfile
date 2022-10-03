@@ -2,7 +2,7 @@ FROM  php:8.0
 
 RUN apt-get update && apt-get install -y wget git  libzip-dev zip
 RUN docker-php-ext-install zip
-ENV NODE_JS_VERSION=10
+ENV NODE_JS_VERSION=18
 RUN mkdir -p ~/.nvm/
 RUN curl -o ~/.nvm/nvm.sh https://raw.githubusercontent.com/creationix/nvm/v0.39.1/nvm.sh # update nvm
 RUN bash -c "source ~/.nvm/nvm.sh; nvm install $NODE_JS_VERSION;"

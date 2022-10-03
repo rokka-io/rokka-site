@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '../liip-styleguide/node_modules/kanbasu/src/assets/scss/tools/functions';
 @import '../liip-styleguide/node_modules/kanbasu/src/assets/scss/tools/mixins';
 @import '../liip-styleguide/src/assets/toolkit/styles/tools/mixins';
@@ -925,17 +927,17 @@ html {
     $rokka-uoso-base-imac: 1170; // 1302
 
     width: 1em;
-    height: 660 / $rokka-uoso-base-imac + em; // 603
+    height: math.div(660, $rokka-uoso-base-imac) + em; // 603
 
     position: relative;
     top: 0;
     left: 0.05em;
 
 
-    margin-bottom: -300 / $rokka-uoso-base-imac + em;
-    margin-top: -200 / $rokka-uoso-base-imac + em;
+    margin-bottom: math.div(-300, $rokka-uoso-base-imac) + em;
+    margin-top: math.div(-200, $rokka-uoso-base-imac) + em;
 
-    perspective: 2860 / $rokka-uoso-base-imac + em;
+    perspective: math.div(2860, $rokka-uoso-base-imac) + em;
 
     font-size: 180vw;
 
@@ -954,10 +956,10 @@ html {
     .rokka-uoso-device__hardware {
         background-image: url(https://rokka.rokka.io/plain/72200a1d224accbb7f2eb0e2b833fa1f96cc1f43.png);
         @include image-2x("https://rokka.rokka.io/plain/7029694e29afbc82e643c11fb7b97c9be13d1149.png");
-        width: 1302 / $rokka-uoso-base-imac + em;;
-        height:  603 / $rokka-uoso-base-imac + em;;
-        left: -52 / $rokka-uoso-base-imac + em;
-        top: -27 / $rokka-uoso-base-imac + em;
+        width: math.div(1302, $rokka-uoso-base-imac) + em;;
+        height:  math.div(603, $rokka-uoso-base-imac) + em;;
+        left: math.div(-52, $rokka-uoso-base-imac) + em;
+        top: math.div(-27, $rokka-uoso-base-imac) + em;
     }
     .rokka-uoso-device__screen {
         width: 100%;
@@ -971,7 +973,7 @@ html {
     $rokka-uoso-base-iphone: 135;
 
     width: 1em;
-    height: 250 / $rokka-uoso-base-iphone + em;
+    height: math.div(250, $rokka-uoso-base-iphone) + em;
 
 
     // position: absolute;
@@ -994,10 +996,10 @@ html {
         @include image-2x("https://rokka.rokka.io/plain/ddfb58bcad87fc6146a9572a36a7909209428b88.png");
     }
     .rokka-uoso-device__screen {
-        width: 104 / $rokka-uoso-base-iphone + em;
-        height: 188 / $rokka-uoso-base-iphone + em;
-        top: 21 / $rokka-uoso-base-iphone + em;
-        left: 10 / $rokka-uoso-base-iphone + em;
+        width: math.div(104, $rokka-uoso-base-iphone) + em;
+        height: math.div(188, $rokka-uoso-base-iphone) + em;
+        top: math.div(21, $rokka-uoso-base-iphone) + em;
+        left: math.div(10, $rokka-uoso-base-iphone) + em;
 
         background-size: 530%;
         background-position: 34% 51%;
@@ -1008,7 +1010,7 @@ html {
     $rokka-uoso-base-ipad: 493;
 
     width: 1em;
-    height: 356 / $rokka-uoso-base-ipad + em;
+    height: math.div(356, $rokka-uoso-base-ipad) + em;
 
     position: absolute;
     bottom: -2.7rem;
@@ -1032,11 +1034,11 @@ html {
         @include image-2x("https://rokka.rokka.io/plain/793dff14fceef24f672dc7689bda834d47ea86df.png");
     }
     .rokka-uoso-device__screen {
-        width: 406 / $rokka-uoso-base-ipad + em;
-        height: 306 / $rokka-uoso-base-ipad + em;
+        width: math.div(406, $rokka-uoso-base-ipad) + em;
+        height: math.div(306, $rokka-uoso-base-ipad) + em;
 
-        left: 39 / $rokka-uoso-base-ipad + em;
-        top: 18 / $rokka-uoso-base-ipad + em;
+        left: math.div(39, $rokka-uoso-base-ipad) + em;
+        top: math.div(18, $rokka-uoso-base-ipad) + em;
 
         background-size: 220%;
         background-position: 27% 50%;
@@ -1049,10 +1051,10 @@ html {
 
 
     width: 1em;
-    height: 414 / $rokka-uoso-base-macbook + em;
+    height: math.div(414, $rokka-uoso-base-macbook) + em;
     // transform: translateX(-100px);
     // margin-top: -70px;
-    perspective: 1840 / $rokka-uoso-base-macbook + em;
+    perspective: math.div(1840, $rokka-uoso-base-macbook) + em;
 
     position: absolute;
     bottom: -3.8rem;
@@ -1090,10 +1092,10 @@ html {
     .rokka-uoso-device__hardware {
         background-image: url(https://rokka.rokka.io/plain/c3dd85cf7dbe18585d60ddd12a37cd0b091b4d4e.png);
         @include image-2x("https://rokka.rokka.io/plain/29deb8c70b5e3945b6509a0b2b2116f0536ef9a5.png");
-        width: 820 / $rokka-uoso-base-macbook + em;
-        height: 458 / $rokka-uoso-base-macbook + em;
-        top: -15 / $rokka-uoso-base-macbook + em;
-        left: -35 / $rokka-uoso-base-macbook + em;
+        width: math.div(820, $rokka-uoso-base-macbook) + em;
+        height: math.div(458, $rokka-uoso-base-macbook) + em;
+        top: math.div(-15, $rokka-uoso-base-macbook) + em;
+        left: math.div(-35, $rokka-uoso-base-macbook) + em;
     }
     .rokka-uoso-device__screen {
         width: 100%;
