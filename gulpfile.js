@@ -114,7 +114,7 @@ gulp.task('compile:sculpin', (cb) => {
   let count = 0;
 
   for (const lang of config.languages) {
-    let sculpinEnv = env + '-' + lang;
+    let sculpinEnv = env + '_' + lang;
     let sculpinCmd = 'vendor/sculpin/sculpin/bin/sculpin generate --env=' + sculpinEnv;
 
     exec(sculpinCmd, (err, stdout, stderr) => {
@@ -136,22 +136,22 @@ gulp.task('compile:html', ['compile:sculpin'], () => {
 
   return Promise.all([
     new Promise(function(resolve, reject) {
-      gulp.src('output_'+ env +'-en/index.html')
+      gulp.src('output_'+ env +'_en/index.html')
         .pipe(gulp.dest(config.dest))
         .on('end', resolve)
     }),
     new Promise(function(resolve, reject) {
-      gulp.src('output_'+ env +'-en/documentation/**/*')
+      gulp.src('output_'+ env +'_en/documentation/**/*')
         .pipe(gulp.dest(config.dest + 'documentation'))
         .on('end', resolve)
     }),
     new Promise(function(resolve, reject) {
-      gulp.src('output_' + env + '-de/**/*')
+      gulp.src('output_' + env + '_de/**/*')
         .pipe(gulp.dest(config.dest + 'de'))
         .on('end', resolve)
     }),
     new Promise(function(resolve, reject) {
-      gulp.src('output_' + env + '-en/**/*')
+      gulp.src('output_' + env + '_en/**/*')
         .pipe(gulp.dest(config.dest + 'en'))
         .on('end', resolve)
     })
@@ -159,8 +159,8 @@ gulp.task('compile:html', ['compile:sculpin'], () => {
     del([
       config.dest + 'de/documentation/',
       config.dest + 'en/documentation/',
-      'output_' + env + '-en',
-      'output_' + env + '-de'
+      'output_' + env + '_en',
+      'output_' + env + '_de'
     ], {force:true})
   });
 })

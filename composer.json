@@ -16,9 +16,8 @@
         }
     ],
     "require": {
-        "sculpin/sculpin": "^2.1@dev",
-        "dflydev/embedded-composer": "^1.0@dev",
-        "masterminds/html5": "^2.3"
+        "sculpin/sculpin": "^3.1.1",
+        "masterminds/html5": "^2.7.6"
     },
     "config": {
         "component-dir": "source/components",
