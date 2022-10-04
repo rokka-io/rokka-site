@@ -22,7 +22,7 @@
     "sass": "^1.55.0"
   },
   "engines": {
-    "node": "^18"
+    "node": ">=16"
   },
   "dependencies": {
     "broken-link-checker": "^0.7.8"
