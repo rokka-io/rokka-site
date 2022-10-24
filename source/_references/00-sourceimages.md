@@ -63,7 +63,7 @@ downloaded by rokka and inserted into your repository. This happens synchronousl
 The image at the URL has to be publicly accessible. There's currently no way to add authentication. If you need that, [talk to us](https://rokka.io/en/contact/).
 
 ```language-bash
-curl -X POST \ 
+curl -X POST \
 -F url[0]='https://rokka.rokka.io/dynamic/noop/f4d3f334ba90d2b4b00e82953fe0bf93e7ad9912.png' \
 'https://api.rokka.io/sourceimages/mycompany'
 ```
@@ -338,7 +338,7 @@ If an image is locked, no one can delete an image before it's not unlocked, not 
 
 Bash:
 ```language-bash
-curl -X PUT 'https://api.rokka.io/sourceimages/mycompany/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/options/protected' \ 
+curl -X PUT 'https://api.rokka.io/sourceimages/mycompany/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/options/protected' \
       --data-raw 'true'
 ```
 

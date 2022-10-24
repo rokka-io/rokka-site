@@ -27,11 +27,11 @@ All you need to do is get the API key and follow the instructions of the library
 To authenticate, put the API key to  the `Api-Key` header, eg:
 
 ```language-bash
-curl -H 'Content-Type: application/json' \  
+curl -H 'Content-Type: application/json' \
  -H 'Api-Version: 1' \
- -H 'Api-Key: myKey' \ 
+ -H 'Api-Key: myKey' \
  -X GET \
- 'https://api.rokka.io/{action}' 
+ 'https://api.rokka.io/{action}'
 ```
 
 ### Format of API Keys
@@ -59,8 +59,8 @@ It will be authenticated as the same user as with that API key.
 
 [Try it out](https://api.rokka.io/doc/#/admin/getUserToken)
 ```language-bash
-curl -H 'Content-Type: application/json' \ 
- -H 'Api-Version: 1' \ 
+curl -H 'Content-Type: application/json' \
+ -H 'Api-Version: 1' \
  -H 'Api-Key: myKey' \
  'https://api.rokka.io/user/apikeys/token'
 ```
@@ -111,9 +111,9 @@ generate a token in the backend from an API Key with less permissions and send i
 After you get the token, you send the token prefixed with `Bearer ` in the `Authorization` header.
 
 ```language-bash
-curl -H 'Content-Type: application/json' \ 
- -H 'Api-Version: 1' \ 
- -H 'Authorization: Bearer $TOKEN' \ 
+curl -H 'Content-Type: application/json' \
+ -H 'Api-Version: 1' \
+ -H 'Authorization: Bearer $TOKEN' \
  'https://api.rokka.io/user/apikeys/current'
 ```
 
