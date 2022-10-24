@@ -48,8 +48,8 @@ To mark an image as protected during upload, you set the `protected` property in
 
 Bash:
 ```language-bash
-curl -X POST -F filedata=@image.png \ 
-     'https://api.rokka.io/sourceimages/mycompany' \ 
+curl -X POST -F filedata=@image.png \
+     'https://api.rokka.io/sourceimages/mycompany' \
      --form 'options[]={"protected":true}'
 ```
 PHP:
@@ -86,7 +86,7 @@ The new hash is reported in the `Location` header field.
 
 Bash:
 ```language-bash
-curl -X PUT 'https://api.rokka.io/sourceimages/mycompany/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/options/protected' \ 
+curl -X PUT 'https://api.rokka.io/sourceimages/mycompany/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/options/protected' \
       --data-raw 'true'
 ```
 
@@ -196,7 +196,7 @@ The examples to set this organization option:
 
 Bash:
 ```language-bash
-curl -X PUT 'https://api.rokka.io/organizations/mycompany/options/protect_dynamic_stack' \ 
+curl -X PUT 'https://api.rokka.io/organizations/mycompany/options/protect_dynamic_stack' \
       --data-raw 'true'
 ```
 
