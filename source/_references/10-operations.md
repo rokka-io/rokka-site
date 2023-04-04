@@ -579,6 +579,7 @@ for some working examples
 - `anchor`: Anchor where to place the text, based on mode. See the [Crop operation](#crop) for possible values. Default: center_center
 - `width`: The width of the box the text should be fit in. If set, the words will wrap, if they reach that width. Default: null
 - `height`: The height of the box the text should be fit in. If `resize_to_box` and `width` is set, the text will be resized to fit this box. If `resize_to_box` is false, the text will be cut off at this height.
+- `spacing`: Spacing between lines. Default: 0
 - `align`:  How to align the text (if `width` is given). Allowed values: left, centre, right
 - `resize_to_box`: Fit the whole text into the text box defined by `width` and `height`. 
 
