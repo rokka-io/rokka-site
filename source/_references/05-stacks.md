@@ -22,36 +22,36 @@ In the following example, the stack applies a resize of 200 x 200 and rotates it
 
 The _options_ parameter is optional. You can use the following options in there.
 
-| Attribute | Default | Minimum | Maximum | Description |
-| --------- | ------- | ------- | ------- | ----------- |
-| basestack | - | - | - | Name of existing stack that will be executed before this stack. See the [Basestacks chapter](#basestacks) below.|
-| optim.quality | 5 | 1 | 10 | General image quality setting. If `jpeg.quality` resp. `webp.quality` is not set explicitely, rokka tries to find the best possible compression automatically.  See the [optimizations chapter](#additional-image-optimizations) below.
-| jpg.quality | 80 | 1 | 100 | Jpg quality setting, lower number means smaller file size and worse lossy quality. Default is 65 for dpr >=2, see the [DPR chapter](#device-pixel-ratio-dpr) below.|
-| webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. Default is 65 for dpr >=2, see the [DPR chapter](#device-pixel-ratio-dpr) below. |
-| heif.quality | 40 | 1 | 100 | Heif/Heic quality setting, lower number means smaller file size and worse lossy quality.  |
-| avif.quality | 50 | 1 | 100 | AVIF quality setting, lower number means smaller file size and worse lossy quality.  |
-| jxl.quality | 75 | 1 | 100 | JPEG XL quality setting, lower number means smaller file size and worse lossy quality.  |
-| gif.quality | 60 | 1 | 100 | Gif quality setting in the [optimization phase](#additional-image-optimizations). Choose a setting of 100 for lossless quality. Lower values also means lower file size. See the [rendering animated GIFs chapter](./render.html#rendering-animated-gifs).|
-| pngquant.quality | 98 | 10 | 100 | We lossy compress (PNG and lossless WebP) images by default to make them much smaller (and hardly noticable). You can try some quality setting with this option. If set to 100, we don't apply any lossy compression.|
-| png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images. |
-| source_file | false | - | - | For outputting just the original unprocessed source file, set this to true and configure an empty operations collection. Can not be used together with other stack options. See the [source_file chapter](#configuring-a-stack-to-just-deliver-the-original-source-file) below.|
-| remote_fullurl_allow | false | - | - | To load images directly from a remote URL instead of uploading them to rokka via the API first. See the [remote_basepath chapter](#loading-images-from-a-remote-url) below.|
-| remote_fullurl_whitelist | null | - | - | To only allow certain domains to be used with the remote image feature. See the [remote_basepath chapter](#loading-images-from-a-remote-url) below.|
-| remote_basepath | - | - | - | To load images directly from a remote URL with a basepath instead of uploading them to rokka via the API first. See the [remote_basepath chapter](#loading-images-from-a-remote-url) below.|
-| autoformat | false | - | - | If set, rokka will return WebP instead of PNG/JPEG, if the client supports it. See the [autoformat chapter](#autoformat) below.|
-| autoformat.exclude | null | - | - | You can exclude some autoformat operations. See the [autoformat chapter](#autoformat) below.|
-| dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See the [DPR chapter](#device-pixel-ratio-dpr) below. |
-| content_disposition | inline | - | - | Sets a "Content-Disposition: attachment", if value is set to "attachment". |
-| optim.disable_all |false| - | - | Disables all additional enhanced image size optimizations. See the [optimizations chapter](#additional-image-optimizations) below.|
-| optim.immediate |false| - | - | Immediatly runs the enhanced image size otimizations instead of doing it later asynchronously. See the [optimizations chapter](#additional-image-optimizations) below. |
-| jpg.transparency.color | FFFFFF | - | - | The background color used to replace the alpha channel. |
+| Attribute | Default | Minimum | Maximum | Description                                                                                                                                                                                                                                                                       |
+| --------- | ------- | ------- | ------- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| basestack | - | - | - | Name of existing stack that will be executed before this stack. See the [Basestacks chapter](#basestacks) below.                                                                                                                                                                  |
+| optim.quality | 5 | 1 | 10 | General image quality setting. If `jpeg.quality` resp. `webp.quality` is not set explicitely, rokka tries to find the best possible compression automatically.  See the [optimizations chapter](#additional-image-optimizations) below.                                           
+| jpg.quality | 80 | 1 | 100 | Jpg quality setting, lower number means smaller file size and worse lossy quality. Default is 65 for dpr >=2, see the [DPR chapter](#device-pixel-ratio-dpr) below.                                                                                                               |
+| webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. Default is 65 for dpr >=2, see the [DPR chapter](#device-pixel-ratio-dpr) below.                                                                |
+| heif.quality | 40 | 1 | 100 | Heif/Heic quality setting, lower number means smaller file size and worse lossy quality.                                                                                                                                                                                          |
+| avif.quality | 50 | 1 | 100 | AVIF quality setting, lower number means smaller file size and worse lossy quality.                                                                                                                                                                                               |
+| jxl.quality | 75 | 1 | 100 | JPEG XL quality setting, lower number means smaller file size and worse lossy quality.                                                                                                                                                                                            |
+| gif.quality | 60 | 1 | 100 | Gif quality setting in the [optimization phase](#additional-image-optimizations). Choose a setting of 100 for lossless quality. Lower values also means lower file size. See the [rendering animated GIFs chapter](./render.html#rendering-animated-gifs).                        |
+| pngquant.quality | 98 | 10 | 100 | We lossy compress (PNG and lossless WebP) images by default to make them much smaller (and hardly noticable). You can try some quality setting with this option. If set to 100, we don't apply any lossy compression.                                                             |
+| png.compression_level | 7 | 0 | 9 | Higher compression means smaller file size but also slower first render. There is little improvement above level 7 for most images.                                                                                                                                               |
+| source_file | false | - | - | For outputting just the original unprocessed source file, set this to true and configure an empty operations collection. Can not be used together with other stack options. See the [source_file chapter](#configuring-a-stack-to-just-deliver-the-original-source-file) below.   |
+| remote_fullurl_allow | false | - | - | To load images directly from a remote URL instead of uploading them to rokka via the API first. See the [remote_basepath chapter](#loading-images-from-a-remote-url) below.                                                                                                       |
+| remote_fullurl_whitelist | null | - | - | To only allow certain domains to be used with the remote image feature. See the [remote_basepath chapter](#loading-images-from-a-remote-url) below.                                                                                                                               |
+| remote_basepath | - | - | - | To load images directly from a remote URL with a basepath instead of uploading them to rokka via the API first. See the [remote_basepath chapter](#loading-images-from-a-remote-url) below.                                                                                       |
+| autoformat | false | - | - | If set, rokka will return WebP/AVIF/JPEG XL instead of PNG/JPEG, if the client supports it. See the [autoformat chapter](#autoformat) below.                                                                                                                                      |
+| autoformat.exclude | null | - | - | You can exclude some autoformat operations. See the [autoformat chapter](#autoformat) below.                                                                                                                                                                                      |
+| dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See the [DPR chapter](#device-pixel-ratio-dpr) below.                                                                                                                                                                            |
+| content_disposition | inline | - | - | Sets a "Content-Disposition: attachment", if value is set to "attachment".                                                                                                                                                                                                        |
+| optim.disable_all |false| - | - | Disables all additional enhanced image size optimizations. See the [optimizations chapter](#additional-image-optimizations) below.                                                                                                                                                |
+| optim.immediate |false| - | - | Immediatly runs the enhanced image size otimizations instead of doing it later asynchronously. See the [optimizations chapter](#additional-image-optimizations) below.                                                                                                            |
+| jpg.transparency.color | FFFFFF | - | - | The background color used to replace the alpha channel.                                                                                                                                                                                                                           |
 | jpg.transparency.autoformat | false | - | - | Delivers the best possible, alpha channel capable format instead of jpg (webp, svg or png), in case the rendered image has a visible alpha channel.  See the [transparency chapter](#delivering-a-transparency-capable-format-instead-of-jpeg-jpg.transparency.autoformat) below. |
-| jpg.transparency.convert | false | - | - | Force converting an alpha channel to a jpg.transparency.color. Very rarely needded, as rokka will figure that out automatically.|
-| timestamp | - | - | - | Use a thumbnail from a video at this timestamp for rendering. See the [video chapter](videos.html#generating-a-thumbnail-from-an-imported-video-for-rendering) for details. | 
-| fps | 10 | 1 | 25 | Sets frame per second for movie to animated gif conversion. |
-| dpi | - | 1 | 5000 | Sets some dpi metadata info to an image, but doesn't resize them. It only works for PNG and TIFF (but not JPEG), currently, and you do have to set `optim.disable_all` to true. DPI doesn't matter in the web context, usually you don't need this. |
+| jpg.transparency.convert | false | - | - | Force converting an alpha channel to a jpg.transparency.color. Very rarely needded, as rokka will figure that out automatically.                                                                                                                                                  |
+| timestamp | - | - | - | Use a thumbnail from a video at this timestamp for rendering. See the [video chapter](videos.html#generating-a-thumbnail-from-an-imported-video-for-rendering) for details.                                                                                                       | 
+| fps | 10 | 1 | 25 | Sets frame per second for movie to animated gif conversion.                                                                                                                                                                                                                       |
+| dpi | - | 1 | 5000 | Sets some dpi metadata info to an image, but doesn't resize them. It only works for PNG and TIFF (but not JPEG), currently, and you do have to set `optim.disable_all` to true. DPI doesn't matter in the web context, usually you don't need this.                               |
 | pdf.dpi | 200 | 10 | 1000 / Define the DPI a PDF is converted to a bitmap image. If the result would be smaller than 1000px wide, rokka doubles it automatically. The default value is usually fine |
-| protected | false | - | - | If a stack should be protected and [needing signed urls](./protected-images-and-stacks.html) |
+| protected | false | - | - | If a stack should be protected and [needing signed urls](./protected-images-and-stacks.html)                                                                                                                                                                                      |
 
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/testorganization/teststack' -d '{ 
@@ -419,7 +419,8 @@ Later, if you want to add another size, you just base them on the same basestack
 If you set the `autoformat: true` stack option, rokka will try to deliver the most appropriate format, not necessarily the one you requested.
 This currently consists of two stages. 
 
-In the first stage, rokka checks the `Accept` header of the request and if it contains `image/webp`, rokka delivers in the usually smaller WebP format instead of PNG or JPEG. 
+In the first stage, rokka checks the `Accept` header of the request and if it contains `image/webp`, rokka delivers in the usually smaller WebP format instead of PNG or JPEG.  The same we do for the more modern AVIF and JPEG-XL formats.
+
 If you didn't set `webp.quality` explicitly and requested a PNG, it will return a lossless image and a lossy compressed image, if a JPG was requested. If you set `webp.quality` to any value on that stack, it will always honor that, no matter what was requested.
 
 We also do some conversion to SVG (or SVG to PNG), if SVG is involved and choose the best format (SVG or Bitmap, depending on the sourceimage and 
@@ -429,7 +430,7 @@ In the second stage, during the [asynchronous 2nd stage optimization stage](#add
 
 We also do optimize SVG images in this stage to make them smaller.
 
-Even though rokka supports JPEG XL and AVIF, it's not enabled by default when setting autoformat to true. But we're happy to enable that for you.
+Even though rokka supports JPEG XL and AVIF, it's only enabled for newly created accounts. If you think it's not supported on your account, talk to us and we're happy to enable it for you.
 
 ### Exclude some autoformat conversions
 

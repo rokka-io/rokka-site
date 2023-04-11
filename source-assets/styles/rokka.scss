@@ -42,17 +42,13 @@ html {
 .logo {
     // height: 48px;
     svg {
-        width: 10em;
-        @include media('md') {
-            width: 7em;
-        }
-        @include media('lg') {
-            width: 7em;
-        }
-        g {
-            fill: currentColor;
-        }
+        width: 5em;
+
     }
+
+    position: absolute;
+    top: 200px;
+    left: 100px;
 }
 
 
