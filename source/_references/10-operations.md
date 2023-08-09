@@ -324,6 +324,14 @@ For the hue parameter, the input is an integer defining how many degrees the col
 - `saturation`: Integer. Percentage of saturation change between 0 and 500. The default value is 100.
 - `hue`: Integer. Degrees for hue rotation between 0 and 360. The default value is 0.
 
+
+### Multiply
+
+Multiplies an image with a factor. Can be used to darken an image.
+
+#### Properties
+- `factor`: Number. The factor to multiply the image with. Between 0 and 1. The default value is 0.96.
+
 ### Resize
 
 Resizes an image.
