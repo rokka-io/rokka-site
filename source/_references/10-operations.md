@@ -331,6 +331,7 @@ Multiplies an image with a factor. Can be used to darken an image.
 
 #### Properties
 - `factor`: Number. The factor to multiply the image with. Between 0 and 1. The default value is 0.96.
+- `factor_color`: String. Multiply by this color in hex without the # sign, example: "0F0F0F", takes precedence over `factor`. The default value is null.
 
 ### Resize
 
