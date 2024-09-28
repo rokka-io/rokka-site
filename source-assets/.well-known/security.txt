@@ -1,5 +1,5 @@
 # We are aware of DMARC issues with our Email Settings and are looking into it. No need to report that.
-Contact: mailto:rokka@rokka.io
-Expires: 2023-04-30T14:13:00.000Z
+Contact: mailto:rokka+security@rokka.io
+Expires: 2025-09-30T14:13:00.000Z
 Preferred-Languages: en, de
 
