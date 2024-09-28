@@ -61,7 +61,7 @@ You can add autodescriptions to existing images.
 
 With curl:
 
-```language curl
+```language-bash
 curl --location 'https://api.rokka.io/sourceimages/myorg/0d8fe0/autodescription' \
 --header 'Api-Key: xyz' \
 --header 'Content-Type: application/json' \
@@ -80,4 +80,5 @@ await rokka.sourceimages.autodescription('myorg', '4f72fb', ['de','fr'], false)
 With PHP:
 
 ```language-php
- $newImage = $client->addAutodescription(['de','en'], '4f72fb');
+$newImage = $client->addAutodescription(['de','en'], '4f72fb');
+```

@@ -481,7 +481,7 @@ You can configure that option globally on the organisation with the following ca
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/mycompany/options' \
  -d '{
         "remote_fullurl_allow": true,
-        "remote_fullurl_whitelist": ["\.rokka.io"]
+        "remote_fullurl_whitelist": ["\.rokka\.io"]
             
      }'
 ```
@@ -500,7 +500,7 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/myc
     ],
     "options": {
        "remote_fullurl_allow": true,
-       "remote_fullurl_whitelist": ["\.rokka.io"]
+       "remote_fullurl_whitelist": ["\.rokka\.io"]
     }
 }'
 ```
