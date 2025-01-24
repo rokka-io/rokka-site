@@ -10,7 +10,7 @@ While the default values for rokka stacks are chosen with decent values, there a
 an impact on either the size of your images or the way you can use them.
 
 Therefore we'd like present here some of our recommended best practice for configuring a rokka stack to get the most out
- of rokka's possiblities.
+ of rokka's possibilities.
 
 Not all of them are always appropriate for your situation (that's why they are not defaults), but it's good to know
 what they are and for what they're good and for what not. We're sure with this you can deliver the best possible
@@ -48,7 +48,7 @@ If the rendered image should have a size of 900 x 600 pixels, the stack configur
 ```
 
 This configuration first [resizes](/documentation/references/operations.html#resize) an image, so that it totally fills
-the defined width and height. The crop operation afterwards clips the parts of the image overflowwing that box.
+the defined width and height. The crop operation afterwards clips the parts of the image overflowing that box.
 
 ### Autoformat for delivering the best suitable image format
 
@@ -144,7 +144,7 @@ or some "temporary" variables to avoid repetition.
 ### Upscaling
 
 rokka by default upscales images in the resize operation to the defined size, even if the source image is smaller than that.
-This guaruantees that the rendered image always has the size given or expected by the browser.
+This guarantees that the rendered image always has the size given or expected by the browser.
 
 But since upsizing images doesn't make them better and browsers can do the upsizing as well, it just adds unneeded bytes
 to your traffic. 
@@ -154,7 +154,7 @@ options `upscale` and `upscale_dpr to control that.
 
 It's very important to make sure browsers still show images in the right size, when you turn those options off. 
 You basically have to tell the browsers, how big (or at least how wide) your images should be shown to be on the safe side. 
-We also reccomend to read [this blog post about resizing and responsive images](https://www.liip.ch/en/blog/things-you-should-know-about-responsive-images)
+We also recommend to read [this blog post about resizing and responsive images](https://www.liip.ch/en/blog/things-you-should-know-about-responsive-images)
  for more background information about this.
 
 To make this better configurable we introduce another render variable: `s` (for scaling), we will also need it later again for another use case.
@@ -255,7 +255,7 @@ https://{organization}.rokka.io/{stack-name}/v-w-900/o-dpr-2/{hash}.{format} 180
 
 #### Generating those responsive URLs in PHP
 
-If you're using PHP, there's  a little helper method in the PHP client, which that makes generating those "srcset" attributes 
+If you're using PHP, there's  a little helper method in the PHP client, which makes generating those "srcset" attributes 
  (together with "src") much easier:
 
 ```language-php
