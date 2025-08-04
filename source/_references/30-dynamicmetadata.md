@@ -95,7 +95,7 @@ If Subject area and Crop area are set, Subject area is used.
 
 ### Multi areas
 
-With the  Mulit areas object, you can assign multiple Crop or Subject areas to one image and use them in a stack.
+With the multi areas object, you can assign multiple Crop or Subject areas to one image and use them in a stack.
 This is especially useful, when you want to use a different section of a picture for different stacks. For example a 9:16 image should focus on different parts of an image than a 4:3 image. 
 
 Setting multi areas on an image:
