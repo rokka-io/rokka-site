@@ -401,6 +401,21 @@ only sharpen pictures with a entropy > 6.
 - `y2`: Number. Maximum amount of brightening. Default: 10.0
 - `y3`: Number. Maximum amount of darkening. Default: 20.0
 
+### Svg2Bitmap
+
+Converts an SVG to a bitmap image via an actual browser engine. This can be useful, if you have complex SVGs with CSS or fonts that you want to convert to a bitmap image. 
+Most SVGs don't need this and conversion to PNG or JPG works out of the box, but if you have problems with a specific SVG, this operation can help.
+This can be a slow operation, if uncached. Use it sparingly.
+
+```language-json
+{
+   "name": "svg2bitmap"
+}
+```
+
+#### Properties
+None
+
 ### SvgDynamic
 
 Adds/replaces dynamically attributes in an SVG Source Image.
