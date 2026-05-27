@@ -6,7 +6,7 @@ description: Dynamic metadata is metadata added to a source image that changes t
 
 ## Intro
 
-Dynamic metadata is metadata added to a source image that changes the image identifying hash. 
+Dynamic metadata is metadata added to a source image that changes the image identifying hash.
 
 ## Add dynamic metadata to a source image
 
@@ -28,7 +28,6 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimag
         "y": 0
     }'
 ```
-
 
 ```language-php
 use Rokka\Client\Core\DynamicMetadata\SubjectArea;
@@ -58,6 +57,36 @@ If you don't need the previous image to be kept on rokka, you can directly delet
 ```language-bash
 curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/subject_area?deletePrevious=true'
 ```
+
+## Updating dynamic metadata without changing the hash
+
+Both the PUT and DELETE endpoints above accept an optional `?keepHash=true` query parameter. When set, rokka updates the dynamic metadata of the existing source image in place and does **not** recompute the identifying hash. The `Location` header in the response points back to the original hash.
+
+This is useful when you have a lot of images and stacks referenced by hash in places you cannot easily update (CMS content, third party systems, printed URLs), and you want to add or change a subject area, crop area, etc. without rewriting all those references.
+
+**A word of warning:** using `keepHash=true` goes against one of rokka's fundamental design principles, namely that the image hash uniquely identifies the source image together with its (dynamic) metadata. With `keepHash=true`, the same hash can suddenly refer to different metadata over time, which is exactly what the hash was designed to prevent. Use this only if you fully understand the trade-offs below — in most cases, accepting a new hash (the default behaviour) is the right choice.
+
+There is a major caveat:
+
+**Downstream caches are not invalidated automatically.** CloudFront, memcached and browser caches will keep serving the previously rendered images for the affected hash until they expire (can take several months). If you need rendered images to reflect the new metadata immediately, you have to invalidate them yourself, for example by bumping the stack version with `bin/console rokka:stack:updateversion $ORGANIZATION $STACK` or flushing the render cache.
+
+**Browser caches are also not invalidated.** Even after you flush CloudFront and the rokka render cache, end users will still see the old rendered image until their local browser cache expires (rendered images are sent with a one-year `Cache-Control` max-age). There is no server-side way to force a refresh — the only options are waiting for the cache to expire, having users hard-reload, or changing the URL.
+
+One workaround for the cache problem is to **create a new stack**. The stack name (and version) is part of the rendered URL, so a new/updated stack produces fresh URLs that are not in any cache, and end users will see the new rendered image immediately — while the source image hash (and therefore the part of the URL you cannot easily change) stays stable.
+
+`keepHash=true` is mutually exclusive with `deletePrevious=true`; combining them returns `400 Bad Request`.
+
+```language-bash
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/subject_area?keepHash=true' -d '{
+        "width": 20,
+        "height": 20,
+        "x": 0,
+        "y": 0
+    }'
+
+curl -X DELETE 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/subject_area?keepHash=true'
+```
+
 ## Supported metadata objects
 
 ### Subject area
@@ -67,8 +96,8 @@ starting point (top-left corner). In pixels (of the full sized image) or percent
 
 Setting the subject area of an image allows the Crop operation (when used with the `auto` anchor),
 to center the cropping box around the defined SubjectArea.
-For further details see the [Crop operation](../references/operations.html#crop) 
- 
+For further details see the [Crop operation](../references/operations.html#crop)
+
 You can use the SubjectArea to specify the most important part of the image, the part that should be
 retained at any size.
 
@@ -78,11 +107,12 @@ retained at any size.
 - `y` (required): Integer. The y-offset of the starting point, in pixels or percentage.
 - `width`: Integer. The width of the subject area, in pixels or percentage. The default value is 1.
 - `height`: Integer. The height of the subject area, in pixels or percentage. The default value is 1.
-- `percentage`: Boolean. If the parameters above are in percentage instead of pixels 
+- `percentage`: Boolean. If the parameters above are in percentage instead of pixels
+
 ### Crop area
 
-Works similarly to the subject area object. But an image will always be cropped exactly at the defined area. 
-This is especially useful with the Multi area format mentioned below. 
+Works similarly to the subject area object. But an image will always be cropped exactly at the defined area.
+This is especially useful with the Multi area format mentioned below.
 
 If Subject area and Crop area are set, Subject area is used.
 
@@ -96,7 +126,7 @@ If Subject area and Crop area are set, Subject area is used.
 ### Multi areas
 
 With the multi areas object, you can assign multiple Crop or Subject areas to one image and use them in a stack.
-This is especially useful, when you want to use a different section of a picture for different stacks. For example a 9:16 image should focus on different parts of an image than a 4:3 image. 
+This is especially useful, when you want to use a different section of a picture for different stacks. For example a 9:16 image should focus on different parts of an image than a 4:3 image.
 
 Setting multi areas on an image:
 
@@ -123,8 +153,8 @@ The version object just takes one parameter `text`. You can give it any string y
 One usecase is, when you'd like to manage different user metadata for the same image for different use cases. If you add a unique version dynamic
 metadata for each of them, you can organize them independently.
 
-Another use case is that if you want to be sure, that an image embedded somewhere won't be deleted by another client, which also 
-used this exact same image with the same hash. Then you would generate a different hash for both with a different version, and they won't delete each others images. 
+Another use case is that if you want to be sure, that an image embedded somewhere won't be deleted by another client, which also
+used this exact same image with the same hash. Then you would generate a different hash for both with a different version, and they won't delete each others images.
 Of course they still can via [deleting by binary hash](source-images.html#deleting-source-images-with-binary-hash), if they really want to. But with
 a different hash for each client (or article for example), they don't have to know about each other and you don't need to keep track of where
 that image is also used. But keep in mind, that even if it's the same image, due to a different hash, an end user has to download it again
