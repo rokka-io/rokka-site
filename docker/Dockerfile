@@ -1,13 +1,17 @@
-FROM  php:8.0
+FROM php:8.3-cli-bookworm
 
-RUN apt-get update && apt-get install -y wget git  libzip-dev zip
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates curl git zip unzip libzip-dev gnupg \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN docker-php-ext-install zip
-ENV NODE_JS_VERSION=18
-RUN mkdir -p ~/.nvm/
-RUN curl -o ~/.nvm/nvm.sh https://raw.githubusercontent.com/creationix/nvm/v0.39.1/nvm.sh # update nvm
-RUN bash -c "source ~/.nvm/nvm.sh; nvm install $NODE_JS_VERSION;"
-ARG COMPOSER_VERSION=1.10.22
-ADD build-composer.sh .
-RUN bash ./build-composer.sh && mv composer.phar /usr/local/bin
-RUN ln -s  /usr/local/bin/composer.phar /usr/local/bin/composer
+
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y --no-install-recommends nodejs \
+    && rm -rf /var/lib/apt/lists/* \
+    && npm --version && node --version
+
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+
 WORKDIR /root/deploy
