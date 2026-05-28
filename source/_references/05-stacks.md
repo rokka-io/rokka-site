@@ -157,7 +157,9 @@ To invalidate the CDN cache for a stack, call the [https://api.rokka.io/stacks/$
 curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/stacks/mycompany/teststack/cache' 
 ```
 
-This endpoint is rate limited, you can do max 5 calls to this per hour. If you need more or need to clear the whole cache, please get in contact with us.
+This endpoint is rate limited, you can do max 10 calls to this per hour. If you need more or need to clear the whole cache, please get in contact with us.
+
+The invalidation is processed **asynchronously**: a `200` response (with `queued: true` in the body) means the paths were accepted for invalidation, not that the CDN cache is already cleared. It usually completes within a few seconds.
 
 
 ### Best practices for configuring a stack
