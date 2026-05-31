@@ -156,7 +156,7 @@ $stack = $client->saveStack($stack);
 
 JavaScript: 
 
-```
+```language-javascript
 import { Rokka } from 'rokka'
 const rokka = new Rokka({apiKey: 'apiKey'})
 const response = await rokka.stacks.create(

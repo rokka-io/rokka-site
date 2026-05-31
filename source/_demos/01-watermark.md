@@ -64,7 +64,7 @@ See the [text operation chapter](/documentation/references/operations.html#text)
 
 **Stack config**:
 
-````javascript
+````language-javascript
 {
     "operations": [
         {

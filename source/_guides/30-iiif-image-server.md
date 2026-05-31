@@ -22,7 +22,7 @@ The largest delivered edge is 2048px (the info.json reports a `maxWidth`/`maxHei
 
 If you're using OpenSeadragon, this would be the config you need and the result of this you can see below.
 
-```javascript
+```language-javascript
 viewer = OpenSeadragon({
     id: "openseadragon1",
     tileSources: 'https://rokka.rokka.io/_iiif/283eaf/info.json',

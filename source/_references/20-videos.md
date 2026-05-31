@@ -21,7 +21,7 @@ The size limit for a file is currently at about 1180 MB, if you need to upload b
 
 The source image response object for a video has some video related info, it's in the static metadata `video` part of the response. See below for an example. 
 
-```json
+```language-json
  {
             "hash": "c97fc83ee1cd3d1919604aa5a57e0cbbc3defae1",
             "short_hash": "c97fc8",
@@ -164,7 +164,7 @@ you have to upload each of those versions to rokka and then link them together, 
 
 You do this with adding the `linked` [dynamic metadata](dynamic-metadata.html) to one of the videos with all the video hashes in the `hashes` property.
 
-```bash
+```language-bash
 curl -X PUT -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/$YOUR_ORG/c97fc83ee1cd3d1919604aa5a57e0cbbc3defae1/meta/dynamic/linked?deletePrevious=true' \
   -d '{
 	"hashes": ["c0ba2aa4915006aa6ef3e260f45c0223873f637b", "edb0911b180e850318775ee0030e54cef78d66f4", "4ec87d67ce71d0b5080394b77dd756d7e8eadef5"]
@@ -197,7 +197,7 @@ directly from a video, without importing the video, but just that thumbnail.
 
 You can do this by appending an `@` and the timestamp to an URL and then use either the  ["upload by URL" through the sourceimages API](source-images.html#create-a-source-image-with-a-remote-url) the following way:
 
-```
+```language-bash
 curl -X POST -F url[0]='https://liip.rokka.io/dynamic/c97fc8.mp4@00:00:22' 'https://api.rokka.io/sourceimages/mycompany'
 ```
 
@@ -223,7 +223,7 @@ To display a video uploaded to rokka and using video.js, just include the follow
 Don't forget to upload and [link together](#linking-videos) videos with the same content but different quality settings/screen resolutions as mentioned above. 
 Also don't forget to use the new hash, after you linked different videos together to get adaptive streaming.
 
-```html
+```language-html
 <head>
     <link href="https://vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
     <script src='https://vjs.zencdn.net/7.10.2/video.min.js'></script>

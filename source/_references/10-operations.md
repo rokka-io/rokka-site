@@ -97,7 +97,7 @@ Example without any cropping:
 Complexer example with cropping on the face, if the image has face detection metadata. Otherwise it just crops the image to a square:
 
 Stack config:
-```javascript
+```language-javascript
 {
     "operations": [
         {

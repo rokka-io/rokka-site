@@ -106,7 +106,7 @@ curl -X POST "https://api.rokka.io/organizations/awesomecompany/memberships" -H 
 
 It will return a new user object with a membership to the current organisation, with a new user_id, Api-Key and the roles defined. Again, keep that Api-Key somewhere safe, you can't recover it (but you could just reissue this command again to get a new one)
 
-```
+```language-json
 {
   "email": "test@example.org",
   "user_id": "ccd7be95-5db2-4e83-994d-f3269a98578b",

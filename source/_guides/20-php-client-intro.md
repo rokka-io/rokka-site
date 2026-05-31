@@ -27,7 +27,7 @@ Note: Alternatively you can also just login at [rokka.io/dashboard](https://rokk
 
 After you installed the rokka CLI, store your rokka api key in a config file with the following command:
 
-```
+```language-bash
 rokka login --apiKey $YOUR_API_KEY
 ```
 
@@ -35,7 +35,7 @@ rokka login --apiKey $YOUR_API_KEY
 
 Now you can upload your first image to rokka. We recommend to upload a high resolution image in a lossless image format like PNG. But there's no use in converting eg. a JPEG to PNG, if the JPEG version is the only version you have, then the JPEG is just fine.
 
-```
+```language-bash
 rokka sourceimages create $YOUR_ORG rokka-pic.png
 ``` 
 
@@ -71,7 +71,7 @@ Another central concept of rokka are stacks. Stacks are a collection of one or m
 
 The above resizing stack can be created with:
 
-```
+```language-bash
 echo '{
   "options": {},
   "operations": [
@@ -101,7 +101,7 @@ After having uploaded a first image and created a first stack, let's finally mov
 
 Install the library using [composer](https://getcomposer.org/) in your project directory:
 
-```
+```language-bash
 composer require rokka/client
 ```
 
@@ -111,7 +111,7 @@ You may use rokka within a bigger framework (like Symfony), a CMS (like WordPres
 
 The easiest way to let the library generate the needed URLs is by using the [\Rokka\Client\TemplateHelper](https://rokka.io/client-php-api/master/Rokka/Client/TemplateHelper.html) class.
 
-```
+```language-php
 <?php
 require_once("vendor/autoload.php");
 use Rokka\Client\TemplateHelper;
@@ -127,7 +127,7 @@ $rokka = new TemplateHelper('$YOUR_ORG', '$YOUR_API_KEY');
 
 Alternatively, you can also just use the `\Rokka\Client\UriHelper:composeUri ` static method.
 
-```
+```language-php
 <img src="https://liip-development.rokka.io<?= UriHelper::composeUri(['stack' => 'test-stack', 'hash' => 'dba893', 'format' => 'jpg']);?>">
 ```
 
@@ -142,13 +142,13 @@ You can add stack options to any render URL (or stack definition), and one of th
 
 The PHP library has some helper functions to generate such URLs. The following returns the same URL as above. And does the right thing, even if you already have options in your URL. No need for you to manually parse or concatenate that URL.
 
-```
+```language-php
 UriHelper::addOptionsToUriString('https://$YOUR_ORG.rokka.io/test-stack/dba893.jpg','options-dpr-2');
 ```
 
 Alternative syntax with an array instead of a string
 
-```
+```language-php
 UriHelper::addOptionsToUriString('https://$YOUR_ORG.rokka.io/test-stack/dba893.jpg',['options' => ['dpr' => 2]]);
 ```
 
@@ -156,7 +156,7 @@ There's also `addOptionsToUri` which takes a `\Psr\Http\Message\UriInterface` in
 
 The above methods may give you an appropriate retina enabled render URL, but you'd still have to write the right HTML attributes to actually enable them. With the method `TemplateHelper::getSrcAttributes`, this gets much easier. Call it like the following:
 
-```
+```language-php
 <img <?= TemplateHelper::getSrcAttributes($rokka->getStackUrl('dba893', 'test-stack', 'jpg'), ['2x', '3x']);?>>
 ```
 
@@ -170,19 +170,19 @@ There are some more helper methods, if you need to resize some pictures quickly 
 
 Rendering an image resized to a width of 400 pixels (you may also specify a height in the 3rd parameter):
 
-```
+```language-php
 <img src="<?= $rokka->getResizeUrl('dba893', 400);?>">
 ```
 
 Renders an image resized and cropped to specific dimensions. Very useful when you want to ensure that all pictures have the same size.
 
-```
+```language-php
 <img src="<?= $rokka->getResizeCropUrl('dba893', 400, 200, 'jpg');?>">
 ```
 
 Renders the image in it's original size.
 
-```
+```language-php
 <img src="<?=  $rokka->getOriginalSizeUrl('dba893', 'jpg');?>">
 ```
 
@@ -192,7 +192,7 @@ You can use all those returned URLs also on the responsive images methods mentio
 
 It can be helpful for SEO purposes to have self-describing image names. That's why almost all URL generating methods also take a "SEO" parameter. It also slugifies the input automatically.
 
-```
+```language-php
 $rokka->getStackUrl('dba893', 'test-stack', 'jpg', 'A picture with thïngs');
 ```
 
@@ -214,7 +214,8 @@ Uploading images manually to rokka is not a very efficient way to have them read
 Or you can use the built in functionality of the `TemplateHelper` class to help you in that. Some methods of that class not only take a rokka image hash as first argument, but also a path to an existing local file, a `SplFileInfo` object or an object which implements [Rokka\Client\LocalImage\AbstractLocalImage](https://rokka.io/client-php-api/master/Rokka/Client/LocalImage/AbstractLocalImage.html) (more about that later)
 
 The TemplateHelper then automatically uploads the image to rokka, if it can't find a corresponding hash locally and does all the rest for you. 
-```
+
+```language-php
 <img src="<?= $rokka->getStackUrl('images/foo.jpg', 'test-stack', 'jpg');?>"> 
 ```
 
@@ -222,7 +223,7 @@ The TemplateHelper then automatically uploads the image to rokka, if it can't fi
 
 By default it stores the hash in a text file next to the local image, but that's maybe not what you need. You can write your own class implementing [\Rokka\Client\TemplateHelper\AbstractCallbacks](https://rokka.io/client-php-api/master/Rokka/Client/TemplateHelper/AbstractCallbacks.html) to change that behaviour.
 
-```
+```language-php
 class MyTemplateHelperCallbacks extends AbstractCallbacks
 {
     public function getHash(AbstractLocalImage $image)
@@ -242,7 +243,7 @@ class MyTemplateHelperCallbacks extends AbstractCallbacks
 
 And then provide that object to the `TemplateHelper` constructor.
 
-```
+```language-php
 $rokka = new TemplateHelper('$YOUR_ORG', '$YOUR_API_KEY', new MyTemplateHelperCallbacks());
 ```
 
@@ -251,7 +252,7 @@ $rokka = new TemplateHelper('$YOUR_ORG', '$YOUR_API_KEY', new MyTemplateHelperCa
 
 Sometimes original images are not stored in the local file system and can't be accessed with one of standard implementations, for example they are on AWS S3 or in a database. To support that, you need to write a class which implements `\Rokka\Client\LocalImage\AbstractLocalImage`. The simplest possible implementation is the following:
 
-```
+```language-php
 class myDBImage extends \Rokka\Client\LocalImage\AbstractLocalImage {
     public function getContent()
     {
@@ -263,7 +264,7 @@ class myDBImage extends \Rokka\Client\LocalImage\AbstractLocalImage {
 
 and then you can use that with:
 
-```
+```language-php
 <img src="<?= $rokka->getStackUrl(new myDBImage('someKeyToLookUpInDB'), 'test-stack');?>"> 
 ```
 

@@ -148,7 +148,7 @@ for this image
 
 The code for this example using [blurhash-img](https://github.com/fpapado/blurhash-img) is:
 
-```html
+```language-html
 <script type="module" src="https://unpkg.com/blurhash-img?module"></script>
 <blurhash-img 
   hash="L[JbHoogofbb?wkCRjofxvjroLae"
