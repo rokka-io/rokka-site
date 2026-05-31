@@ -95,7 +95,7 @@ If you need a new user, either for example for different roles (a write user) or
 
 It's best practice to create a user with only write access for general operations, and only use the admin user when necessary.
 
-You can also to this directly in the [dashboard](https://rokka.io/dashboard/#/memberships).
+You can also do this directly in the [dashboard](https://rokka.io/dashboard/#/memberships).
 
 
 ```language-bash
@@ -201,7 +201,7 @@ If you have admin rights (given when creating a new organization automatically),
 
 __awesomecompany__ would be your organization name, __userId__ the id of the to be added user. (You can [get the user_id](#get-the-current-user_id) with a `GET /user` call, if you know the Api-Key of that user)
 
-Role can be `read`, `write`, `upload`, `sourceimages:read`, `sourceimages:download:protected`, `sourceimages:write`, `sourceimages:unlock`,`admin`.
+Role can be `read`, `write`, `upload`, `sourceimages:read`, `sourceimages:download:protected`, `sourceimages:write`, `sourceimages:unlock`, `admin`.
 
 - Read role can only read metadata, including the organization, but not memberships. This could be used for a display-only application.
 - Write can add images and stacks, as well as reading metadata. This would be the role you would want to give your application interacting with rokka, mainly.
@@ -334,7 +334,7 @@ PHP:
 $client = \Rokka\Client\Factory::getUserClient('awesomecompany', 'apiKey');
 $userApiKey = $client->deleteUserApiKey($id);
 ``` 
-Javascript:
+JavaScript:
 
 ```language-javascript
 rokka.user.deleteApiKey(id)
@@ -355,7 +355,7 @@ PHP:
 $client = \Rokka\Client\Factory::getUserClient('awesomecompany', 'apiKey');
 echo $client->getCurrentUserApiKey()->getId();
 ``` 
-Javascript:
+JavaScript:
 ```language-javascript
 console.log((await rokka.user.getCurrentApiKey()).body)
 ```

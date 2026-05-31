@@ -41,7 +41,7 @@ Rokka can handle PNG, JPEG, (animated) GIF, HEIC, WebP, JPEG XL, AVIF, TIFF, PSD
 
 You can create a source image with a post to the `/sourceimages` route and your organization name. It's a simple post with the file data in the body.
 
-In the following example, __image.png__ is a image file in your current working directory and the organization is set to __mycompany__.
+In the following example, __image.png__ is an image file in your current working directory and the organization is set to __mycompany__.
 
 ```language-bash
 curl -X POST -F filedata=@image.png 'https://api.rokka.io/sourceimages/mycompany'
@@ -102,7 +102,7 @@ $sourceImages = $client->uploadSourceImage(file_get_contents('image.png'), 'imag
 var_dump($sourceImages);
 ```
 
-In case that source image already exists and there are metadata fields which are not defined in the upload, they are not deleted.
+In case the source image already exists and there are metadata fields which are not defined in the upload, they are not deleted.
 
 ### Optimizing source images before saving
 

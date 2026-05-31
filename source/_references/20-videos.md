@@ -9,7 +9,7 @@ description: rokka also can handle videos, stream and convert them.
 
 rokka has some support for streaming videos, also adaptive for different bitrates and screensizes (depending on the used player). It does also support automatic re-encoding or re-sizing of a video. But you can also upload all those manually to be in better control, how they should generated and look.
 
-Currently we only support the MP4 video format, support for other formats would be possible, 'though.
+Currently we only support the MP4 video format, support for other formats would be possible, though.
 
 If you want to work with animated GIFs as source image, see [the rendering animated GIFs chapter](./render.html#rendering-animated-gifs).
 

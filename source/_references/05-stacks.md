@@ -25,7 +25,7 @@ The _options_ parameter is optional. You can use the following options in there.
 | Attribute | Default | Minimum | Maximum | Description                                                                                                                                                                                                                                                                       |
 | --------- | ------- | ------- | ------- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | basestack | - | - | - | Name of existing stack that will be executed before this stack. See the [Basestacks chapter](#basestacks) below.                                                                                                                                                                  |
-| optim.quality | 5 | 0 | 10 | General image quality setting. If `jpeg.quality` resp. `webp.quality` is not set explicitely, rokka tries to find the best possible compression automatically.  See the [optimizations chapter](#additional-image-optimizations) below.                                           
+| optim.quality | 5 | 0 | 10 | General image quality setting. If `jpeg.quality` resp. `webp.quality` is not set explicitly, rokka tries to find the best possible compression automatically.  See the [optimizations chapter](#additional-image-optimizations) below.                                           
 | jpg.quality | 80 | 1 | 100 | Jpg quality setting, lower number means smaller file size and worse lossy quality. For high-DPR (`dpr > 1.5`) renders the default is lowered by 10, see the [DPR chapter](#device-pixel-ratio-dpr) below.                                                                          |
 | webp.quality | 80 | 1 | 100 | WebP quality setting, lower number means smaller file size and worse lossy quality. Choose a setting of 100 for lossless quality. For high-DPR (`dpr > 1.5`) renders the default is lowered by 10, see the [DPR chapter](#device-pixel-ratio-dpr) below.                          |
 | heif.quality | 40 | 1 | 100 | Heif/Heic quality setting, lower number means smaller file size and worse lossy quality.                                                                                                                                                                                          |
@@ -48,7 +48,7 @@ The _options_ parameter is optional. You can use the following options in there.
 | dpr | 1.0 | 1.0 | 10.0 | Sets the desired device pixel ratio of an image. See the [DPR chapter](#device-pixel-ratio-dpr) below.                                                                                                                                                                            |
 | content_disposition | inline | - | - | Sets a "Content-Disposition: attachment", if value is set to "attachment".                                                                                                                                                                                                        |
 | optim.disable_all |false| - | - | Disables all additional enhanced image size optimizations. See the [optimizations chapter](#additional-image-optimizations) below.                                                                                                                                                |
-| optim.immediate |false| - | - | Immediatly runs the enhanced image size otimizations instead of doing it later asynchronously. See the [optimizations chapter](#additional-image-optimizations) below.                                                                                                            |
+| optim.immediate |false| - | - | Immediately runs the enhanced image size optimizations instead of doing it later asynchronously. See the [optimizations chapter](#additional-image-optimizations) below.                                                                                                            |
 | transparency.color | -  | - | - | Always replaces an alpha channel with this color, even if the image format supports transparency.                                                                                                                                                                                |
 | jpg.transparency.color | FFFFFF | - | - | The background color used to replace the alpha channel.                                                                                                                                                                                                                           |
 | jpg.transparency.autoformat | false | - | - | Delivers the best possible, alpha channel capable format instead of jpg (webp, svg or png), in case the rendered image has a visible alpha channel.  See the [transparency chapter](#delivering-a-transparency-capable-format-instead-of-jpeg-jpg.transparency.autoformat) below. |
@@ -172,14 +172,14 @@ The invalidation is processed **asynchronously**: a `200` response (with `"statu
 
 ### Best practices for configuring a stack
 
-There's a whole page for that. We highly recomment reading this "[Best practices for stack configurations](../guides/best-practices-for-stack-configurations.html)" chapter.
+There's a whole page for that. We highly recommend reading this "[Best practices for stack configurations](../guides/best-practices-for-stack-configurations.html)" chapter.
 
 
 ### Configuring a stack with no operations
 
 If you want to deliver an image without any image altering stack operations, you can configure a stack without any operations, just an empty collection with `"operations": []`. This stack configuration still loads the image into our processing engine and converts them to the requested image format (even if input and output image are the same). It will also apply optimizations to make the image as small as possible for delivering to endusers.
 
-This configuration is useful if you want to deliver an image in its original size, don't want to have to take care about the input format and most imporantly, want to profit from our image optimizations. No matter in what format an image is uploaded, it will always be converted to your requested output format and made as small as possible.
+This configuration is useful if you want to deliver an image in its original size, don't want to have to take care about the input format and most importantly, want to profit from our image optimizations. No matter in what format an image is uploaded, it will always be converted to your requested output format and made as small as possible.
 
 ### Configuring a stack to just deliver the original source file
 
@@ -438,7 +438,7 @@ In the first stage, rokka checks the `Accept` header of the request and if it co
 If you didn't set `webp.quality` explicitly and requested a PNG, it will return a lossless image and a lossy compressed image, if a JPG was requested. If you set `webp.quality` to any value on that stack, it will always honor that, no matter what was requested.
 
 We also do some conversion to SVG (or SVG to PNG), if SVG is involved and choose the best format (SVG or Bitmap, depending on the sourceimage and 
-stack operations), no matter which format was requested. See below for options how to turn some of those chonversions off.
+stack operations), no matter which format was requested. See below for options how to turn some of those conversions off.
 
 In the second stage, during the [asynchronous 2nd stage optimization stage](#additional-image-optimizations), rokka analyses the image and changes the format, if another would be more appropriate. It can return a lossy image, even if a lossless was requested and vice versa. That image may be a little bit larger (but often also smaller), but with much better quality and no compression artifacts. This for example applies to computer generated drawings with few colors and large uniform areas, where PNG is a better suited format. Or if you ask for a photo as PNG, then JPG or lossless WebP may be a more suited format (and saves you lots of bytes). As this only happens during the asynchronous optimization, the first hit of such a request may return the lossy image, but subsequent requests later return the lossless format.
 
@@ -448,7 +448,7 @@ Even though rokka supports JPEG XL and AVIF, it's only enabled for newly created
 
 ### Exclude some autoformat conversions
 
-You can prevent some of the conversions a little with the `autoformat.exclude` stack option. It takes a comma-seperated list of the conversions you don't want to have applied.
+You can prevent some of the conversions a little with the `autoformat.exclude` stack option. It takes a comma-separated list of the conversions you don't want to have applied.
 
 | Attribute | Description |
 | --------- | ----------- |
@@ -458,7 +458,7 @@ You can prevent some of the conversions a little with the `autoformat.exclude` s
 | lossy_to_lossless | If you requested a lossy image, rokka will not convert it to a lossless image, even if that would be much smaller and better quality. |
 | lossy_to_lossless_if_bigger | If you requested a lossy image, rokka will not convert it to a lossless image, when the resulting lossless image is bigger than the lossy one. |
 | svg | If the sourceimage is a SVG file and we can do all stack operations in SVG, autoformat outputs it as SVG, even if you requested a different format. This option prevents that. |
-| svg_to_png | If you requested a SVG rendering, but the result is just an image wrapped in SVG, autoformat outputs it as PNG (or WebP). This option prevents that, the otput will always be an SVG. | 
+| svg_to_png | If you requested a SVG rendering, but the result is just an image wrapped in SVG, autoformat outputs it as PNG (or WebP). This option prevents that, the output will always be an SVG. | 
 
 
 ### More info about autoformat

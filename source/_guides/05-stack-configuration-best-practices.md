@@ -1,7 +1,7 @@
 ---
 title: Best practices for stack configurations 
 use: [guides]
-description: We present some of our recommended best practice for configuring a rokka stack to get the most out of rokka's possiblities.
+description: We present some of our recommended best practices for configuring a rokka stack to get the most out of rokka's possibilities.
 ---
 
 ## Best practices for stack configurations 
@@ -9,7 +9,7 @@ description: We present some of our recommended best practice for configuring a 
 While the default values for rokka stacks are chosen with decent values, there are some details you can  adjust to have 
 an impact on either the size of your images or the way you can use them.
 
-Therefore we'd like present here some of our recommended best practice for configuring a rokka stack to get the most out
+Therefore we'd like to present here some of our recommended best practices for configuring a rokka stack to get the most out
  of rokka's possibilities.
 
 Not all of them are always appropriate for your situation (that's why they are not defaults), but it's good to know
@@ -21,7 +21,7 @@ want or apply to your use cases and leave the other things out.
 
 ### The "traditional" resize & crop stack
 
-One of the most common stack configurations is the resize & crop an image to ensure that all images have the exactly same
+One of the most common stack configurations is to resize & crop an image to ensure that all images have the exactly same
 size no matter the size and aspect ratio of the source image. 
 
 If the rendered image should have a size of 900 x 600 pixels, the stack configuration would be the following:

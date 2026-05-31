@@ -42,7 +42,7 @@ doesn't get deleted by default).
 But as with "normal" unprotected images, the same binary gives you always the same hash, depending on if they are
 protected or not. 
 
-### Uploading a to be protected image
+### Uploading a to-be-protected image
 
 To mark an image as protected during upload, you set the `protected` property in `options` to `true`. Examples:
 

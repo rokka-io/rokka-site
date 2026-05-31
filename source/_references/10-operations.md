@@ -340,7 +340,7 @@ Applies a "glitch" / databending effect to an image.
 
 ### Modulate
 
-Modulates an image for brightness, saturation and hue. Use this to for example brighten up or darken an image or remove its colors. 
+Modulates an image for brightness, saturation and hue. Use this to, for example, brighten up or darken an image or remove its colors. 
 
 For brightness and saturation, the input is an integer between 0 and 500, which is meant as percentage. The maximum value of 500 is pretty arbitrary, but more usually doesn't make any sense.
 
@@ -394,7 +394,7 @@ We advise to read [this blog post about resizing and responsive images](https://
 - `upscale_dpr`: Boolean. Whether to allow the resulting image to be dpr times bigger than the original one, when the dpr stack option is set. Eg. If your image has 100x100 dimensions and you ask for a 60x60 image, this setting would upscale a `dpr: 2` setting  to 120x120 even when `upscale` is set to `false`. But it would upscale a request for a 120x120 image only to 200x200 (since a `dpr: 1` request would leave it at 100x100). This is to prevent, that a browser would display an image  with `dpr: 1` on a standard screen bigger than one with `dpr: 2` on a retina screen.  We advise to read [this blog post about resizing and responsive images](https://www.liip.ch/en/blog/things-you-should-know-about-responsive-images), if you want to turn this off. The default value is `true`.
 - `sharpen`:  If set to `true`, rokka will sharpen an image when it's downsized and has an entropy > 5 (indicating that
   it's a photo or similar). 
-  If set to `false` it will not be sharpened. The parameters used are the default values of 
+  If set to `false`, it will not be sharpened. The parameters used are the default values of 
     the Sharpen operator. If you want to have more control over those parameters, you can use the [Sharpen](#sharpen) operation below.
   You can increase also the entropy threshold via a stack expression, eg. `"sharpen": "image.entropy > 6"`.
   If you want to lower it, you have to use the Sharpen operation and set this here to `false`.
