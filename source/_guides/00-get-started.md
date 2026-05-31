@@ -39,12 +39,10 @@ Before you can use the rokka service, you need to register. The rokka API will o
 To do so, you need only supply an email address. This call will register you at the service and create an organization for you:
 
 ```language-bash
-curl -H 'Content-Type: application/json' -X POST 'https://api.rokka.io/users' -d '[
-    {
-        "email": "my@email.com",
-        "organization": "example-organization"
-    }
-]'
+curl -H 'Content-Type: application/json' -X POST 'https://api.rokka.io/users' -d '{
+    "email": "my@email.com",
+    "organization": "example-organization"
+}'
 ```
 
 The response is a json object with the API-Key in it. In addition this information will be mailed to you, just to be sure. Keep them safe, you will need them for the next steps.

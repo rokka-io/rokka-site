@@ -38,7 +38,7 @@ curl -H 'Content-Type: application/json' \
 
 API Keys generated before December 2021 had the format `[0-9A-Za-z]{32}` (32 chars) eg: `mHXscTNT0rk9ZoMLO4dlFbpGxGe06hXt`
 
-Starting in December 2021, we changed that to a 64 char long string with the same pattern eg. `81468485c73a4201b5f86478434eb0431Lj0Sv7jrPioKLSBuNswRWQRP6OJbjLG`
+Starting in December 2021, we changed that to a 64 char long string eg. `81468485c73a4201b5f86478434eb0431Lj0Sv7jrPioKLSBuNswRWQRP6OJbjLG`. It consists of a 32 char lowercase prefix (`[0-9a-z]{32}`, derived from the user id) followed by a 32 char mixed-case secret (`[0-9A-Za-z]{32}`).
 
 ## Using rokka with a JWT Token
 
@@ -179,6 +179,8 @@ seperated list of IPs and networks. If you use `request_ip` as one of the values
 used ip. `request_ip,212.40.50.1/24` would allow the token to be used from the currently used IP and the 212.40.50.1/24
 network. You can define up to 10 values and in total up to 10'000 covered addresses (we can adjust those values, if
 this is not enough for you).
+
+`no_ip_protection` and `ips` are mutually exclusive — combining `no_ip_protection=true` with a non-empty `ips` list returns a `400 Bad Request`.
 
 PS. We're not sure if this is a good idea to enable that IP protection by default. Just define explicitly with `no_ip_protection` or `ips`, what you want/need and the behavior won't change.
 

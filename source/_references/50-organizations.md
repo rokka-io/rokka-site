@@ -19,6 +19,9 @@ have overlapping images, having two separate organizations would be advisable.
 | name | Websafe name to use in urls e.g. "rokka". Only small letters, numbers and dashes ([a-z0-9-]) are allowed. |
 | display_name | A more pretty name that can be displayed e.g. "rokka.io" |
 | billing_email | Email address for billing purposes |
+| created | When this organization was created |
+| options | Organization-level options (eg. remote URL and render fallback options) |
+| master_organization | Name of the parent organization, for sub-organization setups |
 
 ## Create an organization
 
@@ -41,6 +44,8 @@ var_dump($organization);
 ```
 
 Note the use of the websafe name as part of the url on where to put the request.
+
+You can also pass an optional `master_organization` field in the body to create a sub-organization of an existing one.
 
 The return is the full organization object.
 

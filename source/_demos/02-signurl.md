@@ -10,7 +10,7 @@ description: Generating signatures for protected rokka images and stacks
  
 # Sign a rokka URL Demo
 
-See [the docs for detatils](https://rokka.io/documentation/references/protected-images-and-stacks.html).
+See [the docs for details](https://rokka.io/documentation/references/protected-images-and-stacks.html).
 
 
 <div id="demoForm">   

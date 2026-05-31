@@ -188,7 +188,8 @@ Even if you protect all your stacks with the `protected` option, visitors can st
 with the virtual "dynamic" stack. Except if you protect the images itself.
 
 To also protect the "dynamic" stack, you can set the organization option `protect_dynamic_stack` to true and from then
-on all render requests to the "dynamic" stack need to be signed. But also be aware that if a request is somewhere
+on all render requests to the "dynamic" stack need to be signed. This also applies to [IIIF](../guides/iiif-image-server.html)
+render requests (`/render/_iiif/...`), which then need to be signed as well. But also be aware that if a request is somewhere
 still cached, it may still go through with an unsigned URL (talk to us, if that's a problem, we can clear the relevant
 caches manually).
 
@@ -216,7 +217,7 @@ var rokka = require('rokka')({apiKey: 'apiKey'})
 rokka.organizations.setOption(
     org, 
     rokka.organizations.OPTION_PROTECT_DYNAMIC_STACK, 
-    false
+    true
 )
 ```
 
@@ -320,7 +321,7 @@ PHP:
 ```language-php
 $url = https://mycompany.rokka.io/somestack/somehash.jpg";
 # make it valid for a day
-$validUntil = (new DateTime())->add(new DateInterval('PT1D'))
+$validUntil = (new DateTime())->add(new DateInterval('P1D'));
 $signedUrl = (string) \Rokka\Client\UriHelper::signUrl($url, $key, $validUntil); 
 ``` 
 

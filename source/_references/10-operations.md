@@ -44,6 +44,16 @@ Does operations with the alpha (transparency) channel of an image.
     - `extract`: Returns just the alpha channel of an image.
     - `remove`: Removes the alpha channel from an image. 
     - `apply`: Applies an opacity to an image, needs also the property `opacity`
+- `opacity`: Integer, between 0 and 100. The opacity applied when `mode` is `apply`. The default value is 50.
+
+### Addframes
+
+Adds frames to an image to build an animation (a prototype/experimental operation).
+
+#### Properties
+
+- `delay`: Number, between 0 and 1000. The delay between frames, in 100ths of a second. The default value is 10.
+- `frames`: String. The frames to be added.
 
 ### Autorotate
 
@@ -68,6 +78,7 @@ Blurs the entire image.
 #### Properties
 
 - `sigma`: Number, minimum value 0. The default value is 4. Controls most of the blurring of the image.
+- `radius`: Integer, between 0 and 500. The default value is 0. Deprecated for the (default) vips backend &mdash; setting a non-zero value forces the slower ImageMagick fallback. You normally only need `sigma`.
 
 ### Circlemask
 
@@ -261,8 +272,8 @@ Crops an image to a set size.
 
 #### Properties
 
-- `width` (required): Integer, between 1 and 10000. The new width for the image.
-- `height` (required): Integer, between 1 and 10000. The new height for the image.
+- `width` (required): Integer, between 1 and 99999. The new width for the image.
+- `height` (required): Integer, between 1 and 99999. The new height for the image.
 - `anchor`: String. Describes where the crop should originate in the form of `XOFFSET_YOFFSET`, where:
     - `XOFFSET` is either a number of pixels or "left", "center", "right"
     - `YOFFSET` is either a number of pixels or "top", "center", "bottom".
@@ -285,6 +296,7 @@ Crops an image to a set size.
     - `area`
 - `scale`: Scales the crop box by that percentage. Especially useful when using the ratio mode and you want eg. only the middle 50% of the picture cropped. The default value is `100`
 - `movearea_y` / `movearea_x`: Moves a SubjectArea by this percentage along the corresponding axes. Can be useful, if a face shouldn't be in the middle of an image for example. 
+- `area`: String. Selects a named area from the [`multi_areas` dynamic metadata](../references/dynamic-metadata.html) to crop on (used together with `mode: box` or `mode: area`). May only contain letters, digits and underscores. Default: `null` (uses the default subject/crop area). For example a stored area named `landscape_16_9` would be selected via the render URL with `area-landscape_16_9`.
 
 ### Dropshadow
 
@@ -301,9 +313,30 @@ Adds a dropshadow to an image.
                  are good with leaving this at 0.
 - `color`: String. The hex code for the shadow colour. The default value is `000000`.
 
+### Face
+
+Places a secondary image (for example sunglasses or a hat) onto detected faces, aligned to facial landmarks. Requires the source image to have [face detection](dynamic-metadata.html) metadata.
+
+#### Properties
+
+- `secondary_image` (required): String. The rokka hash of the image to put onto the faces.
+- `leftFeature` (required): String. The left landmark feature used to align the secondary image (e.g. `eyeLeft`).
+- `rightFeature` (required): String. The right landmark feature used to align the secondary image (e.g. `eyeRight`).
+- `anchor`: String. Anchor of the point in the `secondary_image` matching `leftFeature`. Default: `center_center`.
+- `scale`: Number. Scale the secondary image by this factor. Default: 1.0.
+
 ### Grayscale
 
 Converts an image to grayscale.
+
+### Glitch
+
+Applies a "glitch" / databending effect to an image.
+
+#### Properties
+
+- `amount`: Integer, between 0 and 10. How much glitch should be applied. The default value is 4.
+- `random`: String. An arbitrary string to get a different random result (and to circumvent caching). Has no other influence on the result.
 
 ### Modulate
 
@@ -332,6 +365,15 @@ Multiplies an image with a factor. Can be used to darken an image.
 #### Properties
 - `factor`: Number. The factor to multiply the image with. Between 0 and 1. The default value is 0.96.
 - `factor_color`: String. Multiply by this color in hex without the # sign, example: "0F0F0F", takes precedence over `factor`. The default value is null.
+
+### Primitive
+
+Recreates an image from a number of simple geometric primitives (an artistic effect, based on [primitive](https://github.com/fogleman/primitive)). This can be a slow operation, use it sparingly.
+
+#### Properties
+
+- `count`: Integer, between 1 and 200. How many primitive shapes to use. The default value is 20.
+- `mode`: Integer, between 0 and 9. Which kind of shape to use (0 = combo, 1 = triangle, 2 = rectangle, 3 = ellipse, etc.). The default value is 0.
 
 ### Resize
 
@@ -365,8 +407,8 @@ Rotates an image clockwise.
 
 #### Properties
 
-- `angle` (required): Number, between 0 and 360. The angle of rotation for the image.
-- `background_colour`: String. The hex code for the background colour. The default value is `FFFFFF`.
+- `angle` (required): Number, between -360 and 360. The angle of rotation for the image. Negative values rotate counter-clockwise. Can be fractional, example: "120.3".
+- `background_color`: String. The hex code for the background colour. The default value is `FFFFFF`.
 - `background_opacity`: Number, between 0 and 100. 100 is fully opaque and 0 is fully transparent. The default value is 0.
 
 ### Sepia
@@ -396,7 +438,7 @@ only sharpen pictures with a entropy > 6.
 
 - `m1`: Number. Slope for jaggy areas. Default: 0.4
 - `m2`: Number. Slope for flat areas. Default: 0.8
-- `sigma`: Number. Sigma of gaussian. Default: 0.8
+- `sigma`: Number. Sigma of gaussian. Default: 0.7
 - `x1`: Number. Flat/jaggy threshold. Default: 2.0
 - `y2`: Number. Maximum amount of brightening. Default: 10.0
 - `y3`: Number. Maximum amount of darkening. Default: 20.0
@@ -496,7 +538,7 @@ With this you can now control the control and stroke width via the render URL, e
 
 #### Properties
 
-- `add` (required): String. The Element-ID and attribute pair as key and the new value as value encoded as URL-Query-Parameter
+- `changes` (required): Array of objects, each with the keys `id` (the element id), `attr` (the attribute to change) and `value` (the new value). See the examples above.
 
 ### Trim
 

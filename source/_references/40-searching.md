@@ -138,7 +138,9 @@ $sourceImageCollection = $client->searchSourceImages(['height' => 1200]);
 The following fields are available for each image for filtering:
 
  - `hash` (string): the image hash;
+ - `short_hash` (string): the image short-hash;
  - `binaryhash` (string): the image binary-hash;
+ - `mimetype` (string): the image mime type, eg. "image/jpeg";
  - `size` (integer): the image filesize, in bytes;
  - `format` (string): the image format, as the file extension ("png", "jpg");
  - `width` (integer): the image width, in pixels;
@@ -147,9 +149,11 @@ The following fields are available for each image for filtering:
  - `name` (string): the name of the image;
  - `name_text` (string): the name of the image tokenized and decompounded for better searching within the name;
  - `user:xxx:xxx`: user metadata fields, see below;
+ - `static:xxx:xxx` / `dynamic:xxx:xxx`: static and dynamic metadata fields, addressed the same way as user metadata (eg. `dynamic:str:version:text`, see [dynamic metadata](dynamic-metadata.html));
 
 You can filter by fields defined in the [User Metadata](/documentation/references/user-metadata.html),
 those fields are accessible by using the `user:` and the correct [field type](user-metadata.html) prefixes.
+The same works for [static](source-images.html#the-source-image-object) and [dynamic](dynamic-metadata.html) metadata with the `static:` and `dynamic:` prefixes.
 
 The following example will return all images where the field `my_integer_field` has a value of `3`:
 

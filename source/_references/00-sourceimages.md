@@ -30,6 +30,11 @@ Rokka can handle PNG, JPEG, (animated) GIF, HEIC, WebP, JPEG XL, AVIF, TIFF, PSD
 | dynamic_metadata | Can contain data that will alter the image identifying hash if altered. See [dynamic metadata](dynamic-metadata.html) |
 | user_metadata | Contains custom meta data set by the API user that is returned when requesting the source image and can be used for searching. Changing this will not alter the main hash identifying the image. See [user metadata](user-metadata.html) |
 | created | When this image was created on rokka |
+| static_metadata | Read-only metadata extracted from the image (EXIF, IPTC, XMP, colours, etc.). See [dynamic metadata](dynamic-metadata.html) for the difference to dynamic metadata |
+| protected | `true` if the image is a [protected image](protected-images-stacks.html) |
+| locked | `true` if the image is locked against deletion (see below) |
+| opaque | `true` if the image has no (semi-)transparent pixels |
+| animated | `true` if the image is animated (e.g. an animated GIF or WebP) |
 | link | Backlink to itself, useful when you have lists or search by binary hash |
 
 ## Create a source image
@@ -50,10 +55,10 @@ var_dump($sourceImages);
 ```
 
  
-It will return the same meta data as you get from retrieving a single image, with the only difference that it is wrapped in an array for future expansions of multi file uploads.
+It will return the same meta data as you get from retrieving a single image, with the only difference that it is wrapped in an array. You can also upload [multiple files in a single request](#supplying-metadata-while-creating-a-source-image) (or several remote URLs with `url[0]`, `url[1]`, …), in which case you get one array entry per uploaded file.
 
-The current limit for uploading images are 150 MB in file size. For source images not in the JPEG or WebP format there's
- an additional limit of 225 Megapixels (equals an image of 15'000 x 15'000 size) .
+The current limit for uploading images is about 1180 MB in file size (about 1.8 GB when `optimize_source` is used). For source images not in the JPEG format there's
+ an additional limit of 225 Megapixels (equals an image of 15'000 x 15'000 size).
 
 ### Create a source image with a remote URL
 
@@ -163,7 +168,7 @@ An example response would be:
     "format": "png",
     "size": 131284,
     "width": 800,
-    "height": 1160
+    "height": 1160,
     "organization": "mycompany",
     "link": "/sourceimages/mycompany/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5"
 }
@@ -338,7 +343,7 @@ If an image is locked, no one can delete an image before it's not unlocked, not 
 
 Bash:
 ```language-bash
-curl -X PUT 'https://api.rokka.io/sourceimages/mycompany/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/options/protected' \
+curl -X PUT 'https://api.rokka.io/sourceimages/mycompany/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/options/locked' \
       --data-raw 'true'
 ```
 

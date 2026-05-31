@@ -18,6 +18,8 @@ If an image with the new hash already exists, it won't be created, but the exist
 
 If you don't need the previous image to be kept on rokka, you can directly delete it with the `?deletePrevious=true` parameter.
 
+The endpoint returns a `201 Created` (with the new source image in the body) when the metadata change results in a new hash, and a `204 No Content` when the metadata is unchanged. Billable-only metadata (like `detection_face`) on a non-paying organization returns a `403`.
+
 In the following example, we are adding a subject area to an image.
 
 ```language-bash
@@ -76,6 +78,8 @@ One workaround for the cache problem is to **create a new stack**. The stack nam
 
 `keepHash=true` is mutually exclusive with `deletePrevious=true`; combining them returns `400 Bad Request`.
 
+When you use `keepHash=true`, the response also includes a `Warning: 299` header reminding you that downstream caches (CloudFront, memcached, browser) are not invalidated automatically and may need manual invalidation (see the caveats above).
+
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/subject_area?keepHash=true' -d '{
         "width": 20,
@@ -118,10 +122,11 @@ If Subject area and Crop area are set, Subject area is used.
 
 #### Properties
 
-- `x` (required): Integer. The x-offset of the starting point, in pixels.
-- `y` (required): Integer. The y-offset of the starting point, in pixels.
-- `width` (required): Integer. The width of the subject area, in pixels. The default value is 1.
-- `height` (required): Integer. The height of the subject area, in pixels. The default value is 1.
+- `x` (required): Integer. The x-offset of the starting point, in pixels or percentage.
+- `y` (required): Integer. The y-offset of the starting point, in pixels or percentage.
+- `width` (required): Integer. The width of the crop area, in pixels or percentage. The default value is 1.
+- `height` (required): Integer. The height of the crop area, in pixels or percentage. The default value is 1.
+- `percentage`: Boolean. If the parameters above are in percentage instead of pixels.
 
 ### Multi areas
 
@@ -175,4 +180,17 @@ You can also search for that version string with eg.
 
 ```language-bash
 curl https://api.rokka.io/sourceimages/testorganization/?dynamic:str:version:text=someVersionHere
+```
+
+### Detection face
+
+You can trigger face detection on an image by setting the `detection_face` dynamic metadata (with an empty body).
+rokka then runs face detection (via AWS Rekognition) and stores the detected face area, which you can use with the
+`face` crop anchor and the `image.face_detection.*` / `image.hasDetectionFace` [expressions](stacks.html#expressions).
+A `detection_eyemouth` area is derived automatically as well.
+
+This is a **billable-account-only** feature — calling it on a non-paying organization returns a `403`.
+
+```language-bash
+curl -H 'Content-Type: application/json' -X PUT  https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/detection_face -d '{}'
 ```

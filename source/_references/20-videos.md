@@ -17,7 +17,7 @@ If you want to work with animated GIFs as source image, see [the rendering anima
 
 Uploading videos works the same way as uploading images with the same API endpoints. Also all other sourceimages API endpoints work the same for videos. See the [source images chapter](source-images.html) for more details.
 
-The size limit for a file is currently at about 300 MB, if you need to upload bigger videos, get in contact with us.
+The size limit for a file is currently at about 1180 MB, if you need to upload bigger videos, get in contact with us.
 
 The source image response object for a video has some video related info, it's in the static metadata `video` part of the response. See below for an example. 
 
@@ -64,7 +64,7 @@ This returns the list of links to the list of segments for all (automatically or
 
 If the video doesn't have already linked videos (described below in detail how to do that), the automatic creation of smaller videos for adaptive streaming will start and added to this video.
 
-rokka will generate videos in 1080p, 720p, 480p, 360p, 240p and 144p sizes, if the original is bigger than this. This encoding can take a few minutes, but will appear automatically in the `m3u` list once they're generated.
+rokka will generate videos in 360p, 480p, 720p, 1080p and 1720p sizes, but only for those heights that are equal to or smaller than the original (no upscaling). If the original's height isn't one of those, it is added to the list as well. This encoding can take a few minutes, but will appear automatically in the `m3u` list once they're generated.
 
 All the newly generated videos will be added as linked sourceimage to the original video and consume storage, counting towards your bill. This for example means, if you also have to delete those linked videos in case you don't need them anymore. You'll find the hashes in the `linked` dynamic metadata.
 

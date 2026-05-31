@@ -24,13 +24,13 @@ While we can delete the CDN caches, there's no way to delete a browser cache wit
 
 For paying customers there's a rate limited [API endpoint](https://api.rokka.io/doc/#/stacks/deleteStackCache) to invalidate the CDN caches for a stack. See [the Stacks chapter](../references/stacks.html#invalidating-the-cdn-cache-for-a-stack) for more details. If it doesn't work for you, get in contact with us.
 
-The CDN invalidation happens **asynchronously**. A `200` response (with `queued: true` in the body) means the paths were accepted for invalidation, not that the CDN cache is already cleared. It usually completes within a few seconds.
+The CDN invalidation happens **asynchronously**. A `200` response (with `"status": "ok"` in the body) means the paths were accepted for invalidation, not that the CDN cache is already cleared. It usually completes within a few seconds.
 
 
 ## Deleting images and stacks
 
 If you delete a source image (or a stack) on the backend via the API, images already rendered with it will still remain in the CDN caches, until they expire. So people still can access the rendered output of it. This usually is not a problem, but may be if you for example have to delete an image for copyright or privacy reasons.  
 
-There's an API endpoint for paying customers to delete such images, see [the API docs](https://api.rokka.io/doc/#/sourceimages/deleteSourceImageCache) for the details. It's limited to 10 calls per hour, if you need more, talk to us.
+There's an API endpoint for paying customers to delete such images, see [the API docs](https://api.rokka.io/doc/#/sourceimages/deleteSourceImageCache) for the details. It's limited to 5 calls per hour, if you need more, talk to us.
 
 As a sidenote, you're not charged for storage used in the CDN caches, just for the storage on your source images. So if you delete a source image via the API, you won't be charged anymore for that storage .

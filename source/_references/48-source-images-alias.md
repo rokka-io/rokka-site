@@ -25,6 +25,8 @@ So if you have a lot of aliases and need to change them, you may run into proble
 To create an alias, you need to know the hash of the source image you want to use for the alias. Then you can create
 the alias with the [sourceimages alias](https://api.rokka.io/doc/#/sourceimages%20alias) endpoint.
 
+Alias names may only contain letters, digits and underscores (`[a-zA-Z0-9_]`). Names with other characters (eg. a hyphen or dot) will not match and result in a `404`.
+
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimages/myorganization/alias/${aliasname}' -d '
     {
@@ -43,6 +45,7 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimag
     {
         "hash": "abcdef1234567890abcdef1234567890abcdef12",
     }
+'
 ```
 
 ## Rendering an alias
@@ -55,6 +58,16 @@ like this:
 https://myorganization.rokka.io/resize/-_myalias_-.jpg
 ```
 
+## Getting an alias
+
+To retrieve an alias and the hash it currently points to, do a GET request to the alias endpoint.
+
+```language-bash
+curl -X GET 'https://api.rokka.io/sourceimages/myorganization/alias/${aliasname}'
+```
+
+It returns the alias object with its `organization`, `alias` and current `hash`.
+
 ## Invalidating an alias at the CDN level
 
 If you want to invalidate an alias at the CDN level, you need to call the [delete cache endpoint](https://api.rokka.io/doc/#/sourceimages%20alias/deleteSourceImageAliasCache) of the alias.
@@ -63,7 +76,7 @@ If you want to invalidate an alias at the CDN level, you need to call the [delet
 curl -X DELETE 'https://api.rokka.io/sourceimages/myorganization/alias/${aliasname}/cache'
 ```
 
-Currently, you can only call this endpoint 10 times per hour. If you need more, please contact us.
+This endpoint requires a paid/billable account — on a free account it returns a `403`. Additionally, you can only call this endpoint 10 times per hour. If you need more, please contact us.
 
 
 ## Deleting an alias

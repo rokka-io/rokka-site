@@ -34,15 +34,13 @@ You can easily add new users with different membership rights in the [dashboard]
 
 Signing up is done using the `/users` endpoint. A post will do the trick.  [Try it out](https://api.rokka.io/doc/#/admin/createUser)
 
-This is the only route besides the operations listing, where you don't need authorization. Everything else will need it, so check for the authorization part of the guide to see the details.
+This is one of the few public routes that don't need authorization (others include the operations listing, `/stackoptions`, `/savings` and the rendering endpoints). Almost everything else needs it, so check the authorization part of the guide for the details.
 
 ```language-bash
-curl -H 'Content-Type: application/json' -X POST 'https://api.rokka.io/users' -d '[
-    {
-        "email": "my@example.org",
-        "organization": "example-organization"
-    }
-]'
+curl -H 'Content-Type: application/json' -X POST 'https://api.rokka.io/users' -d '{
+    "email": "my@example.org",
+    "organization": "example-organization"
+}'
 ```
 
 ```language-php
@@ -61,18 +59,24 @@ You get back a full user object, containing your Api-Key. To be safe, this infor
 
 You can get the user_id of the logged in user with the `/user` endpoint.  [Try it out](https://api.rokka.io/doc/#/admin/getUser)
 
-For security and privacy reasons, we currently only return the user_id and not other information. The reason is that there are
-valid reasons for using the Api-Key in a public setting (for uploading or reading) and therefore people could access your email adress then.
+For read-only users we only return the `user_id` and no other information. The reason is that there are
+valid reasons for using a read-only Api-Key in a public setting (for uploading or reading) and we don't want to expose
+your email address or other Api-Keys then. For all other (non read-only) users, the response also contains the `email`
+and the list of `api_keys`.
 
 ```language-bash
 curl 'https://api.rokka.io/user'
 ```
 
-Response: 
+Response (for a non read-only user): 
 
 ```language-javascript
 {
-    "user_id": "271cce77-45c7-4f6d-a0f6-a4edc29964e6"
+    "user_id": "271cce77-45c7-4f6d-a0f6-a4edc29964e6",
+    "email": "my@example.org",
+    "api_keys": [
+        { "id": "...", "comment": "...", "created": "..." }
+    ]
 }
 ```
 
@@ -119,7 +123,7 @@ use \Rokka\Client\Core\Membership;
 
 $client = \Rokka\Client\Factory::getUserClient('awesomecompany', 'apiKey');
 
-$membership = $client->createUserAndMembership([Membership::ROLE_READ]);
+$membership = $client->createUserAndMembership([Membership::ROLE_WRITE]);
 var_dump($membership);
 ```
 
@@ -141,6 +145,11 @@ Or with the API calls mentioned here.
 | user_id | UUID of user |
 | organization_id | UUID of organization |
 | roles | Which roles the user has for this organization as array |
+| active | Whether the membership is active |
+| last_access | When this user last accessed the organization |
+| created | When this membership was created |
+| comment | Optional comment for this membership |
+| api_key | The Api-Key — only returned when the membership (and its user) is created |
 
 ## List memberships
 
@@ -210,6 +219,15 @@ If you want for example assign an existing user with just a read role to your or
 ```language-bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/awesomecompany/memberships/c8791715-a873-475e-96b2-5ffd488112e7' -d '{
     "roles": ["read"]
+}'
+```
+
+You can pass a single `role` string instead of the `roles` array, and an optional `comment` to store with the membership:
+
+```language-bash
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/awesomecompany/memberships/c8791715-a873-475e-96b2-5ffd488112e7' -d '{
+    "roles": ["read"],
+    "comment": "read-only access for the reporting tool"
 }'
 ```
 

@@ -44,6 +44,7 @@ If the rendered image should have a size of 900 x 600 pixels, the stack configur
         "height": "600 "
       }
     }
+  ]
 }
 ```
 
@@ -134,7 +135,7 @@ or some "temporary" variables to avoid repetition.
 | {stackVariables} | result |
 | --------- | ----------- |
 |  | If you don't add stack variables, it returns the default size of 900 x 600 |
-| /v-w-1200 | Resizes & crops the image to a width of 1200 and the same aspect ratio as the defaults (a width of 800 in the example)
+| /v-w-1200 | Resizes & crops the image to a width of 1200 and the same aspect ratio as the defaults (a height of 800 in the example)
 | /v-h-800 | Resizes & crops the image to a height of 800 and the same aspect ratio as the defaults. |
 | /v-w-1000-h-800 | Resizes & crops the image to a width of 1000 and height of 800, ignoring the default ratio.|
 | /v-r-1.2 | Sets the aspect ratio to 1.2 and uses the default width. Ends in a height of 750 in the example. |
@@ -223,7 +224,7 @@ twice as large as the "normal" ones.
 
 To enable this, we need [Stack expressions](/documentation/references/stacks.html#stack-expressions-for-stack-options-and-stack-variables) and set the image quality lower via `optim.quality`, whenever the [stack option `dpr`](/documentation/references/stacks.html#device-pixel-ratio-dpr) is 2 or greater. You can of course also set `jpg.quality` or similar directly, but
 we recommend using `optim.quality`, since that's more flexible and a little bit more intelligent. 
-Default of `optim.quality` is by the way 4. You may experiment with that settings, if you're not happy with the quality.
+Default of `optim.quality` is by the way 5. You may experiment with that settings, if you're not happy with the quality.
 And of course you could also set `jpeg.quality`/`webp.quality` instead, but then the stack won't take advantage of
 our adaptive quality rendering.
 
@@ -361,7 +362,7 @@ The relevant stack part looks like the following then:
   "name": "crop",
   "options": {},
   "expressions": {
-    "anchor": "$a === 'notset' ? ((image.hasSubjectArea || image.hasDetectionFace || image.format == 'gif') ? 'auto' : 'smart') : $a",
+    "anchor": "$a === 'notset' ? ((image.hasSubjectArea || image.hasDetectionFace || image.isAnimated) ? 'auto' : 'smart') : $a",
     "width": "$finalWidth",
     "height": "$finalHeight"
   }
@@ -379,7 +380,7 @@ two blog posts about this topic by us ([part one](https://www.liip.ch/en/blog/ho
 All you have to do to enable this is to set the 
 [stack option `jpg.transparency.autoformat`](/documentation/references/stacks.html#delivering-a-transparency-capable-format-instead-of-jpeg-jpg.transparency.autoformat) 
 to true. And then whenever you ask for a JPEG render and the source image is not opaque, it will deliver it with this SVG
-trickery. If the source image is not opaque, it will deliver it as JPEG as normal.
+trickery. If the source image is opaque, it will deliver it as JPEG as normal.
 
 It is advised to check the output of such images in Safari (the only main browser not supporting WebP nowadays), as the
 result may not be 100% the same, especially if you half-transparent pixels in them.

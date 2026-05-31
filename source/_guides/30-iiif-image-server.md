@@ -18,12 +18,14 @@ for the latest version (3.0 right now). `https://${org}.rokka.io/_iiif/3/${hash}
 
 If the image is large, we will pregenerate (cache) all the needed tiles on demand, for fast access later.
 
+The largest delivered edge is 2048px (the info.json reports a `maxWidth`/`maxHeight` of 2048 and a `maxArea` of 2048×2048), so the full/max size is capped at that. Compliant viewers honour this automatically via the info.json.
+
 If you're using OpenSeadragon, this would be the config you need and the result of this you can see below.
 
 ```javascript
 viewer = OpenSeadragon({
     id: "openseadragon1",
-    tileSources: 'http://rokka.rokka.test/_iiif/283eaf/info.json',
+    tileSources: 'https://rokka.rokka.io/_iiif/283eaf/info.json',
     imageLoaderLimit: 2
 });
 ```

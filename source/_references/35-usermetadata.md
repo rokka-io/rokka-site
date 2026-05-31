@@ -76,6 +76,25 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/sourceimag
 
 You can also directly provide metadata when you first upload an image. See [Source images](source-images.html) for details.
 
+User metadata is also always included in the `user_metadata` field of the [source image object](source-images.html#the-source-image-object) when you retrieve it.
+
+## Read image metadata
+
+To get all user metadata of an image as a JSON object, make a GET request to
+`https://api.rokka.io/sourceimages/{organization}/{hash}/meta/user`:
+
+```language-bash
+curl -X GET 'https://api.rokka.io/sourceimages/myorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/user'
+```
+
+To get just a single field, append its name:
+
+```language-bash
+curl -X GET 'https://api.rokka.io/sourceimages/myorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/user/somefield'
+```
+
+The single-field endpoint returns the value of that field, or a `404` if the field doesn't exist.
+
 ## Delete metadata from a source image
 
 Besides just setting a value of a field to null as shown above, you can also delete user

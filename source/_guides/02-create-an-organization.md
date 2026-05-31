@@ -14,9 +14,9 @@ Images uploaded to rokka are always owned by an organization, not an individual 
 To get started, lets create an organization:
 
 ```language-bash
-curl -X PUT 'https://api.rokka.io/organizations/testorganization' -d '{
-    'billing_email' => 'billing@testorganization.com',
-    'display_name' => 'Test Organization Ltd.'
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/testorganization' -d '{
+    "billing_email": "billing@testorganization.com",
+    "display_name": "Test Organization Ltd."
 }'
 ```
 ```language-php
@@ -31,7 +31,9 @@ This creates an organization called "testorganization" and returns a json struct
     "id": "c03683b067927d77973b458e0baa40aa7b5e5418",
     "display_name": "Test Organization Ltd.",
     "name": "testorganization",
-    "billing_email": "billing@testorganization.com"
+    "billing_email": "billing@testorganization.com",
+    "created": "2026-05-31T12:00:00+00:00",
+    "master_organization": "testorganization"
 }
 ```
 
