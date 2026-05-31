@@ -353,6 +353,33 @@ You can also change stack variables this way, use the property `variables` inste
 
 Expressions are applied from top to bottom and all the matching ones will be applied, the last one applying for a certain option winning.
 
+```language-bash
+curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/mycompany/stackname?overwrite=true' -d '{
+     "operations": [
+         {
+             "name": "resize",
+             "options": {
+                 "width": 200,
+                 "height": 200
+             }
+         }
+     ],
+     "options": {
+         "optim.quality": 4,
+         "autoformat": true
+     },
+     "expressions": [ {
+         "expression": "options.dpr >= 2",
+             "overrides": {
+                "options": {
+                   "optim.quality": 2
+                }
+             }
+         }
+     ]
+}'
+```
+
 With the PHP client, the code would be the following
 
 ```language-php

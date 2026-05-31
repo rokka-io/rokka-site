@@ -365,6 +365,17 @@ console.log((await rokka.user.getCurrentApiKey()).body)
 If you want to delete all Api Keys, except the currently used one, you can use the following code. 
 Since you can't delete the currently used Api Key, we have to check for that and not try to delete that one.
 
+Bash:
+```language-bash
+CURRENT=$(curl -s -H 'Api-Key: apiKey' 'https://api.rokka.io/user/apikeys/current' | jq -r .id)
+for ID in $(curl -s -H 'Api-Key: apiKey' 'https://api.rokka.io/user/apikeys' | jq -r '.[].id'); do
+    if [ "$ID" != "$CURRENT" ]; then
+        echo "Delete $ID"
+        curl -X DELETE -H 'Api-Key: apiKey' "https://api.rokka.io/user/apikeys/$ID"
+    fi
+done
+```
+
 PHP:
 ```language-php
 $client = \Rokka\Client\Factory::getUserClient('awesomecompany', 'apiKey');
