@@ -65,12 +65,14 @@ $sourceImages = $client->uploadSourceImage(
 
 JavaScript:
 ```language-javascript
-var rokka = require('rokka')({apiKey: 'apiKey'})
-var filePath = 'image.png' 
-var response = rokka.sourceimages.create(
+import { Rokka } from 'rokka'
+const rokka = new Rokka({apiKey: 'apiKey'})
+import { createReadStream } from 'fs'
+const filePath = 'image.png' 
+const response = rokka.sourceimages.create(
     org, 
     filePath, 
-    require('fs').createReadStream(filePath), 
+    createReadStream(filePath), 
     {options: {protected: true}}
 )
 ```
@@ -103,8 +105,9 @@ $newHash = $client->setProtected(
 
 JavaScript:
 ```language-javascript
-var rokka = require('rokka')({apiKey: 'apiKey'})
-var response = rokka.sourceimages.setProtected(
+import { Rokka } from 'rokka'
+const rokka = new Rokka({apiKey: 'apiKey'})
+const response = rokka.sourceimages.setProtected(
     org, 
     '0dcabb778d58d07ccd48b5ff291de05ba4374fb9', 
     true, 
@@ -154,8 +157,9 @@ $stack = $client->saveStack($stack);
 JavaScript: 
 
 ```
-var rokka = require('rokka')({apiKey: 'apiKey'})
-var response await rokka.stacks.create(
+import { Rokka } from 'rokka'
+const rokka = new Rokka({apiKey: 'apiKey'})
+const response = await rokka.stacks.create(
     org,
     "stack-name",
     {
@@ -213,7 +217,8 @@ $client->setOrganizationOption(
 
 JavaScript:
 ```language-javascript
-var rokka = require('rokka')({apiKey: 'apiKey'})
+import { Rokka } from 'rokka'
+const rokka = new Rokka({apiKey: 'apiKey'})
 rokka.organizations.setOption(
     org, 
     rokka.organizations.OPTION_PROTECT_DYNAMIC_STACK, 
@@ -273,8 +278,9 @@ $key = $client->getOrganization()->getSigningKeys()[0];
 
 JavaScript:
 ```language-javascript
-var rokka = require('rokka')({apiKey: 'apiKey'})
-var key = await rokka.organizations.get('test')).body.signing_keys[0].key
+import { Rokka } from 'rokka'
+const rokka = new Rokka({apiKey: 'apiKey'})
+const key = (await rokka.organizations.get('test')).body.signing_keys[0].key
 ```
 
 ### Signing an actual URL
@@ -302,9 +308,10 @@ $signedUrl = (string) \Rokka\Client\UriHelper::signUrl($url, $key);
 
 JavaScript:
 ```language-javascript
-var rokka = require('rokka')()
-var url = https://mycompany.rokka.io/somestack/somehash.jpg";
-var signedUrl = rokka.render.signUrl(url, key)
+import { Rokka } from 'rokka'
+const rokka = new Rokka()
+const url = "https://mycompany.rokka.io/somestack/somehash.jpg";
+const signedUrl = rokka.render.signUrl(url, key)
 ``` 
 
 ### Doing a time limited signed URL
@@ -328,11 +335,12 @@ $signedUrl = (string) \Rokka\Client\UriHelper::signUrl($url, $key, $validUntil);
 JavaScript:
 
 ```language-javascript
-var rokka = require('rokka')()
-var url = https://mycompany.rokka.io/somestack/somehash.jpg";
-var until = new Date()
+import { Rokka } from 'rokka'
+const rokka = new Rokka()
+const url = "https://mycompany.rokka.io/somestack/somehash.jpg";
+const until = new Date()
 until.setDate(until.getDate() + 1)
-var signedUrl = rokka.render.signUrl(url, key, until)
+const signedUrl = rokka.render.signUrl(url, key, until)
 ``` 
 
 Those two libraries round the date up to 5 minutes slices to improve caching, you can change that with 

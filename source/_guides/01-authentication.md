@@ -97,9 +97,10 @@ $token = $client->getNewToken($apiKey, $options);
 and in our [JavaScript library](https://github.com/rokka-io/rokka.js) (from 3.7 on)
 
 ```language-js
-var rka = new rokka()
+import { Rokka } from 'rokka'
+const rka = new Rokka()
 // the apiKey and options are optional
-var options = {'expires_in' => 3600}; // see below for the options
+const options = {expires_in: 3600}; // see below for the options
 const response = rka.user.getNewToken(apiKey, options)
 ```
 
@@ -140,7 +141,8 @@ const getToken = () => {
 const setToken = (token) => {
    window.localStorage.setItem('rokka-token', token ?? '')
 }
-export const rka = rokka({
+import { Rokka } from 'rokka'
+export const rka = new Rokka({
    apiTokenGetCallback: getToken,
    apiTokenSetCallback: setToken,
    apiTokenOptions: { expires_in: 3600 * 72 }, //we want it be valid for 3 days
@@ -215,7 +217,8 @@ example shows the default values)
 
 
 ```language-js
-export const rka = rokka({
+import { Rokka } from 'rokka'
+export const rka = new Rokka({
    apiTokenGetCallback: () => window.localStorage.getItem('rokka-token'),
    apiTokenSetCallback: (token) => window.localStorage.setItem('rokka-token', token ?? ''),
    apiTokenOptions: {

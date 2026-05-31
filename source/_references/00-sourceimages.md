@@ -358,8 +358,9 @@ $newHash = $client->setLocked(
 
 JavaScript:
 ```language-javascript
-var rokka = require('rokka')({apiKey: 'apiKey'})
-var response = rokka.sourceimages.setLocked(
+import { Rokka } from 'rokka'
+const rokka = new Rokka({apiKey: 'apiKey'})
+const response = rokka.sourceimages.setLocked(
     org, 
     '0dcabb778d58d07ccd48b5ff291de05ba4374fb9', 
     true 
