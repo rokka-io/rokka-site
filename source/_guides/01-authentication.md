@@ -123,7 +123,7 @@ If the token and the API key are set, the API key is used. You can unset the API
 it was set before to force the usage of a token.
 
 ```language-php
-$userClient = Factory::getUserClient('orga', null,  [Factory::API_TOKEN => $token]);
+$userClient = \Rokka\Client\Factory::getUserClient('orga', null, [\Rokka\Client\Factory::API_TOKEN => $token]);
 // or
 $userClient->setToken($token)
 ```
