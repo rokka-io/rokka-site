@@ -33,6 +33,45 @@
 <meta content="@liip" name="twitter:site"/>
 <meta content="@liip" name="twitter:creator"/>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "{{ site.domain|trim('/') }}/#organization",
+      "name": "rokka",
+      "url": "{{ site.domain }}",
+      "logo": "{{ site.domain|trim('/') }}/dist/assets/images/rokka-logo.svg",
+      "description": "{{ site.text.lead.text }}",
+      "sameAs": [
+        "https://github.com/rokka-io",
+        "https://twitter.com/liip",
+        "https://www.liip.ch/en/our-work/rokka"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "{{ site.domain|trim('/') }}/#website",
+      "name": "{{ site.title }}",
+      "url": "{{ site.domain }}",
+      "inLanguage": "{{ site.language }}",
+      "publisher": { "@id": "{{ site.domain|trim('/') }}/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "{{ canonical }}#webpage",
+      "url": "{{ canonical }}",
+      "name": "{{ page.title }} | {{ site.title }}",
+      "description": "{{ page.description ? page.description : site.text.lead.text }}",
+      "inLanguage": "{{ site.language }}",
+      "isPartOf": { "@id": "{{ site.domain|trim('/') }}/#website" },
+      "about": { "@id": "{{ site.domain|trim('/') }}/#organization" }
+    }
+  ]
+}
+</script>
+
 {% block additional_head %} {% endblock %}
 </head>
 <body class="rokka-lang-{{ site.language }}" {{ page.body_attributes|raw }}>
