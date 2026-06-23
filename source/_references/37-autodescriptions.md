@@ -1,19 +1,40 @@
 ---
-title: Auto descriptions
+title: AI Auto Descriptions (Automatic Alt Text)
+slug: auto-descriptions
 use: [references]
-description: rokka can generate descriptions for alt attributes automatically
+header_include: references/autodescriptions-head.html
+description: rokka uses an AI vision model to automatically generate accessible alt text (image descriptions) for your images in English, German, French and Italian.
 ---
 
-## Intro
+## What are AI auto descriptions?
 
-Generating mandatory alt attributes for img tags can be quite cumbersome. Rokka can automatically generate them with the help of [OpenAI’s vision LLM](https://platform.openai.com/docs/guides/vision) in different languages. Currently, English, German, French and Italian are supported. If you’d like support for other languages, contact us.
+Auto descriptions let rokka **automatically generate the alt text for your images using an AI vision model**. Instead of writing an `alt` attribute by hand for every `<img>` tag, you ask rokka to describe the image and store that description as image metadata, ready to use in your HTML.
 
-This feature is only available to paying customers. If you'd like to test it without being one, contact us.
+This solves a common, tedious accessibility problem: every image on the web should have a meaningful `alt` attribute (it is mandatory for [WCAG](https://www.w3.org/WAI/tutorials/images/) accessibility compliance and improves SEO), but writing good alt text manually for thousands of images does not scale. rokka generates these descriptions for you, on upload or on demand, in multiple languages.
 
-## Generating an autodescription during uploading of images
+Under the hood, rokka uses [OpenAI’s vision LLM](https://platform.openai.com/docs/guides/vision) to look at the image and produce a short, human-readable description suitable for an alt attribute.
 
-Add the following json snippet to the `meta_static` property.
-If there is already a description in that language, it won’t be generated again. You need to add a `"force": true` attribute, if you want to regenerate them.
+## Which languages are supported?
+
+Auto descriptions are currently available in **English, German, French and Italian**. You can generate descriptions in several languages for the same image in one request. If you need a language that is not listed here, [contact us](/contact) and we will look into adding it.
+
+## Availability
+
+This feature is only available to paying customers. If you’d like to test it without being one, [contact us](/contact).
+
+## How does it work?
+
+There are two ways to get an AI-generated description for an image:
+
+1. **On upload** — generate the description automatically the moment an image is added to rokka.
+2. **On demand** — add (or regenerate) a description for an image that already exists in rokka.
+
+In both cases the generated text is stored as user metadata on the source image, so you can read it back later and render it into your `alt` attributes.
+
+## Generating an auto description while uploading an image
+
+Add the following JSON snippet to the `meta_static` property when you upload an image.
+If there is already a description in that language, it won’t be generated again. Add a `"force": true` attribute if you want to regenerate them.
 
 ```language-json
 {
@@ -23,7 +44,7 @@ If there is already a description in that language, it won’t be generated agai
 }
 ```
 
-With curl: 
+With curl:
 
 ```language-bash
 curl --location 'https://api.rokka.io/sourceimages/myorg' \
@@ -55,9 +76,9 @@ $image = $client->uploadSourceImage(
 );
 ```   
 
-## Adding an autodescription to an existing image
+## Adding an auto description to an existing image
 
-You can add autodescriptions to existing images.
+You can add auto descriptions to images that are already stored in rokka. Set `"force": true` to regenerate a description that already exists.
 
 With curl:
 
@@ -82,3 +103,29 @@ With PHP:
 ```language-php
 $newImage = $client->addAutodescription(['de','en'], '4f72fb');
 ```
+
+## Where are the generated descriptions stored?
+
+The generated text is saved as user metadata on the source image. You can retrieve it together with the rest of the image metadata and then output it as the `alt` attribute of your `<img>` tags. See [User metadata](/documentation/references/user-metadata.html) for how to read metadata back from rokka.
+
+## Frequently asked questions
+
+### What is alt text and why do I need it?
+
+Alt text (the `alt` attribute on an `<img>` tag) is a short text description of an image. Screen readers read it aloud for visually impaired users, browsers show it when an image fails to load, and search engines use it to understand image content. Meaningful alt text is required for accessibility (WCAG) and helps SEO.
+
+### Can rokka generate alt text automatically?
+
+Yes. rokka uses an AI vision model to generate alt text descriptions for your images automatically, either when you upload them or on demand for existing images.
+
+### Which languages can rokka generate descriptions in?
+
+English, German, French and Italian. You can request multiple languages at once. Contact rokka if you need another language.
+
+### Will rokka overwrite an existing description?
+
+No. If a description already exists for a given language, rokka keeps it. To regenerate it, pass `"force": true` in the request.
+
+### Is the auto description feature free?
+
+No, it is only available to paying customers. Contact rokka if you want to test it without being one.

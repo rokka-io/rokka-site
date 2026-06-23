@@ -1,0 +1,76 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "AI Auto Descriptions (Automatic Alt Text)",
+      "description": "rokka uses an AI vision model to automatically generate accessible alt text (image descriptions) for your images in English, German, French and Italian.",
+      "url": "https://rokka.io/documentation/references/auto-descriptions.html",
+      "inLanguage": "en",
+      "keywords": "AI alt text generator, automatic alt text, AI image description, accessibility, WCAG, alt attribute, image SEO, rokka",
+      "author": {
+        "@type": "Organization",
+        "name": "rokka.io",
+        "url": "https://rokka.io/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "rokka",
+        "url": "https://rokka.io/"
+      },
+      "about": {
+        "@type": "SoftwareApplication",
+        "name": "rokka",
+        "applicationCategory": "Image processing and delivery service",
+        "url": "https://rokka.io/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is alt text and why do I need it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Alt text (the alt attribute on an img tag) is a short text description of an image. Screen readers read it aloud for visually impaired users, browsers show it when an image fails to load, and search engines use it to understand image content. Meaningful alt text is required for accessibility (WCAG) and helps SEO."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can rokka generate alt text automatically?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. rokka uses an AI vision model to generate alt text descriptions for your images automatically, either when you upload them or on demand for existing images."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which languages can rokka generate descriptions in?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "English, German, French and Italian. You can request multiple languages at once. Contact rokka if you need another language."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will rokka overwrite an existing description?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. If a description already exists for a given language, rokka keeps it. To regenerate it, pass \"force\": true in the request."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the auto description feature free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, it is only available to paying customers. Contact rokka if you want to test it without being one."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
