@@ -34,6 +34,7 @@ The key point: **permissions live on the membership, not on the API key.** So th
 rights on one organization and maybe only *read* on another (or no access at all) — it depends on the membership of
 its user for the organization in the URL you're calling. That's also why authenticating successfully and being allowed
 to do something are two different things (see the [authentication guide](../guides/authentication.html#concept)).
+To see all the organizations your user belongs to, use [List your own memberships](#list-your-own-memberships).
 
 You can have up to 5 different API keys per user. Useful if you want to change a key via key rotation, or you just want
 to use different ones in different places. See below for details.
@@ -504,6 +505,48 @@ You can [get the user_id](./users-and-memberships.html#get-the-current-user_id) 
 ```language-bash
 curl -X GET 'https://api.rokka.io/user' -H "Content-Type: application/json" 
 ``` 
+
+## List your own memberships
+
+To find out which organizations the currently authenticated user is a member of (and with which roles), use the
+`/user/memberships` endpoint. Unlike [listing an organization's memberships](#list-memberships) — which needs an
+organization name and admin rights — this is user-scoped: it just needs your own Api-Key (or a JWT token) and returns
+every organization *you* belong to. [Try it out](https://api.rokka.io/doc/#/admin/listUserMemberships)
+
+```language-bash
+curl -X GET 'https://api.rokka.io/user/memberships' -H 'Api-Key: myKey'
+```
+
+It returns a `total` and an `items` array, one entry per organization, enriched with the organization name and
+display name (not just the id):
+
+```language-javascript
+{
+  "total": 2,
+  "items": [
+    {
+      "organization": "awesomecompany",
+      "organization_id": "251581fc-12ba-466b-bb21-34d23838dc83",
+      "display_name": "My Awesome Company",
+      "roles": ["admin"],
+      "active": true,
+      "last_access": "2026-07-18T09:12:00+02:00",
+      "created": "2022-03-01T14:00:00+01:00"
+    },
+    {
+      "organization": "anotherorg",
+      "organization_id": "c8791715-a873-475e-96b2-5ffd488112e7",
+      "display_name": "Another Org",
+      "roles": ["read", "upload"],
+      "active": true
+    }
+  ]
+}
+```
+
+As with `/user` and `/user/apikeys`, this endpoint is not available to read-only (public) users: an Api-Key that has
+a read-only role (`read`, `upload` or `sourceimages:read`) anywhere gets a `403`, so a public key can't be used to
+enumerate all the organizations of its user.
 
 ## Using JWT tokens instead of the API key for authentication
 
