@@ -7,17 +7,39 @@ description: All about rokka users and memberships and how to handle them
 
 ## Intro
 
-To access the rokka API, you need an user and a membership of that user to the organization you want to access. 
-This is automatically done, when you create a new account in the [signup screen](https://rokka.io/dashboard/#/signup) or 
+To access the rokka API, you need a **user** and a **membership** of that user to the **organization** you want to access.
+This is automatically done, when you create a new account in the [signup screen](https://rokka.io/dashboard/#/signup) or
 with the corresponding API call.
 
-Each user has one or several Api-Keys, can belong to different organizations and can have a different access level on each
-of those organisations (see [Roles](#roles) for the available access levels).
-You can have up to 5 different Api-Keys per user. Useful if you want to change an Api-Key via key rotation, or
-you just want to use different ones in different places. See below for details. 
+### How users, API keys, memberships and organizations fit together
 
-Each user object has also an unique id, this should be used to add a user to a different organization with the membership
-calls explained below.
+rokka has four related concepts. It's worth getting the mental model right once, because it explains why the same
+API key can be allowed to do one thing and forbidden from doing another:
+
+- **User** — *who you are.* Identified by a UUID and an email. This is the account that owns your API keys.
+- **API key** — *how you authenticate.* A key belongs to a user (up to 5 per user) and, when used, simply identifies
+  that user. A key on its own carries **no permissions** — it's just proof of who you are.
+- **Organization** — *what you're accessing.* Images, stacks and settings are grouped per organization, and the
+  organization name is part of the API and rendering URL (e.g. `api.rokka.io/organizations/awesomecompany/…`).
+- **Membership** — *what you're allowed to do.* A membership is the link between one user and one organization, and it
+  carries the [roles](#roles) (permissions). A user can be a member of many organizations with different roles in each.
+
+```text
+   User  ──owns──▶  API key(s)          (authentication: who am I)
+    │
+    └──has membership(s)──▶  Organization + roles   (authorization: what may I do here)
+```
+
+The key point: **permissions live on the membership, not on the API key.** So the exact same key gives you *admin*
+rights on one organization and maybe only *read* on another (or no access at all) — it depends on the membership of
+its user for the organization in the URL you're calling. That's also why authenticating successfully and being allowed
+to do something are two different things (see the [authentication guide](../guides/authentication.html#concept)).
+
+You can have up to 5 different API keys per user. Useful if you want to change a key via key rotation, or you just want
+to use different ones in different places. See below for details.
+
+Each user object also has a unique id; use it to add the user to a different organization with the membership calls
+explained below.
 
 It's a good idea to create a user for your application with only write access (and not admin rights) when you start using the service in earnest.
 
