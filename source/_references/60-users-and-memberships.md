@@ -11,8 +11,8 @@ To access the rokka API, you need an user and a membership of that user to the o
 This is automatically done, when you create a new account in the [signup screen](https://rokka.io/dashboard/#/signup) or 
 with the corresponding API call.
 
-Each user has one or several Api-Keys, can belong to different organizations and can have different access level on each
-of those organisations. 
+Each user has one or several Api-Keys, can belong to different organizations and can have a different access level on each
+of those organisations (see [Roles](#roles) for the available access levels).
 You can have up to 5 different Api-Keys per user. Useful if you want to change an Api-Key via key rotation, or
 you just want to use different ones in different places. See below for details. 
 
@@ -195,25 +195,61 @@ $memberships = $client->listMemberships();
 var_dump($memberships);
 ```
 
+## Roles
+
+A membership grants a user one or more roles on an organization. The roles are the same whether you set them via the
+[dashboard](https://rokka.io/dashboard/#/memberships), when [assigning a membership](#assign-a-user-to-an-organization),
+or when [creating a user with a membership](#create-a-new-user-object-and-automatically-assign-it-to-an-organisation).
+A membership always needs at least one role, and you can freely combine them (e.g. `["upload", "sourceimages:unlock"]`).
+
+These are all the available roles:
+
+| Role | What it allows |
+| --- | --- |
+| `read` | Read-only access to metadata, including the organization itself, but **not** memberships. Good for a display-only application. |
+| `write` | Add and change images and stacks, plus everything `read` can do. This is the role you'll usually give an application that talks to rokka. |
+| `upload` | Upload images and nothing else. Useful to let others upload directly into your organization without any other access. |
+| `sourceimages:read` | Read source images and their metadata only — no access to other data such as stacks. |
+| `sourceimages:write` | Add and change source images (and upload) only — no access to other data such as stacks. |
+| `sourceimages:download:protected` | Download the original binaries of [protected images](/documentation/references/protected-images-and-stacks.html). Needed on top of `sourceimages:read`/`sourceimages:write`, which otherwise can't download protected originals. |
+| `sourceimages:unlock` | [Lock and unlock source images](/documentation/references/source-images.html#lock-a-source-image-to-prevent-deletion) and nothing else. Best combined with another role. |
+| `billing:read` | Read-only access to the organization's cost / billing overview (the `/billing/{organization}` endpoints) and nothing else. Useful to give someone insight into costs without any write access. |
+| `admin` | Full access, including adding, removing and promoting members in the organization. |
+
+### Roles imply other roles
+
+Roles are hierarchical: a higher role automatically satisfies the lower ones, so you rarely need to combine them
+by hand. The table below shows which roles each role covers implicitly (in addition to itself).
+
+| Role | Also grants |
+| --- | --- |
+| `admin` | Everything — all roles below. |
+| `write` | `read`, `upload`, `sourceimages:read`, `sourceimages:write`, `sourceimages:download:protected`, `billing:read` |
+| `read` | `sourceimages:read`, `sourceimages:download:protected` |
+| `sourceimages:write` | `upload`, `sourceimages:read` |
+| `upload` | — (only itself) |
+| `sourceimages:read` | — (only itself) |
+| `sourceimages:download:protected` | — (only itself) |
+| `sourceimages:unlock` | — (only itself) |
+| `billing:read` | — (only itself) |
+
+So a `write` member can already read source images, upload, and see the billing overview without being given those
+roles explicitly; an `admin` can do anything. Conversely, `sourceimages:read`/`sourceimages:write` can **not** download
+the originals of protected images unless you also grant `sourceimages:download:protected` (`read`, `write` and `admin`
+already can).
+
+> **Tip:** create a user with only `write` access for the day-to-day work of your application, and reserve `admin`
+> for the few operations that actually need it (managing memberships and the organization itself).
+
 ## Assign a user to an organization
 
 If you have admin rights (given when creating a new organization automatically), you can add a user to the organization with this call.  [Try it out](https://api.rokka.io/doc/#/admin/createMembership)
 
 __awesomecompany__ would be your organization name, __userId__ the id of the to be added user. (You can [get the user_id](#get-the-current-user_id) with a `GET /user` call, if you know the Api-Key of that user)
 
-Role can be `read`, `write`, `upload`, `sourceimages:read`, `sourceimages:download:protected`, `sourceimages:write`, `sourceimages:unlock`, `billing:read`, `admin`.
-
-- Read role can only read metadata, including the organization, but not memberships. This could be used for a display-only application.
-- Write can add images and stacks, as well as reading metadata. This would be the role you would want to give your application interacting with rokka, mainly.
-- If you just want to give access to sourceimages, but not other data (like stacks), you can create a user with
-  `sourceimages:read` or `sourceimages:write`.
-- The roles `sourceimages:read` and `sourceimages:write` can't download the original binaries, when they are from 
-  protected images. You have to explicitly give the `sourceimages:download:protected` role then. Other roles
-  can download them. 
-- Upload can just upload pictures, nothing else. Useful if you want to let other people directly upload images to your organization.
-- `sourceimages:unlock` can only [lock and unlock sourceimages](/documentation/references/source-images.html#lock-a-source-image-to-prevent-deletion) and nothing else, best to be combined with another role.
-- `billing:read` gives read-only access to the organization's cost / billing overview (the `/billing/{organization}` endpoints) and nothing else. Useful for giving someone insight into the costs without any write access. Admins (and members with `write`) can already see the billing overview.
-- Admin can do everything, including adding, removing and promoting users in the organization.
+The `roles` array can contain any of the roles described in the [Roles](#roles) section above
+(`read`, `write`, `upload`, `sourceimages:read`, `sourceimages:write`, `sourceimages:download:protected`,
+`sourceimages:unlock`, `billing:read`, `admin`).
 
 If you want for example assign an existing user with just a read role to your organization, do the following
 
@@ -341,6 +377,22 @@ JavaScript:
 rokka.user.deleteApiKey(id)
 ```
 
+
+#### Requiring MFA (TOTP) for an Api Key
+
+You can protect an Api Key with a second factor: such a key can only be exchanged for a JWT token together with
+a valid TOTP code, direct usage is refused. Set (or unset) the flag with a PATCH request.
+[Try it out.](https://api.rokka.io/doc/#/admin/patchUserApiKey)
+
+```language-bash
+curl -X PATCH "https://api.rokka.io/user/apikeys/$ApiKeyId" -H "Content-Type: application/json" -d '{
+    "requires_mfa": true
+    }'
+```
+
+You can also pass `requires_mfa` when [adding a key](#adding-an-api-key-to-a-user). See the
+[MFA section in the authentication guide](../guides/authentication.html#multi-factor-authentication-mfa-for-api-keys)
+for the TOTP setup and the whole flow.
 
 #### Getting currently used Api Key Info
 

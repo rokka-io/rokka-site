@@ -10,9 +10,14 @@ To use the rokka API, you need to authenticate (but not for [rendering images](u
 There are two ways to authenticate, either via an API Key (the one you got when you signed up) or via a JWT Token.
 The latter is useful, when you don't want to store the API Key permanently, but you need the API Key to get such a token initially.
 
+What an authenticated request is *allowed* to do is determined by the [roles](../references/users-and-memberships.html#roles)
+of the user's membership on the organization — a JWT token inherits the roles of the API Key it was created from. So
+"authenticated" and "authorized" are two separate things: a valid key or token can still get a `403` if its roles don't
+cover the requested action.
+
 ## Using rokka with an API Key
 
-This is the easiest way to access the rokka API. Use the API key we provided you or [generate a new key](..references/users-and-memberships.html#rotate-your-api-key) or a [new user](../references/users-and-memberships.html#create-a-new-user-object-and-automatically-assign-it-to-an-organisation).
+This is the easiest way to access the rokka API. Use the API key we provided you or [generate a new key](../references/users-and-memberships.html#rotate-your-api-key) or a [new user](../references/users-and-memberships.html#create-a-new-user-object-and-automatically-assign-it-to-an-organisation).
 
 The disadvantage of this approach is, that you need to know the API key and it's valid forever and from everywhere
 (until you revoke it manually via the API). If you only store the API key somewhere on your backend and it's hidden
@@ -52,10 +57,11 @@ let them into your backend and give out new JWT tokens to them.
 
 ### Getting a token
 
-To get such a token initially, you have to get one with an API key. The token will have the same rights as the API key.
-It will be authenticated as the same user as with that API key.
+To get such a token initially, you have to get one with an API key. The token will have the same rights as the API key
+(the same [roles](../references/users-and-memberships.html#roles) on the same organization). It will be authenticated as
+the same user as with that API key. A token can't be given more rights than the API key it was created with.
 
-(If you need a user with less rights, you need to [create a new one](references/users-and-memberships.html#create-a-new-user-object-and-automatically-assign-it-to-an-organisation) and then generate a token with the API key from that new user)
+(If you need a token with less rights, [create a new user](../references/users-and-memberships.html#create-a-new-user-object-and-automatically-assign-it-to-an-organisation) with just the roles you need and then generate a token with that new user's API key)
 
 [Try it out](https://api.rokka.io/doc/#/admin/getUserToken)
 ```language-bash
@@ -85,7 +91,7 @@ Would return something like
 The `token` property is the actual token to be used for authentication later, the payload is the content of the JWT payload, which
 tells you something about the properties of the JWT token.
 
-In our [PHP library](https://github.com/rokka-io/rokka.js)(https://github.com/rokka-io/rokka-client-php) (from 1.17 on) you can do the following to get one
+In our [PHP library](https://github.com/rokka-io/rokka-client-php) (from 1.17 on) you can do the following to get one
 
 ```language-php
 $client = \Rokka\Client\Factory::getUserClient();
@@ -249,7 +255,7 @@ const isExpired = rka.user.getTokenIsValidFor() < 0
 
 ### Revoking a JWT Token
 
-You can't revoke a JWT token by itself, but you can [delete/rotate the API key](..references/users-and-memberships.html#rotate-your-api-key) used for generating the token, then the token will also be invalid. But beware that this makes all tokens invalid which are based on this
+You can't revoke a JWT token by itself, but you can [delete/rotate the API key](../references/users-and-memberships.html#rotate-your-api-key) used for generating the token, then the token will also be invalid. But beware that this makes all tokens invalid which are based on this
 API key.
 
 ### HTTP Status Codes
@@ -271,4 +277,85 @@ but just not allowed to do that API call (which will also get you a 403 usually)
    "invalid_authentication": true
 }
 ```
+
+## Multi-Factor Authentication (MFA) for API Keys
+
+You can protect individual API keys with a second factor (TOTP, the standard time-based one-time codes from
+authenticator apps like Google Authenticator, Authy or 1Password). An API key with MFA enabled can't be used
+directly anymore — its only purpose is to be exchanged for a time limited [JWT token](#using-rokka-with-a-jwt-token),
+together with a valid TOTP code. If such a key leaks, it's useless without the authenticator.
+
+MFA is set per API key, so you can keep a non-MFA key for CI or server-to-server usage on the same user, while
+your interactively used keys (e.g. for the rokka dashboard) require a second factor.
+
+### Setting up TOTP
+
+Each user has one TOTP setup, shared by all their MFA enabled keys. Start it with:
+
+```language-bash
+curl -H 'Api-Key: myKey' -X POST 'https://api.rokka.io/user/mfa/totp'
+```
+
+This returns a `secret` and a `provisioning_uri` (`otpauth://...`), which you can show as a QR code to scan with
+an authenticator app. The setup only becomes active once you confirm it with a first code:
+
+```language-bash
+curl -H 'Api-Key: myKey' -H 'Content-Type: application/json' \
+ -X POST -d '{"totp": "123456"}' \
+ 'https://api.rokka.io/user/mfa/totp/confirm'
+```
+
+`GET /user/mfa/totp` shows the current state (`none`, `pending` or `active`). `DELETE /user/mfa/totp` (with a
+valid `totp` code in the body) disables TOTP again and removes the MFA requirement from all keys.
+
+### Requiring MFA for a key
+
+```language-bash
+curl -H 'Api-Key: myKey' -H 'Content-Type: application/json' \
+ -X PATCH -d '{"requires_mfa": true}' \
+ 'https://api.rokka.io/user/apikeys/{keyId}'
+```
+
+You can also create a new, already protected key by passing `requires_mfa` to `POST /user/apikeys`.
+Setting `requires_mfa` to `false` again removes the protection. Keys generated before December 2021 (the old
+32 char format) can't be MFA protected — create a new key instead.
+
+Note that enabling MFA on a key also invalidates all JWT tokens that were generated with that key before —
+they lack the MFA confirmation.
+
+### Using an MFA protected key
+
+Exchange the key for a JWT token with a **POST** to the token endpoint, passing the current code from your
+authenticator app as a `totp` property in the JSON body. The code **must** be in the body — it can't be a query
+parameter, so it never ends up in a URL, access log or browser history (an MFA key sent as a `GET`, or with the
+`totp` in the query string, is refused):
+
+```language-bash
+curl -H 'Api-Key: myMfaKey' -H 'Content-Type: application/json' \
+ -X POST -d '{"totp": "123456"}' \
+ 'https://api.rokka.io/user/apikeys/token?expires_in=86400'
+```
+
+All the usual [token options](#token-options) apply (as query parameters, like `expires_in` above). The returned
+token has an `mfa: true` claim in the payload and works like any other token, including
+[renewing](#refreshing-a-token) — a renewal doesn't need a new code.
+
+Using the raw key any other way answers `401` with `"error": "mfa_required"` — that includes any other endpoint,
+a `GET` on the token endpoint, or putting the `totp` in the query string instead of the body. Once you're on
+`POST /user/apikeys/token` with the code in the body, a wrong, already used (each code works only once) or missing
+code answers `401` with `"error": "totp_invalid"`. Too many wrong attempts answer `429` with
+`"error": "totp_rate_limited"`.
+
+### Getting an MFA key before setting up TOTP
+
+A key can be flagged with `requires_mfa` before its user has set up TOTP — for example when rokka support
+creates a protected key for you. Such a key can only reach the TOTP setup endpoints described above (everything
+else answers `401` with `"error": "mfa_enrollment_required"`): whoever receives the key sets up TOTP themselves
+on first use, and from then on the key behaves like a normal MFA protected key.
+
+### If you lose your authenticator
+
+There are no recovery codes. If you still have a non-MFA key on the user, remove the `requires_mfa` flag from
+your keys with it (or simply create a new key). Otherwise, contact rokka support and we can reset the MFA setup
+for your user.
 
