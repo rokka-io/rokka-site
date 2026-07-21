@@ -39,6 +39,18 @@ curl -H 'Content-Type: application/json' \
  'https://api.rokka.io/{action}'
 ```
 
+Alternatively, you can send the API key in the standard `Authorization: Bearer` header, which many HTTP clients and SDKs use by default:
+
+```language-bash
+curl -H 'Content-Type: application/json' \
+ -H 'Api-Version: 1' \
+ -H 'Authorization: Bearer myKey' \
+ -X GET \
+ 'https://api.rokka.io/{action}'
+```
+
+rokka tells a raw API key apart from a [JWT token](#using-rokka-with-a-jwt-token) by its shape, so both can be sent in the same `Authorization: Bearer` header. If you send both an `Api-Key` header and an `Authorization` header, the `Api-Key` header takes precedence.
+
 ### Format of API Keys
 
 API Keys generated before December 2021 had the format `[0-9A-Za-z]{32}` (32 chars) eg: `mHXscTNT0rk9ZoMLO4dlFbpGxGe06hXt`
@@ -124,6 +136,8 @@ curl -H 'Content-Type: application/json' \
  'https://api.rokka.io/user/apikeys/current'
 ```
 
+This is the same header you can use for a [raw API key](#using-an-api-key-to-authenticate-via-rest-api) — rokka detects whether the value is a token or a raw key by its shape, so you don't need to tell it which one you're sending.
+
 In the PHP library, you can set it in the Factory function, or via the `setToken()` method
 If the token and the API key are set, the API key is used. You can unset the API key `$client->setCredentials(null)`, if
 it was set before to force the usage of a token.
@@ -191,6 +205,13 @@ this is not enough for you).
 `no_ip_protection` and `ips` are mutually exclusive — combining `no_ip_protection=true` with a non-empty `ips` list returns a `400 Bad Request`.
 
 PS. We're not sure if this is a good idea to enable that IP protection by default. Just define explicitly with `no_ip_protection` or `ips`, what you want/need and the behavior won't change.
+
+> The token `ips`/`exp` options above live on the individual token. On top of them, the **Api Key itself**
+> can carry an `allowed_ips` whitelist and an `expires` date (see
+> [Restricting an Api Key](../references/users-and-memberships.html#restricting-an-api-key-ip-whitelist-expiry)).
+> Those key-level restrictions are re-checked on every request made with a token minted from that key, so a
+> token can never reach an IP the key forbids nor outlive the key's expiry — even if the token's own `ips`/`exp`
+> would allow it.
 
 #### Renewable
 
