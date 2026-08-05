@@ -31,7 +31,7 @@ Rokka can handle PNG, JPEG, (animated) GIF, HEIC, WebP, JPEG XL, AVIF, TIFF, PSD
 | user_metadata | Contains custom meta data set by the API user that is returned when requesting the source image and can be used for searching. Changing this will not alter the main hash identifying the image. See [user metadata](user-metadata.html) |
 | created | When this image was created on rokka |
 | static_metadata | Read-only metadata extracted from the image (EXIF, IPTC, XMP, colours, etc.). See [dynamic metadata](dynamic-metadata.html) for the difference to dynamic metadata |
-| protected | `true` if the image is a [protected image](protected-images-stacks.html) |
+| protected | `true` if the image is a [protected image](protected-images-and-stacks.html) |
 | locked | `true` if the image is locked against deletion (see below) |
 | opaque | `true` if the image has no (semi-)transparent pixels |
 | animated | `true` if the image is animated (e.g. an animated GIF or WebP) |
@@ -121,7 +121,7 @@ So you still can search for that image if you have to, using the original binary
 
 ### Protecting images
 
-See the [Protected Images and Stacks chapter](./protected-images-stacks.html) for details. 
+See the [Protected Images and Stacks chapter](./protected-images-and-stacks.html) for details. 
 
 
 ### Uploading non image type files
