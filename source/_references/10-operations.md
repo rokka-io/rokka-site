@@ -77,7 +77,7 @@ Blurs the entire image.
 
 #### Properties
 
-- `sigma`: Number, minimum value 0. The default value is 4. Controls most of the blurring of the image.
+- `sigma`: Number, between 0 and 100. The default value is 4. Controls most of the blurring of the image.
 - `radius`: Integer, between 0 and 500. The default value is 0. Deprecated for the (default) vips backend &mdash; setting a non-zero value forces the slower ImageMagick fallback. You normally only need `sigma`.
 
 ### Circlemask
@@ -150,6 +150,8 @@ Merges two images together to one. The to be added image (called secondary image
 One usecase is to extend the canvas size of an image without resizing it. For this you define a new box with `width` and `height` and the optional `secondary_opacity`, `secondary_color` and `anchor`. Then you use `mode: "foreground"` to put the initial image in front of that defined box. 
 
 The returned image is never smaller than the initial image. If eg. the dimensions of `width` and `height` are smaller than the initial image, it will return the full initial image. Therefore you can't count on having all the images returned from this operation having the same size, except if you put a `resize` operation before.
+
+Compositions can be nested (the secondary image can itself be a render using a stack with a composition), but only up to 5 levels deep. Going deeper answers with a `400` and `Composition nesting too deep`.
 
 
 ```language-javascript
@@ -328,6 +330,16 @@ Places a secondary image (for example sunglasses or a hat) onto detected faces, 
 ### Grayscale
 
 Converts an image to grayscale.
+
+#### Properties
+
+- `levels`: Integer, between 2 and 256. The default value is 256. The number of gray levels the image is reduced to (posterization). The default of 256 means no posterization at all, lower values give the image a posterized look with fewer distinct grays. As a side effect this can reduce the file size considerably for lossless output formats like PNG.
+
+Example with `levels` set to 4:
+
+`https://rokka.rokka.io/dynamic/grayscale-levels-4--resize-width-300/o-af-1/5adad6.png`
+
+<img src="https://rokka.rokka.io/dynamic/grayscale-levels-4--resize-width-300/o-af-1/5adad6.png"/>
 
 ### Glitch
 

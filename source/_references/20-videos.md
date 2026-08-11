@@ -19,6 +19,10 @@ Uploading videos works the same way as uploading images with the same API endpoi
 
 The size limit for a file is currently at about 1180 MB, if you need to upload bigger videos, get in contact with us.
 
+Some MP4 files are not detected as `video/mp4` by their container, but as `audio/mp4` (typically MP4s without a video track) or as `video/MP2T` (MPEG transport streams, the `.ts` files HLS is made of). Those are accepted on upload as well and treated as MP4.
+
+`.mov` files are accepted on upload too, but `.mov` is not a render output format &mdash; rokka only produces `.mp4` (and `.webm` / AV1 for [animations](render.html#rendering-animated-gifs)). A render request for a `.mov` is therefore answered with a `301 Moved Permanently` to the same URL with `.mp4`, which works in all browsers.
+
 The source image response object for a video has some video related info, it's in the static metadata `video` part of the response. See below for an example. 
 
 ```language-json

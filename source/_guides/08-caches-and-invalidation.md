@@ -26,11 +26,33 @@ For paying customers there's a rate limited [API endpoint](https://api.rokka.io/
 
 The CDN invalidation happens **asynchronously**. A `200` response (with `"status": "ok"` in the body) means the paths were accepted for invalidation, not that the CDN cache is already cleared. It usually completes within a few seconds.
 
+The CDN itself only accepts a limited number of invalidations at the same time. If it rejects ours because too many are already running, rokka waits a moment and retries, up to 3 attempts in total. You usually won't notice this, apart from the request taking a bit longer.
+
 
 ## Deleting images and stacks
 
 If you delete a source image (or a stack) on the backend via the API, images already rendered with it will still remain in the CDN caches, until they expire. So people still can access the rendered output of it. This usually is not a problem, but may be if you for example have to delete an image for copyright or privacy reasons.  
 
 There's an API endpoint for paying customers to delete such images, see [the API docs](https://api.rokka.io/doc/#/sourceimages/deleteSourceImageCache) for the details. It's limited to 5 calls per hour, if you need more, talk to us.
+
+This endpoint clears the render caches for all stacks the image was rendered with. If there are a lot of them, it may not be able to do all of it in one go, since the CDN only accepts a limited number of wildcard invalidations at a time. If that happens, the response contains a `"truncated": true` flag and a `message` saying so. Just call the endpoint again to process the rest, and repeat until you don't get `truncated` anymore.
+
+```language-js
+{
+    "items": [ ... ],
+    "truncated": true,
+    "message": "Processed 22 of 40 stacks (stopped at CloudFront wildcard-invalidation limit). Call this endpoint again to process the remaining stacks."
+}
+```
+
+If the CDN is still saturated after our retries, the endpoint answers with a `503` and lists the paths it tried to invalidate in `attempted_paths`, so you know exactly what still needs to be done and can retry it yourself later.
+
+```language-js
+{
+    "status": "cloudfront invalidation failed",
+    "message": "CloudFront invalidation failed after 3 attempts: too many invalidations in progress.",
+    "attempted_paths": [ "/mystack/c412d8*", "..." ]
+}
+```
 
 As a sidenote, you're not charged for storage used in the CDN caches, just for the storage on your source images. So if you delete a source image via the API, you won't be charged anymore for that storage .

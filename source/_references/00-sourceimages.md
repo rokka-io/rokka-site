@@ -30,7 +30,7 @@ Rokka can handle PNG, JPEG, (animated) GIF, HEIC, WebP, JPEG XL, AVIF, TIFF, PSD
 | dynamic_metadata | Can contain data that will alter the image identifying hash if altered. See [dynamic metadata](dynamic-metadata.html) |
 | user_metadata | Contains custom meta data set by the API user that is returned when requesting the source image and can be used for searching. Changing this will not alter the main hash identifying the image. See [user metadata](user-metadata.html) |
 | created | When this image was created on rokka |
-| static_metadata | Read-only metadata extracted from the image (EXIF, IPTC, XMP, colours, etc.). See [dynamic metadata](dynamic-metadata.html) for the difference to dynamic metadata |
+| static_metadata | Read-only metadata extracted from the image (EXIF, IPTC, XMP, colours, [content credentials](#content-credentials-c2pa-and-ai-generated-images), etc.). See [dynamic metadata](dynamic-metadata.html) for the difference to dynamic metadata |
 | protected | `true` if the image is a [protected image](protected-images-and-stacks.html) |
 | locked | `true` if the image is locked against deletion (see below) |
 | opaque | `true` if the image has no (semi-)transparent pixels |
@@ -175,6 +175,57 @@ An example response would be:
 ```
 
 
+## Content Credentials (C2PA) and AI generated images
+
+rokka reads [C2PA / Content Credentials](https://contentcredentials.org/) manifests embedded in uploaded images. Most notably this tells you if an image declares itself as AI generated &mdash; images created with OpenAI's ChatGPT / DALL&middot;E for example carry such a signed manifest.
+
+This happens automatically on every upload, you don't have to ask for it. The result is in the `content_credentials` part of the static metadata. Images without a manifest (the vast majority) simply get `"present": false`.
+
+```language-js
+{
+    "hash": "c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5",
+    "static_metadata": {
+        "content_credentials": {
+            "present": true,
+            "ai_generated": true,
+            "digital_source_type": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+            "generator": "gpt-image",
+            "signed_by": "OpenAI OpCo, LLC",
+            "validation_state": "Valid"
+        }
+    }
+}
+```
+
+| Attribute | Description |
+| -------------- | ------------- |
+| present | `true` if the image carries a C2PA manifest at all |
+| ai_generated | `true` if the manifest declares the image as AI generated, ie. its digital source type is `trainedAlgorithmicMedia` |
+| digital_source_type | The full IPTC NewsCodes "digital source type" of the `c2pa.created` action, if there is one |
+| generator | The software which produced the image (eg. `gpt-image`), if stated in the manifest |
+| signed_by | Who cryptographically signed the manifest (eg. `OpenAI OpCo, LLC`), if stated |
+| validation_state | The validation result of the manifest, eg. `Valid` |
+
+The manifest is always read from the original file you uploaded, never from an optimized or rendered copy, since re-encoding an image strips it. Which also means: if you take a render of an AI generated image and upload that again, the new source image has no content credentials anymore.
+
+A manifest only says what the producing tool put in there. Absence of one is no proof that an image is not AI generated, and a present one is only as trustworthy as its signer.
+
+### Searching for AI generated images
+
+The `present`, `ai_generated` and `generator` fields are indexed, so you can [search](searching.html) for them like any other static metadata:
+
+```language-bash
+curl -X GET 'https://api.rokka.io/sourceimages/mycompany?static:boolean:content_credentials__ai_generated=true'
+```
+
+### Reading the content credentials of an already uploaded image
+
+Images which were uploaded before we added this have no `content_credentials` metadata. To read the manifest of such an image after the fact, do a POST on its `contentcredentials` route. It returns the source image object with the metadata added, and stores it. This needs the `sourceimages:write` (or `write`) role.
+
+```language-bash
+curl -X POST 'https://api.rokka.io/sourceimages/mycompany/c412d8d6e4b9b7b058320b06972ac0ec72cfe6e5/contentcredentials'
+```
+
 ## Delete a source image
 
 To delete a source image, you do a delete call on the source images url.
@@ -192,7 +243,7 @@ $isDeleted = $client->deleteSourceImage('c412d8d6e4b9b7b058320b06972ac0ec72cfe6e
 var_dump($isDeleted);
 ```
 
-Deleting a source image will not remove it from the cache. Access to it will fade out as the cache becomes stale. Any new access to a render of a deleted source image will result in a 404 error.
+Deleting a source image immediately removes its already rendered images from rokka's own caches, but not from the CDN edge caches. Access to it will therefore fade out as the CDN cache becomes stale, and any new access to a render of a deleted source image will result in a 404 error. If you need the renders gone from the CDN right away (for copyright or privacy reasons for example), see the [render caches and invalidation guide](../guides/render-caches-and-invalidation.html#deleting-images-and-stacks).
 
 Note: If the image you try to delete does not exist, the API responds with a 404 status code. This 404 can be ignored, though it might indicate a logic error in the client application.
 
