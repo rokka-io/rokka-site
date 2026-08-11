@@ -417,6 +417,37 @@ You can also pass `requires_mfa` when [adding a key](#adding-an-api-key-to-a-use
 [MFA section in the authentication guide](../guides/authentication.html#multi-factor-authentication-mfa-for-api-keys)
 for the TOTP setup and the whole flow.
 
+#### Restricting an Api Key (IP whitelist / expiry)
+
+An Api Key can be restricted to a list of IPs / IPv4 network ranges (`allowed_ips`) and/or given an
+expiration date (`expires`). A request made with a key from a non-whitelisted IP is refused with
+`401` and `"error": "ip_not_allowed"`, a request with an expired key with `401` and
+`"error": "key_expired"`. You can set both when [adding a key](#adding-an-api-key-to-a-user) or change
+them later with a PATCH request. [Try it out.](https://api.rokka.io/doc/#/admin/patchUserApiKey)
+
+```language-bash
+curl -X PATCH "https://api.rokka.io/user/apikeys/$ApiKeyId" -H "Content-Type: application/json" -d '{
+    "allowed_ips": ["192.168.0.5", "10.0.0.0/24"],
+    "expires": "2027-01-01T00:00:00+00:00"
+    }'
+```
+
+- These restrictions apply to the key itself **and** to every JWT token minted from it: changing them
+  takes effect immediately, also for tokens issued earlier. A token minted from a key with an `expires`
+  date never outlives the key.
+- At most 10 entries in `allowed_ips`, covering at most 10'000 addresses in total. IPv6 works for exact
+  matches, network ranges (CIDR) are IPv4 only. Unlike the token `ips` parameter, `request_ip` is not
+  accepted here.
+- Clear the whitelist by PATCHing `allowed_ips` to `null` or `[]`, clear the expiry with `expires: null`.
+  The legacy (pre-2021) key can't carry these restrictions.
+
+> **Careful:** PATCHing the key you are *currently authenticating with* so that it excludes your own IP
+> (or gives it a past `expires`) would immediately lock that key — and its tokens — out. Such a change is
+> refused with `400` by default. Either include your current IP in `allowed_ips`, make the change from an
+> allowed IP, or use another key. If you really mean to (e.g. you are configuring a key for a server that
+> runs elsewhere), append `?force=true` to the PATCH URL to override the guard. Restricting a *different*
+> key than the one making the request is never blocked.
+
 #### Getting currently used Api Key Info
 
 If you don't remember, which Api Key ID the currently used Api Key has, you can do the following request.
