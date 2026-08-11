@@ -237,6 +237,7 @@ These are all the available roles:
 | `sourceimages:download:protected` | Download the original binaries of [protected images](/documentation/references/protected-images-and-stacks.html). Needed on top of `sourceimages:read`/`sourceimages:write`, which otherwise can't download protected originals. |
 | `sourceimages:unlock` | [Lock and unlock source images](/documentation/references/source-images.html#lock-a-source-image-to-prevent-deletion) and nothing else. Best combined with another role. |
 | `billing:read` | Read-only access to the organization's cost / billing overview (the `/billing/{organization}` endpoints) and nothing else. Useful to give someone insight into costs without any write access. |
+| `admin:read` | Read-only organization admin: everything `read` can do, **plus** reading the organization's memberships, users and API key metadata. Grants no write access at all. Useful to give someone (or some auditing tool) an overview of who has access to your organization, without letting them change anything. |
 | `admin` | Full access, including adding, removing and promoting members in the organization. |
 
 ### Roles imply other roles
@@ -248,6 +249,7 @@ by hand. The table below shows which roles each role covers implicitly (in addit
 | --- | --- |
 | `admin` | Everything — all roles below. |
 | `write` | `read`, `upload`, `sourceimages:read`, `sourceimages:write`, `sourceimages:download:protected`, `billing:read` |
+| `admin:read` | `read`, `sourceimages:read`, `sourceimages:download:protected` |
 | `read` | `sourceimages:read`, `sourceimages:download:protected` |
 | `sourceimages:write` | `upload`, `sourceimages:read` |
 | `upload` | — (only itself) |
@@ -261,6 +263,28 @@ roles explicitly; an `admin` can do anything. Conversely, `sourceimages:read`/`s
 the originals of protected images unless you also grant `sourceimages:download:protected` (`read`, `write` and `admin`
 already can).
 
+Note that `admin:read` is only implied by `admin`, **not** by `write` — unlike `billing:read`. Reading everyone's email
+address and API key metadata is more sensitive than the cost overview, so it always has to be granted explicitly (or come
+with full `admin`).
+
+### Read-only overview of your users and their API keys
+
+A member with `admin:read` (or `admin`) can list an organization's memberships with
+`GET /organizations/{organization}/memberships`, and — across organizations — call `GET /user/admin/apikeys`.
+That endpoint returns the members and their **API key metadata** for every organization where the calling user has
+`admin:read`, as `{"total": N, "truncated": false, "items": [...]}` with one entry per (organization, member).
+
+This is meant for auditing: add one user to all the organizations it should oversee with the `admin:read` role, and it
+can review who has access to them and with which keys — through a single call, and without any write access anywhere.
+
+Only key *metadata* is returned (`id`, `comment`, `created`, `accessed`, `requires_mfa`, `allowed_ips`, `expires`).
+The key values themselves are stored one-way hashed and can't be recovered by anyone, including rokka. Signing keys are
+**not** included either — those stay behind the full `admin` role, as they can be used to sign rendering URLs.
+
+Two caveats when setting up such a user: it must not have the `read`, `upload` or `sourceimages:read` role in *any*
+organization (those mark a key as publicly used and block it from all `/user/*` endpoints), and if it is a member of a
+very large number of organizations, the overview stops after the first 50 and sets `"truncated": true`.
+
 > **Tip:** create a user with only `write` access for the day-to-day work of your application, and reserve `admin`
 > for the few operations that actually need it (managing memberships and the organization itself).
 
@@ -272,7 +296,7 @@ __awesomecompany__ would be your organization name, __userId__ the id of the to 
 
 The `roles` array can contain any of the roles described in the [Roles](#roles) section above
 (`read`, `write`, `upload`, `sourceimages:read`, `sourceimages:write`, `sourceimages:download:protected`,
-`sourceimages:unlock`, `billing:read`, `admin`).
+`sourceimages:unlock`, `billing:read`, `admin:read`, `admin`).
 
 If you want for example assign an existing user with just a read role to your organization, do the following
 
