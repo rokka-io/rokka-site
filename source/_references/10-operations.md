@@ -18,6 +18,7 @@ It is possible to list all operations. [Try it out](https://api.rokka.io/doc/#/s
 ```language-bash
 curl -X GET 'https://api.rokka.io/operations'
 ```
+
 ```language-php
 $client = \Rokka\Client\Factory::getImageClient('testorganization', 'apiKey');
 
@@ -40,10 +41,10 @@ Does operations with the alpha (transparency) channel of an image.
 #### Properties
 
 - `mode`: String, mode to be applied. The default value is `mask`.
-    - `mask`: Returns the alpha channel as grayscale image, removing all other information, including the actual alpha channel.
-    - `extract`: Returns just the alpha channel of an image.
-    - `remove`: Removes the alpha channel from an image. 
-    - `apply`: Applies an opacity to an image, needs also the property `opacity`
+  - `mask`: Returns the alpha channel as grayscale image, removing all other information, including the actual alpha channel.
+  - `extract`: Returns just the alpha channel of an image.
+  - `remove`: Removes the alpha channel from an image.
+  - `apply`: Applies an opacity to an image, needs also the property `opacity`
 - `opacity`: Integer, between 0 and 100. The opacity applied when `mode` is `apply`. The default value is 50.
 
 ### Addframes
@@ -85,7 +86,7 @@ Blurs the entire image.
 Puts a circle in the maximum possible area and alpha channels the outside of it to total transparency.
 You most certainly have to crop the image before to get the desired result.
 
-Example without any cropping: 
+Example without any cropping:
 
 `https://rokka.rokka.io/dynamic/circlemask--resize-width-150/o-af-1/5adad6.png`
 
@@ -93,10 +94,10 @@ Example without any cropping:
 
 (Photo by <a href="https://unsplash.com/@junojo?utm_source=unsplash&utm_medium=referral">Juno Jo</a> on <a href="https://unsplash.com/s/photos/face?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>)
 
-
 Complexer example with cropping on the face, if the image has face detection metadata. Otherwise it just crops the image to a square:
 
 Stack config:
+
 ```language-javascript
 {
     "operations": [
@@ -128,31 +129,40 @@ Stack config:
     }
 }
 ```
+
 Output:
 <img src="https://rokka.rokka.io/dynamic/crop-anchor-face-width-[image.detection_face.height*1.5]-height-[image.detection_face.height*1.5]--circlemask--resize-width-150/o-af-1/5adad6.png"/>
 
-
-You can of course also just use fixed values for width and height, if for example what you need is always in the 
+You can of course also just use fixed values for width and height, if for example what you need is always in the
 middle of the picture.
-
-
 
 #### Properties
 
-None yet
+- `radius`: Integer or String. The default value is null. The corner radius, which masks a rounded rectangle instead of a circle &mdash; the "rounded corners" case. Either a number of pixels (`30`) or a percentage of the shorter image side (`"10p"`, or `"10%"` in a JSON stack config; use the `p` spelling in a rendering URL, since a percent sign has to be escaped there). It is clamped to half the shorter side, at which point you get the circle again. A radius of `0` does nothing. If the property is not set at all, the biggest possible circle is masked, as described above.
 
+Rounded corners with a fixed radius of 30 pixels:
 
+`https://rokka.rokka.io/dynamic/resize-width-300--circlemask-radius-30/o-af-1/5adad6.png`
+
+<img src="https://rokka.rokka.io/dynamic/resize-width-300--circlemask-radius-30/o-af-1/5adad6.png"/>
+
+Note the order of the operations there: `circlemask` comes **after** `resize`. The radius always refers to the image
+size at that point of the stack, so with `circlemask-radius-30--resize-width-300` on a 2000 pixel wide original, those
+30 pixels would be scaled down to about 4 pixels in the final image. Either put `circlemask` last, or use a percentage:
+
+`https://rokka.rokka.io/dynamic/circlemask-radius-20p--resize-width-300/o-af-1/5adad6.png`
+
+<img src="https://rokka.rokka.io/dynamic/circlemask-radius-20p--resize-width-300/o-af-1/5adad6.png"/>
 
 ### Composition
 
 Merges two images together to one. The to be added image (called secondary image) can either be another image uploaded to rokka or a fixed box with a defined size and color. You can also add additional transparency to both of them. This second image can be put into the background or the foreground of the initial image.
 
-One usecase is to extend the canvas size of an image without resizing it. For this you define a new box with `width` and `height` and the optional `secondary_opacity`, `secondary_color` and `anchor`. Then you use `mode: "foreground"` to put the initial image in front of that defined box. 
+One usecase is to extend the canvas size of an image without resizing it. For this you define a new box with `width` and `height` and the optional `secondary_opacity`, `secondary_color` and `anchor`. Then you use `mode: "foreground"` to put the initial image in front of that defined box.
 
 The returned image is never smaller than the initial image. If eg. the dimensions of `width` and `height` are smaller than the initial image, it will return the full initial image. Therefore you can't count on having all the images returned from this operation having the same size, except if you put a `resize` operation before.
 
 Compositions can be nested (the secondary image can itself be a render using a stack with a composition), but only up to 5 levels deep. Going deeper answers with a `400` and `Composition nesting too deep`.
-
 
 ```language-javascript
 {
@@ -249,13 +259,10 @@ and could be reused there.
 } 
 ```
 
-
-
-
 #### Properties
 
 - `mode`: Where to put the initial image, `foreground` and `background` are possible options.
-- `width`: Width of the secondary image. 
+- `width`: Width of the secondary image.
 - `height`: Height of the secondary image.
 - `resize_mode`: If `secondary_image` or `secondary_stack` is used and `width` or `height` are set, the image is resized with this resize mode. See the [Resize operation](#resize) for possible values. Default: box
 - `anchor`: Anchor where to place the composition, based on mode. See the [Crop operation](#crop) for possible values. Default: center_center
@@ -267,7 +274,6 @@ and could be reused there.
 - `secondary_stack_variables`: The stack variables to be sent to the secondary stack encoded as URL Query Parameters.
 - `angle`: Rotate the overlay by degrees. Default: 0
 
-
 ### Crop
 
 Crops an image to a set size.
@@ -277,27 +283,27 @@ Crops an image to a set size.
 - `width` (required): Integer, between 1 and 99999. The new width for the image.
 - `height` (required): Integer, between 1 and 99999. The new height for the image.
 - `anchor`: String. Describes where the crop should originate in the form of `XOFFSET_YOFFSET`, where:
-    - `XOFFSET` is either a number of pixels or "left", "center", "right"
-    - `YOFFSET` is either a number of pixels or "top", "center", "bottom".
-   
+  - `XOFFSET` is either a number of pixels or "left", "center", "right"
+  - `YOFFSET` is either a number of pixels or "top", "center", "bottom".
+
    Or it can also be
-    - `smart` for smart cropping (where the most attention of the image would be)
-    - `subjectarea` for cropping on the subjectarea, if one exists
-    - `face` for cropping on a face detection area, if this was added.
-    - `auto`. Default value.
-   
-   `auto` will crop the image centering the crop box around the defined 
+  - `smart` for smart cropping (where the most attention of the image would be)
+  - `subjectarea` for cropping on the subjectarea, if one exists
+  - `face` for cropping on a face detection area, if this was added.
+  - `auto`. Default value.
+
+   `auto` will crop the image centering the crop box around the defined
    [Subject Area](../references/dynamic-metadata.html#subject-area), if any exist, then around a face detection box , if any exist.
    If both are not defined defined, the crop operation will fallback to `center_center`.
-   
+
 - `fallback`: String. What "anchor" should be used, when no subject area was found. Default: "center_center"
 - `mode`: String. If width and height should be taken as absolute values or as ratio. If `ratio` is chosen, rokka will try to find the largest possible crop fitting into the image with that ratio. The default value is `absolute`. With `box` it takes a SubjectArea box for cropping, with `area` it tries to fit a SubjectArea into the ratio given by width and height. Possible values are:
-    - `absolute`
-    - `ratio`
-    - `box`
-    - `area`
+  - `absolute`
+  - `ratio`
+  - `box`
+  - `area`
 - `scale`: Scales the crop box by that percentage. Especially useful when using the ratio mode and you want eg. only the middle 50% of the picture cropped. The default value is `100`
-- `movearea_y` / `movearea_x`: Moves a SubjectArea by this percentage along the corresponding axes. Can be useful, if a face shouldn't be in the middle of an image for example. 
+- `movearea_y` / `movearea_x`: Moves a SubjectArea by this percentage along the corresponding axes. Can be useful, if a face shouldn't be in the middle of an image for example.
 - `area`: String. Selects a named area from the [`multi_areas` dynamic metadata](../references/dynamic-metadata.html) to crop on (used together with `mode: box` or `mode: area`). May only contain letters, digits and underscores. Default: `null` (uses the default subject/crop area). For example a stored area named `landscape_16_9` would be selected via the render URL with `area-landscape_16_9`.
 
 ### Dropshadow
@@ -352,7 +358,7 @@ Applies a "glitch" / databending effect to an image.
 
 ### Modulate
 
-Modulates an image for brightness, saturation and hue. Use this to, for example, brighten up or darken an image or remove its colors. 
+Modulates an image for brightness, saturation and hue. Use this to, for example, brighten up or darken an image or remove its colors.
 
 For brightness and saturation, the input is an integer between 0 and 500, which is meant as percentage. The maximum value of 500 is pretty arbitrary, but more usually doesn't make any sense.
 
@@ -361,7 +367,7 @@ A value of 0 will create an image that is completely black, while a value of 100
 
 The saturation parameter super-saturates or desaturates the input image. A value under 100 desaturates the image, while a value over 100 super-saturates it. A value of 0 returns a completely unsaturated (no colors) image, while a value of 100 leaves the input unchanged. A value of for example 200 doubles the saturation of the image.
 
-For the hue parameter, the input is an integer defining how many degrees the color should be shifted on a color wheel. A value of 0 and 360 leaves the input unchanged. A value of for example 180 inverts all colors to their opposite color on the wheel. 
+For the hue parameter, the input is an integer defining how many degrees the color should be shifted on a color wheel. A value of 0 and 360 leaves the input unchanged. A value of for example 180 inverts all colors to their opposite color on the wheel.
 
 #### Properties
 
@@ -369,12 +375,12 @@ For the hue parameter, the input is an integer defining how many degrees the col
 - `saturation`: Integer. Percentage of saturation change between 0 and 500. The default value is 100.
 - `hue`: Integer. Degrees for hue rotation between 0 and 360. The default value is 0.
 
-
 ### Multiply
 
 Multiplies an image with a factor. Can be used to darken an image.
 
 #### Properties
+
 - `factor`: Number. The factor to multiply the image with. Between 0 and 1. The default value is 0.96.
 - `factor_color`: String. Multiply by this color in hex without the # sign, example: "0F0F0F", takes precedence over `factor`. The default value is null.
 
@@ -398,21 +404,20 @@ At least `width` or `height` is required.
 - `width`: Integer, between 1 and 10000. The new width for the image.
 - `height`: Integer, between 1 and 10000. The new height for the image.
 - `mode`: String. The mode of resizing to use. The default value is `box`. Possible values are:
-    - `absolute`: Resizes the image to the dimensions given.
-    - `box`: Resizes the image to keep its aspect ratio and fit into a box of the dimensions given, i.e. the dimensions given are the maximum dimensions of the resized image.
-    - `fill`: Resizes the image to keep its aspect ratio and completely fill a box of the dimensions given, i.e. the dimensions given are the minimum dimensions of the resized image.
+  - `absolute`: Resizes the image to the dimensions given.
+  - `box`: Resizes the image to keep its aspect ratio and fit into a box of the dimensions given, i.e. the dimensions given are the maximum dimensions of the resized image.
+  - `fill`: Resizes the image to keep its aspect ratio and completely fill a box of the dimensions given, i.e. the dimensions given are the minimum dimensions of the resized image.
 - `upscale`: Boolean. Whether to allow the resulting image to be bigger than the original one. The default value is `true`.
 We advise to read [this blog post about resizing and responsive images](https://www.liip.ch/en/blog/things-you-should-know-about-responsive-images), if you want to turn this off.
 - `upscale_dpr`: Boolean. Whether to allow the resulting image to be dpr times bigger than the original one, when the dpr stack option is set. Eg. If your image has 100x100 dimensions and you ask for a 60x60 image, this setting would upscale a `dpr: 2` setting  to 120x120 even when `upscale` is set to `false`. But it would upscale a request for a 120x120 image only to 200x200 (since a `dpr: 1` request would leave it at 100x100). This is to prevent, that a browser would display an image  with `dpr: 1` on a standard screen bigger than one with `dpr: 2` on a retina screen.  We advise to read [this blog post about resizing and responsive images](https://www.liip.ch/en/blog/things-you-should-know-about-responsive-images), if you want to turn this off. The default value is `true`.
 - `sharpen`:  If set to `true`, rokka will sharpen an image when it's downsized and has an entropy > 5 (indicating that
-  it's a photo or similar). 
-  If set to `false`, it will not be sharpened. The parameters used are the default values of 
+  it's a photo or similar).
+  If set to `false`, it will not be sharpened. The parameters used are the default values of
     the Sharpen operator. If you want to have more control over those parameters, you can use the [Sharpen](#sharpen) operation below.
   You can increase also the entropy threshold via a stack expression, eg. `"sharpen": "image.entropy > 6"`.
   If you want to lower it, you have to use the Sharpen operation and set this here to `false`.
-  Default: `false` 
+  Default: `false`
 
-  
 ### Rotate
 
 Rotates an image clockwise.
@@ -433,7 +438,7 @@ Sharpens an image. Can be useful after downsizing an image, for example (when no
 operation). The properties are a little bit hard to understand, but the defaults can be fine already. All the details
 to the properties are explained in more details on [the vips documentation page about its sharpen method](https://www.libvips.org/API/current/libvips-convolution.html#vips-sharpen).
 If you want more or less sharpening, we suggest you just change the m2 parameter (from the vips docs).
-If you only want to sharpen picture above a certain entropy (pictures with low entropy, like diagrams, often don't benefit 
+If you only want to sharpen picture above a certain entropy (pictures with low entropy, like diagrams, often don't benefit
 from sharpening), you can use a stack expression and the `image.entropy` parameter. The following would for example
 only sharpen pictures with a entropy > 6.
 
@@ -457,7 +462,7 @@ only sharpen pictures with a entropy > 6.
 
 ### Svg2Bitmap
 
-Converts an SVG to a bitmap image via an actual browser engine. This can be useful, if you have complex SVGs with CSS or fonts that you want to convert to a bitmap image. 
+Converts an SVG to a bitmap image via an actual browser engine. This can be useful, if you have complex SVGs with CSS or fonts that you want to convert to a bitmap image.
 Most SVGs don't need this and conversion to PNG or JPG works out of the box, but if you have problems with a specific SVG, this operation can help.
 This can be a slow operation, if uncached. Use it sparingly.
 
@@ -468,19 +473,20 @@ This can be a slow operation, if uncached. Use it sparingly.
 ```
 
 #### Properties
+
 None
 
 ### SvgDynamic
 
 Adds/replaces dynamically attributes in an SVG Source Image.
 
-Can be useful, if you need to change attributes like stroke-width, color or sizes depending on some input values or 
+Can be useful, if you need to change attributes like stroke-width, color or sizes depending on some input values or
 stack variables.
 
-Can also be used together with the [`composition`](#composition) operation to put logos or graphics on to an image and dynamically 
+Can also be used together with the [`composition`](#composition) operation to put logos or graphics on to an image and dynamically
 change them, if you use it together with the `secondary_stack` and maybe `secondary_stack_variables` options there.
 
-To do this, you define the attributes you want to set in the `changes` option as an array with objects containing the keys 
+To do this, you define the attributes you want to set in the `changes` option as an array with objects containing the keys
 `id` (for the element id), `attr` (for the attribute you want to change) and `value` (for the value it should be changed to).
 
 Let's take this SVG as a simple example, you need to upload that to rokka like any other image.
@@ -493,7 +499,7 @@ Let's take this SVG as a simple example, you need to upload that to rokka like a
 
 ```
 
-Then assuming you want to change the "stroke" and the "stroke-width" attribute of the element with the id "line", 
+Then assuming you want to change the "stroke" and the "stroke-width" attribute of the element with the id "line",
 you'd define your stack like this
 
 ```language-json
@@ -516,8 +522,7 @@ you'd define your stack like this
 }
 ```
 
-
-But this feature is best used with stack variables and expressions. 
+But this feature is best used with stack variables and expressions.
 
 ```language-json
 {
@@ -547,7 +552,6 @@ But this feature is best used with stack variables and expressions.
 
 With this you can now control the control and stroke width via the render URL, eg. `https://your-org.rokka.io/stackname/v-color-663388-sw-10/$HASH.svg`.
 
-
 #### Properties
 
 - `changes` (required): Array of objects, each with the keys `id` (the element id), `attr` (the attribute to change) and `value` (the new value). See the examples above.
@@ -560,14 +564,13 @@ Trims edges that are the background color from an image.
 
 - `fuzzy`: Number, between 0 and 100. Sets the degree of tolerance for pixel colour when calculating how much to trim from the image. The default value is 0.
 
-
 ### Text
 
-For writing text on an image, use this operation. 
+For writing text on an image, use this operation.
 
 But before using it, you have to upload the fonts (as TTF format, there are online tools to convert other font formats to TTF)
 you want to use  to your organisation through the normal sourceimage operations and then
-use the hash (or short_hash) in the definition of this operation. A simple example writing a text in black in 
+use the hash (or short_hash) in the definition of this operation. A simple example writing a text in black in
 the middle of your image with font size 20 and the font with the hash "398a83":
 
 ```language-javascript
@@ -582,7 +585,6 @@ the middle of your image with font size 20 and the font with the hash "398a83":
 ```
 
 See below for some more common parameters like `color`, `angle`, `opacity` and `anchor`.
-
 
 #### Variable text through an URL
 
@@ -624,7 +626,6 @@ https://$YOUR_ORG.rokka.io/text-stack/dba893/a-picture-with-text.jpg?v={"text1":
 
 You can use that for any variable, not only for variables related to text
 
-
 #### The width and height parameters
 
 Width and height are a little bit special compared to other operations. You don't have to define them,
@@ -639,19 +640,18 @@ centred vertically within the box, if it fits).
 If you define `width` and `height` and also the option `resize_to_box`, the whole text will always fit in
 that box. But the font size is chosen accordingly to make that happen. The longer the text, the smaller the font size.
 
-
 #### Examples and demos
 
 See the [Watermark with Text Demo](/documentation/demos/watermark.html#watermark-with-text-demo) and
-the [Templates with Text Demo](/documentation/demos/template.html#templates-with-text-demo) 
+the [Templates with Text Demo](/documentation/demos/template.html#templates-with-text-demo)
 for some working examples
- 
+
 #### Properties
 
 - `font`: (required) The rokka hash of a font to be used.
 - `text`: (required) The text to be written on the image.
 - `size`: The size of the text in pixels. Default: 16
-- `color`: Color to use for the text in hex without the # sign, example: "0F0F0F". 
+- `color`: Color to use for the text in hex without the # sign, example: "0F0F0F".
 - `opacity`: Opacity of text. 0 is transparent. Goes up to 100 for opaque. Default: 100
 - `angle`: Rotate the overlay by degrees. Default: 0
 - `anchor`: Anchor where to place the text, based on mode. See the [Crop operation](#crop) for possible values. Default: center_center
@@ -659,5 +659,4 @@ for some working examples
 - `height`: The height of the box the text should be fit in. If `resize_to_box` and `width` is set, the text will be resized to fit this box. If `resize_to_box` is false, the text will be cut off at this height.
 - `spacing`: Spacing between lines. Default: 0
 - `align`:  How to align the text (if `width` is given). Allowed values: left, centre, right
-- `resize_to_box`: Fit the whole text into the text box defined by `width` and `height`. 
-
+- `resize_to_box`: Fit the whole text into the text box defined by `width` and `height`.
