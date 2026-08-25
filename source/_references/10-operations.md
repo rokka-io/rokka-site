@@ -147,12 +147,12 @@ Rounded corners with a fixed radius of 30 pixels:
 <img src="https://rokka.rokka.io/dynamic/resize-width-300--circlemask-radius-30/o-af-1/5adad6.png"/>
 
 Note the order of the operations there: `circlemask` comes **after** `resize`. The radius always refers to the image
-size at that point of the stack, so with `circlemask-radius-30--resize-width-300` on a 2000 pixel wide original, those
+size at that point of the stack, so with `circlemask-radius-30--resize-height-150` on a 2000 pixel wide original, those
 30 pixels would be scaled down to about 4 pixels in the final image. Either put `circlemask` last, or use a percentage:
 
-`https://rokka.rokka.io/dynamic/circlemask-radius-20p--resize-width-300/o-af-1/5adad6.png`
+`https://rokka.rokka.io/dynamic/circlemask-radius-20p--resize-height-150/o-af-1/5adad6.png`
 
-<img src="https://rokka.rokka.io/dynamic/circlemask-radius-20p--resize-width-300/o-af-1/5adad6.png"/>
+<img src="https://rokka.rokka.io/dynamic/circlemask-radius-20p--resize-height-150/o-af-1/5adad6.png"/>
 
 ### Composition
 
