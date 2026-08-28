@@ -88,9 +88,9 @@ You most certainly have to crop the image before to get the desired result.
 
 Example without any cropping:
 
-`https://rokka.rokka.io/dynamic/circlemask--resize-width-150/o-af-1/5adad6.png`
+`https://rokka.rokka.io/dynamic/circlemask--resize-height-150/o-af-1/5adad6.png`
 
-<img src="https://rokka.rokka.io/dynamic/circlemask--resize-width-150/o-af-1/5adad6.png"/>
+<img src="https://rokka.rokka.io/dynamic/circlemask--resize-height-150/o-af-1/5adad6.png"/>
 
 (Photo by <a href="https://unsplash.com/@junojo?utm_source=unsplash&utm_medium=referral">Juno Jo</a> on <a href="https://unsplash.com/s/photos/face?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>)
 
@@ -117,7 +117,7 @@ Stack config:
         {
             "name": "resize",
             "options": {
-                "width": 150
+                "height": 150
             }
         }
     ],
@@ -131,7 +131,7 @@ Stack config:
 ```
 
 Output:
-<img src="https://rokka.rokka.io/dynamic/crop-anchor-face-width-[image.detection_face.height*1.5]-height-[image.detection_face.height*1.5]--circlemask--resize-width-150/o-af-1/5adad6.png"/>
+<img src="https://rokka.rokka.io/dynamic/crop-anchor-face-width-[image.detection_face.height*1.5]-height-[image.detection_face.height*1.5]--circlemask--resize-height-150/o-af-1/5adad6.png"/>
 
 You can of course also just use fixed values for width and height, if for example what you need is always in the
 middle of the picture.
@@ -142,9 +142,9 @@ middle of the picture.
 
 Rounded corners with a fixed radius of 30 pixels:
 
-`https://rokka.rokka.io/dynamic/resize-width-300--circlemask-radius-30/o-af-1/5adad6.png`
+`https://rokka.rokka.io/dynamic/resize-height-150--circlemask-radius-30/o-af-1/5adad6.png`
 
-<img src="https://rokka.rokka.io/dynamic/resize-width-300--circlemask-radius-30/o-af-1/5adad6.png"/>
+<img src="https://rokka.rokka.io/dynamic/resize-height-150--circlemask-radius-30/o-af-1/5adad6.png"/>
 
 Note the order of the operations there: `circlemask` comes **after** `resize`. The radius always refers to the image
 size at that point of the stack, so with `circlemask-radius-30--resize-height-150` on a 2000 pixel wide original, those
@@ -343,9 +343,9 @@ Converts an image to grayscale.
 
 Example with `levels` set to 4:
 
-`https://rokka.rokka.io/dynamic/grayscale-levels-4--resize-width-300/o-af-1/5adad6.png`
+`https://rokka.rokka.io/dynamic/grayscale-levels-4--resize-height-150/o-af-1/5adad6.png`
 
-<img src="https://rokka.rokka.io/dynamic/grayscale-levels-4--resize-width-300/o-af-1/5adad6.png"/>
+<img src="https://rokka.rokka.io/dynamic/grayscale-levels-4--resize-height-150/o-af-1/5adad6.png"/>
 
 ### Glitch
 
