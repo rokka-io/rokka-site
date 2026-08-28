@@ -344,6 +344,11 @@ Setting `requires_mfa` to `false` again removes the protection. Keys generated b
 Note that enabling MFA on a key also invalidates all JWT tokens that were generated with that key before —
 they lack the MFA confirmation.
 
+A user with a read-only role (`read`, `upload` or `sourceimages:read`) can't set any of this up: the `/user/mfa/*`
+and `/user/apikeys` endpoints answer `403` for it. The exception is a key flagged as
+[trusted](../references/users-and-memberships.html#trusted-api-keys) — a key you declare never to hand to end
+users. With such a key, a read-only user can manage its MFA setup and its keys as usual.
+
 ### Using an MFA protected key
 
 Exchange the key for a JWT token with a **POST** to the token endpoint, passing the current code from your

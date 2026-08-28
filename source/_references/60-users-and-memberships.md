@@ -150,6 +150,32 @@ $membership = $client->createUserAndMembership([Membership::ROLE_WRITE]);
 var_dump($membership);
 ```
 
+### Configuring the initial Api Key of the new user
+
+You can optionally configure the **initial Api Key** of that new user with an `api_key` object in the same call.
+It takes a `comment` plus any of the properties you can otherwise set when
+[adding an Api Key](#adding-an-api-key-to-a-user): `trusted`, `requires_mfa`,
+[`allowed_ips` and `expires`](#restricting-an-api-key-ip-whitelist-%2F-expiry).
+
+```language-bash
+curl -X POST "https://api.rokka.io/organizations/awesomecompany/memberships" -H "Content-Type: application/json"  -d '{
+    "roles": [ "read" ],
+    "api_key": {
+        "comment": "key management, server side only",
+        "trusted": true,
+        "allowed_ips": ["192.168.0.5"],
+        "expires": "2027-01-01T00:00:00+00:00"
+    }
+    }'
+```
+
+An invalid value in there answers `400` and doesn't create anything. Leaving `api_key` out (or sending it as
+`null`) just means "all defaults", as before.
+
+This is also the only way to hand a [trusted key](#trusted-api-keys) to a user that gets a read-only role
+(`read`, `upload` or `sourceimages:read`) right away — see
+[Rotating the Api Key of a read-only user](#rotating-the-api-key-of-a-read-only-user).
+
 
 ## Memberships
 
@@ -277,7 +303,8 @@ That endpoint returns the members and their **API key metadata** for every organ
 This is meant for auditing: add one user to all the organizations it should oversee with the `admin:read` role, and it
 can review who has access to them and with which keys — through a single call, and without any write access anywhere.
 
-Only key *metadata* is returned (`id`, `comment`, `created`, `accessed`, `requires_mfa`, `allowed_ips`, `expires`).
+Only key *metadata* is returned (`id`, `comment`, `created`, `accessed`, `requires_mfa`, `trusted`, `allowed_ips`,
+`expires`).
 The key values themselves are stored one-way hashed and can't be recovered by anyone, including rokka. Signing keys are
 **not** included either — those stay behind the full `admin` role, as they can be used to sign rendering URLs.
 
@@ -364,6 +391,11 @@ In general, if a user has `read`, `upload` or `sourceimages:read` rights somewhe
 We assume, that such a user is used for public use and people could otherwise just change your key, if they 
 know the Api Key. If you want to change an Api Key of such a user, you should use [the 2nd method](#creating-a-new-user-to-get-a-new-api-key) with creating
 a new user and associating it to an organization.
+
+The exception to that rule is a key explicitly flagged as [`trusted`](#trusted-api-keys): such a key is declared
+never to be given to end users and may manage the keys of its user, even if that user has a read-only role. That's
+what makes it possible to rotate the published key of such a user, see
+[Rotating the Api Key of a read-only user](#rotating-the-api-key-of-a-read-only-user).
 
 #### Adding an Api Key to a user
 
@@ -472,6 +504,47 @@ curl -X PATCH "https://api.rokka.io/user/apikeys/$ApiKeyId" -H "Content-Type: ap
 > runs elsewhere), append `?force=true` to the PATCH URL to override the guard. Restricting a *different*
 > key than the one making the request is never blocked.
 
+#### Trusted Api Keys
+
+A user with a `read`, `upload` or `sourceimages:read` role is treated as a public user, and all the endpoints
+above (plus `GET /user`, `GET /user/memberships` and the MFA endpoints) answer `403` for it. Such a key usually
+ends up in a frontend, and whoever has it should not be able to change the keys of that user. The downside is
+that such a user can't rotate its own keys either.
+
+Flagging an Api Key as `trusted` is your declaration that *this particular key* is never handed to end users —
+no frontend JavaScript, no mobile app; a key that stays on your server, in your deployment or in your CI. Such a
+key is exempt from that guard and can manage the Api Keys of its user, even when the user has a read-only role.
+[Try it out.](https://api.rokka.io/doc/#/admin/patchUserApiKey)
+
+```language-bash
+curl -X PATCH "https://api.rokka.io/user/apikeys/$ApiKeyId" -H "Content-Type: application/json" -d '{
+    "trusted": true
+    }'
+```
+
+You can also pass `trusted` when [adding a key](#adding-an-api-key-to-a-user), or set it on the initial key of a
+new user when [creating it together with a membership](#configuring-the-initial-api-key-of-the-new-user).
+
+- The flag is **per key**, and the key that authenticates the request is what counts. The published sibling key
+  of the same user stays locked down exactly as before. A JWT token is checked against the key it was minted
+  from, so a token from a trusted key can do the same — and stops being able to, as soon as you clear the flag
+  on that key.
+- It grants **no organization permissions** whatsoever. The membership roles are untouched: a `read` user with a
+  trusted key can still only read images, it just may also manage its own keys, its MFA setup and see its own
+  user object and memberships.
+- It is independent of [`requires_mfa`](#requiring-mfa-totp-for-an-api-key),
+  [`allowed_ips` and `expires`](#restricting-an-api-key-ip-whitelist-%2F-expiry) — a trusted key can carry all of
+  them, and they are enforced on it exactly the same way. Restricting a trusted key to the IP of your server is
+  a good idea.
+- The default is `false`, so nothing changes for keys that were created before. The legacy (pre-2021, 32
+  character) key can't be flagged — create a new key instead.
+- If rokka marked the whole *user* as read-only, a trusted key doesn't change anything — that flag always wins.
+
+> **Careful:** clearing `trusted` again on the key you are *currently authenticating with* is refused with `400`
+> if that would immediately lock it out of key management — that is, if the user is read-only without the flag
+> and has no other usable trusted key left. Use another key, or append `?force=true` to the PATCH URL if you
+> really mean it. Clearing it on a *different* key is never blocked.
+
 #### Getting currently used Api Key Info
 
 If you don't remember, which Api Key ID the currently used Api Key has, you can do the following request.
@@ -560,6 +633,57 @@ You can [get the user_id](./users-and-memberships.html#get-the-current-user_id) 
 ```language-bash
 curl -X GET 'https://api.rokka.io/user' -H "Content-Type: application/json" 
 ``` 
+
+### Rotating the Api Key of a read-only user
+
+Neither of the two methods above works for a user that has a `read`, `upload` or `sourceimages:read` role: its
+key management endpoints answer `403`, as [explained above](#adding%2C-listing-and-deleting-api-keys-of-a-user).
+Which is unfortunate, since a key published in a frontend is exactly the kind of key you want to rotate
+regularly. The way to do that is to give such a user **two keys**: a [trusted](#trusted-api-keys) one that never
+leaves your server and is only used to manage keys, and the key you actually publish.
+
+1) Create the user with a trusted initial key:
+
+```language-bash
+curl -X POST "https://api.rokka.io/organizations/awesomecompany/memberships" -H "Content-Type: application/json"  -d '{
+    "roles": [ "read" ],
+    "api_key": { "trusted": true, "comment": "key management, server side only" }
+    }'
+```
+
+Keep the `api_key` returned here somewhere safe on your server. It is the only key of that user that can manage
+keys, and — like every Api Key — it can't be recovered later.
+
+2) Create the key you actually publish, with the trusted key:
+
+```language-bash
+curl -X POST "https://api.rokka.io/user/apikeys" -H 'Api-Key: theTrustedKey' -H "Content-Type: application/json"  -d '{
+    "comment": "public frontend key"
+    }'
+```
+
+3) Roll that key out to your application. Once it's deployed everywhere, delete the previous published key,
+again with the trusted key (if you don't have its id at hand, [list the keys](#listing-api-keys-of-a-user) with
+`GET /user/apikeys` first):
+
+```language-bash
+curl -X DELETE "https://api.rokka.io/user/apikeys/$oldKeyId" -H 'Api-Key: theTrustedKey'
+```
+
+Repeat steps 2 and 3 whenever you want to rotate — no new user, no membership changes, and the trusted key stays
+the same. Keep in mind that a user can have at most 5 Api Keys, so don't leave old ones around.
+
+A few notes:
+
+- An *existing* read-only user can't be upgraded this way. It can't flag any of its own keys (that's the `403`
+  again), and nobody else can manage another user's keys. Either create a new user as above and move your
+  applications over to it, or ask rokka support to add a trusted key to the existing user.
+- If you want the trusted key to also require [MFA](#requiring-mfa-totp-for-an-api-key), pass
+  `"requires_mfa": true` next to `"trusted": true` in step 1. `requires_mfa` alone is refused with `400` for a
+  read-only membership: a fresh user has no TOTP setup yet, and without the trusted flag the key couldn't even
+  reach the endpoints to do that setup.
+- The published key from step 2 is a normal read-only key. It can't manage anything, and it never sees the
+  trusted key.
 
 ## List your own memberships
 
