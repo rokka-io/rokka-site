@@ -60,6 +60,10 @@ It will return the same meta data as you get from retrieving a single image, wit
 The current limit for uploading images is about 1180 MB in file size (about 1.8 GB when `optimize_source` is used). For source images not in the JPEG format there's
  an additional limit of 225 Megapixels (equals an image of 15'000 x 15'000 size).
 
+If you only want one rendering of an image and have no use for the image itself afterwards, you don't
+have to create a source image at all — see
+[Render an image without storing it](./render.html#render-an-image-without-storing-it).
+
 ### Create a source image with a remote URL
 
 Instead of directly uploading an image within the POST request, you can also provide an URL to a remote image, which then will be 

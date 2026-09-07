@@ -188,3 +188,111 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizati
 
 rokka has the possibility to let you sign render URLs, so that those URLs are only valid for a certain time or can only be accessed
 from certain IP ranges. If you need that feature, get in contact with us.
+
+
+## Render an image without storing it
+
+Sometimes you just want one rendering of an image and have no use for the image afterwards — a one-off
+conversion, a quick preview of what a stack does, a thumbnail for something you keep elsewhere. Uploading
+the image, rendering it and deleting it again is a lot of moving parts for that.
+
+For those cases there's `POST /utils/{organization}/render/{stack}.{format}`. You post the image in the
+request body and get the rendered result back in the response body. **Nothing is stored**: no source image
+is created, the rendering is not cached anywhere, the image never shows up in your source image list or in
+your statistics, and there's nothing to clean up afterwards.
+
+```language-bash
+curl -H 'Api-Key: $YOUR_API_KEY' \
+     -F 'filedata=@myimage.jpg' \
+     'https://api.rokka.io/utils/{organization}/render/{stack}.jpg' \
+     --output rendered.jpg
+```
+
+Note this goes to `api.rokka.io`, not to `{organization}.rokka.io` — it needs your API key, and the key
+needs the `upload` role.
+
+Like the regular render URLs, you can use one of your own stacks, override its operation options, or use
+the `dynamic` stack and put the operations right into the URL:
+
+```language-bash
+# one of your stacks
+https://api.rokka.io/utils/{organization}/render/mystack.jpg
+
+# one of your stacks, with overridden options
+https://api.rokka.io/utils/{organization}/render/mystack/resize-width-100.jpg
+
+# a dynamic stack
+https://api.rokka.io/utils/{organization}/render/dynamic/resize-width-200-height-150--rotate-angle-90.jpg
+```
+
+Stack variables work as well, pass them as JSON in the `v` query parameter, same as
+[for the regular render URLs](./stacks.html).
+
+### When not to use it
+
+Because nothing is cached, **every single call does the full rendering work** — there's no CDN and no render
+cache in front of it. It is meant for one-off renderings, not for delivering images to your users. If you
+serve the same rendering more than once, upload the image and use the regular
+`https://{organization}.rokka.io/{stack}/{hash}.{format}` URLs instead: those are rendered once and then
+served from cache.
+
+### Limitations
+
+- The upload is limited to 100 MB. Bigger images have to be uploaded as source images.
+- Videos, PostScript/EPS and other non-image files are not supported, nor are the video output
+  formats (`mp4`, `webm`, `m3u8`, …). Those need a stored source image. PDFs *are* supported, see
+  below.
+- The `basestack` and `source_file` stack options are not supported, since both of them refer to a
+  stored image.
+- Requests are rate limited per organization. A multi-page PDF request costs one request per page.
+
+### Rendering PDFs, and several pages at once
+
+You can post a PDF just like an image. By default you get page 1 back, rendered into whatever format
+you asked for, and the [`pdf.page`](stacks.html) and `pdf.dpi` stack options work as usual:
+
+```bash
+curl -X POST -H "Api-Key: $API_KEY" -F filedata=@document.pdf \
+  "https://api.rokka.io/utils/$ORGANIZATION/render/dynamic/resize-width-800--o-pdf.page-3.png" \
+  -o page3.png
+```
+
+To get **several pages in one request**, use the `pdf.pages` stack option. The response is then a ZIP
+file with one `page-{n}.{format}` entry per page:
+
+```bash
+curl -X POST -H "Api-Key: $API_KEY" -F filedata=@document.pdf \
+  "https://api.rokka.io/utils/$ORGANIZATION/render/dynamic/resize-width-800--o-pdf.pages-1,3,5..7.png" \
+  -o pages.zip
+
+unzip -l pages.zip
+#   page-1.png
+#   page-3.png
+#   page-5.png
+#   page-6.png
+#   page-7.png
+```
+
+The syntax is a comma separated list of page numbers and ranges, or `all` for the whole document:
+`3`, `1,3,5`, `2..6`, `1,4..6,9`, `all`. Pages are counted from 1.
+
+<div class="alert alert-info">
+Ranges are written with <code>..</code> and <strong>not</strong> with <code>-</code>, because
+<code>-</code> already separates stack options in the URL. <code>o-pdf.pages-1-5</code> is a syntax
+error, <code>o-pdf.pages-1..5</code> is what you want.
+</div>
+
+A few things worth knowing:
+
+- The response is **always** a ZIP when `pdf.pages` is set, even if it resolves to a single page. That
+  way you never have to guess what came back.
+- Pages are deduplicated and always returned in ascending order, so `5,1,3` and `1,3,5` give you the
+  same archive.
+- At most **50 pages** per request. Asking for `all` on a longer document is an error rather than a
+  silently truncated archive — request the pages in batches instead (`1..50`, `51..100`, …).
+- Every rendered page counts as one request against the rate limit, so a 10 page request uses 10 of
+  your requests per minute.
+- Asking for a page the document does not have is an error, and the message tells you how many pages
+  it actually has.
+- `pdf.pages` only works on this endpoint. For a stored PDF, use `pdf.page` and render one page per
+  URL — those are cached and served from the CDN.
