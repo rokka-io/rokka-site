@@ -240,5 +240,18 @@ const jsonLd = {
 </script>
 <slot name="scripts" />
 
+{/*
+  LiipGPT chat, on every page of the site. `is:inline` because this is a
+  third-party module served from rokka.liipgpt.ch, not something Vite should
+  try to resolve or bundle; without it Astro rewrites the tag.
+
+  `lang` follows the page rather than being pinned to "en", so the widget
+  chrome matches the German pages. Note this does not reach /dashboard/ --
+  that is the separate React app install-dashboard.sh copies in, which does
+  not render through this layout.
+*/}
+<script type="module" async src="https://rokka.liipgpt.ch/rokkagpt/cdn/npm/@liip/liipgpt/chat/liipgpt-chat.js" is:inline></script>
+<liipgpt-chat lang={lang} api-url="https://rokka.liipgpt.ch/rokkagpt" flyout></liipgpt-chat>
+
 </body>
 </html>
