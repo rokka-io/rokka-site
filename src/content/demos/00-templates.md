@@ -39,7 +39,6 @@ Uses some complexer stack configuration with stack expressions and variables and
 </select>
     </p>
     <p>
-
     Logo: <select name="logo">
     <option>true</option>
     <option value="" selected>false</option>

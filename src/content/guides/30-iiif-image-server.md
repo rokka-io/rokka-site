@@ -33,13 +33,10 @@ viewer = OpenSeadragon({
 </div>
 
 You can use any rokka picture for this. Try with your own with this form.
-<div id="demoForm">   
-
+<div id="demoForm">
 <form id="form" onsubmit="return submitted(); ">
-
     <p>Rokka Organisation: <input id="org" name="org" value="">
     Hash: <input id="hash" name="hash" value=""></p>
     <p><input type="submit" value="Submit"></p>
-
 </form>
 </div>

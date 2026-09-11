@@ -18,17 +18,14 @@ and the `resize_to_box` option, the text size is automatically adjusted to that 
 <div id="demoForm">   
 <form id="form" onkeyup="updateImage()" onchange="updateImage()">
     <p>Image: 
-
     <select name="imagehash" id="imagehash">
         <option selected>90b93a</option>
-
             <option >5f6f3b</option>
             <option>d73781</option>
     <option >ab329e</option>
     <option >ceb95d</option>
     <option >807fd9</option>
 </select>
-    
     Font: 
     <select name="font">
         <option selected>86d7ee</option>
@@ -37,19 +34,15 @@ and the `resize_to_box` option, the text size is automatically adjusted to that 
 </select>
     Width: 
     <input type="text" name="width"  value="500" size="4">
-
     </p>
     <p>
     Text: 
     <input type="text" name="t"  value="My Watermark">
     Color: 
     <input type="text" name="color" value="000000" size="7">
-
     Opacity: 
     <input type="text" name="o"  value="20" size="4">
-    
     </p>
-    
 </form>
 </div>
 <p>
@@ -63,7 +56,7 @@ See the [text operation chapter](/documentation/references/operations.html#text)
 
 **Stack config**:
 
-````language-javascript
+````javascript
 {
     "operations": [
         {

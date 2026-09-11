@@ -21,15 +21,12 @@ See [the docs for details](https://rokka.io/documentation/references/protected-i
     Valid until: <input id="until"  type="datetime-local" value="now" size="20">
      Round validity up to <input id="roundUp" value="300" size="4"> Seconds.
      </p>
-
     <p>
      Input URL: <input id="inputUrl" value="https://rokka-demos.rokka.io/template/92147e.png" size="120">
      </p>
-
     <p>
      Variable for text (optional): <input id="inputText" value="Title" size="60">
      </p>
-
 </form>
 </div>
 <p>
