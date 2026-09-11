@@ -10,7 +10,6 @@
  */
 import type { Language } from '../data/site';
 import { getSite } from '../data/site';
-import TagManager from '../components/TagManager.astro';
 import Footer from '../components/Footer.astro';
 import Search from '../components/Search.astro';
 import RokkaLogo from '../assets/images/rokka-logo.svg';
@@ -135,7 +134,6 @@ const jsonLd = {
 <slot name="head" />
 </head>
 <body class={`rokka-lang-${lang}`} {...bodyAttrs}>
-<TagManager />
 <div class="navbar navbar--sticky navbar--negative">
     <div class="navbar__body">
         <a class="navbar__brand" href={`/${lang}/`} title="Liip">

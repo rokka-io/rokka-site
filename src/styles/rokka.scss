@@ -1277,10 +1277,6 @@ html {
 .rokka-quotes-container {
   flex: 1 1 auto;
   margin-bottom: 40px;
-
-  @include media('lg') {
-    flex: 0 0 50%;
-  }
 }
 
 .rokka-quote {
