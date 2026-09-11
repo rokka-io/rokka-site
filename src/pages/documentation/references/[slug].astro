@@ -1,0 +1,29 @@
+---
+import { render } from 'astro:content';
+import DocLayout from '../../../layouts/DocLayout.astro';
+import { docEntries, docLinks, docUrl } from '../../../data/docs';
+
+export async function getStaticPaths() {
+  const entries = await docEntries('references');
+  const articles = await docLinks('references');
+  return entries.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry, articles },
+  }));
+}
+
+const { entry, articles } = Astro.props;
+const { Content, headings } = await render(entry);
+---
+
+<DocLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  pageUrl={docUrl('references', entry.data.slug)}
+  head={entry.data.head}
+  bodyAttributes={entry.data.body_attributes}
+  articles={articles}
+  headings={headings}
+>
+  <Content />
+</DocLayout>

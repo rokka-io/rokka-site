@@ -1,8 +1,0 @@
-language: en
-environment: local
-
-domain: /
-
-imports:
-  - translations/text_en.yml
-  - pagedata.yml

@@ -1,0 +1,235 @@
+---
+/**
+ * Port of source/_views/default.html.
+ *
+ * Twig blocks map to named slots. The ones the old templates actually
+ * overrode: additional_head -> "head", real_breadcrumb -> "real-breadcrumb",
+ * content_wrapper -> "content-wrapper", additional_javascript -> "scripts".
+ * `breadcrumb_wrapper` was only ever overridden to empty it (landingpage.html),
+ * so that is the `showBreadcrumb` prop rather than a slot.
+ */
+import type { Language } from '../data/site';
+import { getSite } from '../data/site';
+import TagManager from '../components/TagManager.astro';
+import Footer from '../components/Footer.astro';
+import RokkaLogo from '../assets/images/rokka-logo.svg';
+import '../styles/rokka.scss';
+
+// Structured data needs a stable, absolute, crawlable URL, so this one points
+// at the copy in public/ rather than the bundled asset -- Astro inlines small
+// SVGs as data: URIs, which is not a URL a crawler can fetch.
+const LOGO_URL = 'https://rokka.io/assets/images/rokka-logo.svg';
+
+interface Props {
+  lang: Language;
+  /** Full <title> text, already title-cased and suffixed by the caller. */
+  title: string;
+  canonical: string;
+  /** Sculpin's `page.url`, used for the language switcher hrefs. */
+  pageUrl: string;
+  /** Whether a German translation of this page exists. */
+  multilang?: boolean;
+  /** Raw attribute string from front matter, e.g. `onload="updateImage()"`. */
+  bodyAttributes?: string;
+  pageTitle?: string;
+  pageDescription?: string;
+  showBreadcrumb?: boolean;
+}
+
+const {
+  lang,
+  title,
+  canonical,
+  pageUrl,
+  multilang = false,
+  bodyAttributes,
+  pageTitle,
+  pageDescription,
+  showBreadcrumb = true,
+} = Astro.props;
+
+const site = getSite(lang);
+
+/**
+ * `<body ... {{ page.body_attributes|raw }}>` spliced a raw string into the
+ * tag. Astro has no raw-attribute escape hatch, so parse the (only ever
+ * `onload="..."`) pairs into props to spread.
+ */
+function parseAttributes(raw?: string): Record<string, string> {
+  if (!raw) return {};
+  const out: Record<string, string> = {};
+  for (const m of raw.matchAll(/([\w-]+)\s*=\s*"([^"]*)"/g)) out[m[1]] = m[2];
+  return out;
+}
+const bodyAttrs = parseAttributes(bodyAttributes);
+
+// The JSON-LD used to point at `{{ site.domain }}/dist/assets/images/rokka-logo.svg`.
+// gulp-inject-svg only rewrote <img> tags, never a JSON string, so that URL has
+// always been a 404. Use the real emitted asset instead.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://rokka.io/#organization',
+      name: 'rokka',
+      url: 'https://rokka.io/',
+      logo: LOGO_URL,
+      description: site.text.lead.text,
+      sameAs: [
+        'https://github.com/rokka-io',
+        'https://twitter.com/liip',
+        'https://www.liip.ch/en/our-work/rokka',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://rokka.io/#website',
+      name: site.title,
+      url: 'https://rokka.io/',
+      inLanguage: lang,
+      publisher: { '@id': 'https://rokka.io/#organization' },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${canonical}#webpage`,
+      url: canonical,
+      name: `${pageTitle ?? title} | ${site.title}`,
+      description: pageDescription || site.text.lead.text,
+      inLanguage: lang,
+      isPartOf: { '@id': 'https://rokka.io/#website' },
+      about: { '@id': 'https://rokka.io/#organization' },
+    },
+  ],
+};
+---
+
+<html lang={lang}>
+<head>
+<title>{title}</title>
+<link rel="preconnect" href="https://rokka.rokka.io">
+<meta charset="utf-8"/>
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<meta content={site.text.lead.text} name="description"/>
+<meta content={site.keywords} name="keywords"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="rokka.io, Liip AG, Switzerland" name="author"/>
+<meta content="5301024A6A1B29738BF195B6B8D9CDB6" name="msvalidate.01"/>
+<meta content="#6ea644" name="theme-color"/>
+<link href={canonical} rel="canonical"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/manifest.json" rel="manifest"/>
+<link color="#6ea644" href="/safari-pinned-tab.svg" rel="mask-icon"/>
+<meta content="website" property="og:type"/>
+<meta content="rokka" property="og:site_name"/>
+
+<meta content={canonical} property="og:url"/>
+<meta content="@liip" name="twitter:site"/>
+<meta content="@liip" name="twitter:creator"/>
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd, null, 2)} is:inline />
+
+<slot name="head" />
+</head>
+<body class={`rokka-lang-${lang}`} {...bodyAttrs}>
+<TagManager />
+<div class="navbar navbar--sticky navbar--negative">
+    <div class="navbar__body">
+        <a class="navbar__brand" href={`/${lang}/`} title="Liip">
+            <div class="logo">
+                <RokkaLogo />
+            </div>
+        </a>
+        <div class="flex-item-1 text-right">
+            <a class="btn btn--negative btn--small rokka-navbar-cta" href="/dashboard/#/signup">
+                <Fragment set:html={site.text.navigation.cta} />
+            </a>
+        </div>
+        <button class="navbar__toggle btn btn--bare" title="Toggle navbar">
+            <svg class="navbar-hamburger icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <rect class="navbar-hamburger__first" height="2" width="16" x="4" y="5">
+                </rect>
+                <rect class="navbar-hamburger__second" height="2" width="16" x="4" y="11">
+                </rect>
+                <rect class="navbar-hamburger__third" height="2" width="16" x="4" y="17">
+                </rect>
+            </svg>
+        </button>
+        <nav class="navbar__collapse">
+            <ul class="navbar-menu">
+                <li>
+                    <a class="navbar-menu__link" href={`/${lang}/contact`}>
+                        <Fragment set:html={site.text.navigation.contact} />
+                    </a>
+                </li>
+                <li>
+                    <a class="navbar-menu__link" href="/documentation">
+                        <Fragment set:html={site.text.navigation.documentation} />
+                    </a>
+                </li>
+
+                <li>
+                    <a class="navbar-menu__link" href={`/${lang}#rokka-pricing`}>
+                        <Fragment set:html={site.text.navigation.pricing} />
+                    </a>
+                </li>
+
+
+                <li><a href="https://rokka.io/dashboard" class="navbar-menu__link" set:html={site.text.navigation.login} /></li>
+                <li><a href="https://rokka.io/dashboard/#/signup" class="navbar-menu__link" set:html={site.text.navigation.signup} /></li>
+                <li class="navbar-language-item">
+                    {multilang ? (
+                      <Fragment>
+                        <a class={`navbar-menu__link${lang === 'de' ? ' active' : ''}`} href={`/de${pageUrl}`}>DE</a>
+                        <a class={`navbar-menu__link${lang === 'en' ? ' active' : ''}`} href={`/en${pageUrl}`}>EN</a>
+                      </Fragment>
+                    ) : (
+                      <Fragment>
+                        <span class="navbar-menu__link disabled rokka-lang-not-available">DE</span>
+                        <a class="navbar-menu__link active" href={pageUrl}>EN</a>
+                      </Fragment>
+                    )}
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+{showBreadcrumb && (
+<section class="section section--primary section--middle section--behind-navbar">
+    <div class="section__body">
+        <div class="grid">
+            <div class="grid__item">
+                <h1 class="mrgb0">
+                  {pageTitle}
+                </h1>
+            </div>
+            <div class="grid__item md-w-2/3">
+                <p class="text-lead">
+                  {pageDescription}
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+)}
+
+<slot name="real-breadcrumb" />
+
+<slot name="content-wrapper">
+<section class="section">
+    <div class="section__body">
+        <slot />
+    </div>
+</section>
+</slot>
+
+<Footer />
+<script>
+  import '../scripts/rokka.js';
+</script>
+<slot name="scripts" />
+
+</body>
+</html>

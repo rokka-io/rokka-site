@@ -1,0 +1,29 @@
+---
+import { render } from 'astro:content';
+import DemoLayout from '../../../layouts/DemoLayout.astro';
+import { docEntries, docLinks, docUrl } from '../../../data/docs';
+
+export async function getStaticPaths() {
+  const entries = await docEntries('demos');
+  const articles = await docLinks('demos');
+  return entries.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry, articles },
+  }));
+}
+
+const { entry, articles } = Astro.props;
+const { Content, headings } = await render(entry);
+---
+
+<DemoLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  pageUrl={docUrl('demos', entry.data.slug)}
+  head={entry.data.head}
+  bodyAttributes={entry.data.body_attributes}
+  articles={articles}
+  headings={headings}
+>
+  <Content />
+</DemoLayout>

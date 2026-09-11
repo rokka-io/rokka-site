@@ -1,0 +1,72 @@
+---
+/**
+ * Port of source/_views/guide.html, which source/_views/reference.html extended
+ * with nothing but a different sidebar collection. Both are this one component,
+ * differing only in the `articles` prop.
+ *
+ * Documentation is English-only by design, so there is no language switcher
+ * here and the canonical has no language segment.
+ */
+import Base from './Base.astro';
+import ArticleList from '../components/ArticleList.astro';
+import Toc from '../components/Toc.astro';
+import PageHead from '../components/head/PageHead.astro';
+import { getSite, titleCase, canonicalUrl } from '../data/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  pageUrl: string;
+  head?: 'templates' | 'watermark' | 'signurl' | 'iiif' | 'autodescriptions';
+  bodyAttributes?: string;
+  articles: { url: string; title: string }[];
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { title, description, pageUrl, head, bodyAttributes, articles, headings } = Astro.props;
+const site = getSite('en');
+const sharing = description || site.text.lead.text;
+---
+
+<Base
+  lang="en"
+  title={`${titleCase(title)} | ${site.title}`}
+  canonical={canonicalUrl(pageUrl)}
+  pageUrl={pageUrl}
+  bodyAttributes={bodyAttributes}
+  pageTitle={title}
+  pageDescription={description}
+>
+  <Fragment slot="head">
+    <meta content={`${title} | ${site.title}`} property="og:title"/>
+    <meta content={sharing} property="og:description"/>
+    <meta content={`${title} | ${site.title}`} name="twitter:title"/>
+    <meta content={sharing} name="twitter:description"/>
+    <meta content="summary" name="twitter:card"/>
+    <PageHead head={head} />
+  </Fragment>
+
+  <section class="section pdgt+ pdgb0" slot="real-breadcrumb">
+    <div class="section__body">
+        <div class="rokka-breadcrumbs">
+            <a href="/documentation">« Back to Documentation</a>
+        </div>
+    </div>
+  </section>
+
+  <section class="section" slot="content-wrapper">
+    <div class="section__body">
+        <div class="grid grid--huge">
+            <div class="grid__item md-w-1/4">
+                <ArticleList articles={articles} currentUrl={pageUrl} />
+            </div>
+            <div class="grid__item md-w-3/4">
+                <div class="rokka-doc-content">
+                    <Toc headings={headings} />
+                    <slot />
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+</Base>

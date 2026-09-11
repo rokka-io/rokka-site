@@ -1,8 +1,0 @@
-language: de
-environment: stage
-
-domain: https://stage.rokka.io/
-
-imports:
-  - translations/text_de.yml
-  - pagedata.yml

@@ -1,0 +1,14 @@
+---
+/** Port of source/_partials/article_list.html -- the docs sidebar nav. */
+interface Props {
+  articles: { url: string; title: string }[];
+  currentUrl: string;
+}
+const { articles, currentUrl } = Astro.props;
+---
+
+<ul class="list-stacked list-stacked--divided">
+    {articles.map((article) => (
+    <li class={`list-group-item${currentUrl === article.url ? ' text-bold' : ''}`}><a href={article.url}>{article.title}</a></li>
+    ))}
+</ul>

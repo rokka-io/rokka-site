@@ -1,0 +1,58 @@
+---
+title: Render caches and invalidation
+slug: render-caches-and-invalidation
+description: In depth info about rokka's render caches
+---
+
+## General info about rokka's render caches
+
+rokka assumes that a picture rendered and delivered via a unique URL never changes and be cached for a long time. That's one of the reasons, why we use unique hashes for an image and its output-changing metadata (like subject areas). This has some implications you should be aware of.
+
+With this assumption that the output for a unique URL never changes, we send very long expiry times in the HTTP headers (immutable, resp. one year), so that end-users (eg. browsers) can keep them in their local cache. It also tells the content delivery network (CDN) the same for the best end user experience and keep those images close to the end user in the CDN edge caches and never hits the backend again.
+
+## Updating stacks
+
+As rokka assumes that a unique URL always delivers the same image, it also assumes that a stack, once defined with a specific name, does not change significantly and suddenly delivers a totally different style of pictures. If you do that, images already rendered with that stack will not change in the CDN edge caches nor in browsers that already requested those images (we do have some control over edge caches, but the browsers also cache the images and never request it again).
+
+If you need to change a stack that has already been used in production, we highly recommend to create a new stack with a different name. This will change the render URL, and therefore guarantee that the effects of the new stack rules are seen by all clients.
+
+However, you can get a fresh render of an image with appending the "filename" part with a `v` and some numbers. If you already fetched an image with eg. `https://rokka.rokka.io/plain/68e13ab4522ccd1084e21b721c2b626f5c2634ef.jpg` and then update that stack, you can get a fresh copy from the backend with `https://rokka.rokka.io/plain/68e13ab4522ccd1084e21b721c2b626f5c2634ef/v1.jpg` or also with `https://rokka.rokka.io/plain/68e13ab4522ccd1084e21b721c2b626f5c2634ef/some_name-v1.jpg`. As long as the number after the `v` is different, it gets a new render from the backend. But it needs to be at the very end of the filename. This can help when you overwrite a stack and want to test the new output. Or you wanna make sure all your clients get a fresh copy.
+
+Nevertheless, there are situations where overwriting a stack with the same name may be useful. Basically, if you are fine when already delivered images stay the same and only newly generated get the new options/operations (eg. for changing the quality). Or you want to base an existing stack on a base stack to reorganize your stack with less repetition.
+
+While we can delete the CDN caches, there's no way to delete a browser cache without a new URL (or appending versioned query parameters, for example).
+
+For paying customers there's a rate limited [API endpoint](https://api.rokka.io/doc/#/stacks/deleteStackCache) to invalidate the CDN caches for a stack. See [the Stacks chapter](../references/stacks.html#invalidating-the-cdn-cache-for-a-stack) for more details. If it doesn't work for you, get in contact with us.
+
+The CDN invalidation happens **asynchronously**. A `200` response (with `"status": "ok"` in the body) means the paths were accepted for invalidation, not that the CDN cache is already cleared. It usually completes within a few seconds.
+
+The CDN itself only accepts a limited number of invalidations at the same time. If it rejects ours because too many are already running, rokka waits a moment and retries, up to 3 attempts in total. You usually won't notice this, apart from the request taking a bit longer.
+
+
+## Deleting images and stacks
+
+If you delete a source image (or a stack) on the backend via the API, images already rendered with it will still remain in the CDN caches, until they expire. So people still can access the rendered output of it. This usually is not a problem, but may be if you for example have to delete an image for copyright or privacy reasons.  
+
+There's an API endpoint for paying customers to delete such images, see [the API docs](https://api.rokka.io/doc/#/sourceimages/deleteSourceImageCache) for the details. It's limited to 5 calls per hour, if you need more, talk to us.
+
+This endpoint clears the render caches for all stacks the image was rendered with. If there are a lot of them, it may not be able to do all of it in one go, since the CDN only accepts a limited number of wildcard invalidations at a time. If that happens, the response contains a `"truncated": true` flag and a `message` saying so. Just call the endpoint again to process the rest, and repeat until you don't get `truncated` anymore.
+
+```js
+{
+    "items": [ ... ],
+    "truncated": true,
+    "message": "Processed 22 of 40 stacks (stopped at CloudFront wildcard-invalidation limit). Call this endpoint again to process the remaining stacks."
+}
+```
+
+If the CDN is still saturated after our retries, the endpoint answers with a `503` and lists the paths it tried to invalidate in `attempted_paths`, so you know exactly what still needs to be done and can retry it yourself later.
+
+```js
+{
+    "status": "cloudfront invalidation failed",
+    "message": "CloudFront invalidation failed after 3 attempts: too many invalidations in progress.",
+    "attempted_paths": [ "/mystack/c412d8*", "..." ]
+}
+```
+
+As a sidenote, you're not charged for storage used in the CDN caches, just for the storage on your source images. So if you delete a source image via the API, you won't be charged anymore for that storage .

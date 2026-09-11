@@ -1,0 +1,85 @@
+---
+/**
+ * Verbatim port of source/_views/demos/watermark-head.html.
+ *
+ * Selected per page by `head: watermark` in the markdown front matter, which
+ * replaces Sculpin's dynamic `{{ include(page.header_include) }}`.
+ * Scripts and styles are `is:inline`: the demo markup calls these functions
+ * from inline event attributes, so they have to stay global.
+ */
+---
+<script src="https://unpkg.com/rokka@%5E4.0.0/dist/index.umd.min.js" is:inline></script>
+
+<script type="application/javascript" is:inline>
+    var rootimgurl = "https://rokka-demos.rokka.io/watermark/"
+    //var rootimgurl = "http://test.rokka.test/watermark/"
+    var timeout = null
+    var rka = new rokka.Rokka()
+
+    var defaults = {
+        "font": "86d7ee",
+        "color": "000000",
+        "o": "20",
+        "t": "My Watermark",
+        "width": "500"
+
+    }
+    function updateImage() {
+
+        var hash = document.getElementById('imagehash').value +".jpg"
+
+        var elements = document.getElementById('form').elements
+        var variables = {}
+        for (i = 0; i < elements.length; i++) {
+            var name = elements[i].getAttribute('name')
+            if (name === "imagehash") {
+                continue;
+            }
+            var value = elements[i].value
+
+            if (name === "color" ) {
+                if ( value.length !== 6) {
+                    value = ""
+                }
+            }
+            if (name === "width" ) {
+                if (value < 101) {
+                    value = "100"
+                } if (value > 800) {
+                    value = "800"
+                }
+            }
+            if (defaults[name] && defaults[name] === value){
+                value = ""
+            }
+            variables[name] = value
+        }
+
+        imgurl = rka.render.addStackVariables(rootimgurl +  hash, variables, true)
+
+        document.getElementById("url").value = imgurl
+
+        if (timeout !== null) {
+            window.clearTimeout(timeout)
+        }
+        timeout = window.setTimeout(function () {
+            document.getElementById('image').src = imgurl
+        }, 150)
+
+
+    }
+    function urlchange() {
+        document.getElementById('image').src  = document.getElementById("url").value
+    }
+</script>
+<style is:inline>
+    #demoForm input, #demoForm  select {
+      width: inherit ! important;
+      height: 30px !important;
+    }
+
+    #demoForm select {
+      padding-left: 10px ! important;
+    }
+
+</style>

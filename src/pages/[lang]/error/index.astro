@@ -1,0 +1,31 @@
+---
+/**
+ * Port of source/error.html.
+ *
+ * The original's only content was wrapped in `{% block header %}` -- a block
+ * `default.html` never defines -- so Twig discarded it and the published page
+ * has the site chrome around an empty content section. Reproduced exactly:
+ * the apology text really is missing from the live page, and inventing it back
+ * would be a content change, not a migration.
+ *
+ * Kept rather than deleted because it may back a CloudFront custom error response.
+ */
+import Base from '../../../layouts/Base.astro';
+import { getSite, languagePaths, titleCase, canonicalUrl, type Language } from '../../../data/site';
+
+export function getStaticPaths() {
+  return languagePaths();
+}
+
+const lang = Astro.params.lang as Language;
+const site = getSite(lang);
+const title = 'Error';
+---
+
+<Base
+  lang={lang}
+  title={`${titleCase(title)} | ${site.title}`}
+  canonical={canonicalUrl('/error')}
+  pageUrl="/error"
+  pageTitle={title}
+/>
