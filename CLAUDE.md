@@ -16,6 +16,7 @@ Node 22 (`.nvmrc`). Install once with `npm ci`.
 npm run dev        # dev server on :4321
 npm run build      # production build into dist/
 npm run preview    # serve the built dist/
+npm run verify     # post-build checks (see "CI" below); needs dist/ to exist
 ```
 
 Containerized build (image `docker.gitlab.liip.ch/rokka/rokka-site-build-docker:node22`; build it first with `./docker/build.sh` if missing):
@@ -144,6 +145,30 @@ The pre-migration Sculpin build is the reference. To check a change hasn't shift
 
 - Documentation is English-only by design — don't add German translations under `src/content/`.
 - When editing documentation prose, prefer fixing it in place rather than restructuring — the numeric-prefix ordering and existing anchor IDs are referenced from elsewhere.
+
+## CI
+
+`.github/workflows/ci.yml` runs `npm ci`, `npm run build` and `npm run verify`
+on every pull request and on `master`, and uploads `dist/` as an artifact. It
+checks out with `fetch-depth: 0` because the sitemap reads each page's
+`lastmod` from git history; a shallow clone would date every page the same.
+
+`scripts/verify-build.mjs` guards three things:
+
+1. **Documentation anchor ids**, against the committed snapshot of all 263 in
+   `scripts/anchor-ids.txt`. These are public URLs produced by a hand-written
+   port of Sculpin's algorithm, so a markdown edit or a dependency bump can
+   rewrite them without anyone noticing. If you change a heading on purpose,
+   re-record with `npm run verify -- --update-anchors` and commit the snapshot.
+2. **Internal links**, since `build.format: 'preserve'` makes it easy to link to
+   a directory index for a page that is really a flat `.html` file. The three
+   pre-existing 404s listed under "Known pre-existing quirks" are allowlisted in
+   the script — remove them from `KNOWN_BROKEN` if they ever get fixed.
+3. **Sitemap entries** all resolve to a built file.
+
+Deployment is not in CI. It is still the manual `./buildWithDocker.sh` →
+`./install-dashboard.sh` → `./deploy2aws.sh` sequence, and moving it into
+Actions needs AWS credentials as repository secrets first.
 
 ## Deliberate rendering changes from the migration
 
