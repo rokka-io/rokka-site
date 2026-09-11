@@ -16,7 +16,6 @@ Node 22 (`.nvmrc`). Install once with `npm ci`.
 npm run dev        # dev server on :4321
 npm run build      # production build into dist/
 npm run preview    # serve the built dist/
-npm run check      # astro check (types)
 ```
 
 Containerized build (image `docker.gitlab.liip.ch/rokka/rokka-site-build-docker:node22`; build it first with `./docker/build.sh` if missing):
