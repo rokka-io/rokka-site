@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "verify": "node scripts/verify-build.mjs"
   },
   "engines": {
     "node": ">=22"

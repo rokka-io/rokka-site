@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
+import { execFileSync } from 'node:child_process';
 import { canonicalUrl, LANGUAGES } from '../data/site';
-import { docLinks, type DocType } from '../data/docs';
+import { docEntries, docUrl, type DocType } from '../data/docs';
 
 /**
  * The sitemap.
@@ -23,26 +24,74 @@ import { docLinks, type DocType } from '../data/docs';
 
 const DOC_TYPES: DocType[] = ['guides', 'references', 'demos'];
 
-export const GET: APIRoute = async () => {
-  const urls: string[] = [];
+const BUILD_DATE = new Date().toISOString().replace(/\.\d+Z$/, '+00:00');
 
-  // Bilingual marketing pages. `/` is intentionally not listed; /en/ is its canonical.
+/**
+ * `lastmod` for a page: the date of the last commit that touched its source.
+ *
+ * Falls back to the build date when git cannot answer — no repository, or a
+ * shallow clone, where `git log` only sees the checkout commit. CI therefore
+ * checks out with `fetch-depth: 0`; without it every page would claim the same
+ * (meaningless) date.
+ */
+function lastModified(...files: string[]): string {
+  const dates = files
+    .map((file) => {
+      try {
+        return execFileSync('git', ['log', '-1', '--format=%cI', '--', file], {
+          encoding: 'utf8',
+          stdio: ['ignore', 'pipe', 'ignore'],
+        }).trim();
+      } catch {
+        return '';
+      }
+    })
+    .filter(Boolean);
+  return dates.length ? dates.sort().at(-1)! : BUILD_DATE;
+}
+
+export const GET: APIRoute = async () => {
+  const entries: { url: string; lastmod: string }[] = [];
+
+  // Bilingual marketing pages. `/` is intentionally not listed; /en/ is its
+  // canonical. Their copy lives in the translation files, so a text-only change
+  // still moves the date.
+  const translations = (lang: string) => [`src/data/text.${lang}.yml`];
   for (const lang of LANGUAGES) {
-    urls.push(canonicalUrl('/', lang));
-    urls.push(canonicalUrl('/contact', lang));
-    urls.push(canonicalUrl('/signup', lang));
+    entries.push({
+      url: canonicalUrl('/', lang),
+      lastmod: lastModified('src/layouts/Landing.astro', ...translations(lang)),
+    });
+    entries.push({
+      url: canonicalUrl('/contact', lang),
+      lastmod: lastModified('src/pages/[lang]/contact/index.astro', ...translations(lang)),
+    });
+    entries.push({
+      url: canonicalUrl('/signup', lang),
+      lastmod: lastModified('src/pages/[lang]/signup/index.astro', ...translations(lang)),
+    });
   }
 
   // Documentation, English only by design.
-  urls.push(canonicalUrl('/documentation'));
+  entries.push({
+    url: canonicalUrl('/documentation'),
+    lastmod: lastModified('src/pages/documentation/index.astro'),
+  });
   for (const type of DOC_TYPES) {
-    for (const { url } of await docLinks(type)) urls.push(canonicalUrl(url));
+    for (const entry of await docEntries(type)) {
+      entries.push({
+        url: canonicalUrl(docUrl(type, entry.data.slug)),
+        lastmod: lastModified(entry.filePath ?? `src/content/${type}/${entry.id}.md`),
+      });
+    }
   }
 
   const body = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-    ...urls.map((url) => `  <url><loc>${url}</loc></url>`),
+    ...entries.map(
+      ({ url, lastmod }) => `  <url><loc>${url}</loc><lastmod>${lastmod}</lastmod></url>`
+    ),
     '</urlset>',
     '',
   ].join('\n');

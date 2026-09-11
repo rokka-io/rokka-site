@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+# A newer push to the same branch makes the running build irrelevant.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The sitemap derives each <lastmod> from the last commit that touched
+          # the page's source. The default shallow clone only has one commit, so
+          # every page would report the same date.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # Anchor ids, internal links and sitemap entries. See scripts/verify-build.mjs.
+      - run: npm run verify
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+
+# Deployment is deliberately not wired up here. It still runs by hand
+# (./buildWithDocker.sh, ./install-dashboard.sh, ./deploy2aws.sh) and moving it
+# into CI needs AWS credentials added as repository secrets first.
