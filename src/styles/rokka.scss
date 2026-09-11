@@ -1521,23 +1521,34 @@ html {
     the bar. `--pf-text-muted` is what colours the icon -- it is painted as a
     mask over that colour, not as an <img>.
 
-    It must be `currentColor`, not white. The navbar has three states and the
-    toolkit recolours the bar itself for two of them: `.navbar--negative` is
-    white on green, while `.navbar--overlay` (scrolled) and `.navbar--expanded`
-    (hamburger open) both go #414141 on near-white. `.navbar-menu__link` is
-    `color: inherit` for exactly this reason; the icon follows the same rule, so
-    it never ends up white on white. Dimming is opacity rather than a lighter
-    colour, so it works in both states.
+    It must be `currentColor`, not a fixed colour. The navbar has three states
+    and the toolkit recolours the bar itself for each: `.navbar--negative` is
+    #F7F7F5 on green, while `.navbar--overlay` (scrolled) and
+    `.navbar--expanded` (hamburger open) both go #414141 on near-white.
+    `.navbar-menu__link` is `color: inherit` for exactly this reason, and the
+    icon follows the same rule so it can never come out white on white.
+
+    `color: inherit` is what makes that work, and it is not redundant: Pagefind
+    resets its custom elements with `all: initial; color: CanvasText` to isolate
+    them from host styles, so without this the glass computes to black and stays
+    black on the green bar. That reset is a bare element selector, so a single
+    class outbids it -- unlike the `.pf-*` rules, which are not overridable.
+    Dimming is opacity rather than a lighter colour, so it works in all states.
 
     Width has to come from this element rather than the button, which is
     `width: 100%` of whatever contains it. 44px keeps the tap target at the
-    usual minimum with the 14px glyph centred in it.
+    usual minimum and, with the button's own 14px side padding, leaves exactly
+    the 16px the glyph is resized to below. That padding already matches
+    `.navbar-menu__link`, so the margin here is the `.navbar-menu > li + li`
+    gap, and the glass sits on the same rhythm as the links instead of crowding
+    the first one.
  */
 .rokka-search {
     display: block;
     width: 44px;
     flex-shrink: 0;
-    opacity: 0.85;
+    margin-right: 20px;
+    color: inherit;
     transition: opacity 0.3s;
 
     --pf-input-height: 44px;
@@ -1548,7 +1559,16 @@ html {
     --pf-outline-focus: currentColor;
 
     &:hover {
-        opacity: 1;
+        opacity: 0.7;
+    }
+
+    // Pagefind pins the glyph at 14px behind `:is(*, #\#)` repeated three
+    // times -- a three-ID specificity no site selector can outbid, so
+    // !important is the only lever. 16px is what makes it read as part of the
+    // row rather than a smaller afterthought next to 17px bold links.
+    .pf-trigger-icon {
+        width: 16px !important;
+        height: 16px !important;
     }
 }
 
