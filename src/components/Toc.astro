@@ -1,0 +1,65 @@
+---
+/**
+ * The auto table of contents that src/SculpinTools/AddLinksToId.php used to
+ * prepend to every documentation page.
+ *
+ * Same content rules as before: h2 and h3 only (the PHP tested
+ * `$level < 3 && $level >= 1` against `depth - 1`), plain-text labels, rendered
+ * only when at least one qualifying heading exists, and placed at the top of
+ * the article body so `.rokka-doc-content h2:first-child { margin-top: 0 }`
+ * still applies to its heading. The leading space in "<h2> Table of Contents"
+ * is deliberate -- it is in the published markup.
+ *
+ * `data-pagefind-ignore` sits on the two elements rather than on a wrapper
+ * because a wrapper would stop the h2 being `.rokka-doc-content`'s first child.
+ * Without it every documentation page would index a second copy of all its own
+ * headings, and search excerpts would mostly be table-of-contents fragments.
+ *
+ * One deliberate change: the PHP emitted `<p><ul>...</ul></p>` with nested
+ * lists as *siblings* of their <li>, which is invalid. Browsers auto-closed the
+ * <p>, leaving two stray empty paragraphs' worth of margin on every doc page.
+ * This emits properly nested lists instead, so those two gaps disappear -- the
+ * only intentional visual difference in the documentation.
+ */
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+const entries = headings.filter((h) => h.depth === 2 || h.depth === 3);
+
+/** Group each h3 run under the h2 that precedes it. */
+const tree: { heading: Heading; children: Heading[] }[] = [];
+for (const heading of entries) {
+  if (heading.depth === 2 || tree.length === 0) {
+    tree.push({ heading, children: [] });
+  } else {
+    tree[tree.length - 1].children.push(heading);
+  }
+}
+---
+
+{entries.length > 0 && (
+  <Fragment>
+    <h2 data-pagefind-ignore> Table of Contents</h2>
+    <ul data-pagefind-ignore>
+      {tree.map((node) => (
+        <li>
+          <a href={`#${node.heading.slug}`}>{node.heading.text}</a>
+          {node.children.length > 0 && (
+            <ul>
+              {node.children.map((child) => (
+                <li><a href={`#${child.slug}`}>{child.text}</a></li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ul>
+  </Fragment>
+)}

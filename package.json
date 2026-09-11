@@ -1,30 +1,29 @@
 {
   "name": "rokka-site",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "The website for rokka.io",
   "author": "Liip",
   "homepage": "https://rokka.io",
-  "devDependencies": {
-    "browser-sync": "^2.27.10",
-    "del": "^2.2.2",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^4.1.0",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-htmlmin": "^4.0.0",
-    "gulp-include": "^2.4.1",
-    "gulp-inject-svg": "^0.1.18",
-    "gulp-sass": "^5.1.0",
-    "gulp-svgmin": "^4.1.0",
-    "gulp-uglify": "^3.0.2",
-    "gulp4-run-sequence": "^1.0.1",
-    "pump": "^3.0.0",
-    "run-sequence": "^1.2.2",
-    "sass": "^1.55.0"
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "postbuild": "node scripts/build-search-index.mjs",
+    "preview": "astro preview",
+    "verify": "node scripts/verify-build.mjs"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=22"
   },
   "dependencies": {
-    "broken-link-checker": "^0.7.8"
+    "@astrojs/markdown-satteri": "0.4.1",
+    "astro": "^7.3.2"
+  },
+  "devDependencies": {
+    "broken-link-checker": "^0.7.8",
+    "js-yaml": "^5.4.1",
+    "pagefind": "^1.5.2",
+    "sass": "^1.104.0"
   }
 }

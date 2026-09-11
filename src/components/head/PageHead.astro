@@ -1,0 +1,31 @@
+---
+/**
+ * Static replacement for Sculpin's dynamic `{{ include(page.header_include) }}`.
+ *
+ * Twig resolved a path out of front matter at render time; Astro needs the set
+ * of components to be known statically, so front matter now carries a key
+ * (`head: signurl`) that this maps to a component.
+ */
+import Templates from './Templates.astro';
+import Watermark from './Watermark.astro';
+import Signurl from './Signurl.astro';
+import Iiif from './Iiif.astro';
+import AutoDescriptions from './AutoDescriptions.astro';
+
+interface Props {
+  head?: 'templates' | 'watermark' | 'signurl' | 'iiif' | 'autodescriptions';
+}
+
+const FRAGMENTS = {
+  templates: Templates,
+  watermark: Watermark,
+  signurl: Signurl,
+  iiif: Iiif,
+  autodescriptions: AutoDescriptions,
+} as const;
+
+const { head } = Astro.props;
+const Fragment_ = head ? FRAGMENTS[head] : undefined;
+---
+
+{Fragment_ && <Fragment_ />}

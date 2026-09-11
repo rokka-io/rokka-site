@@ -1,0 +1,20 @@
+---
+/**
+ * Port of source/_partials/demos_list.html -- the "More Demos" strip under a
+ * demo page. Unlike ArticleList it excludes the current page instead of
+ * emphasising it. The heading is hard-coded English, as it was before.
+ */
+interface Props {
+  articles: { url: string; title: string }[];
+  currentUrl: string;
+}
+const { articles, currentUrl } = Astro.props;
+---
+
+<hr>
+<h4>More Demos:</h4>
+<ul class="list-inline list-inline--divided">
+    {articles.filter((article) => article.url !== currentUrl).map((article) => (
+    <li class="list-group-item"><a href={article.url}>{article.title}</a></li>
+    ))}
+</ul>

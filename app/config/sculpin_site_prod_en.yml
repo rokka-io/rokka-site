@@ -1,8 +1,0 @@
-language: en
-environment: prod
-
-domain: https://rokka.io/
-
-imports:
-  - translations/text_en.yml
-  - pagedata.yml

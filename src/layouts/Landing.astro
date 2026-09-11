@@ -1,0 +1,664 @@
+---
+/**
+ * Port of source/_views/landingpage.html, rendered at both `/` (English) and
+ * `/en/` `/de/`.
+ *
+ * Notes on the tricky bits:
+ *  - The pricing calculator had Twig interpolated into JavaScript string
+ *    literals. That becomes `define:vars` on an `is:inline` script: the form
+ *    calls calculatePrice() from inline `onkeyup`/`onchange`, so the function
+ *    has to stay global and the script must not be bundled.
+ *  - The commented-out "why rokka" variant from the original is dropped. It sat
+ *    inside an HTML comment, but Twig still rendered it, so the markup (and its
+ *    three broken `<use xlink:href="#check">` references to a sprite that was
+ *    never inlined) shipped to every visitor.
+ *  - The pricing tiers are still duplicated between the tables and the
+ *    calculator's JS objects, exactly as before. Deduplicating them would be a
+ *    behaviour change; flagged instead.
+ */
+import Base from './Base.astro';
+import RokkaBox from '../assets/images/rokka-box.svg';
+import FilePictureUpload from '../assets/images/icons/file-picture-upload.svg';
+import CropPicture from '../assets/images/icons/crop-picture.svg';
+import Rocket from '../assets/images/icons/rocket.svg';
+import Check from '../assets/images/icons/check.svg';
+import { getSite, canonicalUrl, type Language } from '../data/site';
+
+interface Props {
+  lang: Language;
+}
+const { lang } = Astro.props;
+const site = getSite(lang);
+const t = site.text;
+const reasons = t.why_rokka.reasons as { title: string; text: string }[];
+---
+
+<Base
+  lang={lang}
+  title={site.sharing_title}
+  canonical={canonicalUrl('/', lang)}
+  pageUrl="/"
+  multilang
+  showBreadcrumb={false}
+>
+  <Fragment slot="head">
+    <meta content="summary_large_image" name="twitter:card"/>
+    <meta content="https://rokka.rokka.io/dynamic/ab9144.jpg" name="twitter:image"/>
+    <meta content="https://rokka.rokka.io/dynamic/ab9144.jpg" property="og:image"/>
+    <meta content={site.sharing_title} name="twitter:title"/>
+    <meta content={t.lead.text} name="twitter:description"/>
+    <meta content={site.sharing_title} name="og:title"/>
+    <meta content={t.lead.text} name="og:description"/>
+  </Fragment>
+
+  <Fragment slot="content-wrapper">
+<style is:inline>
+  #calculateForm input, #calculateForm  select {
+    width: inherit ! important;
+    height: 30px !important;
+  }
+
+  #calculateForm select {
+    padding-left: 10px ! important;
+  }
+
+</style>
+<div class="section-spacer">
+  <section class="section section--primary section--fit section--middle section--fixed rokka-hero-section">
+    <div class="section__body">
+      <div class="grid grid--middle">
+        <div class="grid__item md-w-3/5">
+          <div class="rokka-hero-text">
+            <h1 class="h2"><Fragment set:html={t.hero.heading_1} /><br><span class="font-normal" set:html={t.hero.heading_2} /></h1>
+            <p class="text-lead mrgb0" set:html={t.hero.lead} />
+            <a href="/dashboard/#/signup" class="btn btn--negative mrgt hidden-sm-down" id="trial-button" set:html={t.hero.cta} />
+            <a href="https://savings.rokka.io/" class="btn btn--negative mrgt hidden-sm-down" id="compare-button" set:html={t.hero.compare} />
+          </div>
+        </div>
+
+
+        <div class="grid__item md-w-2/5">
+          <div class="rokka-hero flex flex-align-center flex-justify-center">
+            <div class="rokka-hero__animation-wrapper">
+              <div class="rokka-hero__animation rokka-hero__animation--center">
+                <div class="rokka-hero-bubble rokka-hero-bubble--huge">
+                  <div class="rokka-hero-bubble-wrap">
+                    <div class="rokka-hero-bubble__icon">
+                      <RokkaBox />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="rokka-hero__animation rokka-hero__animation--outside">
+                <div class="rokka-hero-bubble rokka-hero-bubble--1">
+                  <div class="rokka-hero-bubble-wrap">
+                    <div class="rokka-hero-bubble__icon">
+                      <FilePictureUpload />
+                    </div>
+                    <div class="rokka-hero-bubble__label"><div set:html={t.hero.feature_1} /></div>
+                  </div>
+                </div>
+
+                <div class="rokka-hero-bubble rokka-hero-bubble--3">
+                  <div class="rokka-hero-bubble-wrap">
+                    <div class="rokka-hero-bubble__icon">
+                      <CropPicture />
+                    </div>
+                    <div class="rokka-hero-bubble__label"><div set:html={t.hero.feature_2} /></div>
+                  </div>
+                </div>
+
+                <div class="rokka-hero-bubble rokka-hero-bubble--4">
+                  <div class="rokka-hero-bubble-wrap">
+                    <div class="rokka-hero-bubble__icon">
+                      <Rocket />
+                    </div>
+                    <div class="rokka-hero-bubble__label"><div set:html={t.hero.feature_3} /></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="section section--light pdgb">
+  <div class="section__body">
+    <p class="text-lead mrgb" set:html={t.lead.text} />
+
+  </div>
+</section>
+
+
+<section class="section section--light rokka-section--why">
+  <div class="section__body">
+    <div class="grid">
+      <div class="grid__item">
+        <h2 class="mrgb+ mrgt0" set:html={t.why_rokka.title} />
+      </div>
+    </div>
+    <div class="grid">
+        {reasons.map((reason) => (
+          <div class="grid__item md-w-1/3">
+            <div class="rokka-feature">
+              <h3 class="mrg0 h4 mrgb--"><div class="rokka-feature__icon"><Check /></div><Fragment set:html={reason.title} /></h3>
+              <p class="mrg0" set:html={reason.text} />
+            </div>
+          </div>
+        ))}
+    </div>
+  </div>
+</section>
+
+<section class="section rokka-section-uoso">
+
+  <div class="section__body">
+    <div class="rokka-uoso-row--middle">
+      <div class="grid">
+        <div class="grid__item">
+          <div class="rokka-uoso-device rokka-uoso-device--imac">
+            <div class="rokka-uoso-device__hardware"></div>
+            <div class="rokka-uoso-device__screen"></div>
+          </div>
+        </div>
+        <div class="grid__item sm-w-1/2 md-w-3/5 lg-w-2/5">
+          <div class="rokka-uoso-text">
+            <h2 class="mrg0 mrgb-- rokka-uoso-headline" set:html={t.uoso.title} />
+            <p class="mrg0" set:html={t.uoso.lead} />
+          </div>
+        </div>
+        <div class="grid__item hidden-md-down lg-w-1/5">
+          <div class="rokka-uoso-device rokka-uoso-device--iphone">
+            <div class="rokka-uoso-device__hardware"></div>
+            <div class="rokka-uoso-device__screen"></div>
+          </div>
+        </div>
+        <div class="grid__item sm-w-1/2 md-w-2/5 lg-w-2/5">
+          <div class="rokka-uoso-device rokka-uoso-device--ipad">
+            <div class="rokka-uoso-device__hardware"></div>
+            <div class="rokka-uoso-device__screen"></div>
+          </div>
+        </div>
+
+        <div class="grid__item sm-w-1/2 md-w-3/5">
+          <div class="rokka-uoso-device rokka-uoso-device--macbook">
+            <div class="rokka-uoso-device__hardware"></div>
+            <div class="rokka-uoso-device__screen"></div>
+          </div>
+        </div>
+
+        <div class="grid__item sm-w-1/2 md-w-2/5">
+          <div class="rokka-uoso-text rokka-uoso-text--cropping">
+            <h3 class="h4" set:html={t.uoso.feature_1.title} />
+            <p class="mrg0" set:html={t.uoso.feature_1.text} />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--light rokka-section--feature">
+  <div class="section__body">
+    <div class="rokka-feature--delivery">
+      <div class="grid grid--middle">
+        <div class="grid__item sm-w-1/2 md-w-3/5 lg-w-1/2">
+          <h2 class="mrgt0" set:html={t.made_for_web} />
+          <h3 class="mrg0 h4 mrgb--" set:html={t.fast_delivery.title} />
+          <p class="mrg0" set:html={t.fast_delivery.text} />
+          <p><img loading="lazy" src="https://rokka.rokka.io/plain/b79c0e60a67dee553866dadd123cc286f3002b2e.png"/></p>
+        </div>
+        <div class="grid__item sm-w-1/2 md-w-2/5 lg-w-1/2">
+          <div class="rokka-feature__image">
+            <img loading="lazy" src="https://rokka.rokka.io/plain/f4d3f334ba90d2b4b00e82953fe0bf93e7ad9912.png"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section__body">
+    <div class="rokka-feature--api">
+      <div class="grid grid--middle mrgt++">
+        <div class="grid__item md-w-3/5 hidden-sm-down">
+          <div class="rokka-feature__image">
+            <div class="rokka-box pdg">
+<pre class="mrgb"><code>$ curl -X POST -F filedata=@image.jpg 'https://api.rokka.io/sourceimages/organization'</code></pre>
+<pre><code class="language-json">{'{'}
+  "total": 1,
+  "items": [
+    {'{'}
+      "hash": "c03683b067927d77973b458e0baa40aa7b5e5418",
+      "short_hash": "c03683",
+      "binary_hash": "05bf2c88f637e6361db31b094b09cfce95a7809c",
+      "created": "2017-11-09T16:49:23+01:00",
+      "name": "image.jpg",
+      "mimetype": "image/jpeg",
+      "size": 426884,
+      "width": 800,
+      "height": 600,
+      "organization": "testorganization",
+    {'}'}
+  ]
+{'}'}</code></pre>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="grid__item md-w-2/5">
+          <h3 class="mrg0 h4 mrgb--" set:html={t.simple_api.title} />
+          <p class="mrg0" set:html={t.simple_api.text} />
+
+          <ul class="list-inline list-inline--tight">
+            <li><a class="label mrgt--" target="_blank" href="https://github.com/rokka-io/rokka.js"><span class="label__body">JavaScript</span></a></li>
+            <li><a class="label mrgt--" target="_blank" href="https://github.com/rokka-io/rokka-client-php"><span class="label__body">PHP</span></a></li>
+            <li><a class="label mrgt--" target="_blank" href="https://github.com/rokka-io/rokka-go"><span class="label__body">Go</span></a></li>
+            <li><a class="label mrgt--" target="_blank" href="https://github.com/rokka-io/rokka-python-codegen"><span class="label__body">Python</span></a></li>
+            <li><a class="label mrgt--" target="_blank" href="https://github.com/rokka-io/rokka-java-codegen"><span class="label__body">Java</span></a></li>
+            <li><a class="label mrgt--" target="_blank" href="https://github.com/rokka-io/rokka-ruby-codegen"><span class="label__body">Ruby</span></a></li>
+            <li><a class="label mrgt--" target="_blank" href="https://github.com/rokka-io/rokka-client-bundle"><span class="label__body">Symfony</span></a></li>
+            <li><a class="label mrgt--" target="_blank" href="https://www.drupal.org/project/rokka"><span class="label__body">Drupal</span></a></li>
+            <li><a class="label mrgt--" target="_blank" href="https://github.com/rokka-io/rokka-laravel-package"><span class="label__body">Laravel</span></a></li>
+            <li><a class="label mrgt--" target="_blank" href="https://wordpress.org/plugins/rokka-integration/"><span class="label__body">WordPress</span></a></li>
+            <li><a class="label mrgt--" target="_blank" href="https://github.com/rokka-io/rokka-kirby-plugin"><span class="label__body">Kirby</span></a></li>
+            <li><a class="label mrgt--" target="_blank" href="https://github.com/rokka-io/rokka-client-php-cli"><span class="label__body">CLI</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+<section id="rokka-pricing" class="section section--alt rokka-section--pricing">
+  <div class="section__body">
+    <h2 class="" set:html={t.pricing.title} />
+    <div class="rokka-box rokka-pricing-box mrgt+">
+      <div class="rokka-pricing rokka-pricing__paid">
+        <div class="grid grid--middle">
+          <div class="grid__item md-w-1/2">
+            <h3 class="mrg0 mrgb--" set:html={t.pricing.paid.title} />
+            <p class="mrg0 rokka-pricing-box__desc" set:html={t.pricing.paid.text} />
+          </div>
+          <div class="grid__item md-w-1/2">
+            <div class="flex">
+              <div class="number flex-item-1">
+                <div class="flex pdgr-">
+                  <div class="number__text">
+                    <div class="number__value number__value--chf h2 mrg0 text-primary">0.40</div>
+                    <div class="number__description">
+                      <div class="text-small" set:html={t.pricing.paid.monthly} />
+                      <div class="text-bold" set:html={t.pricing.paid.storage_text1} />
+                      <div class="text-small" set:html={t.pricing.paid.storage_text2} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="number flex-item-1">
+                <div class="flex pdgr-">
+                  <div class="number__text">
+                    <div class="number__value number__value--chf h2 mrg0 text-primary">0.50</div>
+                    <div class="number__description">
+                      <div class="text-small">&#160;</div>
+                      <div class="text-bold" set:html={t.pricing.paid.traffic_text1} />
+                      <div class="text-small" set:html={t.pricing.paid.traffic_text2} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="rokka-pricing rokka-pricing__details">
+        <a href="#" class="rokka-pricing__details-link">
+
+            <span class="text-bold" set:html={t.pricing.details.title} />
+            <span class="text-primary text-bold" set:html={t.pricing.details.text} />
+
+        </a>
+        <div class="rokka-pricing__details-table">
+          <div class="grid">
+            <div class="grid__item md-w-1/2">
+              <h4 set:html={t.pricing.details.storage} />
+              <table>
+                <thead>
+                  <tr>
+                    <th set:html={t.pricing.details.amount} />
+                    <th set:html={t.pricing.details.chf_per_gb_monthly} />
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>0 - 400</td>
+                    <td>CHF 0.40</td>
+                  </tr>
+
+                  <tr>
+                    <td>401 - 800</td>
+                    <td>CHF 0.30</td>
+                  </tr>
+
+                  <tr>
+                    <td>801 - 1200</td>
+                    <td>CHF 0.20</td>
+                  </tr>
+
+                  <tr>
+                    <td>1201 - 1600</td>
+                    <td>CHF 0.10</td>
+                  </tr>
+
+                  <tr>
+                    <td>1600 - ∞</td>
+                    <td>CHF 0.08</td>
+                  </tr>
+
+
+                </tbody>
+              </table>
+            </div>
+            <div class="grid__item md-w-1/2">
+              <h4 set:html={t.pricing.details.traffic} />
+              <table>
+                <thead>
+                  <tr>
+                    <th set:html={t.pricing.details.amount_monthly} />
+                    <th set:html={t.pricing.details.chf_per_gb} />
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>0 - 2000</td>
+                    <td>CHF 0.50</td>
+                  </tr>
+
+                  <tr>
+                    <td>2001 - 4000</td>
+                    <td>CHF 0.42</td>
+                  </tr>
+
+                  <tr>
+                    <td>4001 - 6000</td>
+                    <td>CHF 0.34</td>
+                  </tr>
+
+                  <tr>
+                    <td>6001 - 8000</td>
+                    <td>CHF 0.26</td>
+                  </tr>
+
+                  <tr>
+                    <td>8001 - ∞</td>
+                    <td><a href={`/${lang}/contact`} set:html={t.pricing.details.contact} /></td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+
+          </div>
+          <Fragment set:html={t.pricing.details.owncdn} /> <a href={`/${lang}/contact`} set:html={t.pricing.details.contact} />
+        </div>
+      </div>
+
+
+      <div class="rokka-pricing rokka-pricing__free">
+        <div class="grid grid--middle">
+          <div class="grid__item md-w-1/2">
+            <p class="mrg0 text-bold" set:html={t.pricing.free.title} />
+            <p class="mrg0 rokka-pricing-box__desc" set:html={t.pricing.free.text} />
+          </div>
+          <div class="grid__item md-w-1/2">
+            <div class="flex">
+              <div class="number flex-item-1">
+                <div class="flex pdgr-">
+                  <div class="number__text">
+                    <div class="number__value h3 mrg0 text-muted" set:html={t.pricing.free.free} />
+                    <div class="number__description text-small" set:html={t.pricing.free.free_space} />
+                  </div>
+                </div>
+              </div>
+
+              <div class="number flex-item-1">
+                <div class="flex pdgr-">
+                  <div class="number__text">
+                    <div class="number__value h3 mrg0 text-muted" set:html={t.pricing.free.free} />
+                    <div class="number__description text-small" set:html={t.pricing.free.free_traffic} />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <script
+        is:inline
+        define:vars={{ chfMonth: t.pricing.calculator.chfmonth, contactLabel: t.pricing.details.contact }}
+      >
+        var trafficPrices = {
+          2000:	0.5,
+          4000:	0.42,
+          6000:	0.34,
+          8000:	0.26,
+
+        }
+
+        var storagePrices = {
+          400:	0.4,
+          800:	0.3,
+          1200:	0.2,
+          1600:	0.1,
+          999999: 0.08
+        }
+
+        function getPrice(storageInput, tierPrices) {
+          var price =  Object.keys(tierPrices).reduce((prev, tierLimit) => {
+            tierLimit = parseInt(tierLimit)
+            var price = tierPrices[tierLimit]
+
+            if (storageInput > prev.tierLimitBefore) {
+              prev.total += price * (Math.min(tierLimit, storageInput) - prev.tierLimitBefore)
+            }
+            prev.tierLimitBefore = tierLimit
+            return prev
+
+          }, {total: 0, tierLimitBefore: 0})
+          return price.total
+        }
+
+        function calculatePrice() {
+
+
+          var form = document.getElementById('form')
+
+          var storageInput = parseInt(form.storage.value)
+          var trafficInput = parseInt(form.traffic.value)
+          var storagePrice =0
+          var trafficPrice = 0
+
+          if (storageInput > 2 || trafficInput > 10) {
+             storagePrice = getPrice(storageInput, storagePrices)
+             trafficPrice = getPrice(trafficInput, trafficPrices)
+
+          }
+          document.getElementById('storagePrice').innerText = storagePrice.toFixed(2).replace('.00', '.-') + ' ' + chfMonth
+          if (trafficInput > 8000) {
+            document.getElementById('trafficPrice').innerText = contactLabel
+
+          } else{
+            document.getElementById('trafficPrice').innerText = trafficPrice.toFixed(2).replace('.00', '.-') + ' ' + chfMonth
+          }
+          if (trafficInput > 8000) {
+            document.getElementById('totalPrice').innerText = contactLabel
+          } else {
+            document.getElementById('totalPrice').innerText = (storagePrice + trafficPrice).toFixed(2).replace('.00', '.-') + ' ' + chfMonth + ' '
+          }
+
+        }
+
+        // `define:vars` wraps this script in an IIFE, so the declaration above
+        // is function-scoped. The form calls calculatePrice() from inline
+        // onkeyup/onchange attributes, which only see globals.
+        window.calculatePrice = calculatePrice
+      </script>
+        <div class="rokka-pricing rokka-pricing__free" id="calculateForm">
+        <form id="form" onkeyup="calculatePrice()" onchange="calculatePrice()">
+
+        <div class="grid">
+          <div class="grid__item md-w-1/2">
+            <h3 class="mrg0 mrgb--" set:html={t.pricing.calculator.title} />
+            <p class="mrg0 rokka-pricing-box__desc" set:html={t.pricing.calculator.text} />
+
+            <p class="mrg0 rokka-pricing-box__desc text-bold"><Fragment set:html={t.pricing.calculator.total} />: <span id="totalPrice">0.- <Fragment set:html={t.pricing.calculator.chfmonth} /></span> </p>
+          </div>
+          <div class="grid__item md-w-1/2">
+            <div class="flex">
+              <div class="number flex-item-1">
+                <div class="flex pdgr-">
+                  <div class="number__text">
+                    <div class="number__value h3 mrg0 text-bold" set:html={t.pricing.details.storage} />
+                    <div class="number__description " style="padding-top: 10px"> <input  autocomplete="off" type="text" name="storage" value="0" size="5"> <Fragment set:html={t.pricing.calculator.gbmonth} /></div>
+                    <div class="number__description " style="padding-top: 10px"> <span id="storagePrice">0.-  <Fragment set:html={t.pricing.calculator.chfmonth} /></span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="number flex-item-1">
+                <div class="flex pdgr-">
+                  <div class="number__text">
+
+                    <div class="number__value h3 mrg0 text-bold" set:html={t.pricing.details.traffic} />
+                    <div class="number__description " style="padding-top: 10px"> <input  autocomplete="off" type="text" name="traffic" value="0" size="5"> <Fragment set:html={t.pricing.calculator.gbmonth} /></div>
+                    <div class="number__description " style="padding-top: 10px"> <span id="trafficPrice">0.- <Fragment set:html={t.pricing.calculator.chfmonth} /></span> </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+        </form>
+      </div>
+    </div>
+
+
+    <p class="text-tiny text-right text-muted">
+      <a href={t.pricing.tos.link} target="_blank" set:html={t.pricing.tos.text} />
+      <Fragment set:html={t.pricing.disclaimer} />
+    </p>
+
+  </div>
+</section>
+
+
+
+
+<section class="section section--primary rokka-section--cta">
+  <div class="section__body">
+
+    <div class="grid grid--middle">
+      <div class="grid__item lg-w-2/3 rokka-cta__text">
+        <h2 class="mrg0" set:html={t.cta.title} />
+        <p class="mrg0 text-lead" set:html={t.cta.text} />
+      </div>
+      <div class="grid__item lg-w-1/3 rokka-cta__button">
+        <a href="/dashboard/#/signup" class="btn btn--md btn--negative" set:html={t.cta.cta_button} />
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<section class="section section--white rokka-section--testimonial">
+  <div class="section__body">
+    <div class="rokka-quotes">
+      <div class="rokka-quotes-container">
+        <div class="rokka-quote rokka-quote--left">
+          <div class="rokka-quote__bubble">
+            <h3 class="mrg0 mrgb--" set:html={t.testimonial2.title} />
+            <p class="mrg0" set:html={t.testimonial2.quote} />
+          </div>
+          <div class="rokka-quote__person">
+            <div class="flex flex-align-center">
+              <div class="flex-item-auto">
+                <div class="rokka-quote__avatar"></div>
+              </div>
+              <div class="flex-item-1">
+                <div class="h4 mrg0" set:html={t.testimonial2.name} />
+                <span set:html={t.testimonial2.job_title} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rokka-quote rokka-quote--right">
+          <div class="rokka-quote__bubble">
+            <h3 class="mrg0 mrgb--" set:html={t.testimonial1.title} />
+            <p class="mrg0" set:html={t.testimonial1.quote} />
+          </div>
+          <div class="rokka-quote__person">
+            <div class="flex flex-align-center">
+              <div class="flex-item-auto">
+                <div class="rokka-quote__avatar"></div>
+              </div>
+              <div class="flex-item-1">
+                <div class="h4 mrg0" set:html={t.testimonial1.name} />
+                <span set:html={t.testimonial1.job_title} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="twitter-timeline" data-chrome="nofooter noheader transparent" data-height="700" data-dnt="true" href="https://twitter.com/rokkaio?ref_src=twsrc%5Etfw"></a>
+    </div>
+
+  </div>
+</section>
+  </Fragment>
+
+  <Fragment slot="scripts">
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8" is:inline></script>
+  <script is:inline>
+      window.addEventListener('DOMContentLoaded', function() {
+        var navbar = document.querySelector('.navbar');
+        new Toolkit.Navbar(navbar, { mode: 'section' });
+      });
+      window.addEventListener('DOMContentLoaded', function() {
+
+        document.querySelector('.rokka-pricing__details-link').addEventListener('click', function(e) {
+          e.preventDefault();
+          document.querySelector('.rokka-pricing__details').classList.add('rokka-pricing__details--open');
+        });
+
+        var hero = document.querySelector('.rokka-hero');
+
+        window.setTimeout(function() {
+          hero.classList.toggle('rokka-hero--appear');
+        }, 800);
+
+        window.setTimeout(function() {
+          hero.classList.toggle('rokka-hero--animate');
+        }, 2000);
+      });
+  </script>
+  </Fragment>
+</Base>

@@ -1,0 +1,12 @@
+---
+import Landing from '../../layouts/Landing.astro';
+import { languagePaths, type Language } from '../../data/site';
+
+export function getStaticPaths() {
+  return languagePaths();
+}
+
+const lang = Astro.params.lang as Language;
+---
+
+<Landing lang={lang} />

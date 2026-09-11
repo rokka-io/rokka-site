@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-composer install
+set -e
+
 rm -rf dist/*
 
-npm install
-
-./node_modules/.bin/gulp build:prod
+npm ci
+npm run build

@@ -1,0 +1,14 @@
+---
+/**
+ * The site root.
+ *
+ * `/` and `/en/` are byte-identical copies of the English landing page. The old
+ * gulp build produced that by copying `output_*_en/index.html` to both
+ * `dist/index.html` and `dist/en/index.html`; here both routes render the same
+ * component. Note the canonical on this page points at `https://rokka.io/en/`,
+ * not `/` -- that is how it has always been published.
+ */
+import Landing from '../layouts/Landing.astro';
+---
+
+<Landing lang="en" />

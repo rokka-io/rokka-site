@@ -1,0 +1,34 @@
+---
+/**
+ * Port of source/pagenotfound/index.html.
+ *
+ * Built under both /en/ and /de/ but marked non-multilang, so the language
+ * switcher shows DE disabled and the canonical carries no language segment --
+ * both copies declare https://rokka.io/pagenotfound, which does not exist.
+ * Preserved as-is; this page may be wired to a CloudFront custom error response.
+ */
+import Base from '../../../layouts/Base.astro';
+import { getSite, languagePaths, titleCase, canonicalUrl, type Language } from '../../../data/site';
+
+export function getStaticPaths() {
+  return languagePaths();
+}
+
+const lang = Astro.params.lang as Language;
+const site = getSite(lang);
+const title = 'Page not found :(';
+---
+
+<Base
+  lang={lang}
+  title={`${titleCase(title)} | ${site.title}`}
+  canonical={canonicalUrl('/pagenotfound')}
+  pageUrl="/pagenotfound"
+  pageTitle={title}
+>
+<div class="jumbotron">
+
+    <p>We are terribly sorry, the requested page was not found. Shadow dwelling creatures, fed on caffeine and electronic gadgets have
+        been dispatched to investigate.</p>
+</div>
+</Base>

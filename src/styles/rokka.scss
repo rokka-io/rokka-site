@@ -1,0 +1,1584 @@
+@use "sass:math";
+
+// The Liip styleguide is vendored under ./vendor/liip-styleguide. It used to
+// live in source-assets/liip-styleguide, where three of these partials sat
+// inside a fake `node_modules/kanbasu/` directory that had to be force-added
+// past .gitignore. That segment is gone; nothing else about the layout changed,
+// because dist/assets/toolkit/styles/toolkit.css resolves its @font-face
+// url("../fonts/Archivo-*.woff2") relative to itself.
+//
+// These stay legacy `@import` on purpose. toolkit.css is a precompiled 406 KB
+// stylesheet pulled in as if it were a partial, and the kanbasu settings rely on
+// @import's global scope. `@use` supports neither, and there is no upstream
+// styleguide to update, so astro.config.mjs silences the deprecation instead.
+@import './vendor/liip-styleguide/kanbasu/src/assets/scss/tools/functions';
+@import './vendor/liip-styleguide/kanbasu/src/assets/scss/tools/mixins';
+@import './vendor/liip-styleguide/src/assets/toolkit/styles/tools/mixins';
+
+// Import Kanbasu and Toolkit Settings
+
+@import './vendor/liip-styleguide/kanbasu/src/assets/scss/settings/settings';
+@import './vendor/liip-styleguide/src/assets/toolkit/styles/settings/settings';
+@import './vendor/liip-styleguide/src/assets/toolkit/styles/settings/kanbasu';
+
+
+// Import Compiled Toolkit CSS
+@import './vendor/liip-styleguide/dist/assets/toolkit/styles/toolkit';
+
+$color-green: #6ea644;
+
+$breakpoint-uoso: 87.5em;
+$breakpoint-header-narrow: 600px;
+
+@mixin image-2x($image) {
+  @media (min--moz-device-pixel-ratio: 1.3),
+         (-o-min-device-pixel-ratio: 2.6/2),
+         (-webkit-min-device-pixel-ratio: 1.3),
+         (min-device-pixel-ratio: 1.3),
+         (min-resolution: 1.3dppx) {
+    background-image: url($image);
+  }
+}
+
+
+body {
+    background: white;
+    overflow-x: hidden;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+.logo {
+    // height: 48px;
+    svg {
+        width: 10em;
+        @include media('md') {
+            width: 7em;
+        }
+        @include media('lg') {
+            width: 7em;
+        }
+        g {
+            fill: currentColor;
+        }
+    }
+}
+
+
+@keyframes arrow-bounce {
+    0% {
+        transform: none;
+    }
+    100% {
+        transform: translateY(0.5rem);
+    }
+}
+
+// .section__continue {
+//     position: absolute;
+//     bottom: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 2rem;
+//     text-align: center;
+//     svg {
+//         height: 2rem;
+//         width: auto;
+//         animation: arrow-bounce 1s infinite alternate ease-in-out;
+//     }
+// }
+
+.rokka-breadcrumbs {
+    color: $muted-color;
+    a {
+        color: inherit;
+        &:hover {
+            opacity: $text-color;
+        }
+    }
+}
+
+.rokka-navbar-cta {
+    transition: 0.3s;
+    color: white;
+    border-color: white;
+    margin-right: $spacing-unit-small;
+    .navbar--overlay &, .navbar--expanded & {
+        color: $brand-color;
+        border-color: $brand-color;
+    }
+    @include media('md') {
+        opacity: 0;
+        margin-right: $spacing-unit-default;
+        .navbar--overlay & {
+            opacity: 1;
+        }
+    }
+    @include media('lg') {
+        margin-right: $spacing-unit-large;
+    }
+}
+
+
+.navbar-menu__link {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.navbar-menu__link.disabled {
+  transition: none;
+  position: relative;
+  &:hover {
+    border: 0;
+  }
+  display: none;
+    @include media('md') {
+      display: inline-block;
+    }
+}
+
+.rokka-lang-not-available:hover {
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 50%;
+    top: 100%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 10px 10px;
+    border-color: transparent transparent rgba(255,255,255,0.1) transparent;
+    .navbar--overlay & {
+      border-bottom-color: $warm-grey-100;
+    }
+  }
+  &:before {
+    content: "Die Dokumentation ist momentan nur auf Englisch verfügbar.";
+    display: block;
+    position: absolute;
+    top: 100%;
+    right: 50%;
+    width: 12rem;
+    padding: 0.3rem;
+    text-align: left;
+    background: red;
+    margin-top: 10px;
+    background: rgba(255,255,255,0.1);
+    .navbar--overlay & {
+      background: $warm-grey-100;
+    }
+  }
+}
+
+.navbar-language-item {
+    text-align: center;
+    .navbar-menu__link {
+        font-weight: normal;
+        font-size: 0.7rem;
+        display: inline-block;
+        @include media('md') {
+            &:last-child {
+                margin-left: $spacing-unit-tiny;
+            }
+        }
+        &.active {
+            font-weight: 500;
+        }
+    }
+}
+
+.d-block {
+    display: block;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+// rokka feature
+.rokka-feature {
+
+}
+
+.rokka-feature__icon {
+    background: #6ea644;
+    color: white;
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 100%;
+    font-size: 1rem;
+    line-height: 1;
+    text-align: center;
+    float: left;
+    margin-right: 0.5rem;
+    svg {
+        width: 0.7em;
+        height: 1.3em;
+        stroke-width: 0.3rem;
+    }
+}
+
+
+
+
+.rokka-box {
+    border: 1px solid #ebebe6;
+    box-shadow: 10px 10px 20px 0 rgba(192, 193, 188, 0.08);
+    border-radius: 4px;
+    background-color: white;
+}
+
+
+.rokka-section--why {
+    padding-bottom: 44vw;
+    .rokka-feature {
+        margin-bottom: $spacing-unit-large;
+    }
+    @include media('sm') {
+        padding-bottom: 20vw;
+    }
+    @include media('lg') {
+        padding-bottom: 16rem;
+    }
+}
+
+
+.rokka-animation--why {
+    // margin-top: 3.1rem;
+    // margin-left: 4rem;
+    margin-bottom: -5rem;
+    text-align: right;
+    @include media('lg') {
+        margin-left: 36%;
+        margin-bottom: -6rem;
+    }
+    img {
+        display: inline-block;
+    }
+}
+
+.rokka-animation--freitag {
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+}
+
+/*
+    Rokka Hero Animation
+ */
+
+@keyframes scale-outside {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: translate(30%,20%);
+    }
+}
+
+// @keyframes rotate-bubble {
+//     0% {
+//         transform: rotate(0deg);
+//     }
+//     100% {
+//         transform: rotate(360deg);
+//     }
+// }
+
+// @keyframes rotate-outside {
+//     0% {
+//         transform: translateY(100%);
+//     }
+//     100% {
+//         transform: translateY(0%);
+//     }
+// }
+
+@keyframes translate-bubble-1 {
+    0% {
+        transform: translate(0%,0%);
+
+    }
+    100% {
+        transform: translate(0%,-10%);
+    }
+}
+
+@keyframes translate-bubble-2 {
+    0% {
+        transform: translate(0%,0%);
+
+    }
+    100% {
+        transform: translate(0%,5%);
+    }
+}
+
+@keyframes translate-bubble-3 {
+    0% {
+        transform: translate(0%,0%);
+
+    }
+    100% {
+        transform: translate(0%,20%);
+    }
+}
+
+@keyframes translate-bubble-4 {
+    0% {
+        transform: translate(0%,0%);
+
+    }
+    100% {
+        transform: translate(0%,-20%);
+    }
+}
+
+.section-spacer {
+    height: 80vh;
+    min-height: 400px;
+    max-height: 900px;
+    @include media('md') {
+        min-height: 600px;
+    }
+}
+
+.rokka-hero-section {
+    height: 80vh;
+    min-height: 400px;
+    max-height: 900px;
+    // min-height: 550px;
+    @include media('md') {
+        min-height: 600px;
+    }
+    .section__body {
+        height: 100%;
+        @include media('md') {
+            height: auto;
+        }
+    }
+}
+
+.rokka-hero-text {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%) translateY(5rem);
+    @media (min-height: $breakpoint-header-narrow) {
+        transform: translateY(-50%) translateY(8rem);
+    }
+    .h2 {
+        margin: 0 -1rem;
+    }
+
+    @include media('md') {
+        .h2 {
+            margin: 0;
+        }
+
+        text-align: left;
+        position: static;
+    }
+    .rokka-lang-de & {
+        @include media('lg') {
+            .nbsp {
+                display: block;
+            }
+        }
+    }
+    .rokka-lang-en & {
+        @include media('md') {
+            .nbsp {
+                display: block;
+            }
+        }
+    }
+}
+
+.push-left {
+    padding-left: 3rem;
+}
+
+.rokka-hero-container {
+    z-index: 2;
+    position: relative;
+}
+
+.rokka-hero {
+    font-size: 9px;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateY(-5rem);
+    @include media('sm') {
+        font-size: 11px;
+    }
+    @include media('md') {
+        position: static;
+        transform: none;
+        font-size: 12px;
+    }
+    @include media('lg') {
+        @media (min-height: 800px) {
+          font-size: 14px;
+        }
+    }
+    .rokka-hero__animation {
+        transition: 0.9s;
+    }
+    .rokka-hero__animation--center {
+        transform: scale(0) rotate(-90deg);
+        transition-timing-function: cubic-bezier(0.54, -0.17, 0.26, 1.07);
+        transition-duration: 1s;
+        opacity: 0;
+        z-index: 150;
+    }
+    .rokka-hero__animation--outside {
+        transform: rotate(-120deg) scale(1);
+        transition-timing-function: cubic-bezier(0.18, 0.35, 0.32, 0.99);
+        transition-duration: 0.6s;
+        opacity: 1;
+        z-index: 130;
+        transform-style: preserve-3d;
+        display: none;
+        @media (min-height: $breakpoint-header-narrow) {
+            display: block;
+        }
+    }
+    .rokka-hero-bubble {
+        transition: 0.6s;
+        transition-timing-function: cubic-bezier(0.18, 0.35, 0.32, 0.99);
+    }
+    .rokka-hero-bubble__label div {
+        transition: 0.4s;
+        transform: translateY(-150%);
+        transition-timing-function: cubic-bezier(0.54, -0.17, 0.26, 1.57);
+
+    }
+    &.rokka-hero--appear {
+        .rokka-hero__animation--center {
+            transform: none;
+            opacity: 1;
+        }
+        .rokka-hero__animation--outside {
+            transform: none;
+            transition-delay: 0s;
+            opacity: 1;
+        }
+        .rokka-hero-bubble {
+
+        }
+        .rokka-hero-bubble--1 {
+            transform: translate(0%, -290%);
+            transition-delay: 0s;
+            opacity: 0.7;
+            @include media('md') {
+                transform: translate(-150%, -270%);
+            }
+        }
+        .rokka-hero-bubble--3 {
+            transform: translate(-240%, 130%);
+            transition-delay: 0.17s;
+            opacity: 0.8;
+            @include media('md') {
+                transform: translate(240%,90%);
+            }
+        }
+        .rokka-hero-bubble--4 {
+            transform: translate(240%, 130%);
+            transition-delay: 0.21s;
+            opacity: 0.9;
+            @include media('md') {
+                transform: translate(-240%,210%);
+            }
+        }
+        .rokka-hero-bubble__label div {
+            opacity: 1;
+            transform: none;
+            transition-delay: 0.8s;
+        }
+    }
+    &.rokka-hero--animate {
+        .rokka-hero__animation--outside {
+            // animation: scale-outside 7s infinite ease-in-out;
+            // animation-direction: alternate;
+            .rokka-hero-bubble {
+                .rokka-hero-bubble-wrap {
+                    animation: translate-bubble-1 5s infinite ease-in-out;
+                    animation-direction: alternate;
+                }
+            }
+            .rokka-hero-bubble--2 {
+                .rokka-hero-bubble-wrap {
+                    animation-name: translate-bubble-2;
+                    animation-delay: 1.2s;
+                }
+            }
+            .rokka-hero-bubble--3 {
+                .rokka-hero-bubble-wrap {
+                    animation-name: translate-bubble-3;
+                    animation-delay: 0.8s;
+                    animation-duration: 4.7s;
+                }
+            }
+            .rokka-hero-bubble--4 {
+                .rokka-hero-bubble-wrap {
+                    animation-name: translate-bubble-4;
+                    animation-delay: 0.4s;
+                }
+            }
+        }
+    }
+}
+.rokka-hero__animation-wrapper {
+    position: relative;
+    width: 5em;
+    height: 5em;
+}
+
+.rokka-hero__animation {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.rokka-hero-bubble {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1em;
+    opacity: 0;
+}
+
+.rokka-hero-bubble-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.rokka-hero-bubble--huge {
+    opacity: 1;
+    transform: scale(2);
+    .rokka-hero-bubble-wrap {
+        // font-size: 2.6em;
+
+    }
+    .rokka-hero-bubble__icon {
+        padding: 0.9em;
+        border-width: 1px;
+        background: rgba(255,255,255,0.2);
+        // color: $color-green;
+    }
+}
+
+.rokka-hero-bubble--1 {
+    transform: scale(1);
+    .rokka-hero-bubble__icon svg {
+        transform: translateX(11%);
+    }
+}
+.rokka-hero-bubble--2 {
+    filter: blur(6px);
+    transform: translate3d(0,0,4px);
+
+}
+.rokka-hero-bubble--3 {
+    transform: translate3d(0,0,4px);
+
+}
+.rokka-hero-bubble--4 {
+    transform: translate3d(0,0,4px);
+}
+
+.rokka-hero-bubble__icon {
+    height: 100%;
+    width: 100%;
+    border: 2px solid white;
+    border-radius: 100%;
+    padding: 1.1em;
+    svg {
+        height: 100%;
+        width: 100%;
+        path, g {
+            stroke: white;
+        }
+    }
+}
+
+.rokka-hero-bubble__label {
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8em;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4em;
+    display: flex;
+    @include media('md') {
+        display: flex;
+    }
+    div {
+        text-align: center;
+        opacity: 0;
+    }
+}
+
+/*
+    Rokka Feature Animation
+ */
+.rokka-feature--api {
+
+    .rokka-feature__image {
+        perspective: 780px;
+        @include media('md') {
+            margin-left: -8%;
+            margin-right: -6%;
+        }
+        @include media('lg') {
+            margin-left: -8%;
+            margin-right: -8%;
+        }
+    }
+
+    pre, code {
+        background: none;
+        color: #414141;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        word-break: break-all;
+        white-space: pre-wrap;
+        font-size: 10px;
+        @include media('lg') {
+            font-size: 14px;
+        }
+        .token.boolean, .token.constant, .token.deleted, .token.function, .token.number, .token.property, .token.symbol, .token.tag {
+            color: #B23852;
+        }
+
+        .language-css .token.string, .style .token.string, .token.attr-name, .token.builtin, .token.char, .token.entity, .token.important, .token.inserted, .token.operator, .token.regex, .token.selector, .token.string, .token.url, .token.variable {
+            color: #EC9506;
+        }
+
+    }
+
+    @include media('md') {
+        .rokka-box {
+            transform: rotate3d(15,32,0,12deg) scale(0.9);
+        }
+    }
+}
+
+
+
+// number
+.number {
+    display: inline-block;
+}
+
+.number__before {
+    svg {
+        width: 50px;
+        height: 46px;
+        @include media('md') {
+            width: 36px;
+            height: 36px;
+        }
+        @include media('lg') {
+            width: 64px;
+            height: 64px;
+        }
+        g, path {
+            stroke: $brand-color;
+        }
+    }
+}
+
+.number__value {
+    line-height: 1;
+}
+
+.number__value--chf {
+    position: relative;
+    &:before {
+        content: "CHF";
+        font-size: $font-size-small;
+        color: $muted-color;
+        font-weight: normal;
+        display: block;
+        margin-bottom: 0.3em;
+        @include media('md') {
+
+        }
+        @include media('lg') {
+
+            position: absolute;
+            right: 103%;
+            top: 0.4em;
+        }
+    }
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-item-auto {
+    flex: 0 0 auto;
+}
+
+.flex-item-1 {
+    flex: 1 1;
+}
+
+.flex-align-center {
+    align-items: center;
+}
+
+.flex-justify-center {
+    justify-content: center;
+}
+
+.flex-align-end {
+    align-items: flex-end;
+}
+
+.flex-space-between {
+    justify-content: space-between;
+}
+
+// Maybe Styleguide
+.font-normal {
+    font-weight: normal;
+}
+
+.text-primary {
+    color: $color-green;
+}
+
+.section--white {
+    background-color: white;
+}
+
+.btn {
+    font-weight: bold;
+}
+
+.navbar-menu__link, .label, .navbar-language-item .navbar-menu__link.active {
+    font-weight: bold;
+}
+
+// .btn--negative {
+//     color: white;
+//     border-color: white;
+//     text-transform: uppercase;
+//     font-weight: bold;
+//     &:hover, &:focus {
+//         color: #6ea644;
+//         background: white;
+//     }
+// }
+
+.text-tiny {
+    font-size: 0.6rem;
+}
+
+
+// Lightning fast delivery
+//
+
+.rokka-section--feature {
+    overflow: hidden;
+}
+
+.rokka-feature--delivery {
+    padding-bottom: 2rem;
+    @include media('sm') {
+        padding-bottom: 0;
+    }
+    .rokka-feature__image {
+        position: absolute;
+        width: 14rem;
+        bottom: -40%;
+        right: -10%;
+        z-index: -1;
+        img {
+            width: 100%;
+        }
+        @include media('sm') {
+            position: static;
+            width: auto;
+            bottom: auto;
+            right: auto;
+            transform: translateX(10%);
+        }
+
+        @include media('md') {
+            transform: translateX(12%);
+        }
+
+        @include media('lg') {
+            transform: translate(22%,5%);
+            img {
+                width: auto;
+            }
+        }
+
+    }
+}
+
+
+
+// Easy API
+.rokka-feature--api {
+    margin-bottom: 3rem;
+}
+
+
+
+// Upload once, show often
+//
+
+.rokka-section-uoso {
+    background-image: linear-gradient( 118deg, rgb(65,65,65) 0%, rgb(80,80,77) 100%);
+    color: white;
+    // padding-top: 0;
+    overflow: visible;
+
+    // padding-bottom: 0;
+    @include media('md') {
+        padding-bottom: 0;
+    }
+}
+
+.rokka-uoso {
+    position: relative;
+}
+
+.rokka-uoso-headline {
+    margin-right: -35px !important;
+}
+
+.rokka-uoso-row--top {
+    // position: absolute;
+    // top: 0;
+    // left: 50%;
+    // transform: translateX(-50%);
+}
+
+.rokka-uoso-row--middle {
+    // padding-top: 12rem;
+    padding-bottom: 60vw;
+    @include media('sm') {
+        padding-bottom: 0;
+    }
+    .rokka-uoso-text {
+        position: relative;
+        @include media('sm') {
+            margin-bottom: 3rem;
+        }
+    }
+}
+
+.rokka-uoso-row--bottom {
+    .rokka-uoso-text {
+        margin-top: 105px;
+    }
+}
+
+
+
+.rokka-uoso-device {
+    position: relative;
+}
+
+.rokka-uoso-device__screen {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    background-image: url(https://rokka.rokka.io/plain/68e13ab4522ccd1084e21b721c2b626f5c2634ef.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.rokka-uoso-device__hardware {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.rokka-uoso-device--imac {
+    $rokka-uoso-base-imac: 1170; // 1302
+
+    width: 1em;
+    height: math.div(660, $rokka-uoso-base-imac) + em; // 603
+
+    position: relative;
+    top: 0;
+    left: 0.05em;
+
+
+    margin-bottom: math.div(-300, $rokka-uoso-base-imac) + em;
+    margin-top: math.div(-200, $rokka-uoso-base-imac) + em;
+
+    perspective: math.div(2860, $rokka-uoso-base-imac) + em;
+
+    font-size: 180vw;
+
+
+    @include media('sm') {
+        font-size: 90vw;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+
+    @media (min-width: $breakpoint-uoso) {
+        font-size: 1260px;
+    }
+
+    .rokka-uoso-device__hardware {
+        background-image: url(https://rokka.rokka.io/plain/72200a1d224accbb7f2eb0e2b833fa1f96cc1f43.png);
+        @include image-2x("https://rokka.rokka.io/plain/7029694e29afbc82e643c11fb7b97c9be13d1149.png");
+        width: math.div(1302, $rokka-uoso-base-imac) + em;;
+        height:  math.div(603, $rokka-uoso-base-imac) + em;;
+        left: math.div(-52, $rokka-uoso-base-imac) + em;
+        top: math.div(-27, $rokka-uoso-base-imac) + em;
+    }
+    .rokka-uoso-device__screen {
+        width: 100%;
+        height: 100%;
+        transform-origin: top center;
+        transform: rotateX(-71.6deg);
+    }
+}
+
+.rokka-uoso-device--iphone {
+    $rokka-uoso-base-iphone: 135;
+
+    width: 1em;
+    height: math.div(250, $rokka-uoso-base-iphone) + em;
+
+
+    // position: absolute;
+    bottom: 0;
+    left: 0;
+    display: none;
+    @include media('md') {
+        position: relative;
+        display: block;
+        font-size: 9.65vw;
+    }
+    @include media('md') {
+        margin: 0 auto;
+    }
+    @media (min-width: $breakpoint-uoso) {
+        font-size: $rokka-uoso-base-iphone + px;
+    }
+    .rokka-uoso-device__hardware {
+        background-image: url(https://rokka.rokka.io/plain/dcd9dcb739471efe9d61c688b4736ace20054f11.png);
+        @include image-2x("https://rokka.rokka.io/plain/ddfb58bcad87fc6146a9572a36a7909209428b88.png");
+    }
+    .rokka-uoso-device__screen {
+        width: math.div(104, $rokka-uoso-base-iphone) + em;
+        height: math.div(188, $rokka-uoso-base-iphone) + em;
+        top: math.div(21, $rokka-uoso-base-iphone) + em;
+        left: math.div(10, $rokka-uoso-base-iphone) + em;
+
+        background-size: 530%;
+        background-position: 34% 51%;
+    }
+}
+
+.rokka-uoso-device--ipad {
+    $rokka-uoso-base-ipad: 493;
+
+    width: 1em;
+    height: math.div(356, $rokka-uoso-base-ipad) + em;
+
+    position: absolute;
+    bottom: -2.7rem;
+    left: 60%;
+
+    font-size: 52vw;
+
+    @include media('sm') {
+        position: relative;
+        font-size: 35.24vw;
+        bottom: auto;
+        left: auto;
+    }
+
+    @media (min-width: $breakpoint-uoso) {
+        font-size: $rokka-uoso-base-ipad + px;
+    }
+
+    .rokka-uoso-device__hardware {
+        background-image: url(https://rokka.rokka.io/plain/ebe74b1469ce0aa140ac0e0e63ed17ec0d88fbaa.png);
+        @include image-2x("https://rokka.rokka.io/plain/793dff14fceef24f672dc7689bda834d47ea86df.png");
+    }
+    .rokka-uoso-device__screen {
+        width: math.div(406, $rokka-uoso-base-ipad) + em;
+        height: math.div(306, $rokka-uoso-base-ipad) + em;
+
+        left: math.div(39, $rokka-uoso-base-ipad) + em;
+        top: math.div(18, $rokka-uoso-base-ipad) + em;
+
+        background-size: 220%;
+        background-position: 27% 50%;
+    }
+}
+
+
+.rokka-uoso-device--macbook {
+    $rokka-uoso-base-macbook: 660;
+
+
+    width: 1em;
+    height: math.div(414, $rokka-uoso-base-macbook) + em;
+    // transform: translateX(-100px);
+    // margin-top: -70px;
+    perspective: math.div(1840, $rokka-uoso-base-macbook) + em;
+
+    position: absolute;
+    bottom: -3.8rem;
+    left: -60%;
+    font-size: 100vw;
+
+    @include media('sm') {
+        position: relative;
+        font-size: 47.21vw;
+        left: auto;
+        right: 3rem;
+        bottom: -3rem;
+    }
+    @include media('md') {
+        right: 1rem;
+    }
+
+    @media (min-width: 940px) {
+        margin-bottom: -5rem;
+        bottom: 1rem;
+    }
+
+    @include media('lg') {
+        margin-bottom: -1.7rem;
+        bottom: 0.2rem;
+        right: 2rem;
+    }
+
+    @media (min-width: $breakpoint-uoso) {
+        font-size: $rokka-uoso-base-macbook + px;
+        bottom: 0.5rem;
+        margin-bottom: -1rem;
+    }
+
+    .rokka-uoso-device__hardware {
+        background-image: url(https://rokka.rokka.io/plain/c3dd85cf7dbe18585d60ddd12a37cd0b091b4d4e.png);
+        @include image-2x("https://rokka.rokka.io/plain/29deb8c70b5e3945b6509a0b2b2116f0536ef9a5.png");
+        width: math.div(820, $rokka-uoso-base-macbook) + em;
+        height: math.div(458, $rokka-uoso-base-macbook) + em;
+        top: math.div(-15, $rokka-uoso-base-macbook) + em;
+        left: math.div(-35, $rokka-uoso-base-macbook) + em;
+    }
+    .rokka-uoso-device__screen {
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        transform-origin: top center;
+        transform: rotateX(-78.7deg);
+        background-size: 120%;
+        background-position: 12% 81%;
+    }
+}
+
+
+.rokka-uoso-text--cropping {
+    @include media('md') {
+        margin-bottom: 2rem;
+    }
+    @include media('lg') {
+        margin-top: 13vw;
+    }
+    @media (min-width: $breakpoint-uoso) {
+        margin-top: 9rem;
+    }
+}
+
+
+
+/*
+    Pricing
+ */
+
+.rokka-section--pricing {
+    .number .flex {
+        flex-direction: column;
+        margin-top: $spacing-unit-small;
+        @include media('md') {
+            margin-top: 0;
+            flex-direction: row;
+        }
+        .number__description, .number__before {
+            // font-size: $font-size-small;
+            @include media('md') {
+                // font-size: $font-size-default;
+            }
+        }
+    }
+}
+
+.rokka-pricing-box {
+
+}
+
+.rokka-pricing {
+    padding: $spacing-unit-small;
+    @include media('md') {
+        padding: $spacing-unit-default;
+    }
+}
+
+.rokka-pricing__free {
+    border-top: 1px solid #ebebe6;
+}
+
+.rokka-pricing-box__desc {
+    @include media('lg') {
+        padding-right: 5rem;
+    }
+}
+
+.rokka-pricing__details {
+    border-top: 1px solid #ebebe6;
+    padding: 0;
+    table {
+        // font-size: $font-size-small;
+    }
+    tr {
+        border-bottom: $field-border;
+    }
+    th, td {
+        padding-left: 0;
+        width: 50%;
+    }
+}
+
+.rokka-pricing__details-link {
+    display: block;
+    padding: $spacing-unit-small;
+    color: $text-color;
+    @include media('md') {
+        padding: $spacing-unit-default;
+        // padding-right: 65%;
+    }
+    &:hover, &:active, &:focus {
+        background: #F7F7F5;
+        text-decoration: none;
+    }
+}
+
+.rokka-pricing__details--open {
+    .rokka-pricing__details-table {
+        max-height: 1200px;
+    }
+    .rokka-pricing__details-link {
+        background: white;
+        pointer-events: none;
+        span:last-child {
+            display: none;
+        }
+    }
+}
+
+.rokka-pricing__details-table {
+    max-height: 0px;
+    transition: 1.5s;
+    overflow: hidden;
+    padding: 0 $spacing-unit-default;
+}
+
+/*
+    Try out rokka for free
+ */
+
+.rokka-section--cta {
+    .rokka-cta__text, .rokka-cta__button {
+        // text-align: center;
+    }
+    .rokka-cta__button {
+        margin-top: $spacing-unit-default;
+        @include media('lg') {
+            margin-top: 0;
+            text-align: right;
+        }
+    }
+}
+
+
+
+
+/*
+    Testimonial
+ */
+.rokka-section--testimonial {
+    @include media('lg') {
+        padding-bottom: 0;
+    }
+}
+
+
+.rokka-quotes {
+    display: flex;
+    flex-direction: column;
+    margin-left: -20px;
+    margin-right: -20px;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2rem;
+    @include media('md') {
+        flex-direction: column;
+        overflow-x: hidden;
+    }
+    @include media('lg') {
+        flex-direction: row;
+        padding: 0 2% 0 5%;
+    }
+}
+
+.rokka-quotes-container {
+  flex: 1 1 auto;
+  margin-bottom: 40px;
+
+  @include media('lg') {
+    flex: 0 0 50%;
+  }
+}
+
+.rokka-quote {
+    margin-top: 2rem;
+    flex: 1 0;
+    padding-left: 20px;
+    min-width: 300px;
+    padding-right: 20px;
+
+    &:last-child {
+        padding-right: 20px;
+    }
+    @include media('md') {
+        padding-right: 0;
+        margin-left: 0;
+        flex: 0;
+    }
+    @include media('lg') {
+        padding-right: 0;
+        margin-top: 0;
+        flex: 1 1;
+    }
+}
+
+.rokka-quote__person {
+    @include media('lg') {
+        margin-left: -3.425rem;
+    }
+}
+
+.rokka-quote__bubble {
+    background: #EBEBE6;
+    position: relative;
+    padding: $spacing-unit-small;
+    margin-bottom: 2rem;
+    @include media('lg') {
+        padding: $spacing-unit-default;
+    }
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: -20px;
+        left: 15px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 30px 25px 0 0;
+        border-color: #EBEBE6 transparent transparent transparent;
+        @include media('lg') {
+            left: 0;
+        }
+    }
+}
+
+.rokka-quote--left {
+    @include media('md') {
+        margin-right: 20%;
+    }
+    @include media('lg') {
+        margin-right: $spacing-unit-default;
+    }
+    .rokka-quote__avatar {
+        // Was `../images/...`, which only resolved because gulp happened to emit
+        // dist/assets/styles/ and dist/assets/images/ as siblings. Now a real
+        // path Vite can resolve and fingerprint.
+        background-image: url(../assets/images/rokka-testimonial-migros-alain.svg);
+    }
+}
+
+.rokka-quote--right {
+    @include media('md') {
+        margin-left: 20%;
+    }
+    @include media('lg') {
+        margin-left: $spacing-unit-default;
+    }
+    .rokka-quote__bubble {
+        @include media('lg') {
+            margin-top: 40px;
+        }
+    }
+    .rokka-quote__avatar {
+        background-image: url(https://rokka.rokka.io/plain/d4ed81c5f43055f6032e6e57761d80303b135d7f.jpg);
+    }
+}
+
+.rokka-quote__avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 100%;
+    background-size: 100%;
+    margin-right: 0.5rem;
+    @include media('lg') {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+
+
+
+
+/*
+    Rokka Footer
+ */
+.rokka-footer {
+    border-top: 1px solid #DDDDD8;
+    flex-direction: column;
+    @include media('md') {
+        flex-direction: row;
+        //align-items: center;
+    }
+}
+
+.rokka-footer__logo {
+    line-height: 0;
+    margin-bottom: $spacing-unit-small;
+    @include media('md') {
+        margin-bottom: 0;
+    }
+}
+
+.rokka-footer__logo {
+    .rokka-footer__logo-rokka {
+        height: 1.5rem;
+        width: 6.4rem;
+        margin-top: -0.3rem;
+        @include media('md') {
+            height: 2rem;
+            width: 8rem;
+        }
+        g {
+            fill: currentColor;
+        }
+    }
+}
+.rokka-footer__logo-liip {
+  height: 0.75rem;
+  width: auto;
+  margin-bottom: 0.7rem;
+  g {
+      fill: currentColor;
+  }
+}
+.rokka-footer__item  {
+    @include media('md') {
+        margin-left: $spacing-unit-small;
+    }
+}
+
+
+
+/*
+    Documentation
+ */
+
+.rokka-doc-content {
+    h2:first-child {
+        margin-top: 0;
+    }
+}
+
+
+
+
+/*
+    Contact Form
+ */
+
+.pipedriveWebForms {
+    margin: -16px;
+    width: auto !important;
+    min-height: 1000px;
+}
+
+.rokka-contact {
+    padding: $spacing-unit-small;
+    border: $field-border;
+    border-radius: $border-radius-default;
+    margin-top: 73px;
+    background: $warm-grey-50;
+}
+
+.rokka-contact__phone {
+    font-size: $font-size-large;
+}
+
+.rokka-contact__mail {
+    font-size: $font-size-large;
+}
+
+.anchorLink, .anchorLink:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/*
+    Documentation search (Pagefind) -- see src/components/Search.astro.
+
+    Pagefind's Component UI ships its own stylesheet and reads its whole theme
+    off `--pf-*` custom properties, so matching the site is a matter of
+    redeclaring a handful of them rather than fighting its selectors. Which
+    matters: its rules are written as `:is(*, #\#):is(*, #\#):is(*, #\#) .pf-x`,
+    i.e. deliberately at three-ID specificity, and no sane site selector outbids
+    that. Everything below therefore goes through the variables.
+
+    The theme sits on the root element because the modal is a <dialog> in the
+    top layer: scoping the colours to the trigger would leave the dialog on
+    Pagefind's defaults.
+
+    It has to be `:root:root`, not `:root`. Pagefind declares its own defaults
+    on `:root`, and its stylesheet is linked from Search.astro in the *body*,
+    so it comes after this file in document order and wins every tie. Doubling
+    the selector outbids it on specificity instead of relying on order, which
+    Astro does not guarantee anyway. Get this wrong and nothing below applies:
+    the giveaway is a GitHub-blue focus ring (#0969da, Pagefind's default).
+ */
+
+:root:root {
+    --pf-font: inherit;
+    --pf-text: #{$warm-grey-800};
+    --pf-border: #{$warm-grey-200};
+    --pf-border-focus: #{$color-green};
+    --pf-outline-focus: #{$color-green};
+    --pf-border-radius: #{$border-radius-default};
+    --pf-hover: #{$warm-grey-50};
+    // Not a highlight background -- Pagefind paints <mark> transparent and
+    // colours the text with this, so it needs to stay readable on white.
+    --pf-mark: #{darken($color-green, 8%)};
+}
+
+/*
+    The navbar trigger. Pagefind's button is a full-width search field by
+    default; `compact` already strips it to the icon, and these turn the
+    leftover chrome off so what is left is a bare magnifying glass sitting on
+    the bar. `--pf-text-muted` is what colours the icon -- it is painted as a
+    mask over that colour, not as an <img>.
+
+    It must be `currentColor`, not a fixed colour. The navbar has three states
+    and the toolkit recolours the bar itself for each: `.navbar--negative` is
+    #F7F7F5 on green, while `.navbar--overlay` (scrolled) and
+    `.navbar--expanded` (hamburger open) both go #414141 on near-white.
+    `.navbar-menu__link` is `color: inherit` for exactly this reason, and the
+    icon follows the same rule so it can never come out white on white.
+
+    `color: inherit` is what makes that work, and it is not redundant: Pagefind
+    resets its custom elements with `all: initial; color: CanvasText` to isolate
+    them from host styles, so without this the glass computes to black and stays
+    black on the green bar. That reset is a bare element selector, so a single
+    class outbids it -- unlike the `.pf-*` rules, which are not overridable.
+    Dimming is opacity rather than a lighter colour, so it works in all states.
+
+    Width has to come from this element rather than the button, which is
+    `width: 100%` of whatever contains it. 44px keeps the tap target at the
+    usual minimum and, with the button's own 14px side padding, leaves exactly
+    the 16px the glyph is resized to below. That padding already matches
+    `.navbar-menu__link`, so the margin here is the `.navbar-menu > li + li`
+    gap, and the glass sits on the same rhythm as the links instead of crowding
+    the first one.
+ */
+.rokka-search {
+    display: block;
+    width: 44px;
+    flex-shrink: 0;
+    margin-right: 20px;
+    color: inherit;
+    transition: opacity 0.3s;
+
+    --pf-input-height: 44px;
+    --pf-background: transparent;
+    --pf-border: transparent;
+    --pf-border-focus: transparent;
+    --pf-text-muted: currentColor;
+    --pf-outline-focus: currentColor;
+
+    &:hover {
+        opacity: 0.7;
+    }
+
+    // Pagefind pins the glyph at 14px behind `:is(*, #\#)` repeated three
+    // times -- a three-ID specificity no site selector can outbid, so
+    // !important is the only lever. 16px is what makes it read as part of the
+    // row rather than a smaller afterthought next to 17px bold links.
+    .pf-trigger-icon {
+        width: 16px !important;
+        height: 16px !important;
+    }
+}
+
+// The trigger is a sibling of <pagefind-modal> inside .navbar__body, so the
+// overrides above are scoped to the element itself -- put them on a wrapper and
+// the dialog would inherit the navbar's colours and lose its own text.
+.rokka-search--unavailable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    opacity: 0.4;
+}

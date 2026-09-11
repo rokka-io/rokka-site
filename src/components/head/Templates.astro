@@ -1,0 +1,76 @@
+---
+/**
+ * Verbatim port of source/_views/demos/templates-head.html.
+ *
+ * Selected per page by `head: templates` in the markdown front matter, which
+ * replaces Sculpin's dynamic `{{ include(page.header_include) }}`.
+ * Scripts and styles are `is:inline`: the demo markup calls these functions
+ * from inline event attributes, so they have to stay global.
+ */
+---
+<script src="https://unpkg.com/rokka@%5E4.0.0/dist/index.umd.min.js" is:inline></script>
+
+<script type="application/javascript" is:inline>
+    var rootimgurl = "https://rokka-demos.rokka.io/template/"
+ //   var rootimgurl = "http://test.rokka.test/template4/"
+    var timeout = null
+    var rka = new rokka.Rokka()
+
+    var defaults = {
+        "s": "50",
+        "font": "86d7ee",
+        "color": "7DAD41",
+        "o": "100",
+        "a": "-5",
+        "wlogo": "150"
+
+    }
+    function updateImage() {
+
+        var hash = document.getElementById('imagehash').value +".png"
+
+        var elements = document.getElementById('form').elements
+        var variables = {}
+        for (i = 0; i < elements.length; i++) {
+            var name = elements[i].getAttribute('name')
+            if (name === "imagehash") {
+                continue;
+            }
+            var value = elements[i].value
+
+            if (name === "color" ) {
+                if ( value.length !== 6 || value === "ff6600") {
+                    value = ""
+                }
+            }
+            if (defaults[name] && defaults[name] === value){
+                value = ""
+            }
+            variables[name] = value
+
+        }
+        imgurl = rka.render.addStackVariables(rootimgurl +  hash, variables, true)
+        document.getElementById("url").value = imgurl
+
+        if (timeout !== null) {
+            window.clearTimeout(timeout)
+        }
+        timeout = window.setTimeout(function () {
+            document.getElementById('image').src = imgurl
+        }, 150)
+    }
+    function urlchange() {
+        document.getElementById('image').src  = document.getElementById("url").value
+    }
+</script>
+<style is:inline>
+    #demoForm input, #demoForm  select {
+      width: inherit ! important;
+      height: 30px !important;
+    }
+
+    #demoForm select {
+      padding-left: 10px ! important;
+    }
+
+</style>
