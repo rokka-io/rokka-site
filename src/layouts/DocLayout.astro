@@ -61,7 +61,7 @@ const sharing = description || site.text.lead.text;
                 <ArticleList articles={articles} currentUrl={pageUrl} />
             </div>
             <div class="grid__item md-w-3/4">
-                <div class="rokka-doc-content">
+                <div class="rokka-doc-content" data-pagefind-body data-pagefind-meta={`title:${title}`}>
                     <Toc headings={headings} />
                     <slot />
                 </div>

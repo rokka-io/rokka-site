@@ -12,6 +12,7 @@ import type { Language } from '../data/site';
 import { getSite } from '../data/site';
 import TagManager from '../components/TagManager.astro';
 import Footer from '../components/Footer.astro';
+import Search from '../components/Search.astro';
 import RokkaLogo from '../assets/images/rokka-logo.svg';
 import '../styles/rokka.scss';
 
@@ -147,6 +148,14 @@ const jsonLd = {
                 <Fragment set:html={site.text.navigation.cta} />
             </a>
         </div>
+        {/*
+          Deliberately here, in navbar__body, and not in the navbar-menu list
+          inside .navbar__collapse: that whole subtree is scaled to nothing
+          behind the hamburger below 48em, which would take the search button
+          with it and put <pagefind-modal> inside a collapsed container. Out
+          here the magnifying glass stays reachable on phones too.
+        */}
+        <Search />
         <button class="navbar__toggle btn btn--bare" title="Toggle navbar">
             <svg class="navbar-hamburger icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <rect class="navbar-hamburger__first" height="2" width="16" x="4" y="5">

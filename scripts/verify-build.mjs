@@ -111,5 +111,49 @@ if (!isFile(`${DIST}/sitemap.xml`)) {
   }
 }
 
+// ----------------------------------------------------------------- 4. pagefind
+// The search index is built by the `postbuild` script, from the same dist/ this
+// is checking. Two ways it goes wrong without anyone noticing: the whole step
+// is skipped (someone ran `astro build` directly, and the search box then loads
+// a 404), or `data-pagefind-body` falls off a layout and the index silently
+// shrinks. And, as @astrojs/sitemap did before it, a tool that derives URLs from
+// file paths can mangle them under build.format: 'preserve' — so check the
+// result rather than trusting it.
+const DOC_PAGES = htmlFiles(`${DIST}/documentation`).filter((f) => !f.endsWith('/index.html')).length;
+const FRAGMENTS = `${DIST}/pagefind/fragment`;
+
+if (!isFile(`${DIST}/pagefind/pagefind-component-ui.js`)) {
+  fail('dist/pagefind/ is missing — run `npm run build`, not `astro build`, so postbuild runs');
+} else {
+  const { gunzipSync } = await import('node:zlib');
+  const { readdirSync } = await import('node:fs');
+  const fragments = readdirSync(FRAGMENTS).map((f) => {
+    const txt = gunzipSync(readFileSync(`${FRAGMENTS}/${f}`)).toString('utf8');
+    return JSON.parse(txt.slice(txt.indexOf('{')));
+  });
+  const urls = fragments.map((f) => f.url);
+  // Pagefind turns every id'd h1-h6 into a sub-result. build-search-index.mjs
+  // strips the deep ids from the copy it indexes so chunks stop at h3; if that
+  // stops working the search box silently fills up with 24 rows called
+  // "Properties" again.
+  const deep = fragments.flatMap((f) =>
+    (f.anchors ?? [])
+      .filter((a) => /^h[4-6]$/i.test(a.element))
+      .map((a) => `${f.url}#${a.id}`)
+  );
+  const dead = urls.filter((u) => !isFile(`${DIST}${u.split('#')[0]}`));
+  if (dead.length) {
+    fail(`${dead.length} search result URL(s) do not resolve:`);
+    for (const u of dead.slice(0, 20)) console.error(`        ${u}`);
+  } else if (urls.length !== DOC_PAGES) {
+    fail(`search index has ${urls.length} pages, but dist/documentation has ${DOC_PAGES} — a data-pagefind-body may have been lost`);
+  } else if (deep.length) {
+    fail(`${deep.length} search chunk(s) are deeper than h3 — the id stripping in scripts/build-search-index.mjs is not taking effect:`);
+    for (const u of deep.slice(0, 5)) console.error(`        ${u}`);
+  } else {
+    ok(`all ${urls.length} documentation pages are in the search index, chunked to h3`);
+  }
+}
+
 console.log(failures ? `\n${failures} check(s) failed` : '\nall checks passed');
 process.exit(failures ? 1 : 0);

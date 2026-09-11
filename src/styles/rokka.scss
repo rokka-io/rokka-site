@@ -1477,3 +1477,88 @@ html {
     color: inherit;
     text-decoration: none;
 }
+
+
+/*
+    Documentation search (Pagefind) -- see src/components/Search.astro.
+
+    Pagefind's Component UI ships its own stylesheet and reads its whole theme
+    off `--pf-*` custom properties, so matching the site is a matter of
+    redeclaring a handful of them rather than fighting its selectors. Which
+    matters: its rules are written as `:is(*, #\#):is(*, #\#):is(*, #\#) .pf-x`,
+    i.e. deliberately at three-ID specificity, and no sane site selector outbids
+    that. Everything below therefore goes through the variables.
+
+    The theme sits on the root element because the modal is a <dialog> in the
+    top layer: scoping the colours to the trigger would leave the dialog on
+    Pagefind's defaults.
+
+    It has to be `:root:root`, not `:root`. Pagefind declares its own defaults
+    on `:root`, and its stylesheet is linked from Search.astro in the *body*,
+    so it comes after this file in document order and wins every tie. Doubling
+    the selector outbids it on specificity instead of relying on order, which
+    Astro does not guarantee anyway. Get this wrong and nothing below applies:
+    the giveaway is a GitHub-blue focus ring (#0969da, Pagefind's default).
+ */
+
+:root:root {
+    --pf-font: inherit;
+    --pf-text: #{$warm-grey-800};
+    --pf-border: #{$warm-grey-200};
+    --pf-border-focus: #{$color-green};
+    --pf-outline-focus: #{$color-green};
+    --pf-border-radius: #{$border-radius-default};
+    --pf-hover: #{$warm-grey-50};
+    // Not a highlight background -- Pagefind paints <mark> transparent and
+    // colours the text with this, so it needs to stay readable on white.
+    --pf-mark: #{darken($color-green, 8%)};
+}
+
+/*
+    The navbar trigger. Pagefind's button is a full-width search field by
+    default; `compact` already strips it to the icon, and these turn the
+    leftover chrome off so what is left is a bare magnifying glass sitting on
+    the bar. `--pf-text-muted` is what colours the icon -- it is painted as a
+    mask over that colour, not as an <img>.
+
+    It must be `currentColor`, not white. The navbar has three states and the
+    toolkit recolours the bar itself for two of them: `.navbar--negative` is
+    white on green, while `.navbar--overlay` (scrolled) and `.navbar--expanded`
+    (hamburger open) both go #414141 on near-white. `.navbar-menu__link` is
+    `color: inherit` for exactly this reason; the icon follows the same rule, so
+    it never ends up white on white. Dimming is opacity rather than a lighter
+    colour, so it works in both states.
+
+    Width has to come from this element rather than the button, which is
+    `width: 100%` of whatever contains it. 44px keeps the tap target at the
+    usual minimum with the 14px glyph centred in it.
+ */
+.rokka-search {
+    display: block;
+    width: 44px;
+    flex-shrink: 0;
+    opacity: 0.85;
+    transition: opacity 0.3s;
+
+    --pf-input-height: 44px;
+    --pf-background: transparent;
+    --pf-border: transparent;
+    --pf-border-focus: transparent;
+    --pf-text-muted: currentColor;
+    --pf-outline-focus: currentColor;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+// The trigger is a sibling of <pagefind-modal> inside .navbar__body, so the
+// overrides above are scoped to the element itself -- put them on a wrapper and
+// the dialog would inherit the navbar's colours and lose its own text.
+.rokka-search--unavailable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    opacity: 0.4;
+}

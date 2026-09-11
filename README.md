@@ -22,6 +22,11 @@ npm run build
 npm run preview
 ```
 
+Note that the documentation search — the magnifying glass in the header — only
+works in a built site, not under `npm run dev`: the index is generated from
+`dist/`, which does not exist yet at that point. In dev the icon is there but
+dimmed and inert.
+
 Check for broken links
 ----------------------
 
@@ -44,6 +49,10 @@ Two things to know before editing:
 
 - The numeric filename prefix (`00-`, `05-`, `10-`, …) sets the order in the sidebar. Leave gaps so pages can be inserted later.
 - Every page has an explicit `slug:` in its front matter, and that slug is the public URL. Changing it breaks incoming links, so don't, even if the title changes.
+
+New pages are picked up by the search automatically; there is no index to
+maintain. Only the documentation is searchable — the marketing pages and the
+dashboard are deliberately left out.
 
 Deployment
 ----------

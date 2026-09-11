@@ -10,6 +10,11 @@
  * still applies to its heading. The leading space in "<h2> Table of Contents"
  * is deliberate -- it is in the published markup.
  *
+ * `data-pagefind-ignore` sits on the two elements rather than on a wrapper
+ * because a wrapper would stop the h2 being `.rokka-doc-content`'s first child.
+ * Without it every documentation page would index a second copy of all its own
+ * headings, and search excerpts would mostly be table-of-contents fragments.
+ *
  * One deliberate change: the PHP emitted `<p><ul>...</ul></p>` with nested
  * lists as *siblings* of their <li>, which is invalid. Browsers auto-closed the
  * <p>, leaving two stray empty paragraphs' worth of margin on every doc page.
@@ -41,8 +46,8 @@ for (const heading of entries) {
 
 {entries.length > 0 && (
   <Fragment>
-    <h2> Table of Contents</h2>
-    <ul>
+    <h2 data-pagefind-ignore> Table of Contents</h2>
+    <ul data-pagefind-ignore>
       {tree.map((node) => (
         <li>
           <a href={`#${node.heading.slug}`}>{node.heading.text}</a>
