@@ -129,6 +129,34 @@ The pre-migration Sculpin build is the reference. To check a change hasn't shift
 - Documentation is English-only by design — don't add German translations under `src/content/`.
 - When editing documentation prose, prefer fixing it in place rather than restructuring — the numeric-prefix ordering and existing anchor IDs are referenced from elsewhere.
 
+## Deliberate rendering changes from the migration
+
+These are decided. Don't "restore" them.
+
+- **Standards mode.** The Sculpin pages had no doctype, so the site rendered in
+  quirks mode; Astro emits one. The only thing that actually changes is table
+  typography — in quirks mode tables do not inherit `font-size`/`line-height`,
+  so they fell back to `medium`/`normal` (16px). They now match body text
+  (17px/26px) like everything else. It affects the 11 pages that contain a
+  table: `stacks.html` is the extreme case at +8.4% page height, `index.html`
+  is +0.5%. Everything else measures pixel-identical, because `box-sizing:
+  border-box` is applied globally and no images sit in table cells.
+  Adding `table { font-size: medium; line-height: normal }` would undo it —
+  that was considered and rejected, as it re-introduces the quirk on purpose.
+
+- **CommonMark list semantics.** Two constructs the old parser rendered as
+  plain paragraphs are now real lists, which is what the author meant:
+  `1)`/`2)`/`3)` in `60-users-and-memberships.md` (PHP Markdown Extra only
+  accepted `1.`) and the ` - ` bullets under "Where:" in `40-searching.md`.
+  Escaping them back (`1\)`) would restore the old look; deliberately not done.
+
+- **GFM autolinking** turns a bare email in `02-create-an-organization.md` and a
+  bare URL in `05-stacks.md` into links. Two links sitewide.
+
+- The generated ToC emits properly nested lists instead of the old
+  `<p><ul>…</ul></p>`, which was invalid and left two empty paragraphs of
+  margin on every documentation page.
+
 ## Known pre-existing quirks, deliberately preserved
 
 - `/` declares `https://rokka.io/en/` as its canonical, not `/`.
