@@ -196,8 +196,11 @@ Or with the API calls mentioned here.
 | active | Whether the membership is active |
 | last_access | When this user last accessed the organization |
 | created | When this membership was created |
-| comment | Optional comment for this membership |
+| comment | Optional comment for this membership, at most 1000 characters |
 | api_key | The Api-Key — only returned when the membership (and its user) is created |
+
+A user can be a member of at most **100 organizations**. Adding a user who already has 100 memberships, or creating
+an organization as such a user, answers `400`.
 
 ## List memberships
 
@@ -332,7 +335,8 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizati
 }'
 ```
 
-You can pass a single `role` string instead of the `roles` array, and an optional `comment` to store with the membership:
+You can pass a single `role` string instead of the `roles` array, and an optional `comment` (a string of at most 1000
+characters) to store with the membership:
 
 ```bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/awesomecompany/memberships/c8791715-a873-475e-96b2-5ffd488112e7' -d '{
@@ -353,6 +357,8 @@ var_dump($membership);
 If the membership didn't exist yet, it will return a 201 code.
 If the membership existed and has been updated, it will return a 200 code.
 If the membership existed and it has not been updated, it will return a 204 code.
+If the user already has the maximum of 100 memberships, or the comment is invalid, it will return a 400 code. Changing
+the roles of an existing membership always works.
 In a special case, if the action would remove the last active admin from the organization, it will return a 409 error and not execute the removal. This is to prevent locking yourself out of the organization. The only way to remove this is to delete the organization as a whole.
 
 ## Remove a user from an organization
@@ -399,11 +405,11 @@ what makes it possible to rotate the published key of such a user, see
 #### Adding an Api Key to a user
 
 You can have up to 5 Api Keys per user. To add a new one, you POST to the `/user/apikeys` endpoint. It can have an
-optional comment, too. [Try it out](https://api.rokka.io/doc/#/admin/createUserApiKey)
+optional comment (a string of at most 1000 characters), too. [Try it out](https://api.rokka.io/doc/#/admin/createUserApiKey)
 
 ```bash
 curl -X POST "https://api.rokka.io/user/apikeys" -H "Content-Type: application/json"  -d '{ 
-    "comment": [ "some comment" ]
+    "comment": "some comment"
     }'
 ```
 
