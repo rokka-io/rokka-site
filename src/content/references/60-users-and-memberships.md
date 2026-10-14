@@ -410,6 +410,9 @@ The token is only returned in this response, rokka stores just a hash of it. Tre
 can join your organization with its roles, once, until it expires. If it got lost or into the wrong hands, revoke the
 invitation and create a new one. An organization can have at most 50 open invitations.
 
+An invitation only works as long as you are admin of the organization. If you are removed from it or lose the `admin`
+role, your open invitations can't be redeemed anymore.
+
 It returns a 201 code, a 400 code for invalid roles, comment or expiry or with 50 open invitations, and a 403 code
 without the `admin` role on the organization.
 
@@ -463,7 +466,8 @@ the roles, the comment and the expiry, and changes nothing.
 - 400: the token is missing, or your user already has the maximum of 100 memberships (the invitation stays open).
 - 403: the organization is disabled, or your user is read-only (it has a `read`, `upload` or `sourceimages:read` role
   somewhere) and the Api-Key isn't [trusted](#trusted-api-keys). A published read-only key can't join organizations.
-- 404: the token is unknown, expired, revoked or already used.
+- 404: the token is unknown, expired, revoked or already used, or whoever created the invitation is no longer admin of
+  the organization.
 - 409: your user already is a member of that organization. The invitation stays open.
 
 ## Remove a user from an organization
