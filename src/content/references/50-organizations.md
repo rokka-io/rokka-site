@@ -48,6 +48,9 @@ var_dump($organization);
 Note the use of the websafe name as part of the url on where to put the request.
 
 You can also pass an optional `master_organization` field in the body to create a sub-organization of an existing one.
+That needs the `admin` role on it. Without the field, the new organization is put below the master organization of
+your other organizations, but only if you're admin of that master organization. Otherwise, or with
+`"master_organization": null`, it becomes its own master organization.
 
 The return is the full organization object.
 

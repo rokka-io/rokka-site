@@ -39,8 +39,9 @@ To see all the organizations your user belongs to, use [List your own membership
 You can have up to 5 different API keys per user. Useful if you want to change a key via key rotation, or you just want
 to use different ones in different places. See below for details.
 
-Each user object also has a unique id; use it to add the user to a different organization with the membership calls
-explained below.
+Each user object also has a unique id. An admin can use it to add the user to another organization below the same
+master organization with the membership calls explained below. Users from anywhere else join with an
+[invitation](#invite-a-user-to-an-organization), so nobody becomes a member of an organization without doing it themselves.
 
 It's a good idea to create a user for your application with only write access (and not admin rights) when you start using the service in earnest.
 
@@ -302,8 +303,9 @@ A member with `admin:read` (or `admin`) can list an organization's memberships w
 That endpoint returns the members and their **API key metadata** for every organization where the calling user has
 `admin:read`, as `{"total": N, "truncated": false, "items": [...]}` with one entry per (organization, member).
 
-This is meant for auditing: add one user to all the organizations it should oversee with the `admin:read` role, and it
-can review who has access to them and with which keys — through a single call, and without any write access anywhere.
+This is meant for auditing: add one user to all the organizations it should oversee with the `admin:read` role (with an
+[invitation](#invite-a-user-to-an-organization) for organizations below another master organization), and it can review
+who has access to them and with which keys — through a single call, and without any write access anywhere.
 
 Only key *metadata* is returned (`id`, `comment`, `created`, `accessed`, `requires_mfa`, `trusted`, `allowed_ips`,
 `expires`).
@@ -322,6 +324,12 @@ very large number of organizations, the overview stops after the first 50 and se
 If you have admin rights (given when creating a new organization automatically), you can add a user to the organization with this call.  [Try it out](https://api.rokka.io/doc/#/admin/createMembership)
 
 __awesomecompany__ would be your organization name, __userId__ the id of the to be added user. (You can [get the user_id](#get-the-current-user_id) with a `GET /user` call, if you know the Api-Key of that user)
+Only the user id works here, an email address is answered with a 404 like any unknown id.
+
+This only works directly if the user is already a member of an organization with the same
+[master organization](organizations.html#list-the-sub-organizations-of-an-organization) as __awesomecompany__ (or of
+__awesomecompany__ itself, if it's the master). Anyone else gets a 403: [invite them](#invite-a-user-to-an-organization)
+instead. Changing the roles of an existing member always works.
 
 The `roles` array can contain any of the roles described in the [Roles](#roles) section above
 (`read`, `write`, `upload`, `sourceimages:read`, `sourceimages:write`, `sourceimages:download:protected`,
@@ -359,7 +367,104 @@ If the membership existed and has been updated, it will return a 200 code.
 If the membership existed and it has not been updated, it will return a 204 code.
 If the user already has the maximum of 100 memberships, or the comment is invalid, it will return a 400 code. Changing
 the roles of an existing membership always works.
+If the user isn't a member yet and not a member of an organization with the same master organization either, it will
+return a 403 code.
+If the user is not found, it will return a 404 code.
 In a special case, if the action would remove the last active admin from the organization, it will return a 409 error and not execute the removal. This is to prevent locking yourself out of the organization. The only way to remove this is to delete the organization as a whole.
+
+## Invite a user to an organization
+
+Users who aren't members of an organization below your master organization join with an invitation. As an admin, you
+create it and pass its token (or the dashboard link) on, for example in a chat. The invited user then
+[redeems it](#join-an-organization-with-an-invitation) with their own Api-Key and becomes a member with the roles of
+the invitation. Nobody becomes a member of your organization without doing that themselves, and you don't need to know
+the user's id or email.  [Try it out](https://api.rokka.io/doc/#/admin/createInvitation)
+
+```bash
+curl -H 'Content-Type: application/json' -X POST 'https://api.rokka.io/organizations/awesomecompany/invitations' -d '{
+    "roles": ["read", "upload"],
+    "comment": "Jane, frontend"
+}'
+```
+
+```json
+{
+  "id": "6f1c0e2b9a7d4c3e8b5a1f0d2c4e6a8b",
+  "roles": ["read", "upload"],
+  "comment": "Jane, frontend",
+  "created": "2026-10-14T10:00:00+00:00",
+  "expires": "2026-10-21T10:00:00+00:00",
+  "created_by": "c8791715-a873-475e-96b2-5ffd488112e7",
+  "token": "6f1c0e2b9a7d4c3e8b5a1f0d2c4e6a8b0123456789abcdef0123456789abcdef01234567",
+  "url": "https://rokka.io/dashboard/#/invitations/accept?token=6f1c0e2b9a7d4c3e8b5a1f0d2c4e6a8b0123456789abcdef0123456789abcdef01234567"
+}
+```
+
+| Attribute | Description |
+| -------------- | ------------- |
+| roles | Required. The roles the user gets, any of the [roles](#roles) |
+| comment | Optional, at most 1000 characters. It becomes the comment of the membership |
+| expires | Optional ISO 8601 date. Defaults to 7 days from now, at most 30 days |
+
+The token is only returned in this response, rokka stores just a hash of it. Treat it like an Api-Key: whoever has it
+can join your organization with its roles, once, until it expires. If it got lost or into the wrong hands, revoke the
+invitation and create a new one. An organization can have at most 50 open invitations.
+
+It returns a 201 code, a 400 code for invalid roles, comment or expiry or with 50 open invitations, and a 403 code
+without the `admin` role on the organization.
+
+### List and revoke invitations
+
+With the `admin` or `admin:read` role, you can list the open invitations of an organization. The tokens are never
+listed.  [Try it out](https://api.rokka.io/doc/#/admin/listInvitations)
+
+```bash
+curl -X GET 'https://api.rokka.io/organizations/awesomecompany/invitations'
+```
+
+```json
+{
+  "total": 1,
+  "items": [
+    {
+      "id": "6f1c0e2b9a7d4c3e8b5a1f0d2c4e6a8b",
+      "roles": ["read", "upload"],
+      "comment": "Jane, frontend",
+      "created": "2026-10-14T10:00:00+00:00",
+      "expires": "2026-10-21T10:00:00+00:00",
+      "created_by": "c8791715-a873-475e-96b2-5ffd488112e7"
+    }
+  ]
+}
+```
+
+To revoke an invitation, delete it with the `admin` role. It returns a 204 code, or a 404 code if there's no such open
+invitation.  [Try it out](https://api.rokka.io/doc/#/admin/deleteInvitation)
+
+```bash
+curl -X DELETE 'https://api.rokka.io/organizations/awesomecompany/invitations/6f1c0e2b9a7d4c3e8b5a1f0d2c4e6a8b'
+```
+
+## Join an organization with an invitation
+
+To accept an invitation, send its token with your own Api-Key. Your user becomes a member of the organization with the
+roles of the invitation.  [Try it out](https://api.rokka.io/doc/#/admin/redeemInvitation)
+
+```bash
+curl -H 'Content-Type: application/json' -X POST 'https://api.rokka.io/user/invitations' -d '{
+    "token": "6f1c0e2b9a7d4c3e8b5a1f0d2c4e6a8b0123456789abcdef0123456789abcdef01234567"
+}'
+```
+
+It returns a 201 code and the new membership, in the same format as [your own memberships](#list-your-own-memberships).
+To first see what you'd accept, add `"dry_run": true`: that returns a 200 code with the organization, its display name,
+the roles, the comment and the expiry, and changes nothing.
+
+- 400: the token is missing, or your user already has the maximum of 100 memberships (the invitation stays open).
+- 403: the organization is disabled, or your user is read-only (it has a `read`, `upload` or `sourceimages:read` role
+  somewhere) and the Api-Key isn't [trusted](#trusted-api-keys). A published read-only key can't join organizations.
+- 404: the token is unknown, expired, revoked or already used.
+- 409: your user already is a member of that organization. The invitation stays open.
 
 ## Remove a user from an organization
 
@@ -379,6 +484,18 @@ $client->deleteMembership('c8791715-a873-475e-96b2-5ffd488112e7');
 If the user is removed from the organization, it will return a 204 code.
 If the user is not found or not a member of this organization, it will return a 404 code.
 If the specified user is the only admin of this organization, it will return a 409 code. The last admin of an organization can not be removed
+
+### Leave an organization
+
+You can also leave an organization yourself, with `current` as user id. That needs no role in the organization.
+
+```bash
+curl -X DELETE 'https://api.rokka.io/organizations/awesomecompany/memberships/current'
+```
+
+It returns a 204 code, a 404 code if you're not a member, and a 409 code if you're the last admin. A read-only user (with
+a `read`, `upload` or `sourceimages:read` role somewhere) gets a 403 code unless the Api-Key is
+[trusted](#trusted-api-keys), so a published read-only key can't remove its user from the organization.
                       
 ## Rotate your Api Key
 
