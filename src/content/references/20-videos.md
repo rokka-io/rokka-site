@@ -211,8 +211,9 @@ or use the "[rendering a remote image](stacks.html#rendering-a-remote-image)" me
 https://mycompany.rokka.io/somestack/-https://liip.rokka.io/dynamic/c97fc8.mp4@00:00:22-/some-seo-string.jpg
 ```
 
-Both methods will just import that thumbnail into rokka for later reuse and not the whole video. It also just downloads the parts needed from the video 
-to extract that thumbnail and not the full video. 
+Both methods will just import that thumbnail into rokka for later reuse and not the whole video. To extract the thumbnail, rokka
+downloads the whole video file first, so it can't be bigger than the maximum upload size. The URL has to point to a video file,
+streaming playlists like HLS (`.m3u8`) are not supported.
 
 ## Using video.js for adaptive streams
 
