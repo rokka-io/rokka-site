@@ -515,16 +515,21 @@ If you include a rokka image from your own organisation, that's always allowed, 
  
 #### Using remote_fullurl_allow
 
-With the `remote_fullurl_allow` you basically open up your rokka configuration to include any publicly available image. So be careful. But you can restrict the allowed images with `remote_fullurl_whitelist`, which takes an array of regexes for allowed domains.
+With the `remote_fullurl_allow` you basically open up your rokka configuration to include any publicly available image. So be careful. But you can restrict the allowed images with `remote_fullurl_whitelist`, which takes an array of allowed hosts:
 
-You can configure that option globally on the organisation with the following call (which would allow images from rokka.io to be loaded):
+- A host name like `example.com` allows that host and all its subdomains, e.g. `images.example.com`, but not `example.com.attacker.net`.
+- With a leading dot, `.example.com` allows only the subdomains, not `example.com` itself.
+- Any other entry is a regular expression, e.g. `^images\.example\.(com|net)$`, written in JSON as `"^images\\.example\\.(com|net)$"`. It has to match up to the end of the host name, starting at its beginning or right after a dot.
+
+Before 23 October 2026, every entry was a regular expression that could match anywhere in the host name, so `example.com` also allowed `example.com.attacker.net`.
+
+You can configure that option globally on the organisation with the following call (which would allow images from rokka.io and its subdomains to be loaded):
 
 ```bash
 curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/organizations/mycompany/options' \
  -d '{
         "remote_fullurl_allow": true,
-        "remote_fullurl_whitelist": ["\.rokka\.io$"]
-            
+        "remote_fullurl_whitelist": ["rokka.io"]
      }'
 ```
 You can also set `remote_fullurl_allow` on individual stacks, if you want to have different ones for example.
@@ -542,7 +547,7 @@ curl -H 'Content-Type: application/json' -X PUT 'https://api.rokka.io/stacks/myc
     ],
     "options": {
        "remote_fullurl_allow": true,
-       "remote_fullurl_whitelist": ["\.rokka\.io"]
+       "remote_fullurl_whitelist": [".rokka.io"]
     }
 }'
 ```
