@@ -1,0 +1,58 @@
+---
+/**
+ * /chat/ — the LiipGPT assistant as a full page instead of the floating
+ * flyout that Base.astro puts on every other page.
+ *
+ * English-only, like the /documentation/ tree: the widget ships German
+ * strings, but this page's own chrome is not in the bilingual `[lang]` tree,
+ * so there is no /de/chat to switch to.
+ *
+ * `inline-layout` is the attribute that matters, not the absence of `flyout`.
+ * Without either, the widget still mounts as a full-screen sheet with
+ * `preventScroll: true` — it would take the page over and lock body scroll.
+ * `inline-layout` puts it in the document flow, where it sizes itself against
+ * the viewport and switches to its own internal scrolling once it outgrows it.
+ *
+ * `chatFlyout={false}` suppresses the layout's floating instance; two copies
+ * of the element on one page would each open their own conversation.
+ */
+import Base from '../../layouts/Base.astro';
+import { getSite, titleCase, canonicalUrl } from '../../data/site';
+
+const site = getSite('en');
+
+const title = 'Chat';
+const description =
+  'Ask the rokka assistant about the API, stacks, operations or anything else in the documentation.';
+---
+
+<Base
+  lang="en"
+  title={`${titleCase(title)} | ${site.title}`}
+  canonical={canonicalUrl('/chat')}
+  pageUrl="/chat"
+  pageTitle={title}
+  pageDescription={description}
+  chatFlyout={false}
+>
+  <liipgpt-chat
+    lang="en"
+    api-url="https://rokka.liipgpt.ch/rokkagpt"
+    inline-layout
+  ></liipgpt-chat>
+</Base>
+
+<style>
+  /*
+   * A custom element is `display: inline` until told otherwise, and the widget
+   * does not set `:host { display: block }` itself — left inline, its block
+   * children lay out against a zero-height inline box.
+   *
+   * The min-height reserves the space the widget will take, so the footer does
+   * not sit under the heading and then jump down when the module lands.
+   */
+  liipgpt-chat {
+    display: block;
+    min-height: 60vh;
+  }
+</style>

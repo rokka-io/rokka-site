@@ -466,6 +466,11 @@ Converts an SVG to a bitmap image via an actual browser engine. This can be usef
 Most SVGs don't need this and conversion to PNG or JPG works out of the box, but if you have problems with a specific SVG, this operation can help.
 This can be a slow operation, if uncached. Use it sparingly.
 
+The browser runs without network access and without scripts. Before converting, rokka removes `<script>` elements,
+event handler attributes like `onload`, `<foreignObject>`, elements outside the SVG namespace and links other than
+references within the SVG (`#…`) and, on `<image>` and `<feImage>`, embedded `data:` URLs. So embed fonts and images
+as `data:` URLs (e.g. in `@font-face` within a `<style>` element), anything loaded from the web won't show up.
+
 ```json
 {
    "name": "svg2bitmap"

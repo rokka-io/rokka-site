@@ -58,7 +58,9 @@ var_dump($sourceImages);
 It will return the same meta data as you get from retrieving a single image, with the only difference that it is wrapped in an array. You can also upload [multiple files in a single request](#supplying-metadata-while-creating-a-source-image) (or several remote URLs with `url[0]`, `url[1]`, …), in which case you get one array entry per uploaded file.
 
 The current limit for uploading images is about 1180 MB in file size (about 1.8 GB when `optimize_source` is used). For source images not in the JPEG format there's
- an additional limit of 225 Megapixels (equals an image of 15'000 x 15'000 size).
+ an additional limit of 225 Megapixels (equals an image of 15'000 x 15'000 size). rokka checks it against the size in the
+ file header before decoding the image. For a GIF, a frame larger than the GIF's declared size counts too. Images with a
+ width or height of 0 are rejected, and so is a GIF that takes longer than 30 seconds to decode.
 
 If you only want one rendering of an image and have no use for the image itself afterwards, you don't
 have to create a source image at all — see

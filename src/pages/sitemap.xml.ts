@@ -72,6 +72,12 @@ export const GET: APIRoute = async () => {
     });
   }
 
+  // English-only pages outside the bilingual tree.
+  entries.push({
+    url: canonicalUrl('/chat'),
+    lastmod: lastModified('src/pages/chat/index.astro'),
+  });
+
   // Documentation, English only by design.
   entries.push({
     url: canonicalUrl('/documentation'),
