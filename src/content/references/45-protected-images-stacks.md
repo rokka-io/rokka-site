@@ -30,6 +30,11 @@ protected images. You have to explicitly give the `sourceimages:download:protect
 can download them. See [Assign a user to an organization](users-and-memberships.html#assign-a-user-to-an-organization) 
 for details.
 
+This also applies when a protected image is only pulled into another render, for example as `secondary_image` of a
+`composition`, as a frame of `addframes` or as the `font` of a `text` operation. The whole render URL then needs a
+signature, even if the image in the URL itself isn't protected. The same goes for a [protected stack](#protected-stacks)
+used as `secondary_stack`, `addframes` frame or `basestack` of another stack.
+
 ### Same image protected has a different hash than unprotected
 
 Important to know: The same image uploaded once as protected and once as unprotected get different hashes. This
