@@ -72,6 +72,7 @@ Instead of directly uploading an image within the POST request, you can also pro
 downloaded by rokka and inserted into your repository. This happens synchronously, so you will get the same hashes and metadata back as with directly uploading an image.
 
 The image at the URL has to be publicly accessible. There's currently no way to add authentication. If you need that, [talk to us](https://rokka.io/en/contact/).
+rokka only fetches from the default ports (80 for `http`, 443 for `https`), and a URL with a user name or password in it (`https://user:password@example.com/…`) is rejected. Both get a `400`, also when the URL redirects there.
 
 ```bash
 curl -X POST \
