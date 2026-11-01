@@ -605,6 +605,8 @@ Concerete example with `remote_fullurl_allow`:
 https://mycompany.rokka.io/somestack/-https://blog.liip.ch/content/uploads/2017/06/Relax_sabbatical.jpg-/some-seo-string.jpg
 ```
 
+The remote URL (with `remote_basepath`, the base path plus your path) can be at most 500 characters long. A longer one answers `404` "No image found." and isn't loaded.
+
 Please be aware, that rokka only downloads your image once and never checks again, if it changed. If you change your image, you should therefore also change the filename.
 
 Also be aware, that if you uploaded that same image already via the API and then via this way, then it will have two different hashes. The binary itself is only stored once, 'though. If you delete one of those hashes via the API, the other will still be in rokka.
