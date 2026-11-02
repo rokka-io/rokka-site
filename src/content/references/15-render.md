@@ -54,6 +54,8 @@ You can also add stack options do a dynamic stack, prefix them with `options-`, 
 https://{organization}.rokka.io/dynamic/resize-width-200-height-150--rotate-angle-90--options-dpr-2/{hash}.{format}
 ```
 
+A dynamic stack can have at most 50 operations. With more, or when an operation would make the image wider or higher than 10000 pixels, the rendering answers `400`. An image that is already larger than that can still be rendered, as long as no operation makes it larger still.
+
 
 We recommend using stacks instead of the dynamic renderer for a better reusability of your rendered images.
 
