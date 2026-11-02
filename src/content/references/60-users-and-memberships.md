@@ -263,7 +263,7 @@ These are all the available roles:
 | `upload` | Upload images and nothing else. Useful to let others upload directly into your organization without any other access. |
 | `sourceimages:read` | Read source images and their metadata only — no access to other data such as stacks. |
 | `sourceimages:write` | Add and change source images (and upload) only — no access to other data such as stacks. |
-| `sourceimages:download:protected` | Download the original binaries of [protected images](/documentation/references/protected-images-and-stacks.html). Needed on top of `sourceimages:read`/`sourceimages:write`, which otherwise can't download protected originals. |
+| `sourceimages:download:protected` | Download the original binaries of [protected images](/documentation/references/protected-images-and-stacks.html). Needed on top of `sourceimages:read`/`sourceimages:write`, which otherwise can't download protected originals or unprotect an image. |
 | `sourceimages:unlock` | [Lock and unlock source images](/documentation/references/source-images.html#lock-a-source-image-to-prevent-deletion) and nothing else. Best combined with another role. |
 | `billing:read` | Read-only access to the organization's cost / billing overview (the `/billing/{organization}` endpoints) and nothing else. Useful to give someone insight into costs without any write access. |
 | `admin:read` | Read-only organization admin: everything `read` can do, **plus** reading the organization's memberships, users and API key metadata. Grants no write access at all. Useful to give someone (or some auditing tool) an overview of who has access to your organization, without letting them change anything. |
@@ -289,8 +289,8 @@ by hand. The table below shows which roles each role covers implicitly (in addit
 
 So a `write` member can already read source images, upload, and see the billing overview without being given those
 roles explicitly; an `admin` can do anything. Conversely, `sourceimages:read`/`sourceimages:write` can **not** download
-the originals of protected images unless you also grant `sourceimages:download:protected` (`read`, `write` and `admin`
-already can).
+the originals of protected images, nor set a protected image to unprotected, unless you also grant
+`sourceimages:download:protected` (`read`, `write` and `admin` already can).
 
 Note that `admin:read` is only implied by `admin`, **not** by `write` — unlike `billing:read`. Reading everyone's email
 address and API key metadata is more sensitive than the cost overview, so it always has to be granted explicitly (or come
