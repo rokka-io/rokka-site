@@ -26,8 +26,8 @@ a signed url to be accessed. Be aware, that people still can just download that 
 it to other people.
 
 Furthermore, API users with just the roles `sourceimages:read` and `sourceimages:write` can't download the original binaries of such
-protected images. You have to explicitly give the `sourceimages:download:protected` role to those users. Other roles
-can download them. See [Assign a user to an organization](users-and-memberships.html#assign-a-user-to-an-organization) 
+protected images, and they can't set them to unprotected either (that would make the original downloadable). You
+have to explicitly give the `sourceimages:download:protected` role to those users. Other roles can do both. See [Assign a user to an organization](users-and-memberships.html#assign-a-user-to-an-organization) 
 for details.
 
 This also applies when a protected image is only pulled into another render, for example as `secondary_image` of a
