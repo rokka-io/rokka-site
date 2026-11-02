@@ -207,6 +207,8 @@ Expressions can be used to dynamically define [stack operations options](#expres
 
 The simplest example of an expression is to just return a [stack variable](#stack-variables) with `$variable`, but you can also do more advanced stuff like `$w < 500 ? $w : 500` and much more.
 
+Expressions in a render URL (like `dynamic/resize-width-[$w * 2]/…`) can't use ranges (`1..10`) or `matches`, and answer `400` if they do. Expressions in the stack itself can.
+
 Besides stack variables you can also use some other properties with  information about the used source image, the current request or any defined stack option. See the following table
 for more information. If there's a property missing you'd like to have, we can almost certainly add them.
 
