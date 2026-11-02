@@ -72,6 +72,8 @@ rokka will generate videos in 360p, 480p, 720p, 1080p and 1720p sizes, but only 
 
 All the newly generated videos will be added as linked sourceimage to the original video and consume storage, counting towards your bill. This for example means, if you also have to delete those linked videos in case you don't need them anymore. You'll find the hashes in the `linked` dynamic metadata.
 
+The generated videos of a [protected](protected-images-and-stacks.html) video are protected as well, so they need a signed URL too. If you change the `protected` option of a video, its new hash doesn't link the generated videos of the old one, and the next `.m3u` request generates them again. Videos you linked yourself stay linked.
+
 If you don't want that automatic encoding to happen, use the .m3u8 link instead of the .m3u, which doesn't trigger that.
 You can also add manually linked videos to produce the different videos for adaptive streaming by yourself, see below for details.
 
