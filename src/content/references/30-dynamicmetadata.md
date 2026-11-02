@@ -16,7 +16,7 @@ rokka will generate a new image with a new identifying hash, the same binary has
 
 If an image with the new hash already exists, it won't be created, but the existing one will be used and returned. Existing meta data won't be copied/overwritten in this case.
 
-If you don't need the previous image to be kept on rokka, you can directly delete it with the `?deletePrevious=true` parameter.
+If you don't need the previous image to be kept on rokka, you can directly delete it with the `?deletePrevious=true` parameter. A [locked](source-images.html#lock-a-source-image-to-prevent-deletion) image can't be deleted this way, that answers `403`; unlock it first.
 
 The endpoint returns a `201 Created` (with the new source image in the body) when the metadata change results in a new hash, and a `204 No Content` when the metadata is unchanged. Billable-only metadata (like `detection_face`) on a non-paying organization returns a `403`.
 
@@ -54,7 +54,7 @@ To delete dynamic metadata from a source image, you need to provide the organiza
 
 As in adding dynamic meta data, rokka will generate a new image with a new identifying hash, the same binary hash and meta data and return the new location in the `Location` header of the response.  If an image with the new hash already exists, it won't be created, but the existing one will be used and returned. Eventually existing meta data won't be copied/overwritten in this case.
 
-If you don't need the previous image to be kept on rokka, you can directly delete it with the `?deletePrevious=true` parameter.
+If you don't need the previous image to be kept on rokka, you can directly delete it with the `?deletePrevious=true` parameter. Without it, the previous image is kept. A locked image can't be deleted this way either, that answers `403`.
 
 ```bash
 curl -H 'Content-Type: application/json' -X DELETE 'https://api.rokka.io/sourceimages/testorganization/0dcabb778d58d07ccd48b5ff291de05ba4374fb9/meta/dynamic/subject_area?deletePrevious=true'
