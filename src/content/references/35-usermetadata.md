@@ -49,6 +49,9 @@ characters:
  - `0-9` (numbers);
  - `_` (underscore).
 
+The type prefix comes on top of that, separated by a single colon (`int:some_number`). A name with a second colon,
+like `int:some:number`, answers `400`.
+
 The most flexible way to add/replace/delete fields is with a PATCH request and having the field data
 JSON-encoded in the body.
 This also allows to update more than one field at once.
