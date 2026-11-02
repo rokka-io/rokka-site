@@ -420,7 +420,7 @@ We advise to read [this blog post about resizing and responsive images](https://
 
 ### Rotate
 
-Rotates an image clockwise.
+Rotates an image clockwise. An angle that isn't a multiple of 90 makes the image larger. If that would make it wider or higher than 10000 pixels, the rendering answers `400`.
 
 #### Properties
 
