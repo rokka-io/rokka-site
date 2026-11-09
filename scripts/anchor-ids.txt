@@ -106,11 +106,15 @@ installation
 intro
 invalidating-an-alias-at-the-cdn-level
 invalidating-the-cdn-cache-for-a-stack
+invite-a-user-to-an-organization
 ip-protection
 is-the-auto-description-feature-free%3F
 javascript-library-specifics
+join-an-organization-with-an-invitation
+leave-an-organization
 limitations
 limiting-signed-urls-by-other-parameters
+list-and-revoke-invitations
 list-memberships
 list-operations
 list-source-images
@@ -230,6 +234,7 @@ upload-an-image
 upload-image-into-an-organization
 upload-images
 uploading-a-to-be-protected-image
+uploading-many-images-at-once
 uploading-non-image-type-files
 uploading-videos
 upscaling

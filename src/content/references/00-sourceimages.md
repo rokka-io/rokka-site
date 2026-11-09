@@ -55,7 +55,7 @@ var_dump($sourceImages);
 ```
 
  
-It will return the same meta data as you get from retrieving a single image, with the only difference that it is wrapped in an array. You can also upload [multiple files in a single request](#supplying-metadata-while-creating-a-source-image) (or several remote URLs with `url[0]`, `url[1]`, …), in which case you get one array entry per uploaded file.
+It will return the same meta data as you get from retrieving a single image, with the only difference that it is wrapped in an array. You can also upload [multiple files in a single request](#supplying-metadata-while-creating-a-source-image) (or several remote URLs with `url[0]`, `url[1]`, …), in which case you get one array entry per uploaded file. For larger amounts of images, we recommend single uploads in parallel instead, see [Uploading many images at once](#uploading-many-images-at-once).
 
 The current limit for uploading images is about 1180 MB in file size (about 1.8 GB when `optimize_source` is used). For source images not in the JPEG format there's
  an additional limit of 225 Megapixels (equals an image of 15'000 x 15'000 size). rokka checks it against the size in the
@@ -87,6 +87,48 @@ $sourceImages = $client->uploadSourceImageByUrl('https://rokka.rokka.io/dynamic/
 var_dump($sourceImages);
 ```
 
+### Uploading many images at once
+
+If you have a lot of images to upload, for example for an initial migration of tens of thousands of images, we recommend
+__one image per request, with several requests running in parallel__, instead of putting many files into a single request.
+
+- __Failures are easy to pin down.__ Every upload gets its own HTTP status, so when one image fails (corrupt file,
+  unsupported format, too large, a timeout, a `429`), you know exactly which one it was and only retry that one. With
+  many files in one request, it's harder to tell which file caused a problem, and a timeout leaves you not knowing which
+  of them made it.
+- __Retries are cheap.__ Retrying a single image costs one image, not the whole batch.
+- __Requests stay small and short__, so you don't run into upload size limits or long-running requests.
+
+Some recommendations for such an import:
+
+- __Limit the concurrency.__ Start with about 5 to 10 parallel uploads and only go higher as long as you don't get `429`
+  responses or noticeably slower responses. The [rate limiting](../guides/api-rate-limiting-and-throttling.html) chapter
+  explains how rokka throttles bulk uploads.
+- __Retry `429` and `5xx` responses__ with a pause that grows with each attempt. Our client libraries already retry a `429` for you.
+- __Set generous timeouts__, as throttled requests take longer than usual.
+- __Store the returned `hash`__ (or `short_hash`) together with your own ID or the original filename. That's what you need to render the image later.
+- __Make the import restartable.__ Keep a record of what was uploaded and what failed, so you can resume after an
+  interruption and retry the failures separately. Uploading the same image again is harmless, rokka returns the existing
+  source image with the same hash. You can also check whether an image is already there by [its binary hash](#finding-with-binary-hash).
+
+A minimal example with `curl` and `xargs`, uploading every file in `images/` with 8 parallel requests, writing the
+response of each upload next to the file and the name of each failed file to `failed.txt`:
+
+```bash
+export ROKKA_API_KEY=myKey
+find images/ -type f ! -name '*.json' -print0 | xargs -0 -P 8 -I{} sh -c '
+  curl -sS --fail --retry 5 --retry-delay 5 --max-time 300 \
+    -H "Api-Version: 1" -H "Api-Key: $ROKKA_API_KEY" \
+    -F filedata=@"$1" \
+    https://api.rokka.io/sourceimages/mycompany > "$1.json" \
+  || echo "$1" >> failed.txt' _ {}
+```
+
+`--retry` makes `curl` retry `429` and `5xx` responses and timeouts. Afterwards, run the same command over the files in
+`failed.txt` again. For more control (resuming, logging, mapping hashes to your own IDs), write the same pattern with
+one of the [client libraries](../guides/get-started.html) and their async or parallel HTTP support.
+
+If you plan to import a very large number of images, [let us know](https://rokka.io/en/contact/) beforehand, so we can make sure enough capacity is available.
 
 ### Supplying metadata while creating a source image
 
