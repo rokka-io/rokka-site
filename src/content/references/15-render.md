@@ -211,6 +211,11 @@ curl -H 'Api-Key: $YOUR_API_KEY' \
 Note this goes to `api.rokka.io`, not to `{organization}.rokka.io` — it needs your API key, and the key
 needs the `upload` role.
 
+A rendering that pulls in a [protected image or stack](./protected-images-and-stacks.html), e.g. as the
+`secondary_image` or `secondary_stack` of a `composition`, also needs a key that may read protected images
+(`sourceimages:download:protected`, which `read`, `write` and `admin` include). A key with only `upload` or
+`sourceimages:write` gets a `403` for it.
+
 Like the regular render URLs, you can use one of your own stacks, override its operation options, or use
 the `dynamic` stack and put the operations right into the URL:
 
