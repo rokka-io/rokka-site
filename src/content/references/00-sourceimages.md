@@ -153,6 +153,33 @@ var_dump($sourceImages);
 
 In case the source image already exists and there are metadata fields which are not defined in the upload, they are not deleted.
 
+The response returns them as `user_metadata` and `dynamic_metadata`. The upload accepts these names too, so
+`user_metadata[0]` works like `meta_user[0]` and `dynamic_metadata[0]` like `meta_dynamic[0]`. Use one name per
+request, sending both answers `400`.
+
+#### Metadata for several images in one request
+
+Files, URLs and their metadata are matched by their index: `meta_user[0]` belongs to `filedata[0]`, `meta_user[1]` to
+`filedata[1]`, and so on.
+
+```bash
+curl -X POST -H "Api-Key: $ROKKA_API_KEY" \
+             -F 'filedata[0]=@image1.png' \
+             -F 'meta_user[0]={"foo":"bar"}' \
+             -F 'filedata[1]=@image2.png' \
+             -F 'meta_user[1]={"foo":"baz"}' \
+             -F 'meta_dynamic[1][subject_area]={"x":100,"y":100}' \
+             -F 'url[2]=https://example.org/image3.jpg' \
+             -F 'meta_user[2]={"foo":"qux"}' \
+             'https://api.rokka.io/sourceimages/mycompany'
+```
+
+- Files and URLs share the indexes, `url[1]` next to `filedata[1]` answers `400`.
+- Give several files an index (`filedata[0]`, `filedata[1]`) or send them as `filedata[]`. A plain `filedata` sent
+  twice only keeps the last file.
+- Metadata for an index without a file or URL answers `400`, e.g. "meta_user[2] has no file or url with the same
+  index." The images don't need metadata, `filedata[0]` alone next to `filedata[1]` with `meta_user[1]` is fine.
+
 ### Optimizing source images before saving
 
 Sometimes source images contain too much data not really needed for just rendering images. 
