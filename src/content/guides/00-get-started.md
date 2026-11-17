@@ -28,9 +28,11 @@ You can also play with the API in our [Swagger UI](https://api.rokka.io/doc/) di
 
 ## Versioning
 
-Before we dive into the API more, you should be aware of versioning. The header `Api-Version` expects a full number as value, lowest being 1. You should always send the API version header when making requests. The pre built libraries already do that by default, sending the correct header for the version of the API they are using.
+Before we dive into the API more, you should be aware of versioning. The header `Api-Version` expects a full number as value, lowest being 1.
 
-If you do not use the version header, rokka will always default to the latest version! In other words: __If you don't send the version header, your application might break at any time__ - you have been warned.
+Currently the header is optional: version 1 is the only API version, so requests without it get exactly the same behaviour as requests with `Api-Version: 1`. The pre built libraries send it by default anyway, with the version of the API they are using.
+
+We still recommend sending it. If you do not use the version header, rokka will always default to the latest version, so once a version 2 exists, __an application that doesn't send the header might break__.
 
 ## Registration
 
