@@ -55,7 +55,7 @@ This is the most important constraint in the repo. The URL shape is inherited fr
 | `/index.html` | English landing page |
 | `/en/…`, `/de/…` | `index`, `contact/`, `signup/`, `pagenotfound/`, `error/` |
 | `/documentation/index.html` | docs landing, **English only** |
-| `/documentation/{guides,references,demos}/<slug>.html` | 26 docs, **English only**, flat `.html` files |
+| `/documentation/{guides,references,demos}/<slug>.html` | 27 docs, **English only**, flat `.html` files |
 
 `/` and `/en/` are byte-identical copies of the landing page.
 
@@ -89,7 +89,7 @@ crawls the built HTML and writes a static index plus its UI bundle to
   `.rokka-doc-content` wrapper in `DocLayout` and `DemoLayout` only. Once *any*
   page carries that attribute Pagefind indexes *only* pages that have it — so
   the marketing pages, `/documentation/index.html` and the embedded dashboard
-  stay out with no allowlist to maintain. All 26 docs, nothing else.
+  stay out with no allowlist to maintain. All 27 docs, nothing else.
 - **The trigger is in the navbar in `Base.astro`, so it is on every page** —
   both languages, marketing pages included — while the index is English
   documentation only. That asymmetry is intentional (a header search that
@@ -168,7 +168,7 @@ Astro's `i18n` routing is deliberately **not** used — the `/` + `/en/` duplica
 Two things that bite:
 
 - **The numeric filename prefix (`00-`, `05-`, `10-`…) is the sidebar order.** Sort with `byFilename` from `src/content.config.ts`, which sorts on `filePath` — *not* `id`, because a front-matter `slug` overrides the glob loader's generated `id` and sorting on `id` silently gives you an alphabetical sidebar.
-- **`slug:` in front matter is the public URL** and is pinned for all 26 pages. Under Sculpin the URL was derived from the *title*, so renaming a heading used to move a published page (`03-upload-an-image.md` is still served as `upload-and-render-an-image.html`). Never change a slug.
+- **`slug:` in front matter is the public URL** and is pinned for all 27 pages. Under Sculpin the URL was derived from the *title*, so renaming a heading used to move a published page (`03-upload-an-image.md` is still served as `upload-and-render-an-image.html`). Never change a slug.
 
 Other front matter: `title`, `description`, `head` (selects a per-page `<head>` fragment), `body_attributes` (raw attributes spliced onto `<body>`, always an `onload=` for the demos).
 
@@ -232,7 +232,7 @@ checks out with `fetch-depth: 0` because the sitemap reads each page's
 
 `scripts/verify-build.mjs` guards four things:
 
-1. **Documentation anchor ids**, against the committed snapshot of all 263 in
+1. **Documentation anchor ids**, against the committed snapshot of all 273 in
    `scripts/anchor-ids.txt`. These are public URLs produced by a hand-written
    port of Sculpin's algorithm, so a markdown edit or a dependency bump can
    rewrite them without anyone noticing. If you change a heading on purpose,
