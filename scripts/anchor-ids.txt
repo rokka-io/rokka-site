@@ -57,6 +57,7 @@ deleting-images-and-stacks
 deleting-source-images-with-binary-hash
 delivering-a-transparency-capable-format-instead-of-jpeg-jpg.transparency.autoformat
 delivering-jpegs-with-transparency
+delivery-of-rendered-images
 detection-face
 device-pixel-ratio-dpr
 different-sorting
@@ -130,6 +131,7 @@ management-api
 managing-via-api
 manually-linking-videos
 memberships
+metadata-for-several-images-in-one-request
 modulate
 more-info-about-autoformat
 multi-areas
@@ -137,6 +139,7 @@ multi-factor-authentication-mfa-for-api-keys
 multiply
 note-about-cms-clients
 optimizing-source-images-before-saving
+optional-features-that-use-other-services
 or-%2F-not-filtering
 organizations-own-images
 output-as-video
@@ -153,6 +156,7 @@ protected-images
 protected-stacks
 protecting-images
 protecting-the-dynamic-stack
+questions
 range-filtering
 rate-limit-response-headers
 read-data-of-one-organization
@@ -262,6 +266,7 @@ what-are-ai-auto-descriptions%3F
 what-is-alt-text-and-why-do-i-need-it%3F
 when-not-to-use-it
 where-are-the-generated-descriptions-stored%3F
+where-your-data-is-stored
 which-languages-are-supported%3F
 which-languages-can-rokka-generate-descriptions-in%3F
 will-rokka-overwrite-an-existing-description%3F
